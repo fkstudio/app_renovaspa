@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +10,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/setlang/{locale?}', function($locale = 'en'){
+	App::setLocale($locale);
+
+	return redirect("/");
 });
+
+/*
+|----------------------------------------------------------------------------
+| Country controller routes
+|----------------------------------------------------------------------------
+*/
+Route::get('/', [ 'as' => 'home.home', 'uses' => 'HomeController@home' ]);
+
+/*
+|----------------------------------------------------------------------------
+| Country controller routes
+|----------------------------------------------------------------------------
+*/
+Route::get('/country/all', [ 'as' => 'country.all', 'uses' => 'CountryController@getAll' ]);
+
+/*
+|----------------------------------------------------------------------------
+| Hotel controller routes
+|----------------------------------------------------------------------------
+*/
+Route::get('/hotel/details/{id}', [ 'as' => 'hotel.details', 'uses' => 'HotelController@details' ]);
