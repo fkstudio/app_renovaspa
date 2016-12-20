@@ -23,6 +23,12 @@ class CountryController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    public function countries(){
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+        
+        return view("country.list", [ "model" => $countries ]);
+    }
+
     public function getAll(){
         $countries = $this->entityManager->getRepository("App\Models\CountryModel")->findAll();
         $model = [];

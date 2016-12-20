@@ -40,7 +40,7 @@ class DbContext
         $connectionOptions = array(
             'driver'   => 'pdo_mysql',
             'host'     => 'localhost',
-            'dbname'   => 'renovaspa',
+            'dbname'   => 'renovatest',
             'user'     => 'root',
             'password' => 'root',
         );

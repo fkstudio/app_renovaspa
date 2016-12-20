@@ -18,18 +18,6 @@ class ServiceModel {
 
 	/** ============= PUBLIC PROPERTIES =============== */
 
-	/**
-     * @ManyToOne(targetEntity="CountryModel", inversedBy="Services")
-     * @JoinColumn(name="country_id", referencedColumnName="id")
-    */
-    private $Country;
-
-	/**
-     * @ManyToOne(targetEntity="RegionModel", inversedBy="Services")
-     * @JoinColumn(name="region_id", referencedColumnName="id")
-    */
-    private $Region;
-
 	/** 
 	 * @OneToOne(targetEntity="HotelModel", cascade={"persist"})
 	 * @JoinColumn(name="hotel_id", referencedColumnName="id")
@@ -50,9 +38,6 @@ class ServiceModel {
 
 	/** @age_restriction @Column(type="boolean") */
 	public $AgeRestriction;
-
-	/** @price @Column(type="float") */
-	public $Price;
 
 	/** @opening_time @Column(type="date") */
 	public $OpeningTime;

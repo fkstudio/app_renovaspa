@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Database\DbContext;
+use App\Models\CountryModel;
 
 
-class HomeController extends Controller
+class ReservationController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -22,12 +23,14 @@ class HomeController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
-    public function home(){
-        return view("home/index");
+    private function getCountries(){
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+        
+        return $countries;
     }
 
-    public function about(){
-    	return view("home/about");
+    public function bookhere(){
+        return view("reservation.bookhere", [ 'countries' => $this->getCountries() ]);
     }
 
 }

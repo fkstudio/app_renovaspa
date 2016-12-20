@@ -27,11 +27,7 @@
 	
 	@include("shared._navbar")    
 
-	<div class="container-fluid">
-		<div class="container">
-			@yield("content")
-		</div>
-	</div>
+	@yield("content")
 
 	@include("shared._footer")
 
@@ -42,5 +38,7 @@
 
     <!-- Bootstrap submenu js -->
     <script src="{{ URL::to('/') }}/js/bootstrap-submenu.min.js"></script>
+
+    @yield("scripts")
   </body>
 </html>
