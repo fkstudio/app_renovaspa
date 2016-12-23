@@ -24,4 +24,19 @@ class ServiceModel {
 	// service price object
 	public $ServicePrice;
 
+	/** 
+	 * @OneToMany(targetEntity="ServicePriceModel", mappedBy="Service")
+	*/
+	public $ServicePrices;
+
+	public function getPrice($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->Hotel->Id == $hotel_id){
+				return $servicePrice->Price;
+			}
+		}
+
+		return 0;
+	}
+
 }

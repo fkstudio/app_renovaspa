@@ -11,18 +11,22 @@ class ServiceController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Country Controller
+    | Service Controller
     |--------------------------------------------------------------------------
     */
 
     private $dbcontext;
     private $entityManager;
 
+    /* ============================= PUBLIC METHODS ============================= */
+    
+    /* public class construct */
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* get all services in category by hotel */
     public function servicesByCategoryAndHotel(Request $request, $category_id){
 
         $hotel_id = $request->session()->get('hotel_id');
@@ -34,17 +38,6 @@ class ServiceController extends Controller
         $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
 
         $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryModel")->findBy(["Category" => $category->Id]);
-        
-        foreach($serviceCategories as $serviceCategory){
-
-            $servicePrice = $this->entityManager->getRepository('App\Models\Test\ServicePriceModel')
-                                                ->findOneBy([ "Service" => $serviceCategory->Service->Id, 'Hotel' => $hotel->Id ]);
-
-            if($servicePrice != null)
-                $serviceCategory->Service->ServicePrice = $servicePrice;
-            else
-                $serviceCategory->Service->ServicePrice = new \App\Models\Test\ServicePriceModel();
-        }
 
         return view("service.list", [ "model" => $serviceCategories, 'hotel' => $hotel, 'category' => $category, "region" => $region ]);
     }

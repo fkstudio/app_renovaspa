@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Test;
 
 /**
  * @Entity
@@ -28,13 +28,16 @@ class ReservationItemModel {
 	*/
 	public $Service;
 
-	/** @prefered_date @Column(type="date") */
+	/** @Column(name="customer_name", type="string") */
+	public $CustomerName;
+
+	/** @Column(name="prefered_date", type="date") */
 	public $PreferedDate;
 
-	/** @prefered_time @Column(type="date") */
+	/** @Column(name="prefered_time", type="time") */
 	public $PreferedTime;
 
-	/** @price @Column(type="float") */
+	/** @Column(name="price", type="float") */
 	public $Price;
 
 	/** 
@@ -43,13 +46,11 @@ class ReservationItemModel {
 	*/
 	public $Cabin;
 
-	/** @enabled @Column(type="boolean") */
-	public $Enabled;
 
-	/** @created @Column(type="date") */
+	/** @created @Column(type="datetime") */
 	public $Created;
 
-	/** @modified @Column(type="date") */
+	/** @modified @Column(type="datetime") */
 	public $Modified;
 
 	/** @Column(type="boolean", name="is_deleted") */

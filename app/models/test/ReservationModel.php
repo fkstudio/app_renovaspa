@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Models;
+	namespace App\Models\Test;
 
 	/**
 	 * @Entity
@@ -24,23 +24,23 @@
 
 		/** 
 		 * @OneToOne(targetEntity="RegionModel", cascade={"persist"})
-		 * @JoinColumn(name="region_id", referencedColumnName="Id")
+		 * @JoinColumn(name="region_id", referencedColumnName="id")
 		*/
 		public $Region;
 
 		/** 
 		 * @OneToOne(targetEntity="HotelModel", cascade={"persist"})
-		 * @JoinColumn(name="hotel_id", referencedColumnName="Id")
+		 * @JoinColumn(name="hotel_id", referencedColumnName="id")
 		*/
 		public $Hotel;
 
-		/** @confirmation_number @Column(type="string") */
+		/** @Column(name="confirmation_number", type="string") */
 		public $ConfirmationNumber;		
 
-		/** @customer_name @Column(type="string") */
+		/** @Column(name="customer_name", type="string") */
 		public $CustomerName;
 
-		/** @customerEmail @Column(type="string") */
+		/** @Column(name="customer_email", type="string") */
 		public $CustomerEmail;
 
 		/** @arrival @Column(type="date") */
@@ -51,7 +51,7 @@
 
 		/** 
 		 * @OneToOne(targetEntity="PaymentMethodModel", cascade={"persist"})
-		 * @JoinColumn(name="payment_method_id", referencedColumnName="Id")
+		 * @JoinColumn(name="payment_method_id", referencedColumnName="id")
 		*/
 		public $PaymentMethod;
 
@@ -64,32 +64,29 @@
 		/** @total @Column(type="float") */
 		public $Total;
 
-		/** @last_four_card_numbers @Column(type="string") */
+		/** @Column(name="last_four_card_numbers", type="string") */
 		public $LastFourCardNumbers;
-
-		/** @stay_in_hotel @Column(type="boolean") */
-		public $StayInHotel;
 
 		/** 
 		 * @OneToMany(targetEntity="ReservationItemModel", mappedBy="Reservation")
 		*/
-		protected $ServicesDetails;
+		public $ServicesDetails;
 
 		/** 
 		 * @OneToMany(targetEntity="CertificateDetail", mappedBy="Reservation")
 		*/
-		protected $CertificateDetails;
+		//protected $CertificateDetails;
 
 		/** 
 		 * @OneToOne(targetEntity="StatusModel", cascade={"persist"})
-		 * @JoinColumn(name="status_id", referencedColumnName="Id")
+		 * @JoinColumn(name="status_id", referencedColumnName="id")
 		*/
 		public $Status;
 
-		/** @created @Column(type="date") */
+		/** @created @Column(type="datetime") */
 		public $Created;
 
-		/** @modified @Column(type="date") */
+		/** @modified @Column(type="datetime") */
 		public $Modified;
 
 		/** @Column(type="boolean", name="is_deleted") */

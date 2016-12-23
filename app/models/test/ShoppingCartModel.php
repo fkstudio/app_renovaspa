@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Models;
+	namespace App\Models\Test;
 
 	/**
 	 * @Entity
@@ -22,11 +22,15 @@
 		/** 
 		 * @OneToMany(targetEntity="ShoppingCartItemModel", mappedBy="Cart")
 		*/
-		protected $Items;
+		public $Items;
 
-		/** @created @Column(type="date") */
+		/** @created @Column(type="datetime") */
 		public $Created;
 
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
+
+		public function __construct(){
+			$this->Items = [];
+		}
 	}

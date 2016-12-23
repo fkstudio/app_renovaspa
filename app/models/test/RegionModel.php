@@ -27,4 +27,9 @@ class RegionModel {
 	*/
 	public $Country;
 
+	/** 
+	 * @OneToMany(targetEntity="HotelRegionModel", mappedBy="Region")
+	*/
+	public $HotelRegions;
+
 }

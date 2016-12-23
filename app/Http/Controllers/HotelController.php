@@ -12,18 +12,22 @@ class HotelController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Country Controller
+    | Hotel Controller
     |--------------------------------------------------------------------------
     */
 
     private $dbcontext;
     private $entityManager;
 
+    /* ============================= PUBLIC METHODS ============================= */
+    
+    /* public class construct */
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* get all hotels by current region */
     public function hotelsByRegion(Request $request, $region_id){
         $request->session()->put('region_id', $region_id);
 
@@ -34,6 +38,7 @@ class HotelController extends Controller
 
     }
 
+    /* get all hotels in json format */
     public function getAll($region_id){
         $hotels = $this->entityManager->getRepository("App\Models\HotelModel")->findBy([ 'Region' => $region_id ]);
         $model = [];
@@ -46,12 +51,13 @@ class HotelController extends Controller
 
     }
 
+    /* get hotel by id */
     public function details($id = null){
         
         if($id == null)
             return redirect("/");
 
-        $hotel = $this->entityManager->getRepository("App\Models\HotelModel")->findOneBy([ 'Id' => $id]);
+        $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy([ 'Id' => $id]);
 
         return view("hotel.details", ['model' => $hotel]);
 

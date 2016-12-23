@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Models;
+	namespace App\Models\Test;
 
 	/**
 	 * @Entity
@@ -19,12 +19,6 @@
 		/** @name @Column(type="string") */
 		public $Name;
 
-		/** @enabled @Column(type="boolean") */
-		public $Enabled;
-
-		/** @created @Column(type="date") */
-		public $Created;
-
-		/** @Column(type="boolean", name="is_deleted") */
-		public $IsDeleted;
+		/** @Column(name="symbol", type="string") */
+		public $Symbol;
 	}

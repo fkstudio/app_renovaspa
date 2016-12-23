@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Models;
+	namespace App\Models\Test;
 
 	/**
 	 * @Entity
@@ -49,9 +49,14 @@
 		/** @type @Column(type="string") */
 		public $Type;
 
-		/** @created @Column(type="date") */
+		/** @created @Column(type="datetime") */
 		public $Created;
 
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
+
+
+		public function __cosntruct(){
+			$this->Cabin = new App\Models\Test\Cabin();
+		}
 	}

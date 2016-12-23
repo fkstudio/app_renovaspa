@@ -22,8 +22,19 @@
 		public $Name;
 
 		/** 
+		 * @OneToOne(targetEntity="CurrencyModel", cascade={"persist"})
+		 * @JoinColumn(name="currency_id", referencedColumnName="id")
+		*/
+		public $Currency;
+
+		/** 
 		 * @OneToMany(targetEntity="RegionModel", mappedBy="Country")
 		*/
 		public $Regions;
+
+		/** 
+		 * @OneToOne(targetEntity="PhotoModel", mappedBy="Country")
+		*/
+		public $Photo;
 
 	}

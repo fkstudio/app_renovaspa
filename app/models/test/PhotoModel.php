@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Test;
 
 /**
  * @Entity
@@ -28,12 +28,20 @@ class PhotoModel {
 	*/
 	public $Category;
 
+	/** 
+	 * @OneToOne(targetEntity="CountryModel", cascade={"persist"})
+	 * @JoinColumn(name="country_id", referencedColumnName="id")
+	*/
+	public $Country;
+
+	/** 
+	 * @OneToOne(targetEntity="RegionModel", cascade={"persist"})
+	 * @JoinColumn(name="region_id", referencedColumnName="id")
+	*/
+	public $Region;
+	
+
 	/** @path @Column(type="string") */
 	public $Path;
 
-	/** @created @Column(type="date") */
-	public $Created;
-
-	/** @Column(type="boolean", name="is_deleted") */
-	public $IsDeleted;
 }

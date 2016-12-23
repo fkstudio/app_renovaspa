@@ -11,24 +11,29 @@ class CategoryController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Country Controller
+    | Category Controller
     |--------------------------------------------------------------------------
     */
 
     private $dbcontext;
     private $entityManager;
 
+    /* ============================= PUBLIC METHODS ============================= */
+    
+    /* public class construct */
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* get all categories */
     public function categories(Request $request, $region_id){
         $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findBy(["Region" => $region_id]);
 
         return view("category.list", [ "model" => $regionServices ]);
     }
 
+    /* get a list of available categories in current hotel */
     public function categoriesByHotel(Request $request, $hotel_id){
         $request->session()->put("hotel_id", $hotel_id);
 

@@ -10,13 +10,16 @@ class HomeController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Country Controller
+    | Home Controller
     |--------------------------------------------------------------------------
     */
 
     private $dbcontext;
     private $entityManager;
 
+    /* ============================= PUBLIC METHODS ============================= */
+    
+    /* public class construct */
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();

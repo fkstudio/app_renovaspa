@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Test;
 
 /**
  * @Entity
@@ -19,9 +19,4 @@ class StatusModel {
 	/** @name @Column(type="string") */
 	public $Name;
 
-	/** @created @Column(type="date") */
-	public $Created;
-
-	/** @Column(type="boolean", name="is_deleted") */
-	public $IsDeleted;
 }

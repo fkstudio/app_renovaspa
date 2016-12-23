@@ -38,7 +38,9 @@
                   @foreach($country->Regions as $region)
                     <a href="#fakelink" tabindex="-1" class="dropdown-submenu-item">{{ $region->Name }} <span class="caret"></span></a>
                     <ul class="dropdown-submenu">
-
+                      @foreach($region->HotelRegions as $hotelRegion)
+                        <a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }} <span class="caret"></span></a>
+                      @endforeach
                     </ul>
                   @endforeach
                 </ul>

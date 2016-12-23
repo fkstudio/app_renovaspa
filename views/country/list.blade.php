@@ -8,15 +8,18 @@
 			<div class="container">
 				<h3>COUNTRIES</h3>
 				<hr>
-				<div class="row">
-					<br/>
-					<div class="col-md-12">
-						 @foreach($model as $country)
-					    <a href="{{ URL::to('/') }}/country/{{ $country->Id }}/regions">{{ $country->Name }}</a>
-					    <hr/>
-					    @endforeach
+				@foreach($model as $country)
+				    <div class="col-md-3" style="padding: 100px;
+												 text-align: center;
+												 background: url('{{ URL::to('/images') }}/countries/country-{{ $country->Id  }}/{{ $country->Photo->Path }}');
+												 background-size: cover;"
+				>
+						<a style="color:white;
+								  font-size: 20px;
+								  font-weight: bold;" href="{{ URL::to('/') }}/country/{{ $country->Id }}/regions">{{ $country->Name }}</a>	
 					</div>
-				</div>
+					@break
+			    @endforeach
 			</div>
 		</div>
 		@endsection

@@ -21,4 +21,9 @@ class CategoryModel {
 	/** @name @Column(type="string") */
 	public $Name;
 
+	/** 
+	 * @OneToOne(targetEntity="PhotoModel", mappedBy="Category")
+	*/
+	public $Photo;
+
 }

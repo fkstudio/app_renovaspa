@@ -45,6 +45,19 @@ Route::get('/category/{category_id}/services', [ 'as' => 'service.listByCategory
 
 /*
 |----------------------------------------------------------------------------
+| AddToCart controller routes
+|----------------------------------------------------------------------------
+*/
+Route::post('/cart/add/services', [ 'as' => 'cart.addServices', 'uses' => 'ShoppingCartController@addToCart' ]);
+
+Route::get('/shopping/cart', [ 'as' => 'cart.myCart', 'uses' => 'ShoppingCartController@myCart' ]);
+
+Route::get('/shopping/cart/remove/item/{itemId}', [ 'as' => 'cart.removeItem', 'uses' => 'ShoppingCartController@removeItem' ]);
+
+Route::post('/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'ShoppingCartController@checkout' ]);
+
+/*
+|----------------------------------------------------------------------------
 | Country controller routes
 |----------------------------------------------------------------------------
 */
@@ -78,3 +91,21 @@ Route::get('/region/{region_id}/hotels', [ 'as' => 'hotel.hotelsByRegion', 'uses
 |----------------------------------------------------------------------------
 */
 Route::get('/reservation/bookhere', [ 'as' => 'reservation.bookhere', 'uses' => 'ReservationController@bookhere' ]);
+
+
+Route::post('/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
+
+/*
+|----------------------------------------------------------------------------
+| Payment controller routes
+|----------------------------------------------------------------------------
+*/
+Route::post('/payment', [ 'as' => 'payment.payment', 'uses' => 'PaymentController@payment' ]);
+
+Route::get('/payment/gateway', [ 'as' => 'payment.gateway', 'uses' => 'PaymentController@gatewayPayment' ]);
+
+Route::get('/payment/paypal', [ 'as' => 'payment.paypal', 'uses' => 'PaymentController@paypalPayment' ]);
+
+Route::post('/payment/gateway/proceed', [ 'as' => 'payment.execGatewayPayment', 'uses' => 'PaymentController@execGatewayPayment' ]);
+
+Route::get('/payment/voucher', [ 'as' => 'payment.serviceVoucher', 'uses' => 'PaymentController@sendVoucher' ]);
