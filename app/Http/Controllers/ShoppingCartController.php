@@ -62,10 +62,17 @@ class ShoppingCartController extends Controller
     public function myCart(Request $request){
         $session = $request->session();
         $sessionId = $session->getId();
+        $reservationType = $session->get('reservation_type');
+
+        if($reservationType == 1)
+            $action = '/shopping/cart/checkout';
+        else if($reservationType == 2)
+            $action = '/certificate/registration';
+
 
         $cart = $this->getCart($sessionId);
 
-        return view('cart.myCart', [ 'model' => $cart, 'category_id' => $session->get('category_id') ]);
+        return view('cart.myCart', [ 'model' => $cart, 'category_id' => $session->get('category_id'), 'action' => $action, 'reservationType' => $reservationType ]);
     }
 
     /* add items to current user cart */
@@ -74,6 +81,7 @@ class ShoppingCartController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
         $statusMessage = '';
+        $reservationType = $session->get('reservation_type');
 
         /* get current user cart */
         $cart = $this->getCart($sessionId);
@@ -88,6 +96,7 @@ class ShoppingCartController extends Controller
                 $cartItem = null;
                 $cartItemExists = $this->entityManager->getRepository('\App\Models\Test\ShoppingCartItemModel')->findOneBy(['Cart' => $cart->Id, 'Service' => $serviceId]);
 
+                
                 if($cartItemExists == null){
                     $cartItem = new \App\Models\Test\ShoppingCartItemModel();
                     $cartItem->Cart = $cart;
@@ -96,20 +105,35 @@ class ShoppingCartController extends Controller
                     $cartItem->Price = $service->getPrice($session->get('hotel_id'));
                     $cartItem->PreferedDate = null;
                     $cartItem->PreferedTime = null;
-                    $cartItem->Type = 1;
+                    $cartItem->Type = $reservationType;
                     $cartItem->Created = new \DateTime();
                     $cartItem->IsDeleted = false; 
                 }
                 else {
-                    $cartItem = $cartItemExists;
-                    $cartItem->Quantity = $cartItemExists->Quantity + $serviceQuantity;
+                    if($reservationType == 1){
+                        $cartItem = $cartItemExists;
+                        $cartItem->Quantity = $cartItem->Quantity + $serviceQuantity;
+                    }
+                    else if ($reservationType == 2){
+                        $cartItem = clone $cartItemExists;
+                        $cartItem->Quantity = $serviceQuantity;
+                    }
+                }
+
+                if($reservationType == 2){
+                    $cartItem->CertificateNumber = $session->get("current_certificate");
                 }
 
                 $this->entityManager->persist($cartItem);
 
                 $statusMessage = 'Items added to cart';
+
+                
             }
         }
+
+        if($reservationType == 2)
+            $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
 
         $this->entityManager->persist($cart);
         $this->entityManager->flush();

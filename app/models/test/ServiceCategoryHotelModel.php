@@ -4,9 +4,9 @@ namespace App\Models\Test;
 
 /**
  * @Entity
- * @Table(name="service_category")
+ * @Table(name="service_category_hotel")
  */
-class ServiceCategoryModel {
+class ServiceCategoryHotelModel {
 
 	/** ============= PRIVATE PROPERTIES ============== */
 	/** 

@@ -9,7 +9,7 @@ return [
     */
 
     'home' => 'HOME',
-    'bookhere' => 'BOOKHERE',
+    'bookhere' => 'BOOK HERE',
     'gift_certificates' => 'GIFT CERTIFICATES',
     'weddings' => 'WEDDINGS',
     'the_day' => "THE DAY",

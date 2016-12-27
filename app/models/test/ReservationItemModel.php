@@ -55,4 +55,8 @@ class ReservationItemModel {
 
 	/** @Column(type="boolean", name="is_deleted") */
 	public $IsDeleted;
+
+	public function __clone(){
+		$this->Id = null;
+	}
 }

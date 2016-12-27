@@ -46,7 +46,14 @@ class ReservationController extends Controller
     /* return a view to complete reservation data */
     public function checkout(Request $request){
         $session = $request->session();
-        $sessionId = $session->getId(); 
+        $sessionId = $session->getId();
+
+        $reservationType = $session->get('reservation_type');
+
+        // echo '<pre>';
+        // print_r($_POST);
+        // echo '</pre>';
+        // exit();
 
         $reservation = null;
         $reservation_id = $session->get('current_reservation_id');
@@ -57,7 +64,7 @@ class ReservationController extends Controller
         else {
             $reservation = new \App\Models\Test\ReservationModel();
 
-            $reservation->Type = 1;
+            $reservation->Type = $reservationType;
             $reservation->Region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
             $reservation->Hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
             $reservation->ConfirmationNumber = $this->getConfirmationNumber(8);
@@ -72,33 +79,70 @@ class ReservationController extends Controller
 
             $this->entityManager->persist($reservation);
 
-            foreach($_POST['id'] as $key => $item){
-                $serviceId = $_POST['id'][$key];
-                $service = $this->entityManager->getRepository('App\Models\Test\ServiceModel')->findOneBy(['Id' => $item]);
-                $servicePrice = $this->entityManager->getRepository('App\Models\Test\ServicePriceModel')
-                                                    ->findOneBy([ "Service" => $serviceId, 'Hotel' => $session->get('hotel_id') ]);
+            if($reservationType == 1){
+                foreach($_POST['id'] as $key => $item){
+                    $service = $this->entityManager->getRepository('App\Models\Test\ServiceModel')->findOneBy(['Id' => $item]);
+                    
+                    $reservationItem = new \App\Models\Test\ReservationItemModel();
+                    $reservationItem->Reservation = $reservation;
+                    $reservationItem->Service = $service;
+                    $reservationItem->CustomerName =  $_POST['customer_name'][$key];
+                    $reservationItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
+                    $reservationItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+                    $reservationItem->Price = $service->getPrice($reservation->Hotel->Id);
 
+                    $reservationItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
+                    $reservationItem->Created = new \DateTime();
+                    $reservationItem->Modified = new \DateTime();
+                    $reservationItem->IsDeleted = false;
+
+                    $reservation->Subtotal += $reservationItem->Price;
+                    $reservation->Total += $reservationItem->Price;
+                    
+                    $this->entityManager->persist($reservationItem);
+                }
+            }
+            else if ($reservationType == 2){
+                $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
                 
-                $reservationItem = new \App\Models\Test\ReservationItemModel();
-                $reservationItem->Reservation = $reservation;
-                $reservationItem->Service = $service;
-                $reservationItem->CustomerName =  $_POST['customer_name'][$key];
-                $reservationItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
-                $reservationItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
-                if($servicePrice != null)
-                    $reservationItem->Price = $servicePrice->Price;
-                else
-                    $reservationItem->Price = 0.00;
+                foreach($_POST['certificate_number'] as $key => $value){
 
-                $reservationItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
-                $reservationItem->Created = new \DateTime();
-                $reservationItem->Modified = new \DateTime();
-                $reservationItem->IsDeleted = false;
+                    $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                     ->findBy(['Cart' => $cart->Id, 'CertificateNumber' => $value]);
+                    $totalValue = 0;
+                    
+                    foreach($cartItems as $item){
+                        $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
+                    }
 
-                $reservation->Subtotal += $reservationItem->Price;
-                $reservation->Total += $reservationItem->Price;
-                
-                $this->entityManager->persist($reservationItem);
+                    // echo $value . '<br/>';
+                    // echo $totalValue . '<br/>';
+                    // // echo $cartItems[$key]->Service->Name .' ';
+                    // // echo $cartItems[$key]->Service->getPrice($reservation->Hotel->Id) * count($cartItems);
+                    // echo '<br/>';
+                    
+                    $certificateItem = new \App\Models\Test\CertificateDetailModel();
+                    $certificateItem->Reservation = $reservation;
+                    $certificateItem->Type = 1;
+                    $certificateItem->Service = $cartItems[0]->Service;
+                    $certificateItem->Value = $totalValue;
+                    $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
+                    $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
+                    $certificateItem->Message = $_POST['message'][$key];
+                    $certificateItem->SendType = $_POST['sendType'][$key];
+                    $certificateItem->Arrival = new \DateTime();
+                    $certificateItem->Departure = new \DateTime();
+                    $certificateItem->OtherFields = "";
+                    $certificateItem->Created = new \DateTime();
+                    $certificateItem->Modified = new \DateTime();
+                    $certificateItem->Enabled = true;
+                    $certificateItem->IsDeleted = false;
+
+                    $reservation->Subtotal += $certificateItem->Value;
+                    $reservation->Total += $certificateItem->Value;
+
+                    $this->entityManager->persist($certificateItem);    
+                } 
             }
 
             $this->entityManager->flush();

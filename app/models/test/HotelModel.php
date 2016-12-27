@@ -37,6 +37,12 @@
 		/** @Column(name="description", type="string") */
 		public $Description;
 
+		/** @Column(name="discount", type="decimal") */
+		public $Discount;
+
+		/** @Column(name="active_discount", type="boolean") */
+		public $ActiveDiscount;
+
 		/** 
 		 * @OneToMany(targetEntity="PhotoModel", mappedBy="Hotel")
 		*/

@@ -21,9 +21,6 @@ class ServiceModel {
 	/** @name @Column(type="string") */
 	public $Name;
 
-	// service price object
-	public $ServicePrice;
-
 	/** 
 	 * @OneToMany(targetEntity="ServicePriceModel", mappedBy="Service")
 	*/
@@ -32,7 +29,21 @@ class ServiceModel {
 	public function getPrice($hotel_id){
 		foreach($this->ServicePrices as $servicePrice){
 			if($servicePrice->Hotel->Id == $hotel_id){
-				return $servicePrice->Price;
+				
+				$finalPrice = $servicePrice->Price;
+
+				if($servicePrice->ActiveDiscount){
+			        $totalDiscount =  ( $servicePrice->Discount / 100 ) * $finalPrice;
+
+			        $finalPrice -= $totalDiscount;	
+				}
+				else if($servicePrice->Hotel->ActiveDiscount){
+			        $totalDiscount =  ( $servicePrice->Hotel->Discount / 100 ) * $finalPrice;
+
+			        $finalPrice -= $totalDiscount;	
+				}
+				
+				return $finalPrice;
 			}
 		}
 

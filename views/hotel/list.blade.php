@@ -11,7 +11,11 @@
 					<br/>
 					<div class="col-md-12">
 						@foreach($model as $hotelRegion)
-					    <a href="{{ URL::to('/') }}/hotel/{{ $hotelRegion->Hotel->Id }}/categories">{{ $hotelRegion->Hotel->Name }}</a>
+					    @if ($reservationType == 1)
+					    	<a href="{{ URL::to('/') }}/hotel/{{ $hotelRegion->Hotel->Id }}/categories">{{ $hotelRegion->Hotel->Name }}</a>
+					    @elseif ($reservationType == 2)
+					    	<a href="{{ URL::to('/')}}/certificate/options/{{ $hotelRegion->Hotel->Id }}">{{ $hotelRegion->Hotel->Name }}</a>
+					    @endif
 					    <hr/>
 					    @endforeach
 					</div>

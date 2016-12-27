@@ -33,7 +33,7 @@
 											<input type="hidden" name="id[]" value="{{ $categoryRegion->Service->Id }}" /> 
 											{{ $categoryRegion->Service->Name }}
 										</td>
-										<td>${{ number_format($categoryRegion->Service->getPrice($hotel->Id)) }}</td>
+										<td>{{ $region->Country->Currency->Symbol.number_format($categoryRegion->Service->getPrice($hotel->Id)) }}</td>
 										<td>
 											<input type="number" value='0' name="quantity[]" class="form-control" />
 										</td>
@@ -45,7 +45,11 @@
 							<div class="form-group">
 								{{ csrf_field() }}
 								<button class="btn btn-primary">ADD TO CART</button>
+								@if (session('current_certificate') > session('certificate_quantity'))
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default">GO TO CART</a>
+								@else
+								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories" class="btn btn-default">GO TO NEXT CERTIFICATE</a>
+								@endif
 							</div>	
 						</form>
 						

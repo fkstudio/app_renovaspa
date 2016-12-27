@@ -13,7 +13,7 @@
 					    @if (session('status'))
 						<p>{{ session('status') }}</p>
 						@endif
-						<form action="{{ URL::to('/') }}/shopping/cart/checkout" method="post">
+						<form action="{{ URL::to('/') . $action }}" method="post">
 							<table class="table table-responsive">
 								<thead>
 									<tr>
@@ -47,7 +47,11 @@
 							<div class="form-group">
 								{{ csrf_field() }}
 								<a href="{{ URL::to('/') }}/category/{{ $category_id }}/services" class="btn btn-default">BACK TO SERVICES</a>
+								@if ($reservationType == 1) 
 								<button type="submit" class="btn btn-primary">PROCEED TO CHECKOUT</button>
+								@elseif ($reservationType == 2)
+								<button type="submit" class="btn btn-primary">PROCEED TO GIFT REGISTRATION</button>
+								@endif
 							</div>	
 						</form>
 					</div>

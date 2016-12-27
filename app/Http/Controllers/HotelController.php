@@ -29,12 +29,14 @@ class HotelController extends Controller
 
     /* get all hotels by current region */
     public function hotelsByRegion(Request $request, $region_id){
-        $request->session()->put('region_id', $region_id);
+        $session = $request->session();
+        $session->put('region_id', $region_id);
+
 
         $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(['Id' => $region_id]);
         $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
         
-        return view("hotel.list", [ "model" => $hotels, 'region' => $region]);
+        return view("hotel.list", [ "model" => $hotels, 'region' => $region, 'reservationType' => $session->get('reservation_type')]);
 
     }
 

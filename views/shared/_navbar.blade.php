@@ -39,7 +39,7 @@
                     <a href="#fakelink" tabindex="-1" class="dropdown-submenu-item">{{ $region->Name }} <span class="caret"></span></a>
                     <ul class="dropdown-submenu">
                       @foreach($region->HotelRegions as $hotelRegion)
-                        <a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }} <span class="caret"></span></a>
+                        <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }} <span class="caret"></span></a></li>
                       @endforeach
                     </ul>
                   @endforeach
@@ -53,8 +53,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ url('/setlang/es') }}">{{ trans('navbar.es') }}</a></li>
-            <li><a href="{{ url('/setlang/en') }}">{{ trans('navbar.en') }}</a></li>
+            <li><a href="{{ url('/') }}/setlang/es">{{ trans('navbar.es') }}</a></li>
+            <li><a href="{{ url('/') }}/setlang/en">{{ trans('navbar.en') }}</a></li>
           </ul>
         </li>
       </ul>

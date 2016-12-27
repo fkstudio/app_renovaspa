@@ -29,9 +29,6 @@ class CountryController extends Controller
 
     /* get all countries */
     public function countries(Request $request){
-        $request->session()->flush();
-        $request->session()->regenerate();
-
         $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
         
         return view("country.list", [ "model" => $countries ]);

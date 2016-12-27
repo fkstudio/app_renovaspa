@@ -49,6 +49,9 @@
 		/** @type @Column(type="string") */
 		public $Type;
 
+		/** @Column(name="certificate_number", type="integer") */
+		public $CertificateNumber;		
+
 		/** @created @Column(type="datetime") */
 		public $Created;
 

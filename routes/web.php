@@ -10,8 +10,9 @@
 |
 */
 
-Route::get('/setlang/{locale?}', function($locale = 'en'){
-	App::setLocale($locale);
+Route::get('/setlang/{locale?}', function($locale){
+	\Session::put('locale', $locale);
+	\Session::save();
 
 	return redirect("/");
 });
@@ -21,9 +22,11 @@ Route::get('/setlang/{locale?}', function($locale = 'en'){
 | Home controller routes
 |----------------------------------------------------------------------------
 */
-Route::get('/home', [ 'as' => 'home.home', 'uses' => 'HomeController@home' ]);
+Route::get('/', [ 'as' => 'home.home', 'uses' => 'HomeController@home' ]);
 
 Route::get('/about', [ 'as' => 'home.about', 'uses' => 'HomeController@about' ]);
+
+Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeController@select' ]);
 
 
 /*
@@ -63,7 +66,19 @@ Route::post('/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'Sho
 */
 Route::get('/country/all', [ 'as' => 'country.all', 'uses' => 'CountryController@getAll' ]);
 
-Route::get('/', [ 'as' => 'country.list', 'uses' => 'CountryController@countries' ]);
+Route::get('/countries', [ 'as' => 'country.list', 'uses' => 'CountryController@countries' ]);
+
+
+/*
+|----------------------------------------------------------------------------
+| Certificate controller routes
+|----------------------------------------------------------------------------
+*/
+Route::get('/certificate/options/{hotel_id}', [ 'as' => 'certificate.options', 'uses' => 'CertificateController@options' ]);
+
+Route::post('/certificate/check/option', [ 'as' => 'certificate.checkOption', 'uses' => 'CertificateController@checkOption' ]);
+
+Route::post('/certificate/registration', [ 'as' => 'certificate.registration', 'uses' => 'CertificateController@registration' ]);
 
 /*
 |----------------------------------------------------------------------------

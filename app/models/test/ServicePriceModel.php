@@ -33,6 +33,13 @@ class ServicePriceModel {
 	*/
 	public $Service;
 
+	/** @Column(name="discount", type="decimal") */
+	public $Discount;
+
+	/** @Column(name="active_discount", type="boolean") */
+	public $ActiveDiscount;
+	
+
 	public function __construct(){
 		$this->Price = 0.00;
 	}

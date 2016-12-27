@@ -202,6 +202,9 @@ class PaymentController extends Controller
             );
         }
 
+        /* clear session data */
+        $session->flush();
+
         /* show voucher */
         return view('payment.voucher', $model);
     }

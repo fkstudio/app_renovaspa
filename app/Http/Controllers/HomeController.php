@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\DbContext;
 
@@ -27,6 +28,30 @@ class HomeController extends Controller
 
     public function home(){
         return view("home/index");
+    }
+
+    public function select(Request $request, $selection){
+        $session = $request->session();
+
+        $request->session()->flush();
+        $request->session()->regenerate();
+
+        switch ($selection) {
+            case 'services':
+                $session->put('reservation_type', 1);
+                break;
+            case 'certificates':
+                $session->put('reservation_type', 2);
+                break;
+            case 'weddings':
+                $session->put('reservation_type', 3);
+                break;
+            default:
+                $session->put('reservation_type', 1);
+                break;
+        }
+
+        return redirect()->route('country.list');
     }
 
     public function about(){
