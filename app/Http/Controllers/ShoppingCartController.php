@@ -127,13 +127,8 @@ class ShoppingCartController extends Controller
                 $this->entityManager->persist($cartItem);
 
                 $statusMessage = 'Items added to cart';
-
-                
             }
         }
-
-        if($reservationType == 2)
-            $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
 
         $this->entityManager->persist($cart);
         $this->entityManager->flush();

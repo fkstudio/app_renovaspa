@@ -186,27 +186,56 @@ class PaymentController extends Controller
             'discount' => number_format($reservation->Discount, 2),
             'subtotal' => $reservation->Subtotal,
             'total' => $reservation->Total,
-            'currency_symbol' => $reservation->Region->Country->Currency->Symbol
+            'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
+            'details' => []
         ];
 
-        foreach($reservation->ServicesDetails as $detail){
-            // add price to total amount
+        if($reservation->Type == 1){
+            foreach($reservation->ServicesDetails as $detail){
+                // add price to total amount
 
-            $model['details'][] = array(
-              "name" => $detail->CustomerName,
-              "quantity" => 1,
-              "service" => $detail->Service->Name,
-              "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m:s'),
-              "details" => $detail->Cabin->Name,
-              "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
-            );
+                $model['details'][] = array(
+                  "name" => $detail->CustomerName,
+                  "quantity" => 1,
+                  "service" => $detail->Service->Name,
+                  "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m:s'),
+                  "details" => $detail->Cabin->Name,
+                  "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
+                );
+            }    
         }
+        else if ($reservation->Type == 2){
+            foreach($reservation->CertificateDetails as $key => $detail){
+                $model['details'][$key] = array(
+                    'from_customer' => $detail->FromCustomerName,
+                    'to_customer' => $detail->ToCustomerName,
+                    'confirmation_number' => $reservation->ConfirmationNumber,
+                    'price' => $detail->Service->getPrice($reservation->Hotel->Id)
+                );
+
+                if($detail->Type == 1){
+                    $model['details'][$key]['type'] = 'Email';
+                }
+                else if($detail->Type == 2){
+                    $model['details'][$key]['type'] = "Print";
+                }
+                else if ($detail->Type == 3){
+                    $model['details'][$key]['type'] = "Hotel";
+                }
+            }
+        }
+        
 
         /* clear session data */
         $session->flush();
 
-        /* show voucher */
-        return view('payment.voucher', $model);
+        if($reservation->Type == 1){
+            /* show voucher */
+            return view('payment.voucher', $model);
+        }
+        else if ($reservation->Type == 2){
+            return view('payment.certificate_voucher', $model);
+        }
     }
 
 }

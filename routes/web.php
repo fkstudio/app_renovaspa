@@ -36,7 +36,7 @@ Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeContro
 */
 Route::get('/region/{region_id}/categories', [ 'as' => 'category.categoryList', 'uses' => 'CategoryController@categories' ]);
 
-Route::get('/hotel/{hotel_id}/categories', [ 'as' => 'category.categoriesByHotel', 'uses' => 'CategoryController@categoriesByHotel' ]);
+Route::get('/hotel/{hotel_id}/categories/{next?}', [ 'as' => 'category.categoriesByHotel', 'uses' => 'CategoryController@categoriesByHotel' ]);
 
 /*
 |----------------------------------------------------------------------------

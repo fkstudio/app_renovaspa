@@ -51,11 +51,22 @@ class CertificateController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
 
-        $items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u INNER JOIN App\Models\Test\ShoppingCartModel c WHERE c.Session = :sessionId  GROUP BY u.CertificateNumber  ORDER BY u.CertificateNumber')
-                         ->setParameter('sessionId', $sessionId)
+        $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
+        $services = [];
+
+        $items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart  ORDER BY u.CertificateNumber')
+                         ->setParameter('cart', $cart->Id)
                          ->getResult();
+
+        foreach($items as $item){
+            if(!isset($services[$item->CertificateNumber])){
+                $services[$item->CertificateNumber] = [];
+            }
+
+            $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $item->Quantity ];
+        }
                                                                           
-        return view('certificate.registration', ['model' => $items]);
+        return view('certificate.registration', ['model' => $services]);
 
     }
 

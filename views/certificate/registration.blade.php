@@ -25,11 +25,14 @@
 				<label>B) Personalize by adding a message:</label>
 			</div>
 			@foreach($model as $key => $item)
-			<h3>Certificate #{{ $item->CertificateNumber }}</h3>
+			<h3>Certificate #{{ $key }}</h3>
 			<hr>
-<!-- 			<p><strong>Service based value:</strong> {{ $item->Quantity .' '. $item->Service->Name }}</p> -->
+				@foreach($item as $service)
+				<p><strong>Service based value:</strong> {{ $service['quantity'] .' '. $service['name'] }}</p>
+				@endforeach
+			<hr>
 			<div class="form-group">
-				<input type="hidden" class="form-control" name="certificate_number[{{ $key }}]" value="{{ $item->CertificateNumber }}" />
+				<input type="hidden" class="form-control" name="certificate_number[{{ $key }}]" value="{{ $key }}" />
 			</div>
 			<div class="form-group">
 				<label> To (as it will appear on the gift certificate):</label>
@@ -41,7 +44,7 @@
 			</div>
 			<div class="form-group">
 				<label>Enter a message</label>
-				<textarea  name="message[]" class="form-control"></textarea>
+				<textarea  name="message[{{ $key }}]" class="form-control"></textarea>
 			</div>
 			<div class="col-md-3">
 				<input type="radio" name="sendType[{{ $key }}]" value=1 > Email

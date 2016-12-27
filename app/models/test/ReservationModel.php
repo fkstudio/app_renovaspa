@@ -73,9 +73,9 @@
 		public $ServicesDetails;
 
 		/** 
-		 * @OneToMany(targetEntity="CertificateDetail", mappedBy="Reservation")
+		 * @OneToMany(targetEntity="CertificateDetailModel", mappedBy="Reservation")
 		*/
-		//protected $CertificateDetails;
+		public $CertificateDetails;
 
 		/** 
 		 * @OneToOne(targetEntity="StatusModel", cascade={"persist"})

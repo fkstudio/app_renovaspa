@@ -45,10 +45,10 @@
 							<div class="form-group">
 								{{ csrf_field() }}
 								<button class="btn btn-primary">ADD TO CART</button>
-								@if (session('current_certificate') > session('certificate_quantity'))
+								@if (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity'))
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default">GO TO CART</a>
 								@else
-								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories" class="btn btn-default">GO TO NEXT CERTIFICATE</a>
+								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default">GO TO NEXT CERTIFICATE</a>
 								@endif
 							</div>	
 						</form>

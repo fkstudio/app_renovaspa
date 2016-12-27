@@ -34,8 +34,15 @@ class CategoryController extends Controller
     }
 
     /* get a list of available categories in current hotel */
-    public function categoriesByHotel(Request $request, $hotel_id){
-        $request->session()->put("hotel_id", $hotel_id);
+    public function categoriesByHotel(Request $request, $hotel_id, $next = 0){
+        $session = $request->session();
+        $session->put("hotel_id", $hotel_id);
+        $reservationType = $session->get('reservation_type');
+
+        if($next != 0){
+            if($reservationType == 2)
+            $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
+        }
 
         $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
         $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")

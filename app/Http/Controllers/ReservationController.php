@@ -50,11 +50,6 @@ class ReservationController extends Controller
 
         $reservationType = $session->get('reservation_type');
 
-        // echo '<pre>';
-        // print_r($_POST);
-        // echo '</pre>';
-        // exit();
-
         $reservation = null;
         $reservation_id = $session->get('current_reservation_id');
 
@@ -115,12 +110,6 @@ class ReservationController extends Controller
                         $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
                     }
 
-                    // echo $value . '<br/>';
-                    // echo $totalValue . '<br/>';
-                    // // echo $cartItems[$key]->Service->Name .' ';
-                    // // echo $cartItems[$key]->Service->getPrice($reservation->Hotel->Id) * count($cartItems);
-                    // echo '<br/>';
-                    
                     $certificateItem = new \App\Models\Test\CertificateDetailModel();
                     $certificateItem->Reservation = $reservation;
                     $certificateItem->Type = 1;
