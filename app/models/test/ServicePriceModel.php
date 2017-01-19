@@ -38,6 +38,9 @@ class ServicePriceModel {
 
 	/** @Column(name="active_discount", type="boolean") */
 	public $ActiveDiscount;
+
+	/** @Column(name="ignore_hotel_discount", type="boolean") */
+	public $IgnoreHotelDiscount;
 	
 
 	public function __construct(){

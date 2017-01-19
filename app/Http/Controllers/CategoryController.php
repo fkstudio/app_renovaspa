@@ -39,20 +39,45 @@ class CategoryController extends Controller
         $session->put("hotel_id", $hotel_id);
         $reservationType = $session->get('reservation_type');
 
-        if($next != 0){
-            if($reservationType == 2)
-            $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
+        try {
+            if($next != 0){
+                if($reservationType == 2 && $next != $session->get('current_certificate') && $next <= $session->get('certificate_quantity')){
+                    $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
+                }
+            }
+
+            $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
+            $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
+                                               ->findOneBy(["Hotel" => $hotel_id]);
+
+            $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
+                                                  ->findBy(["Country" => $hotelRegion->Region->Country->Id], ["Order" => "DESC"]);
+
+            $breadcrumps = [
+                $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',
+                $hotelRegion->Region->Name => '/region/'. $hotelRegion->Region->Id . '/hotels',
+                $hotelRegion->Hotel->Name => 'hotel/' . $hotelRegion->Hotel->Id . '/categories',
+                'TREATMENTS' => '#fakelink'
+            ];
+
+
+            $viewData = [ 
+                "model" => $regionServices, 
+                "hotel" => $hotel, 
+                "region" => $hotelRegion->Region, 
+                'breadcrumps' => $breadcrumps 
+            ];
+
+            if($session->get('reservation_type') == 2){
+                $session->flash('success', 'Select a treatment for the certificate #'. $session->get('current_certificate') .' - '. $session->get('certificate_quantity'));
+                return view("category.list", $viewData);
+            }
+
+            return view("category.list", $viewData);
         }
-
-        $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
-        $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
-                                           ->findOneBy(["Hotel" => $hotel_id]);
-
-        $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
-                                              ->findBy(["Country" => $hotelRegion->Region->Country->Id]);
-
-
-        return view("category.list", [ "model" => $regionServices, "hotel" => $hotel, "region" => $hotelRegion->Region ]);
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
 }

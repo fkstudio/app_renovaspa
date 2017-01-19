@@ -32,12 +32,28 @@ class HotelController extends Controller
         $session = $request->session();
         $session->put('region_id', $region_id);
 
+        try {
+            $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(['Id' => $region_id]);
+            $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
 
-        $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(['Id' => $region_id]);
-        $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
-        
-        return view("hotel.list", [ "model" => $hotels, 'region' => $region, 'reservationType' => $session->get('reservation_type')]);
+            $breadcrumps = [
+                $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
+                $region->Name => '/region/'. $region->Id . '/hotels',
+                'HOTELS' => '#fakelink'
+            ];
+            
+            $viewData = [ 
+                "model" => $hotels, 
+                'region' => $region, 
+                'reservationType' => $session->get('reservation_type'),
+                'breadcrumps' => $breadcrumps
+            ];
 
+            return view("hotel.list", $viewData);
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
     /* get all hotels in json format */
@@ -59,10 +75,14 @@ class HotelController extends Controller
         if($id == null)
             return redirect("/");
 
-        $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy([ 'Id' => $id]);
+        try {
+            $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy([ 'Id' => $id]);
 
-        return view("hotel.details", ['model' => $hotel]);
-
+            return view("hotel.details", ['model' => $hotel]);
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
 }

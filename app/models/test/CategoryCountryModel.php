@@ -30,4 +30,7 @@ class CategoryCountryModel {
 	*/
 	public $Country;		
 
+	/** @Column(name="ordinal", type="integer") */
+	public $Order;
+
 }

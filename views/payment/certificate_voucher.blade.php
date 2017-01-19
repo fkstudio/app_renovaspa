@@ -153,7 +153,7 @@
 					<td>{{ $detail["to_customer"] }}</td>
 					<td>{{ $detail["type"] }}</td>
 					<td>{{ $detail["confirmation_number"] }}</td>
-					<td>{{ $detail["price"] }}</td>
+					<td>{{ $currency_symbol.$detail["price"] }}</td>
 					<td></td>
 				</tr>
 				@endforeach
@@ -175,10 +175,6 @@
 					<tr>
 						<td>Subtotal</td>
 						<td>{{ $currency_symbol.number_format($subtotal, 2) }}</td>
-					</tr>
-					<tr>
-						<td>Discount</td>
-						<td>{{ $currency_symbol.$discount }}</td>
 					</tr>
 					<tr>
 						<td><strong>Total</strong></td>

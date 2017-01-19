@@ -1,6 +1,6 @@
 	@extends('layout/baseLayout')
 
-	@section('title', 'Services')
+	@section('title', 'Card information')
 
 	@section("content")
 		<div class="container-fluid">

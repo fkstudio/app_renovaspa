@@ -32,14 +32,24 @@ class RegionController extends Controller
     public function regionsByCountry(Request $request, $country_id){
         $session = $request->session();
         $session->put("country_id", $country_id);
-        
-        $country = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findOneBy([ 'Id' => $country_id ]);
-        $regions = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findBy([ 'Country' => $country_id ]);
 
-        $session->put('currency', $country->Currency->Name);
-        $session->put('currency_symbol', $country->Currency->Symbol);
-        
-        return view("region.list", [ "model" => $regions, 'country' => $country ]);
+        try {
+            $country = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findOneBy([ 'Id' => $country_id ]);
+            $regions = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findBy([ 'Country' => $country_id ]);
+
+            $session->put('currency', $country->Currency->Name);
+            $session->put('currency_symbol', $country->Currency->Symbol);
+
+            $breadcrumps = [
+                $country->Name => '/country/'. $country->Id . '/regions',
+                'REGIONS' => '#fakelink'
+            ];
+            
+            return view("region.list", [ "model" => $regions, 'country' => $country, 'breadcrumps' => $breadcrumps ]);
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
     /* /GET */

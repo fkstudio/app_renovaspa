@@ -1,26 +1,33 @@
 
 @extends('layout/baseLayout')
 
-@section('title', 'Regions')
+@section('title', 'Complete certificate information')
 
 @section("content")
 <div id="vue-app" class="container-fluid">
 	<div class="container">
-		<h3>GIFT CERTIFICATE REGISTRATION</h3>
-		<hr>
+		<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
+		<br/>
 		<form action="{{ URL::to('/') }}/reservation/checkout" method="POST">
-			<div class="form-group">
-				<label>A) Who will receive this gift certificate?</label>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>A) Who will receive this gift certificate?</label>
+					</div>
+					<div class="form-group">
+						<label>First name</label>
+						<input type="text" class="form-control input-border" name="first_name" />
+					</div>
+					<div class="form-group">
+						<label>Last name</label>
+						<input type="text" class="form-control input-border" name="last_name" />
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label>First name</label>
-				<input type="text" class="form-control" name="first_name" />
-			</div>
-			<div class="form-group">
-				<label>Last name</label>
-				<input type="text" class="form-control" name="last_name" />
-			</div>
+
+			<div class="clearfix"></div>
 			<hr>
+			
 			<div class="form-group">
 				<label>B) Personalize by adding a message:</label>
 			</div>
@@ -31,21 +38,37 @@
 				<p><strong>Service based value:</strong> {{ $service['quantity'] .' '. $service['name'] }}</p>
 				@endforeach
 			<hr>
-			<div class="form-group">
-				<input type="hidden" class="form-control" name="certificate_number[{{ $key }}]" value="{{ $key }}" />
+			
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<input type="hidden" class="form-control input-border" name="certificate_number[{{ $key }}]" value="{{ $key }}" />
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-6">
+								<label> To (as it will appear on the gift certificate):</label>
+								<input type="text" class="form-control input-border" name="to_customer[{{ $key }}]" />
+							</div>
+							<div class="col-md-6">
+								<label>* From (as it will appear on the gift certificate):</label>
+								<input type="text" class="form-control input-border" name="from_customer[{{ $key }}]" />
+							</div>	
+							<div class="clearfix"></div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Enter a message</label>
+									<textarea  name="message[{{ $key }}]" class="form-control input-border"></textarea>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label> To (as it will appear on the gift certificate):</label>
-				<input type="text" class="form-control" name="to_customer[{{ $key }}]" />
-			</div>
-			<div class="form-group">
-				<label>* From (as it will appear on the gift certificate):</label>
-				<input type="text" class="form-control" name="from_customer[{{ $key }}]" />
-			</div>
-			<div class="form-group">
-				<label>Enter a message</label>
-				<textarea  name="message[{{ $key }}]" class="form-control"></textarea>
-			</div>
+
+			<div class="clearfix"></div>
+
 			<div class="col-md-3">
 				<input type="radio" name="sendType[{{ $key }}]" value=1 > Email
 			</div>
@@ -59,8 +82,10 @@
 			<hr>
 			@endforeach
 			<div class="col-md-3">
-				{{ csrf_field() }}
-				<button type="submit" class="btn btn-primary">CONTINUE</button>
+				<div class="row">
+					{{ csrf_field() }}
+					<button type="submit" class="btn btn-primary">CONTINUE</button>
+				</div>
 			</div>
 		</form>
 	</div>

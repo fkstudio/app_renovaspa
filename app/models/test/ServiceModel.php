@@ -26,24 +26,72 @@ class ServiceModel {
 	*/
 	public $ServicePrices;
 
+
+	/* get the services price without any discount */
+	public function getPlanePrice($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->Hotel->Id == $hotel_id){
+				
+				$finalPrice = $servicePrice->Price;
+				
+				return $finalPrice;
+			}
+		}
+
+		return 0;
+	}
+
+	/* return true if the services has discount activate and false if not */
+	public function hasDiscount($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->Hotel->Id == $hotel_id){
+				return $servicePrice->ActiveDiscount;
+			}
+		}
+
+		return false;
+	}
+
+	/* return true if the services as hotel discount and false if not */
+	public function hasHotelDiscount($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->Hotel->Id == $hotel_id){
+				return $servicePrice->IgnoreHotelDiscount;
+			}
+		}
+
+		return false;
+	}
+
 	public function getPrice($hotel_id){
 		foreach($this->ServicePrices as $servicePrice){
 			if($servicePrice->Hotel->Id == $hotel_id){
 				
 				$finalPrice = $servicePrice->Price;
 
-				if($servicePrice->ActiveDiscount){
+				if($servicePrice->ActiveDiscount == true){
 			        $totalDiscount =  ( $servicePrice->Discount / 100 ) * $finalPrice;
 
 			        $finalPrice -= $totalDiscount;	
 				}
-				else if($servicePrice->Hotel->ActiveDiscount){
+				
+				if($servicePrice->IgnoreHotelDiscount == false && $servicePrice->Hotel->ActiveDiscount == true){
 			        $totalDiscount =  ( $servicePrice->Hotel->Discount / 100 ) * $finalPrice;
 
 			        $finalPrice -= $totalDiscount;	
 				}
 				
 				return $finalPrice;
+			}
+		}
+
+		return 0;
+	}
+
+	public function getDiscount($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->Hotel->Id == $hotel_id){
+				return $servicePrice->Discount;
 			}
 		}
 

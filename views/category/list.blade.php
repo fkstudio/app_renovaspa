@@ -4,22 +4,20 @@
 
 	@section("content")
 		<div class="container-fluid">
-			<div class="container">
-				<h3>{{ $region->Country->Name }} - {{ $region->Name }} - {{ $hotel->Name }} - TREATMENTS</h3>
-				<hr>
-				@if (session('reservation_type') == 2)
-				<p>Select a treatment for the certificate # {{ session('current_certificate') }} - {{ session('certificate_quantity') }}</p>
-				@endif
+			@include('shared._breadcrumps')
+			<hr>
+			@include('shared._messages')
+			<div class="row">
 				@foreach($model as $categoryRegion)
-				    <div class="col-md-3" style="padding: 100px;
-												 border: solid 1px rgb(224, 224, 224);
-												 text-align: center;"
-				>
-						<a href="{{ URL::to('/') }}/category/{{ $categoryRegion->Category->Id }}/services">{{ $categoryRegion->Category->Name }}</a>	
-					</div>
-			    @endforeach
-			</div>
+				<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryRegion->Category->Id }}/services">
+				    <div class="col-md-3">
+				    	<div style="background: url({{ URL::to('/')  }}/images/categories/category-{{ $categoryRegion->Category->Id  }}/{{ $categoryRegion->Category->Photo->Path  }});background-size: cover;" class="col-md-12 block-content" >
+							<span>{{ $categoryRegion->Category->Name }}</span>
+						</div>
+				    </div>
+				</a>
+		    @endforeach
+		    </div>
 		</div>
 		
 	@endsection
-    

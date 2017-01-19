@@ -31,13 +31,25 @@ class CertificateController extends Controller
         $session->put('reservation_type', 2);
         $session->put('hotel_id', $hotel_id);
 
-        return view("certificate.options");
+        $region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
+        $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $hotel_id ]);
+
+        $breadcrumps = [
+            $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
+            $region->Name => '/region/'. $region->Id . '/hotels',
+            $hotel->Name => 'hotel/' . $hotel->Id . '/categories',
+            'CERTIFICATES' => '#fakelink',
+            'CERTIFICATE OPTIONS' => '#fakelink'
+        ];
+
+        return view("certificate.options", [ 'breadcrumps' => $breadcrumps ]);
     }
 
     public function checkOption(Request $request){
         $session = $request->session();
         $session->put('certificate_quantity', $_POST['quantity']);
         $session->put('current_certificate', 1);
+        $session->put('can_go_to_cart', false);
 
         if($_POST['type'] == 1){
             return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $session->get('hotel_id') ]);

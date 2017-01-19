@@ -4,8 +4,7 @@
 
 		@section("content")
 		<div class="container-fluid">
-			<div class="container">
-				<h3>{{ $region->Country->Name }} - {{ $region->Name }} - HOTELS</h3>
+				@include('shared._breadcrumps')
 				<hr>
 				<div class="row">
 					<br/>
@@ -20,7 +19,6 @@
 					    @endforeach
 					</div>
 				</div>
-			</div>
 		</div>
 		@endsection
 

@@ -33,13 +33,35 @@ class ServiceController extends Controller
         $region_id = $request->session()->get('region_id');
         $request->session()->put('category_id', $category_id);
 
-        $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
-        $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(["Id" => $category_id]);
-        $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
+        try {
+                
+            $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
+            $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(["Id" => $category_id]);
+            $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
 
-        $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id]);
+            $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id]);
 
-        return view("service.list", [ "model" => $serviceCategories, 'hotel' => $hotel, 'category' => $category, "region" => $region ]);
+            $breadcrumps = [
+                $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
+                $region->Name => '/region/'. $region->Id . '/hotels',
+                $hotel->Name => '/hotel/' . $hotel->Id . '/categories',
+                $category->Name => '/category/'. $category->Id . '/services',
+                'SERVICES' => '#fakelink'
+            ];
+
+            $viewData = [ 
+                    "model" => $serviceCategories, 
+                    "hotel" => $hotel, 
+                    "category" => $category, 
+                    "region" => $region,
+                    "breadcrumps" => $breadcrumps 
+            ];
+
+            return view("service.list", $viewData);
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
 }

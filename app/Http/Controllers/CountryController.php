@@ -30,8 +30,12 @@ class CountryController extends Controller
     /* get all countries */
     public function countries(Request $request){
         $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+
+        $breadcrumps = [
+            'COUNTRIES' => '#fakelink'
+        ];
         
-        return view("country.list", [ "model" => $countries ]);
+        return view("country.list", [ "model" => $countries, 'breadcrumps' => $breadcrumps ]);
     }
 
     /* get all countries in json format */

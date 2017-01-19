@@ -34,42 +34,47 @@ class PaymentController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
 
-        $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
-        $session->put('reservation_email', $_POST['email']);
-        $session->put('payment_method', $_POST['payment_method']);
+        try {
+            $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
+            $session->put('reservation_email', $_POST['email']);
+            $session->put('payment_method', $_POST['payment_method']);
 
-        $paymentMethod = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findOneBy(['Id' => $_POST['payment_method']]);
-        $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
+            $paymentMethod = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findOneBy(['Id' => $_POST['payment_method']]);
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
 
-        /* if paymment method is null return error */
-        if($paymentMethod == null){
-            // redirect payment method error
-            echo 'payment method error';
-            return;
-        }
-
-        /* if reservation is != null proceed with the logic */
-        if($reservation != null){
-            $reservation->CustomerName = $session->get('reservation_customer_name');
-            $reservation->CustomerEmail = $_POST['email'];
-            $reservation->PaymentMethod = $paymentMethod;
-
-            $this->entityManager->persist($reservation);
-            $this->entityManager->flush();    
-
-            if($paymentMethod->Name == 'Paypal'){
-                // redirect
-                return redirect()->route('payment.paypal');
+            /* if paymment method is null return error */
+            if($paymentMethod == null){
+                // redirect payment method error
+                echo 'payment method error';
+                return;
             }
-            else if($paymentMethod->Name == 'Credit card'){
-                // redirect
-                return redirect()->route('payment.gateway');
+
+            /* if reservation is != null proceed with the logic */
+            if($reservation != null){
+                $reservation->CustomerName = $session->get('reservation_customer_name');
+                $reservation->CustomerEmail = $_POST['email'];
+                $reservation->PaymentMethod = $paymentMethod;
+
+                $this->entityManager->persist($reservation);
+                $this->entityManager->flush();    
+
+                if($paymentMethod->Name == 'Paypal'){
+                    // redirect
+                    return redirect()->route('payment.paypal');
+                }
+                else if($paymentMethod->Name == 'Credit card'){
+                    // redirect
+                    return redirect()->route('payment.gateway');
+                }
+            }
+            else{
+                // redirect to reservation error
+                echo 'reservation error';
+                return;
             }
         }
-        else{
-            // redirect to reservation error
-            echo 'reservation error';
-            return;
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
 
@@ -83,60 +88,66 @@ class PaymentController extends Controller
     /* execute a payment by paymentGateway API */
     public function execGatewayPayment(Request $request){
         /* if each filed is fill proceed with the logic */
-        if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['year']) or !empty($_POST['month']) or !empty($_POST['cvv'])){
-            
-            $session = $request->session();
-            $sessionId = $session->getId();
-            $currency = $session->get('currency');
-            $currencySymbol = $session->get('currency_symbol');
-    
 
-            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
+        try {
+            if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['year']) or !empty($_POST['month']) or !empty($_POST['cvv'])){
+                
+                $session = $request->session();
+                $sessionId = $session->getId();
+                $currency = $session->get('currency');
+                $currencySymbol = $session->get('currency_symbol');
+        
 
-            /* payment gateway configuration */
-            $gatewayURL = 'https://secure.networkmerchants.com/api/v2/three-step';
-            $APIKey = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy';
-            
-            $paymentGateway = new \App\Classes\gwapi;
-            $paymentGateway->setLogin("demo", "password");
-            //$paymentGateway->setLogin("renovaspa", "heath1098");
+                $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
 
-            /* payment data */
-            $total = $reservation->Total;
-            $cardYear = substr($_POST['year'], -2);
-            $expDate = $_POST['month'].'/'.$cardYear;
-            $cvv = $_POST['cvv'];
-            $cardNumber = $_POST['card_number'];
+                /* payment gateway configuration */
+                $gatewayURL = 'https://secure.networkmerchants.com/api/v2/three-step';
+                $APIKey = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy';
+                
+                $paymentGateway = new \App\Classes\gwapi;
+                $paymentGateway->setLogin("demo", "password");
+                //$paymentGateway->setLogin("renovaspa", "heath1098");
 
-            /* set billing information */
-            $paymentGateway->setBilling($_POST['card_name'] ,"x","","Bavaro", "", "LA",
-                "LA",'21000','DR','809-747-2992',"","sales@renovaspa.com",
-                "");
+                /* payment data */
+                $total = $reservation->Total;
+                $cardYear = substr($_POST['year'], -2);
+                $expDate = $_POST['month'].'/'.$cardYear;
+                $cvv = $_POST['cvv'];
+                $cardNumber = $_POST['card_number'];
 
-            /* set order */
-            $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
+                /* set billing information */
+                $paymentGateway->setBilling($_POST['card_name'] ,"x","","Bavaro", "", "LA",
+                    "LA",'21000','DR','809-747-2992',"","sales@renovaspa.com",
+                    "");
 
-            /* execute order */
-            $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvv);
+                /* set order */
+                $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
 
-            /* check payment status code */
-            if($paymentGateway->responses['response_code'] != 100){
-                /* error case */
-                return redirect()->route('payment.gateway')->with('status', 'Transaction error. Please contact your card provider for more information or try with another card.');
-            }   
+                /* execute order */
+                $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvv);
+
+                /* check payment status code */
+                if($paymentGateway->responses['response_code'] != 100){
+                    /* error case */
+                    return redirect()->route('payment.gateway')->with('status', 'Transaction error. Please contact your card provider for more information or try with another card.');
+                }   
+                else {
+                    /* success case */
+                    $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
+
+                    /* update reservation status to completed */
+                    $this->entityManager->persist($reservation);
+                    $this->entityManager->flush();
+
+                    return redirect()->route('payment.serviceVoucher');
+                } 
+            }
             else {
-                /* success case */
-                $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
-
-                /* update reservation status to completed */
-                $this->entityManager->persist($reservation);
-                $this->entityManager->flush();
-
-                return redirect()->route('payment.serviceVoucher');
-            } 
+                return redirect()->route('payment.gateway')->with('failure', 'Invalid info, please fill all fields.');
+            }
         }
-        else {
-            return redirect()->route('payment.gateway')->with('status', 'Invalid info, please fill all fields.');
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
 
@@ -154,88 +165,92 @@ class PaymentController extends Controller
     public function sendVoucher(Request $request){
         $session = $request->session();
         $sessionId = $session->getId();
-
         $reservation_id = $session->get('current_reservation_id');
-        
-        /* if reservation id is null return an error */
-        if(!isset($reservation_id) || empty($reservation_id)){
-            return redirect()->route('country.list')->with('status', 'There is not voucher to show.');
-        }
 
-        $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
+        try {
+            /* if reservation id is null return an error */
+            if(!isset($reservation_id) || empty($reservation_id)){
+                return redirect()->route('/')->with('failure', 'There is not voucher to show.');
+            }
 
-        /* if reservation is null return an error */
-        if($reservation == null){
-            return redirect()->route('country.list')->with('status', 'There is not voucher to show.');
-        }
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
 
-        /* set voucher data */
-        $model = [
-            'customer_name' => $reservation->CustomerName,
-            'customer_email' => $reservation->CustomerEmail,
-            'current_date' => new \DateTime("now"),
-            'confirmation_number' => $reservation->ConfirmationNumber,
-            'author_code' => uniqid(),
-            'card_type' => "Credit Card",
-            'billing_details' => $reservation->Region->Country->Name,
-            'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
-            'hotel_email' => $reservation->Hotel->NotifyEmail,
-            'customer_service_name' => $reservation->Hotel->CustomerServiceName,
-            'check_in' => $session->get("arrival"),
-            'check_out' => $session->get("departure"),
-            'discount' => number_format($reservation->Discount, 2),
-            'subtotal' => $reservation->Subtotal,
-            'total' => $reservation->Total,
-            'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
-            'details' => []
-        ];
+            /* if reservation is null return an error */
+            if($reservation == null){
+                return redirect()->route('/')->with('failure', 'There is not voucher to show.');
+            }
 
-        if($reservation->Type == 1){
-            foreach($reservation->ServicesDetails as $detail){
-                // add price to total amount
+            /* set voucher data */
+            $model = [
+                'customer_name' => $reservation->CustomerName,
+                'customer_email' => $reservation->CustomerEmail,
+                'current_date' => new \DateTime("now"),
+                'confirmation_number' => $reservation->ConfirmationNumber,
+                'author_code' => uniqid(),
+                'card_type' => "Credit Card",
+                'billing_details' => $reservation->Region->Country->Name,
+                'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
+                'hotel_email' => $reservation->Hotel->NotifyEmail,
+                'customer_service_name' => $reservation->Hotel->CustomerServiceName,
+                'check_in' => $session->get("arrival"),
+                'check_out' => $session->get("departure"),
+                'discount' => number_format($reservation->Discount, 2),
+                'subtotal' => $reservation->Subtotal,
+                'total' => $reservation->Total,
+                'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
+                'details' => []
+            ];
 
-                $model['details'][] = array(
-                  "name" => $detail->CustomerName,
-                  "quantity" => 1,
-                  "service" => $detail->Service->Name,
-                  "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m:s'),
-                  "details" => $detail->Cabin->Name,
-                  "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
-                );
-            }    
-        }
-        else if ($reservation->Type == 2){
-            foreach($reservation->CertificateDetails as $key => $detail){
-                $model['details'][$key] = array(
-                    'from_customer' => $detail->FromCustomerName,
-                    'to_customer' => $detail->ToCustomerName,
-                    'confirmation_number' => $reservation->ConfirmationNumber,
-                    'price' => $detail->Service->getPrice($reservation->Hotel->Id)
-                );
+            /* individual services voucher info */
+            if($reservation->Type == 1){
+                foreach($reservation->ServicesDetails as $detail){
+                    // add price to total amount
 
-                if($detail->Type == 1){
-                    $model['details'][$key]['type'] = 'Email';
-                }
-                else if($detail->Type == 2){
-                    $model['details'][$key]['type'] = "Print";
-                }
-                else if ($detail->Type == 3){
-                    $model['details'][$key]['type'] = "Hotel";
+                    $model['details'][] = array(
+                      "name" => $detail->CustomerName,
+                      "quantity" => 1,
+                      "service" => $detail->Service->Name,
+                      "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m:s'),
+                      "details" => $detail->Cabin->Name,
+                      "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
+                    );
+                }    
+            }
+            /* certificate voucher info */
+            else if ($reservation->Type == 2){
+                foreach($reservation->CertificateDetails as $key => $detail){
+                    $model['details'][$key] = array(
+                        'from_customer' => $detail->FromCustomerName,
+                        'to_customer' => $detail->ToCustomerName,
+                        'confirmation_number' => $reservation->ConfirmationNumber,
+                        'price' => number_format($detail->Value)
+                    );
+
+                    if($detail->Type == 1){
+                        $model['details'][$key]['type'] = 'Email';
+                    }
+                    else if($detail->Type == 2){
+                        $model['details'][$key]['type'] = "Print";
+                    }
+                    else if ($detail->Type == 3){
+                        $model['details'][$key]['type'] = "Hotel";
+                    }
                 }
             }
-        }
-        
 
-        /* clear session data */
-        $session->flush();
+            /* clear session data */
+            $session->flush();
 
-        if($reservation->Type == 1){
-            /* show voucher */
-            return view('payment.voucher', $model);
+            if($reservation->Type == 1){
+                /* show voucher */
+                return view('payment.voucher', $model);
+            }
+            else if ($reservation->Type == 2){
+                return view('payment.certificate_voucher', $model);
+            }
         }
-        else if ($reservation->Type == 2){
-            return view('payment.certificate_voucher', $model);
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
-
 }
