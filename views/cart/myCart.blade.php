@@ -64,9 +64,9 @@
 										@endif
 
 										@if ($item->Service->hasHotelDiscount($hotel_region->Hotel->Id))
-										<span class="discount-tached">-10% online discount</span>
-										@else
 										<span class="discount">-10% online discount</span>
+										@else
+										<span class="discount-tached">-10% online discount</span>
 										@endif
 									</td>
 									<td class="padding-td">
@@ -93,9 +93,9 @@
 											<td>Subtotal</td>
 											<td>{{ $country->Currency->Symbol }}{{ $subtotal }}</td>
 										</tr>
-										@if ($hotel_region->Hotel->ActiveDiscount)
+										@if ($hotel_region->ActiveDiscount)
 										<tr>
-											<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Hotel->Discount }}% online discount available</span></td>
+											<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% online discount available</span></td>
 										</tr>
 										@endif
 										<tr>

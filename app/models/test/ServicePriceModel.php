@@ -22,10 +22,10 @@ class ServicePriceModel {
 	public $Price;
 
 	/** 
-	 * @OneToOne(targetEntity="HotelModel", cascade={"persist"})
-	 * @JoinColumn(name="hotel_id", referencedColumnName="id")
+	 * @OneToOne(targetEntity="HotelRegionModel", cascade={"persist"})
+	 * @JoinColumn(name="hotel_region_id", referencedColumnName="id")
 	*/
-	public $Hotel;
+	public $HotelRegion;
 
 	/** 
 	 * @OneToOne(targetEntity="ServiceModel", cascade={"persist"})

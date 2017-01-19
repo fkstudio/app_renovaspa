@@ -53,9 +53,9 @@
 									@endif
 
 									@if ($categoryRegion->Service->hasHotelDiscount($hotel->Id))
-									<span class="discount-tached">-10% online discount</span>
-									@else
 									<span class="discount">-10% online discount</span>
+									@else
+									<span class="discount-tached">-10% online discount</span>
 									@endif
 									
 								</td>

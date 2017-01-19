@@ -30,4 +30,10 @@ class HotelRegionModel {
 	*/
 	public $Region;
 
+	/** @Column(name="discount", type="decimal") */
+	public $Discount;
+
+	/** @Column(name="active_discount", type="boolean") */
+	public $ActiveDiscount;
+
 }
