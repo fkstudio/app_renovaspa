@@ -75,13 +75,25 @@ class ShoppingCartController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-        try {
+        //try {
             if($reservationType == 1)
                 $action = '/shopping/cart/checkout';
             else if($reservationType == 2)
                 $action = '/certificate/registration';
 
             $cart = $this->getCart($sessionId);
+
+            $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.Service')
+                         ->setParameter('cart', $cart->Id)
+                         ->getResult();
+            
+            foreach($cart->Items as $item){
+                $item->Quantity = $this->entityManager
+                                            ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service GROUP BY u.Service')
+                                            ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id ])
+                                            ->getSingleResult()['Total'];
+            }
+
             $country = $this->entityManager->getRepository('\App\Models\Test\CountryModel')->findOneBy(['Id' => $session->get('country_id')]);
 
             $breadcrumps = [
@@ -90,10 +102,10 @@ class ShoppingCartController extends Controller
             ];
 
             return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'reservationType' => $reservationType ]);
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        // }
     }
 
     /* add items to current user cart */
@@ -132,30 +144,20 @@ class ShoppingCartController extends Controller
                     $service = $this->entityManager->getRepository("App\Models\Test\ServiceModel")->findOneBy(['Id' => $serviceId]);
 
                     $cartItem = null;
-                    $cartItemExists = $this->entityManager->getRepository('\App\Models\Test\ShoppingCartItemModel')->findOneBy(['Cart' => $cart->Id, 'Service' => $serviceId]);
 
-                    
-                    if($cartItemExists == null){
+                    for($i = 1; $i <= $serviceQuantity; $i++){
                         $cartItem = new \App\Models\Test\ShoppingCartItemModel();
                         $cartItem->Cart = $cart;
                         $cartItem->Service = $service;
-                        $cartItem->Quantity = intval($serviceQuantity);
+                        $cartItem->Quantity = 1;
                         $cartItem->Price = $service->getPrice($session->get('hotel_id'));
                         $cartItem->PreferedDate = null;
                         $cartItem->PreferedTime = null;
                         $cartItem->Type = $reservationType;
                         $cartItem->Created = new \DateTime();
                         $cartItem->IsDeleted = false; 
-                    }
-                    else {
-                        if($reservationType == 1){
-                            $cartItem = $cartItemExists;
-                            $cartItem->Quantity = $cartItem->Quantity + $serviceQuantity;
-                        }
-                        else if ($reservationType == 2){
-                            $cartItem = clone $cartItemExists;
-                            $cartItem->Quantity = $serviceQuantity;
-                        }
+
+                        $this->entityManager->persist($cartItem);
                     }
 
                     /* check if the reservation type is equal to certificate */
@@ -166,8 +168,6 @@ class ShoppingCartController extends Controller
                     if($session->get('can_go_to_cart') == false && $session->get('current_certificate') >= $session->get('certificate_quantity')){
                         $session->put('can_go_to_cart', true);
                     }
-
-                    $this->entityManager->persist($cartItem);
 
                     $statusMessage = 'Services has been added to your cart';
                 }

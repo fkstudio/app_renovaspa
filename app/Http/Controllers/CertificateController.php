@@ -66,7 +66,7 @@ class CertificateController extends Controller
         $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
         $services = [];
 
-        $items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart  ORDER BY u.CertificateNumber')
+        $items = $this->entityManager->createQuery('SELECT u, count(u.Quantity) as u.TotalQuantity FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart  ORDER BY u.CertificateNumber')
                          ->setParameter('cart', $cart->Id)
                          ->getResult();
 

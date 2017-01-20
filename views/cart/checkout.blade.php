@@ -30,23 +30,28 @@
 									@for($i = 0; $i < $item->Quantity; $i++)
 										<tr>
 											<td>
-												<input type="hidden" name="id[]" value="{{ $item->Service->Id }}" /> 
+												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												{{ $item->Service->Name }}
 											</td>
 											<td>
-												<input type="text" name="customer_name[]" placeholder="Ej. Jhon Doe" class="form-control" value="" />
+												<input type="text" name="customer_name[]" placeholder="Ej. Jhon Doe" class="form-control" value="{{ $item->CustomerName }}" />
 											</td>
 											<td>
-												<input type="date" name="prefered_date[]" class="datepicker form-control" />
+												<input type="date" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('dd/mm/yyyy') : '' ) }}" class="datepicker form-control" />
 											</td>
 											<td>
-												<input type="time" name="prefered_time[]" class="datepicker form-control" />
+												<input type="time" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
 											</td>
 											
 											<td>
 												<select class="form-control" name="cabin_type[]">
 													@foreach($cabins as $cabin)
-													<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@if ($item->Cabin != null && $item->Cabin->Id == $cabin->Id)
+															<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@else 
+															<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@endif
+													
 													@endforeach
 												</select>
 											</td>
@@ -73,6 +78,10 @@
 	<!-- Moment JS-->
 	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
+	<!-- Timepicker -->
+	<link rel="stylesheet" type="text/css" href="{{ URL::to('/') }}/css/jquery.timepicker.css">
+	<script type="text/javascript" src="{{ URL::to('/') }}/js/jquery.timepicker.js"></script>
+
 	<!-- Include Date Range Picker -->
 	<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
@@ -83,6 +92,8 @@
 		        singleDatePicker: true,
 		        showDropdowns: true
 			});
+
+			$('.timepicker').timepicker();
 		});
 	</script>
 	@endsection

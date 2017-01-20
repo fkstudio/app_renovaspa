@@ -23,6 +23,12 @@ class ReservationItemModel {
 	public $Reservation;
 
 	/** 
+	 * @OneToOne(targetEntity="ShoppingCartItemModel", cascade={"persist"})
+	 * @JoinColumn(name="cart_item_id", referencedColumnName="id")
+	*/
+	public $CartItem;
+
+	/** 
 	 * @OneToOne(targetEntity="ServiceModel", cascade={"persist"})
 	 * @JoinColumn(name="service_id", referencedColumnName="id")
 	*/

@@ -25,16 +25,21 @@
 		/** @quantity @Column(type="integer") */
 		public $Quantity;
 
+		public $TotalQuantity = 0;
+
 		/** 
 		 * @OneToOne(targetEntity="ServiceModel", cascade={"persist"})
 		 * @JoinColumn(name="service_id", referencedColumnName="id")
 		*/
 		public $Service;
 
+		/** @Column(name="customer_name", type="string") */
+		public $CustomerName;
+
 		/** @prefered_date @Column(type="date") */
 		public $PreferedDate;
 
-		/** @prefered_time @Column(type="date") */
+		/** @prefered_time @Column(type="time") */
 		public $PreferedTime;
 
 		/** 

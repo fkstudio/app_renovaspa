@@ -44,7 +44,8 @@
 									@php
 										$subtotal += $item->Service->getPlanePrice($hotel_region->Hotel->Id) * $item->Quantity;
 										$total += $item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity;
-									@endphp
+
+                         			@endphp	
 								<tr>
 									<td><img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
 									<td class="padding-td">
