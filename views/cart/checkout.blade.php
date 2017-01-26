@@ -29,21 +29,21 @@
 								@foreach($model->Items as $item)
 									@for($i = 0; $i < $item->Quantity; $i++)
 										<tr>
-											<td>
+											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												{{ $item->Service->Name }}
 											</td>
-											<td>
+											<td class="padding-td">
 												<input type="text" name="customer_name[]" placeholder="Ej. Jhon Doe" class="form-control" value="{{ $item->CustomerName }}" />
 											</td>
-											<td>
+											<td class="padding-td">
 												<input type="date" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('dd/mm/yyyy') : '' ) }}" class="datepicker form-control" />
 											</td>
-											<td>
+											<td class="padding-td">
 												<input type="time" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
 											</td>
 											
-											<td>
+											<td class="padding-td">
 												<select class="form-control" name="cabin_type[]">
 													@foreach($cabins as $cabin)
 														@if ($item->Cabin != null && $item->Cabin->Id == $cabin->Id)
@@ -65,7 +65,11 @@
 						<div class="form-group">
 							{{ csrf_field() }}
 							<a href="{{ URL::to('/') }}/shopping/cart" class="btn btn-default">BACK TO CART</a>
-							<button type="submit" class="btn btn-primary">PROCEED TO PAYMENT</button>
+							@if (count($model->Items) > 0)
+								<button type="submit" class="btn btn-primary">PROCEED TO PAYMENT</button>
+							@else
+								<button type="button" class="disabled btn btn-primary">PROCEED TO PAYMENT</button>
+							@endif
 						</div>	
 					</form>
 				</div>

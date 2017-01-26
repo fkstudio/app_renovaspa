@@ -75,7 +75,7 @@ class ServiceModel {
 			        $finalPrice -= $totalDiscount;	
 				}
 				
-				if($servicePrice->IgnoreHotelDiscount == false && $servicePrice->HotelRegion->Hotel->ActiveDiscount == true){
+				if($servicePrice->IgnoreHotelDiscount == false && $servicePrice->HotelRegion->ActiveDiscount == true){
 			        $totalDiscount =  ( $servicePrice->HotelRegion->Discount / 100 ) * $finalPrice;
 
 			        $finalPrice -= $totalDiscount;	

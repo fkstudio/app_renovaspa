@@ -78,7 +78,7 @@ Route::get('/certificate/options/{hotel_id}', [ 'as' => 'certificate.options', '
 
 Route::post('/certificate/check/option', [ 'as' => 'certificate.checkOption', 'uses' => 'CertificateController@checkOption' ]);
 
-Route::post('/certificate/registration', [ 'as' => 'certificate.registration', 'uses' => 'CertificateController@registration' ]);
+Route::get('/certificate/registration', [ 'as' => 'certificate.registration', 'uses' => 'CertificateController@registration' ]);
 
 /*
 |----------------------------------------------------------------------------

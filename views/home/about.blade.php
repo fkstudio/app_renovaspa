@@ -13,7 +13,7 @@
     <div class="container-fluid">
     	<div class="container about-container" style="height:400px;">
     		<div class="row" style="text-align: center;">
-    			<h3 class="history-title">{{ trans('about.our_history') }}</h3>
+    			<h3 class="history-title">{{ trans("about.our_history") }}</h3>
     			<p>{{ trans("about.history") }}</p>
     		</div>
     	</div>

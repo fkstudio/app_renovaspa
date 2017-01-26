@@ -64,23 +64,42 @@
 							</div>	
 						</div>
 					</div>
+					<div class="form-group">
+						<label>C) Select delivery method:</label>
+						<p>* Choose from Renova Spa s flexible delivery options</p>
+					</div>
+					<div class="clearfix"></div>
+					<br/>
+					<div class="col-md-4 delivery-type-content">
+						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-envelope"></span>
+						<br/>
+						<input type="radio" name="sendType[{{ $key }}]" value=1 > Email
+						<br/>
+						<p>Instantly send it to the recipient's e-mail.</p>
+					</div>
+					<div class="col-md-4 delivery-type-content">
+						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-print"></span>
+						<br/>
+						<input type="radio" name="sendType[{{ $key }}]" value=2 > Print
+						<br/>
+						<p>Receive the gift certificate in your mail and print it off.</p>
+					</div>
+					<div class="col-md-4 delivery-type-content">
+						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-home"></span>
+						<br/>
+						<input type="radio" name="sendType[{{ $key }}]" value=3 > Hotel
+						<br/>
+						<p>Let us deliver your certificate at your recipient's hotel room*.</p>
+					</div>
 				</div>
 			</div>
-
-			<div class="clearfix"></div>
-
-			<div class="col-md-3">
-				<input type="radio" name="sendType[{{ $key }}]" value=1 > Email
-			</div>
-			<div class="col-md-3">
-				<input type="radio" name="sendType[{{ $key }}]" value=2 > Print
-			</div>
-			<div class="col-md-3">
-				<input type="radio" name="sendType[{{ $key }}]" value=3 > Hotel
-			</div>
-			<div class="clearfix"></div>
-			<hr>
 			@endforeach
+			<div class="col-md-12 certificate-terms">
+				<p> <input type="checkbox" name="terms"> I have added gift certificate/s.
+					I agree to the  Privacy Policy , Terms & Conditions ,  Cancellation and Refund Policyand understandthat the gift certificate receiver must present a printout of the gift certificate at the time of redemption. 
+					If the gift certificate is delivered to the guest's room (hotel delivery method selected), the printout is not required. 
+					(Links to the gift certificate will be provided after completing your order).</p>
+			</div>
 			<div class="col-md-3">
 				<div class="row">
 					{{ csrf_field() }}

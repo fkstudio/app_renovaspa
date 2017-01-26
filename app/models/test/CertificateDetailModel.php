@@ -24,14 +24,13 @@ class CertificateDetailModel {
 
 	// 1 = service based
 	// 2 = value based
-	/** @type @Column(type="string") */
+	/** @type @Column(type="integer") */
 	public $Type;
 
 	/** 
-	 * @OneToOne(targetEntity="ServiceModel", cascade={"persist"})
-	 * @JoinColumn(name="service_id", referencedColumnName="id")
+	 * @OneToMany(targetEntity="CertificateDetailServiceModel", cascade="persist",  mappedBy="CertificateDetail")
 	*/
-	public $Service;
+	public $CertificateDetailServices;
 
 	/** @value @Column(type="decimal") */
 	public $Value;
@@ -71,4 +70,8 @@ class CertificateDetailModel {
 
 	/** @Column(type="boolean", name="is_deleted") */
 	public $IsDeleted;
+
+	public function __construct(){
+		$this->CertificateDetailServices = [];
+	}
 }

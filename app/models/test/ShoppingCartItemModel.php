@@ -51,11 +51,14 @@
 		// 1 = services
 		// 2 = certificate
 		// 3 = wedding
-		/** @type @Column(type="string") */
+		/** @type @Column(type="integer") */
 		public $Type;
 
 		/** @Column(name="certificate_number", type="integer") */
 		public $CertificateNumber;		
+
+		/** @Column(name="value", type="decimal") */
+		public $Value;
 
 		/** @created @Column(type="datetime") */
 		public $Created;

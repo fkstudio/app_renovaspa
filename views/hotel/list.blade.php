@@ -1,25 +1,34 @@
-		@extends('layout/baseLayout')
+@extends('layout/baseLayout')
 
-		@section('title', 'Hotels')
+@section('title', 'Hotels')
 
-		@section("content")
-		<div class="container-fluid">
-				@include('shared._breadcrumps')
-				<hr>
-				<div class="row">
-					<br/>
-					<div class="col-md-12">
-						@foreach($model as $hotelRegion)
-					    @if ($reservationType == 1)
-					    	<a href="{{ URL::to('/') }}/hotel/{{ $hotelRegion->Hotel->Id }}/categories">{{ $hotelRegion->Hotel->Name }}</a>
-					    @elseif ($reservationType == 2)
-					    	<a href="{{ URL::to('/')}}/certificate/options/{{ $hotelRegion->Hotel->Id }}">{{ $hotelRegion->Hotel->Name }}</a>
-					    @endif
-					    <hr/>
-					    @endforeach
-					</div>
+@section("content")
+<div class="container-fluid">
+	@include('shared._breadcrumps')
+	<hr>
+	<div class="row">
+		@foreach($model as $hotelRegion)
+		    @php
+		    	$url = "";
+			    if ($reservationType == 1){
+			    	$url = "/hotel/".$hotelRegion->Hotel->Id."/categories";
+			    }
+			    elseif ($reservationType == 2){
+			    	$url = "/certificate/options/".$hotelRegion->Hotel->Id;
+			    }
+			    
+		    @endphp
+
+	    <a style="font-size: 30px;color:white;" href="{{ URL::to('/').$url }}">
+		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		    	<div style="background: url({{ URL::to('/')  }}/images/hotels/hotel-{{ $hotelRegion->Hotel->Id  }}/{{  $hotelRegion->Hotel->getProfile() }});background-size: cover;" class="col-md-12 block-content" >
+					<span>{{ $hotelRegion->Hotel->Name }}</span>
 				</div>
-		</div>
-		@endsection
+		    </div>
+		</a>
+	    @endforeach
+	</div>
+</div>
+@endsection
 
     

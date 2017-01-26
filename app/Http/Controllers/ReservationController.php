@@ -57,11 +57,13 @@ class ReservationController extends Controller
                 $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
             }
             else {
+                /* get hotel data */
+                $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
                 /* fill reservation data */
                 $reservation = new \App\Models\Test\ReservationModel();
                 $reservation->Type = $reservationType;
                 $reservation->Region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
-                $reservation->Hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
+                $reservation->Hotel = $hotel;
                 $reservation->ConfirmationNumber = $this->getConfirmationNumber(8);
                 $reservation->Arrival = new \DateTime(); // FIXME
                 $reservation->Departure = new \DateTime(); // FIXME
@@ -112,28 +114,55 @@ class ReservationController extends Controller
                         $reservationItem->Modified = new \DateTime();
                         $reservationItem->IsDeleted = false;
 
-                        $reservation->Subtotal += $reservationItem->Price;
-                        $reservation->Total += $reservationItem->Price;
+                        $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
+                        $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
                         
-                        $this->entityManager->persist($reservationItem);
+                        $reservation->ServicesDetails[] = $reservationItem;
                     }
                 }
                 else if ($reservationType == 2){
                     
                     foreach($_POST['certificate_number'] as $key => $value){
+                        $certificateItem = new \App\Models\Test\CertificateDetailModel();
 
-                        $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
-                                                         ->findBy(['Cart' => $cart->Id, 'CertificateNumber' => $value]);
+                        $certType = $session->get('certificate_type');
                         $totalValue = 0;
                         
-                        foreach($cartItems as $item){
-                            $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
-                        }
-
-                        $certificateItem = new \App\Models\Test\CertificateDetailModel();
                         $certificateItem->Reservation = $reservation;
-                        $certificateItem->Type = 1;
-                        $certificateItem->Service = $cartItems[0]->Service;
+                        $certificateItem->Type = $certType;
+
+                        /* if services based */
+                        if($certType == 1){
+                            /* cart items */
+                            $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                         ->findBy(['Cart' => $cart->Id, 'CertificateNumber' => $value]);
+
+                            /* get total price*/
+                            foreach($cartItems as $item){
+                                $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
+
+                                /* add services to certificate item */
+                                $certificateDetailService = new \App\Models\Test\CertificateDetailServiceModel();
+                                $certificateDetailService->CertificateDetail = $certificateItem;
+                                $certificateDetailService->Service = $item->Service;
+
+                                $certificateItem->CertificateDetailServices[] = $certificateDetailService;
+                            }
+                        }
+                        /* if value based */
+                        else if($certType == 2){
+                            $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                         ->findOneBy(['Cart' => $cart->Id, 'CertificateNumber' => $value + 1]);
+
+                            if($cartItem == null)
+                                throw new \Exception("Invalid certificate data", 1);
+                                
+                            $totalValue = $cartItem->Value;
+                        }
+                        else
+                            throw new \Exception("Error Processing Request", 1);
+                            
+                        
                         $certificateItem->Value = $totalValue;
                         $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
@@ -150,7 +179,7 @@ class ReservationController extends Controller
                         $reservation->Subtotal += $certificateItem->Value;
                         $reservation->Total += $certificateItem->Value;
 
-                        $this->entityManager->persist($certificateItem);    
+                        $reservation->CertificateDetails[] = $certificateItem;  
                     } 
                 }
 

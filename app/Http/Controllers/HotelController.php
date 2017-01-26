@@ -78,7 +78,12 @@ class HotelController extends Controller
         try {
             $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy([ 'Id' => $id]);
 
-            return view("hotel.details", ['model' => $hotel]);
+            $breadcrumps = [
+                'HOTELS' => '#fakelink', 
+                $hotel->Name => '#fakelink'
+            ];
+
+            return view("hotel.details", ['model' => $hotel, 'breadcrumps' => $breadcrumps]);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');

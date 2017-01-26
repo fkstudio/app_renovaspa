@@ -2,6 +2,10 @@
  	font-family: 'Montserrat', sans-serif;
  }
 
+ .custom-hr {
+ 	border-color:#5fc7ae;
+ }
+
  body {
  	color: #7f7f7f !important;
  }
@@ -13,6 +17,15 @@
  .container-fluid-full {
  	width: 100% !important;
  }
+
+ .affix {
+      top: 0;
+      width: 100%;
+  }
+
+  .affix + .container-fluid {
+      padding-top: 70px;
+  }
 
  .navbar {
  	margin-bottom: 0px !important;
@@ -195,6 +208,24 @@
  	border: none !important;
  	box-shadow: none !important;
  }
+
+ .custom-select {
+ 	-moz-appearance: none;
+    -webkit-appearance: none;
+ 	min-width: 200px;
+ 	min-height: 45px;
+ 	margin-right: 10px;
+ }
+
+ .custom-label {
+ 	font-weight: normal !important;
+ 	margin-bottom: 10px;
+ }
+
+ .btn-confirm-book {
+ 	height: 45px !important;
+	margin-top: 5px
+ }
  /* form control class modofications end */
 
 
@@ -233,6 +264,79 @@
  }
 
  /* discount end */
+
+ /* carousel */
+ .carousel-bordered {
+ 	border: solid 10px #5fc7ae;
+ }
+
+ /* details hotel */
+ .details-hotel-title {
+ 	color: #5fc7ae;
+ 	margin-top: 0px;
+ }
+
+ .under-title-line {
+ 	width: 100px;
+	height: 2px;
+	border-bottom: solid 1px rgb(194, 204, 193);
+	margin-bottom: 15px
+ }
+
+ #details-hotel-container-book {
+	background: rgb(240, 240, 240);
+ }
+
+ /* details hotel end */
+
+ .hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+ }
+
+ .thumbnail-carousel {
+    display: block;
+	margin-bottom: 20px;
+	line-height: 1.42857143;
+	background-color: #5fc7ae !important;
+	border-radius: 0px !important;
+	-webkit-transition: border .2s ease-in-out;
+	-o-transition: border .2s ease-in-out;
+	transition: border .2s ease-in-out
+ }
+
+ .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    width: 100%;
+ }
+
+ /* carousel end */
+
+ .delivery-type-content {
+ 	text-align: center;
+ }
+
+ .certificate-terms {
+ 	background-color: #5fc7ae;
+	padding: 15px;
+	color: white;
+	margin-bottom: 10px
+ }
+
+ .certificate-block {
+ 	border: solid 1px rgb(229, 232, 230);
+ }
+ .certificate-block ul {
+ 	font-size: 10px;
+	color: rgb(151, 152, 146);
+ }
+ .gift-icon {
+ 	font-size: 50px;
+	margin-top: 25px;
+	border-right: solid 1px rgb(228, 235, 230);
+	padding-right: 12px;
+ }
+
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 footer { background-color:#1c1c1c; min-height:350px; font-family: 'Open Sans', sans-serif; }

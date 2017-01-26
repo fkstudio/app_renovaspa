@@ -9,6 +9,8 @@
   $categories = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CategoryCountryModel")
                                                   ->findBy(["Country" => session('country_id')], ["Order" => "DESC"]);
 
+  $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
+
 @endphp
 
 @section("content")
@@ -22,6 +24,7 @@
 				@if ($category->Photo != null)
 				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $category->Id }}/{{ $category->Photo->Path }}" class="img-responsive" alt='{{ $category->Name }}' />
 				@endif
+				<br class="hidden-lg" />
 			</div>
 			<div class="col-md-7">
 				<h4>Select your moment of pleasure</h5>
@@ -53,9 +56,9 @@
 									@endif
 
 									@if ($categoryRegion->Service->hasHotelDiscount($hotel->Id))
-									<span class="discount">-10% online discount</span>
-									@else
-									<span class="discount-tached">-10% online discount</span>
+									<span class="discount">-{{ $hotel_region->Discount }}% online discount</span>
+									@elseif ($hotel_region->ActiveDiscount)
+									<span class="discount-tached">-{{ $hotel_region->Discount }}% online discount</span>
 									@endif
 									
 								</td>
@@ -74,11 +77,12 @@
 					<div class="clearfix"></div>
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								{{ csrf_field() }}
 								<button class="btn btn-interline block-button">ADD TO CART</button>	
 							</div>
-							<div class="col-md-6">
+							<br class="visible-xs" />
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								@if (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">GO TO CART</a>
 								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)

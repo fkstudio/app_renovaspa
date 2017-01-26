@@ -14,7 +14,7 @@
 				<br/>
 				<div class="col-md-12">
 				    @include('shared._messages')
-					<form action="{{ URL::to('/') . $action }}" method="post">
+					<form action="{{ URL::to('/') . $action }}" method="{{ $method }}">
 						<table class="table table-responsive">
 							<thead>
 								<tr>
@@ -65,9 +65,9 @@
 										@endif
 
 										@if ($item->Service->hasHotelDiscount($hotel_region->Hotel->Id))
-										<span class="discount">-10% online discount</span>
-										@else
-										<span class="discount-tached">-10% online discount</span>
+										<span class="discount">-{{ $hotel_region->Discount }}% online discount</span>
+										@elseif ($hotel_region->ActiveDiscount)
+										<span class="discount-tached">-{{ $hotel_region->Discount }}% online discount</span>
 										@endif
 									</td>
 									<td class="padding-td">
@@ -85,7 +85,7 @@
 						<p style="text-align: center;">There is not item at your cart</p>
 						@endif
 						<div class="clearfix"></div>
-						<div class="col-md-offset-7 col-md-5">
+						<div class="col-lg-offset-7 col-lg-5 col-md-offset-5 col-md-7 col-sm-12">
 							<div class="row">
 								<h3>CART TOTAL</h3>
 								<table class="table table-borderless">
@@ -107,15 +107,27 @@
 								</table>
 								<div class="clearfix"></div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-6 col-sm-6 col-xs-12">
 										{{ csrf_field() }}
 										<a href="{{ URL::to('/') }}/category/{{ $category_id }}/services" class="btn btn-default block-button">BACK TO SERVICES</a>
 									</div>
-									<div class="col-md-6">
+									<div class="clearfix visible-xs"></div>
+									<br class="visible-xs" />
+									<div class="col-md-6 col-sm-6 col-xs-12">
 										@if ($reservationType == 1) 
-										<button type="submit" class="btn btn-primary block-button">PROCEED TO CHECKOUT</button>
+											@if ($total > 0)
+												<button type="submit" class="btn btn-primary block-button">PROCEED TO CHECKOUT</button>
+											@else
+												<button type="button" class="disabled btn btn-primary block-button">PROCEED TO CHECKOUT</button>
+											@endif
+
 										@elseif ($reservationType == 2)
-										<button type="submit" class="btn btn-primary block-button">GO TO GIFT REGISTRATION</button>
+											@if ($total > 0)
+												<button type="submit" class="btn btn-primary block-button">GO TO GIFT REGISTRATION</button>
+											@else
+												<button type="button" class="disabled btn btn-primary block-button">GO TO GIFT REGISTRATION</button>
+											@endif
+										
 										@endif
 									</div>
 								</div>

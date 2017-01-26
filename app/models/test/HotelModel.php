@@ -56,4 +56,22 @@
 
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
+
+		public function getProfile(){
+			$photo_path = null;
+			if(count($this->Photos) > 0){
+				foreach($this->Photos as $photo){
+					if( strpos($photo->Path, 'profile')){
+						$photo_path = $photo->Path;
+						break;
+					}
+				}
+			}
+			else {
+				$newPhoto = new \App\Models\Test\PhotoModel();
+				$photo_path = $newPhoto->Path;
+			}
+
+			return $photo_path;
+		}
 	}

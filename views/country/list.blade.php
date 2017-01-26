@@ -11,7 +11,7 @@
 	
 	@foreach($model as $country)
 		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/country/{{ $country->Id }}/regions">
-		    <div class="col-md-3">
+		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		    	<div style="background: url({{ URL::to('/images') }}/countries/country-{{ $country->Id  }}/{{ $country->Photo->Path }});background-size: cover;" class="col-md-12 block-content" >
 					<span>{{ $country->Name }}	</span>
 				</div>

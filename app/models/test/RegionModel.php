@@ -32,4 +32,9 @@ class RegionModel {
 	*/
 	public $HotelRegions;
 
+	/** 
+	 * @OneToOne(targetEntity="PhotoModel", mappedBy="Region")
+	*/
+	public $Photo;
+
 }

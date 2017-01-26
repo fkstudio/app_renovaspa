@@ -68,12 +68,12 @@
 		public $LastFourCardNumbers;
 
 		/** 
-		 * @OneToMany(targetEntity="ReservationItemModel", mappedBy="Reservation")
+		 * @OneToMany(targetEntity="ReservationItemModel", cascade="persist", mappedBy="Reservation")
 		*/
 		public $ServicesDetails;
 
 		/** 
-		 * @OneToMany(targetEntity="CertificateDetailModel", mappedBy="Reservation")
+		 * @OneToMany(targetEntity="CertificateDetailModel", cascade="persist",  mappedBy="Reservation")
 		*/
 		public $CertificateDetails;
 
@@ -91,4 +91,9 @@
 
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
+
+		public function __construct(){
+			$this->ServicesDetails = [];
+			$this->CertificateDetailModel = [];
+		}
 	}
