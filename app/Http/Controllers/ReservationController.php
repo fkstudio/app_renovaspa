@@ -49,7 +49,8 @@ class ReservationController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-        //try {
+
+        try {
             $reservation = null;
             $reservation_id = $session->get('current_reservation_id');
 
@@ -196,10 +197,10 @@ class ReservationController extends Controller
 
             $paymentMethods = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findAll();
             return view("reservation.checkout", [ 'model' => $reservation, 'breadcrumps' => $breadcrumps,  'paymentMethods' => $paymentMethods ]);
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 
 }

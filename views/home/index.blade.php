@@ -38,6 +38,7 @@
 			</div>
 		</div>
 	</div>
+	<?php /*
 	<div class="container-fluid container-fluid-full" id="home-search-content">
 		<div class="container">
 			<div class="row">
@@ -103,6 +104,8 @@
 		</div>
 		<br class="visible-xs" />
 	</div>
+	*/
+	 ?>
 @endsection
 
 @section('scripts')
