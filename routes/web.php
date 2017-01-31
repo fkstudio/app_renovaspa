@@ -57,7 +57,7 @@ Route::get('/shopping/cart', [ 'as' => 'cart.myCart', 'uses' => 'ShoppingCartCon
 
 Route::get('/shopping/cart/remove/item/{itemId}', [ 'as' => 'cart.removeItem', 'uses' => 'ShoppingCartController@removeItem' ]);
 
-Route::post('/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'ShoppingCartController@checkout' ]);
+Route::match(['post', 'get'], '/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'ShoppingCartController@checkout' ]);
 
 /*
 |----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ Route::get('/region/{region_id}/hotels', [ 'as' => 'hotel.hotelsByRegion', 'uses
 Route::get('/reservation/bookhere', [ 'as' => 'reservation.bookhere', 'uses' => 'ReservationController@bookhere' ]);
 
 
-Route::post('/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
+Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
 
 /*
 |----------------------------------------------------------------------------

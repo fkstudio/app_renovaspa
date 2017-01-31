@@ -8,7 +8,7 @@
 		<div class="container-fluid">
 			@include('shared._breadcrumps')
 			<hr>
-			<h3>SHOPPING CART SERVICES</h3>
+			<h3>{{ trans('titles.my_cart_title') }}</h3>
 			<hr>
 			<div class="row">
 				<br/>
@@ -19,16 +19,16 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th><span style="font-weight: normal !important;">Service</span></th>
-									<th><span style="font-weight: normal !important;">Unit price</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans("shared.service") }}</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans('shared.unit_price') }}</span></th>
 									@if (session('reservation_type') == 2)
-									<th><span style="font-weight: normal !important;">Certificate number</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans('shared.certificate_numer') }}</span></th>
 									@endif
 
 									<th><span style="font-weight: normal !important;"></span></th>
-									<th><span style="font-weight: normal !important;">Quantity</span></th>
-									<th><span style="font-weight: normal !important;">Total</span></th>
-									<th><span style="font-weight: normal !important;">Delete</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans('shared.quantity') }}</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans('shared.total') }}</span></th>
+									<th><span style="font-weight: normal !important;">{{ trans('shared.delete') }}</span></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -65,9 +65,9 @@
 										@endif
 
 										@if ($item->Service->hasHotelDiscount($hotel_region->Hotel->Id))
-										<span class="discount">-{{ $hotel_region->Discount }}% online discount</span>
+										<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 										@elseif ($hotel_region->ActiveDiscount)
-										<span class="discount-tached">-{{ $hotel_region->Discount }}% online discount</span>
+										<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 										@endif
 									</td>
 									<td class="padding-td">
@@ -96,7 +96,7 @@
 										</tr>
 										@if ($hotel_region->ActiveDiscount)
 										<tr>
-											<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% online discount available</span></td>
+											<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount_available') }}</span></td>
 										</tr>
 										@endif
 										<tr>
@@ -109,23 +109,23 @@
 								<div class="row">
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										{{ csrf_field() }}
-										<a href="{{ URL::to('/') }}/category/{{ $category_id }}/services" class="btn btn-default block-button">BACK TO SERVICES</a>
+										<a href="{{ URL::to('/') }}/category/{{ $category_id }}/services" class="btn btn-default block-button">{{ trans('shared.back_to_services') }}</a>
 									</div>
 									<div class="clearfix visible-xs"></div>
 									<br class="visible-xs" />
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										@if ($reservationType == 1) 
 											@if ($total > 0)
-												<button type="submit" class="btn btn-primary block-button">PROCEED TO CHECKOUT</button>
+												<button type="submit" class="btn btn-primary block-button">{{ trans('shared.checkout') }}</button>
 											@else
-												<button type="button" class="disabled btn btn-primary block-button">PROCEED TO CHECKOUT</button>
+												<button type="button" class="disabled btn btn-primary block-button">{{ trans('shared.checkout') }}</button>
 											@endif
 
 										@elseif ($reservationType == 2)
 											@if ($total > 0)
-												<button type="submit" class="btn btn-primary block-button">GO TO GIFT REGISTRATION</button>
+												<button type="submit" class="btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</button>
 											@else
-												<button type="button" class="disabled btn btn-primary block-button">GO TO GIFT REGISTRATION</button>
+												<button type="button" class="disabled btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</button>
 											@endif
 										
 										@endif

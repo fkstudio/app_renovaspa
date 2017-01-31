@@ -4,12 +4,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Treatment view Language Lines
+    | reservation checkout view Language Lines
     |--------------------------------------------------------------------------
     */
 
-    'not_suitable' => 'Not suitable during pregnancy',
-    'suitable_minors' => 'Suitable for minors',
-    'tax_included' => 'Prices include 16.00% tax'
+    'booked_to' => 'Booked to',
+    'at_time' => 'at time',
+    'place_order' => 'PLACE ORDER'
 
 ];

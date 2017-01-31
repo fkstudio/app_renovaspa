@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
+        
     }
 
     public function home(){

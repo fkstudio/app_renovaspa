@@ -65,7 +65,7 @@ class ShoppingCartController extends Controller
             return view('cart.checkout', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'category_id' => $session->get('category_id'), 'cabins' => $cabins ]); 
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
 
@@ -124,7 +124,7 @@ class ShoppingCartController extends Controller
             return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
 
@@ -154,7 +154,7 @@ class ShoppingCartController extends Controller
             }
 
             if($procced == false)
-                return redirect()->route("service.listByCategory", $data)->with('failure', "Please select at least one service");
+                return redirect()->route("service.listByCategory", $data)->with('failure', trans("messages.select_some_service"));
 
             foreach($_POST['id'] as $key => $id){
                 $serviceId = $id;
@@ -189,7 +189,7 @@ class ShoppingCartController extends Controller
                         $session->put('can_go_to_cart', true);
                     }
 
-                    $statusMessage = 'Services has been added to your cart';
+                    $statusMessage = trans('messages.items_added');
                 }
             }
 
@@ -199,7 +199,7 @@ class ShoppingCartController extends Controller
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
 
@@ -212,7 +212,7 @@ class ShoppingCartController extends Controller
             $cartItemExists = $this->entityManager->getRepository('\App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $itemId]);
 
             if($cartItemExists != null){
-                $message = $cartItemExists->Quantity .' "'. $cartItemExists->Service->Name . '" services removed from your shopping cart.'; 
+                $message = $cartItemExists->Quantity .' "'. $cartItemExists->Service->Name . trans("item_removed_from_your_cart"); 
                 $this->entityManager->remove($cartItemExists);
 
                 $this->entityManager->flush();
@@ -220,13 +220,13 @@ class ShoppingCartController extends Controller
                 return redirect()->route("cart.myCart")->with('success', $message);
             }
             else {
-                return redirect()->route("cart.myCart")->with('failure', "Cart item doesn't exists");
+                return redirect()->route("cart.myCart")->with('failure', trans("cart_item_doesn_exists"));
             }
 
             
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
 

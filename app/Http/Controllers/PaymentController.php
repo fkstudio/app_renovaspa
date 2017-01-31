@@ -33,8 +33,17 @@ class PaymentController extends Controller
     public function payment(Request $request){
         $session = $request->session();
         $sessionId = $session->getId();
+        $reservationType = $session->get('reservation_type');
+        $reservation_id = $session->get('current_reservation_id');
+
 
         try {
+            // check valid data
+            if(!isset($_POST["payment_method"]) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email']) || empty($_POST["country"])){
+                return redirect()->route("reservation.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
+            }
+
+            
             $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
             $session->put('reservation_email', $_POST['email']);
             $session->put('payment_method', $_POST['payment_method']);
@@ -45,15 +54,40 @@ class PaymentController extends Controller
             /* if paymment method is null return error */
             if($paymentMethod == null){
                 // redirect payment method error
-                echo 'payment method error';
-                return;
+                return redirect()->route('reservation.checkout')->with('failure', trans('messages.select_payment_method'));
             }
 
             /* if reservation is != null proceed with the logic */
             if($reservation != null){
-                $reservation->CustomerName = $session->get('reservation_customer_name');
-                $reservation->CustomerEmail = $_POST['email'];
+
                 $reservation->PaymentMethod = $paymentMethod;
+
+                if($reservationType == 2){
+                    if(empty($_POST['customer_first_name']) or
+                       empty($_POST['customer_last_name']) or
+                       empty($_POST['customer_email']) or
+                       empty($_POST["customer_email_confirmation"]) )
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.invalid_data"));
+                    else if ($_POST["customer_email"] != $_POST["customer_email_confirmation"])
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.email_doesn_match"));
+
+                    $reservation->CertificateFirstName = $_POST["customer_first_name"];
+                    $reservation->CertificateLastName = $_POST["customer_last_name"];
+                    $reservation->CertificateEmail = $_POST["customer_email"];
+                    $reservation->CertificateMI = $_POST["customer_MI"];
+                }
+
+                // complete reservation data
+                $reservation->PaymentInformation->FirstName = $_POST['first_name'];
+                $reservation->PaymentInformation->LastName = $_POST['last_name'];
+                $reservation->PaymentInformation->CustomerEmail = $_POST['email'];
+                $reservation->PaymentInformation->PostCode = $_POST["post_code"];
+                $reservation->PaymentInformation->PhoneNumber = $_POST["phone_number"];
+                $reservation->PaymentInformation->CountryName = $_POST["country"];
+                $reservation->PaymentInformation->CompanyName = $_POST["company_name"];
+                $reservation->PaymentInformation->StreetAddress = $_POST["street_address"];
+                $reservation->PaymentInformation->TownCity = $_POST["city"];
+                $reservation->PaymentInformation->ApartmentUnit = $_POST["apartment_unit"];
 
                 $this->entityManager->persist($reservation);
                 $this->entityManager->flush();    
@@ -74,14 +108,27 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('reservation.checkout')->with('failure', trans('messages.session_expired'));
         }
     }
 
     /* /GET */ 
     /* return a view to fill credit card data */
     public function gatewayPayment(Request $request){
-        return view('payment.cardinfo');
+        $session = $request->session();
+
+        try {
+            $reservation_id = $session->get('current_reservation_id');
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
+
+            $total = $reservation->Total;
+            $country = $reservation->Region->Country;
+
+            return view('payment.cardinfo', [ 'country' => $country, 'total' => number_format($total, 2) ]);
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home');
+        }
     }
 
     /* /POST */
@@ -90,8 +137,8 @@ class PaymentController extends Controller
         /* if each filed is fill proceed with the logic */
 
         try {
-            if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['year']) or !empty($_POST['month']) or !empty($_POST['cvv'])){
-                
+            if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['month_year']) or !empty($_POST['cvc'])){
+
                 $session = $request->session();
                 $sessionId = $session->getId();
                 $currency = $session->get('currency');
@@ -110,9 +157,13 @@ class PaymentController extends Controller
 
                 /* payment data */
                 $total = $reservation->Total;
-                $cardYear = substr($_POST['year'], -2);
-                $expDate = $_POST['month'].'/'.$cardYear;
-                $cvv = $_POST['cvv'];
+
+                $expData = explode(' / ', $_POST['month_year']);
+                if(count($expData) <= 0)
+                    return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_card_data'));
+
+                $expDate = $expData[0].'/'.$expData[1];
+                $cvc = $_POST['cvc'];
                 $cardNumber = $_POST['card_number'];
 
                 /* set billing information */
@@ -124,12 +175,13 @@ class PaymentController extends Controller
                 $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
 
                 /* execute order */
-                $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvv);
+                $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvc);
 
                 /* check payment status code */
                 if($paymentGateway->responses['response_code'] != 100){
                     /* error case */
-                    return redirect()->route('payment.gateway')->with('status', 'Transaction error. Please contact your card provider for more information or try with another card.');
+                    $session->flash('failure', trans('messages.transaction_error'));
+                    return redirect()->route('payment.gateway');
                 }   
                 else {
                     /* success case */
@@ -143,11 +195,11 @@ class PaymentController extends Controller
                 } 
             }
             else {
-                return redirect()->route('payment.gateway')->with('failure', 'Invalid info, please fill all fields.');
+                return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_data'));
             }
         }
         catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }
 
@@ -182,8 +234,8 @@ class PaymentController extends Controller
 
             /* set voucher data */
             $model = [
-                'customer_name' => $reservation->CustomerName,
-                'customer_email' => $reservation->CustomerEmail,
+                'customer_name' => $reservation->PaymentInformation->FirstName,
+                'customer_email' => $reservation->PaymentInformation->CustomerEmail,
                 'current_date' => new \DateTime("now"),
                 'confirmation_number' => $reservation->ConfirmationNumber,
                 'author_code' => uniqid(),

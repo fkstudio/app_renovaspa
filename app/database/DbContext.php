@@ -39,10 +39,10 @@ class DbContext
         // define credentials...
         $connectionOptions = array(
             'driver'   => 'pdo_mysql',
-            'host'     => 'localhost',
-            'dbname'   => 'renovatest',
-            'user'     => 'root',
-            'password' => 'root',
+            'host'     => 'renovaspa.com',
+            'dbname'   => 'renovasp_newrenova',
+            'user'     => 'renovasp_renovan',
+            'password' => 'r3n0v42016',
         );
 
         return EntityManager::create($connectionOptions, $config);

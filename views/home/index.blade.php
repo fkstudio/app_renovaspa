@@ -3,7 +3,10 @@
 @section('title', 'Home')
 
 @section('content')
-	<div class="container-fluid container-fluid-full">
+	<div class="container">
+		@include('shared._messages')
+	</div>
+	<div class="container-fluid container-fluid-full" style="margin-bottom: -20px;">
 		<div class="row">
 			<div id="home-carousel" class="carousel slide" data-ride="carousel">
 				<!-- Indicators -->

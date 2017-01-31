@@ -49,8 +49,16 @@ class ReservationController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
+       //  echo '<pre>';
+       // // print_r($_SESSION);
+       //  echo '</pre>';
+       //  echo '===========================';
+       //  echo '<pre>';
+       //  print_r($_POST);
+       //  echo '</pre>';
+       //  exit();
+       // try {
 
-        try {
             $reservation = null;
             $reservation_id = $session->get('current_reservation_id');
 
@@ -60,20 +68,32 @@ class ReservationController extends Controller
             else {
                 /* get hotel data */
                 $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
+
+                $region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
+
+                $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
+
+                /* check if the region, hotel and status are valid */
+                if($hotel == null or $region == null or $status == null)   
+                    return redirect()->route("cart.myCart")->with("failure", "An error found. Invalid data.", 1);
+                    
                 /* fill reservation data */
                 $reservation = new \App\Models\Test\ReservationModel();
                 $reservation->Type = $reservationType;
-                $reservation->Region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
+                $reservation->Region = $region;
                 $reservation->Hotel = $hotel;
                 $reservation->ConfirmationNumber = $this->getConfirmationNumber(8);
                 $reservation->Arrival = new \DateTime(); // FIXME
                 $reservation->Departure = new \DateTime(); // FIXME
                 $reservation->Subtotal = 0;
                 $reservation->Total = 0;
-                $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
+                $reservation->Status = $status;
                 $reservation->Created = new \DateTime();
                 $reservation->Modified = new \DateTime();
                 $reservation->IsDeleted = false;
+
+                /* add payment information */
+                $paymentInformation = new \App\Models\Test\PaymentInformationModel();
 
                 /* save reservation */
                 $this->entityManager->persist($reservation);
@@ -82,8 +102,16 @@ class ReservationController extends Controller
                 $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
 
                 if($reservationType == 1){
-                    
+
                     foreach($_POST['id'] as $key => $item){
+
+                        if(empty($_POST['id'][$key]) or 
+                           empty($_POST['customer_name'][$key]) or
+                           empty($_POST['prefered_date'][$key]) or
+                           empty($_POST['prefered_time'][$key]) or
+                           empty($_POST["cabin_type"][$key]))
+                            return redirect()->route("cart.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
+                            
                         /* get cart item */
                         $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
                         $cartItem->CustomerName = $_POST['customer_name'][$key];
@@ -122,7 +150,16 @@ class ReservationController extends Controller
                     }
                 }
                 else if ($reservationType == 2){
-                    
+                
+
+                    //$reservation->CustomerName = $_POST['customer_first_name'].' '.$_POST["customer_last_name"];
+                    //$reservation->CustomerMI = $_POST['customer_MI'];
+
+                    // if(isset($_POST['not_my_info']))
+                    //     $reservation->NotMyInfo = true;
+                    // else
+                    //     $reservation->NotMyInfo = false;
+
                     foreach($_POST['certificate_number'] as $key => $value){
                         $certificateItem = new \App\Models\Test\CertificateDetailModel();
 
@@ -156,12 +193,12 @@ class ReservationController extends Controller
                                                          ->findOneBy(['Cart' => $cart->Id, 'CertificateNumber' => $value + 1]);
 
                             if($cartItem == null)
-                                throw new \Exception("Invalid certificate data", 1);
+                                return redirect()->route('certificate.registration')->with("failure", "Invalid certificate data");
                                 
                             $totalValue = $cartItem->Value;
                         }
                         else
-                            throw new \Exception("Error Processing Request", 1);
+                            return redirect()->route('home.home')->with("failure", "Error Processing Request");
                             
                         
                         $certificateItem->Value = $totalValue;
@@ -197,10 +234,10 @@ class ReservationController extends Controller
 
             $paymentMethods = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findAll();
             return view("reservation.checkout", [ 'model' => $reservation, 'breadcrumps' => $breadcrumps,  'paymentMethods' => $paymentMethods ]);
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with("failure", 'Your session has expired.');
+        // }
     }
 
 }

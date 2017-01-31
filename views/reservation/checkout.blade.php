@@ -14,68 +14,106 @@
 	<div class="container-fluid">
 		@include('shared._breadcrumps')
 		<hr style="margin-bottom: 0px !important;">
+		@include('shared._messages')
 		<div class="row">
 			<form action="{{ URL::to('/') }}/payment" method="POST">
 				<div class="col-md-6">
-					<h3>PAYMENT INFORMATION</h3>
+					@if ($model->Type == 2)
+					<h3>{{ trans('titles.reservation_checkout_customer_title') }}</h3>
 					<hr>
+					<p>We will use this information to send purchase confirmations and certificates to your e-mail address. The billing information may be different.</p>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-5">
 							<div class="form-group">
-								<input type="text" name="first_name" class="form-control input-border" placeholder="First name">
+								<input type="text" required name="customer_first_name" value="{{ $model->CertificateFirstName }}" class="form-control input-border" placeholder="* First name/Given name">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-2">
+							<input type="text" name="customer_MI" value="{{ $model->CertificateMI }}" class="form-control input-border" placeholder="MI">
+						</div>
+						<div class="col-md-5">
 							<div class="form-group">
-								<input type="text" name="last_name" class="form-control input-border" placeholder="Last name">
+								<input type="text" required name="customer_last_name" value="{{ $model->CertificateLastName }}" class="form-control input-border" placeholder="* Last name/Surname">
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="email" name="email" class="form-control input-border" placeholder="Email">
+								<input type="checkbox" name="not_my_info" /> This is not my information. I am making this purchase for another person.
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="text" name="Country" class="form-control input-border" placeholder="Country">
+								<input type="email" required name="customer_email" value="{{ $model->CertificateEmail }}" class="form-control input-border" placeholder="* Email">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="text" name="PostCode" class="form-control input-border" placeholder="Postcode/Zip">
+								<input type="email" required name="customer_email_confirmation" class="form-control input-border" placeholder="* Email confirmation">
+							</div>
+						</div>
+					</div>
+					@endif
+					<h3>{{ trans('titles.reservation_checkout_left_title') }}</h3>
+					<hr>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" value="{{ $model->PaymentInformation->FirstName }}" required name="first_name" class="form-control input-border" placeholder="* First name">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="number" name="Phone" class="form-control input-border" placeholder="Phone number">
+								<input type="text" required value="{{ $model->PaymentInformation->LastName }}" name="last_name" class="form-control input-border" placeholder="* Last name">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="email" required value="{{ $model->PaymentInformation->CustomerEmail }}" name="email" class="form-control input-border" placeholder="* email">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="text" required name="country" value="{{ $model->PaymentInformation->CountryName }}" class="form-control input-border" placeholder="* country">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" name="city" value="{{ $model->PaymentInformation->TownCity }}" class="form-control input-border" placeholder="Town/City">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" name="post_code" value="{{ $model->PaymentInformation->PostCode }}" class="form-control input-border" placeholder="Postcode/Zip">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="text" name="CompanyName" class="form-control input-border" placeholder="Company name">
+								<input type="number" name="phone_number" value="{{ $model->PaymentInformation->PhoneNumber }}" class="form-control input-border" placeholder="Phone number">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" name="company_name" value="{{ $model->PaymentInformation->CompanyName }}" class="form-control input-border" placeholder="Company name">
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="StreetAddress" class="form-control input-border" placeholder="StreetAddress">
+								<input type="text" name="street_address" value="{{ $model->PaymentInformation->StreetAddress }}" class="form-control input-border" placeholder="StreetAddress">
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="Apartment" class="form-control input-border" placeholder="Apartment, suit, unit, etc (optional)">
+								<input type="text" name="apartment_unit" value="{{ $model->PaymentInformation->ApartmentUnit }}" class="form-control input-border" placeholder="Apartment, suit, unit, etc (optional)">
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" name="City" class="form-control input-border" placeholder="Town/City">
-							</div>
-						</div>
-						
+
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h3>ORDER SUMMARY</h3>
+					<h3>{{ trans('titles.reservation_checkout_right_title') }}</h3>
 					<hr>
 					@php
 						$hotel_id = $hotel_region->Hotel->Id;
@@ -89,20 +127,20 @@
 									@php
 										$discount = $detail->Service->getDiscount($hotel_id)
 									@endphp
-									<span class="discount">{{ "-".$discount. "% discount" }}</span>
+									<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
 									@endif
 
 									@if ($detail->Service->hasHotelDiscount($hotel_id))
-									<span class="discount">-{{ $hotel_region->Discount }}% online discount</span>
+									<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 									@elseif ($hotel_region->ActiveDiscount)
-									<span class="discount-tached">-{{ $hotel_region->Discount }}% online discount</span>
+									<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 								@endif
 								<br/>
-								<span>Booked to {{ $detail->PreferedDate->format('d/m/Y') }} at time {{ $detail->PreferedTime->format('h:m a') }}, {{ $detail->CustomerName }}</span>
+								<span>{{ trans('checkout.booked_to') }} {{ $detail->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $detail->PreferedTime->format('h:m a') }}, {{ $detail->CustomerName }}</span>
 								<br/>
-								<span>Price: {{ $country->Currency->Symbol.number_format($detail->Service->getPlanePrice($hotel_id), 2) }}</span>
+								<span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol.number_format($detail->Service->getPlanePrice($hotel_id), 2) }}</span>
 								<br/>
-								<span>Final price: <strong>{{ $country->Currency->Symbol.number_format($detail->Service->getPrice($hotel_id), 2) }}</strong></span>
+								<span>{{ trans('shared.final_price') }}: <strong>{{ $country->Currency->Symbol.number_format($detail->Service->getPrice($hotel_id), 2) }}</strong></span>
 							</div>
 						</div>
 						<div class="clearfix"></div>
@@ -141,7 +179,7 @@
 						@endforeach
 					@endif
 					<table class="table table-borderless">
-						<h3>CART TOTAL</h3>
+						<h3>{{ trans('titles.cart_total') }}</h3>
 						<tbody style="font-size: 20px;">
 							<tr>
 								<td>Subtotal</td>
@@ -149,7 +187,7 @@
 							</tr>
 							@if ($hotel_region->ActiveDiscount)
 							<tr>
-								<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% online discount available</span></td>
+								<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount_available') }}</span></td>
 							</tr>
 							@endif
 							<tr>
@@ -163,18 +201,30 @@
 						<img style="width: 100px; float:right; margin-top: -5px" class="img-responsive" src="{{ URL::to('/') }}/images/visamastercard.png" />
 					</div>
 					<div class="col-md-6">
-						<input type="radio" name="payment_method" value="{{ $paymentMethods[1]->Id }}" /> {{ $paymentMethods[1]->Name }}
+						<input type="radio" checked name="payment_method" value="{{ $paymentMethods[1]->Id }}" /> {{ $paymentMethods[1]->Name }}
 						<img style="width: 100px; float:right; margin-top: -15px" class="img-responsive" src="{{ URL::to('/') }}/images/paypal.png" />
 					</div>
 					<div class="clearfix"></div>
 					<br/>
 					<div class="col-md-12">
 						{{ csrf_field() }}
-						<button type="submit" class="btn btn-primary btn-block">PLACE ORDER</button>
+						<button type="submit" class="btn btn-primary btn-block">{{ trans('checkout.place_order') }}</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	@endsection
+
+	@section("scripts")
+	<script>
+		
+		$(document).on('ready', function(){
+			$("#showContentButton").click(function(){
+				preventDefault();
+				$("#contentPaymentInfo").removeClass("hidden");
+			})
+		})
+	</script>
 	@endsection
     

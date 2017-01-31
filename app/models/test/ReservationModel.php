@@ -37,17 +37,33 @@
 		/** @Column(name="confirmation_number", type="string") */
 		public $ConfirmationNumber;		
 
-		/** @Column(name="customer_name", type="string") */
-		public $CustomerName;
+		/** @Column(name="certificate_first_name", type="string") */
+		public $CertificateFirstName;
 
-		/** @Column(name="customer_email", type="string") */
-		public $CustomerEmail;
+		/** @Column(name="certificate_last_name", type="string") */
+		public $CertificateLastName;
 
+		/** @Column(name="certificate_MI", type="string") */
+		public $CertificateMI;
+
+		/** @Column(name="certificate_not_my_info", type="string") */
+		public $CertificateNotMyInfo;
+
+		/** @Column(name="certificate_email", type="string") */
+		public $CertificateEmail;
+
+		
 		/** @arrival @Column(type="date") */
 		public $Arrival;
 
 		/** @departure @Column(type="date") */
 		public $Departure;
+
+		/** 
+		 * @OneToOne(targetEntity="PaymentInformationModel", cascade={"persist"})
+		 * @JoinColumn(name="payment_information_id", referencedColumnName="id")
+		*/
+		public $PaymentInformation;
 
 		/** 
 		 * @OneToOne(targetEntity="PaymentMethodModel", cascade={"persist"})
@@ -95,5 +111,6 @@
 		public function __construct(){
 			$this->ServicesDetails = [];
 			$this->CertificateDetailModel = [];
+			$this->PaymentInformation = new \App\Models\Test\PaymentInformationModel();
 		}
 	}
