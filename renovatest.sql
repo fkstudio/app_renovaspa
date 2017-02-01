@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jan 30, 2017 at 09:09 PM
+-- Generation Time: Jan 31, 2017 at 06:53 PM
 -- Server version: 5.5.42
 -- PHP Version: 5.6.10
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `newrenova`
+-- Database: `renovatest`
 --
 
 -- --------------------------------------------------------
@@ -606,7 +606,9 @@ ALTER TABLE `category`
 -- Indexes for table `category_country`
 --
 ALTER TABLE `category_country`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `country_id` (`country_id`);
 
 --
 -- Indexes for table `certificate_detail_service`
@@ -624,7 +626,8 @@ ALTER TABLE `certificate_item`
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `currency_id` (`currency_id`);
 
 --
 -- Indexes for table `currency`
@@ -642,7 +645,9 @@ ALTER TABLE `hotel`
 -- Indexes for table `hotel_region`
 --
 ALTER TABLE `hotel_region`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hotel_region_region_index` (`region_id`),
+  ADD KEY `hotel_region_hotel_index` (`hotel_id`) USING BTREE;
 
 --
 -- Indexes for table `payment_information`
@@ -660,7 +665,9 @@ ALTER TABLE `payment_method`
 -- Indexes for table `photo`
 --
 ALTER TABLE `photo`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hotel_id` (`hotel_id`),
+  ADD KEY `region_id` (`region_id`);
 
 --
 -- Indexes for table `region`
@@ -678,7 +685,9 @@ ALTER TABLE `reservation`
 -- Indexes for table `reservation_item`
 --
 ALTER TABLE `reservation_item`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation_id` (`reservation_id`),
+  ADD KEY `service_id` (`service_id`);
 
 --
 -- Indexes for table `service`
@@ -690,19 +699,26 @@ ALTER TABLE `service`
 -- Indexes for table `service_category_hotel`
 --
 ALTER TABLE `service_category_hotel`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hotel_id` (`hotel_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `service_id` (`service_id`);
 
 --
 -- Indexes for table `service_price`
 --
 ALTER TABLE `service_price`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `service_id` (`service_id`),
+  ADD KEY `hotel_region_id` (`hotel_region_id`);
 
 --
 -- Indexes for table `service_region`
 --
 ALTER TABLE `service_region`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `service_id` (`service_id`),
+  ADD KEY `region_id` (`region_id`);
 
 --
 -- Indexes for table `shopping_cart`
@@ -721,3 +737,66 @@ ALTER TABLE `shopping_cart_item`
 --
 ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `category_country`
+--
+ALTER TABLE `category_country`
+  ADD CONSTRAINT `category_country_ibfk_2` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
+  ADD CONSTRAINT `category_country_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+
+--
+-- Constraints for table `country`
+--
+ALTER TABLE `country`
+  ADD CONSTRAINT `country_ibfk_1` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`);
+
+--
+-- Constraints for table `hotel_region`
+--
+ALTER TABLE `hotel_region`
+  ADD CONSTRAINT `hotel_region_ibfk_4` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
+  ADD CONSTRAINT `hotel_region_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
+  ADD CONSTRAINT `hotel_region_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
+  ADD CONSTRAINT `hotel_region_ibfk_3` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`);
+
+--
+-- Constraints for table `photo`
+--
+ALTER TABLE `photo`
+  ADD CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
+  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`);
+
+--
+-- Constraints for table `reservation_item`
+--
+ALTER TABLE `reservation_item`
+  ADD CONSTRAINT `reservation_item_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  ADD CONSTRAINT `reservation_item_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`);
+
+--
+-- Constraints for table `service_category_hotel`
+--
+ALTER TABLE `service_category_hotel`
+  ADD CONSTRAINT `service_category_hotel_ibfk_4` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  ADD CONSTRAINT `service_category_hotel_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
+  ADD CONSTRAINT `service_category_hotel_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `service_category_hotel_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+
+--
+-- Constraints for table `service_price`
+--
+ALTER TABLE `service_price`
+  ADD CONSTRAINT `service_price_ibfk_2` FOREIGN KEY (`hotel_region_id`) REFERENCES `hotel_region` (`id`),
+  ADD CONSTRAINT `service_price_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+
+--
+-- Constraints for table `service_region`
+--
+ALTER TABLE `service_region`
+  ADD CONSTRAINT `service_region_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
+  ADD CONSTRAINT `service_region_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);

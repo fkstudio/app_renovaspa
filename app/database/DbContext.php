@@ -3,7 +3,7 @@
 namespace App\Database;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\Configuration;
 
 class DbContext
 {
@@ -31,18 +31,33 @@ class DbContext
      */
     public function createEntityManager()
     {
-        $path = array('../Models');
-        $devMode = true;
+        $applicationMode = "development";
 
-        $config = Setup::createAnnotationMetadataConfiguration($path, $devMode);
+        if($applicationMode == "development")
+            $cache = new \Doctrine\Common\Cache\ArrayCache;
+        else
+            $cache = new \Doctrine\Common\Cache\ApcCache;
+
+        $config = new Configuration;
+        $config->setMetadataCacheImpl($cache);
+        $driverImpl = $config->newDefaultAnnotationDriver(__DIR__."/app/models/test");
+        $config->setMetadataDriverImpl($driverImpl);
+        $config->setQueryCacheImpl($cache);
+        $config->setProxyDir(__DIR__."/data/DoctrineORMModule/Proxy");
+        $config->setProxyNamespace("Renovaspa\Proxies");
+
+        if($applicationMode == "development")
+            $config->setAutoGenerateProxyClasses(true);
+        else
+            $config->setAutoGenerateProxyClasses(false);
 
         // define credentials...
         $connectionOptions = array(
             'driver'   => 'pdo_mysql',
-            'host'     => 'renovaspa.com',
-            'dbname'   => 'renovasp_newrenova',
-            'user'     => 'renovasp_renovan',
-            'password' => 'r3n0v42016',
+            'host'     => 'localhost',
+            'dbname'   => 'renovatest',
+            'user'     => 'root',
+            'password' => 'root',
         );
 
         return EntityManager::create($connectionOptions, $config);
