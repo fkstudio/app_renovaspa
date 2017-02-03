@@ -22,6 +22,12 @@ class ServiceModel {
 	public $Name;
 
 	/** 
+	 * @OneToOne(targetEntity="CabinModel", cascade={"persist"})
+	 * @JoinColumn(name="cabin_id", referencedColumnName="id")
+	*/
+	public $Cabin;
+
+	/** 
 	 * @OneToMany(targetEntity="ServicePriceModel", mappedBy="Service")
 	*/
 	public $ServicePrices;

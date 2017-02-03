@@ -25,6 +25,9 @@ class CabinModel {
 	/** @modified @Column(type="date") */
 	public $Modified;
 
+	/** @Column(name="max_cant_persons", type="integer") */
+	public $MaxCantPersons;
+
 	/** @Column(type="boolean", name="is_deleted") */
 	public $IsDeleted;
 }

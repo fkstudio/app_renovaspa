@@ -122,7 +122,7 @@
 						@foreach($model->ServicesDetails as $detail)
 						<div class="col-md-12">
 							<div class="row">
-								<h5><strong>1 {{ $detail->Service->Name }}</strong></h5>
+								<h5><strong>1 {{ $detail->Service->Name }}</strong> - {{ trans("shared.cabin_type") }} ( {{ $detail->Cabin->Name }} )</h5>
 								@if ($detail->Service->hasDiscount($hotel_id))
 									@php
 										$discount = $detail->Service->getDiscount($hotel_id)
@@ -198,11 +198,11 @@
 					</table>
 					<div class="col-md-6">
 						<input type="radio" name="payment_method" value="{{ $paymentMethods[0]->Id }}" /> {{ $paymentMethods[0]->Name }}
-						<img style="width: 100px; float:right; margin-top: -5px" class="img-responsive" src="{{ URL::to('/') }}/images/visamastercard.png" />
+						<img style="width: 100px; float:right; margin-top: -15px" class="img-responsive" src="{{ URL::to('/') }}/images/paypal.png" />
 					</div>
 					<div class="col-md-6">
 						<input type="radio" checked name="payment_method" value="{{ $paymentMethods[1]->Id }}" /> {{ $paymentMethods[1]->Name }}
-						<img style="width: 100px; float:right; margin-top: -15px" class="img-responsive" src="{{ URL::to('/') }}/images/paypal.png" />
+						<img style="width: 100px; float:right; margin-top: -5px" class="img-responsive" src="{{ URL::to('/') }}/images/visamastercard.png" />
 					</div>
 					<div class="clearfix"></div>
 					<br/>

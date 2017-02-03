@@ -57,174 +57,159 @@ class ReservationController extends Controller
        //  print_r($_POST);
        //  echo '</pre>';
        //  exit();
-       // try {
+        try {
 
             $reservation = null;
-            $reservation_id = $session->get('current_reservation_id');
 
-            if($reservation_id != null && $reservation_id != ""){
-                $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
-            }
-            else {
-                /* get hotel data */
-                $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
+            /* get hotel data */
+            $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
 
-                $region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
+            $region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
 
-                $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
+            $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
 
-                /* check if the region, hotel and status are valid */
-                if($hotel == null or $region == null or $status == null)   
-                    return redirect()->route("cart.myCart")->with("failure", "An error found. Invalid data.", 1);
-                    
-                /* fill reservation data */
-                $reservation = new \App\Models\Test\ReservationModel();
-                $reservation->Type = $reservationType;
-                $reservation->Region = $region;
-                $reservation->Hotel = $hotel;
-                $reservation->ConfirmationNumber = $this->getConfirmationNumber(8);
-                $reservation->Arrival = new \DateTime(); // FIXME
-                $reservation->Departure = new \DateTime(); // FIXME
-                $reservation->Subtotal = 0;
-                $reservation->Total = 0;
-                $reservation->Status = $status;
-                $reservation->Created = new \DateTime();
-                $reservation->Modified = new \DateTime();
-                $reservation->IsDeleted = false;
-
-                /* add payment information */
-                $paymentInformation = new \App\Models\Test\PaymentInformationModel();
-
-                /* save reservation */
-                $this->entityManager->persist($reservation);
-
-                /* get shopping cart */
-                $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
-
-                if($reservationType == 1){
-
-                    foreach($_POST['id'] as $key => $item){
-
-                        if(empty($_POST['id'][$key]) or 
-                           empty($_POST['customer_name'][$key]) or
-                           empty($_POST['prefered_date'][$key]) or
-                           empty($_POST['prefered_time'][$key]) or
-                           empty($_POST["cabin_type"][$key]))
-                            return redirect()->route("cart.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
-                            
-                        /* get cart item */
-                        $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
-                        $cartItem->CustomerName = $_POST['customer_name'][$key];
-                        $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
-                        $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
-                        $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
-
-                        $this->entityManager->persist($cartItem);
-
-                        $reservationItem = null;
-                        $reservationItemExists = $this->entityManager->getRepository('App\Models\Test\ReservationItemModel')->findOneBy(['CartItem' => $item]);
-
-                        if($reservationItemExists != null)
-                            $reservationItem = $reservationItemExists;
-                        else
-                            $reservationItem = new \App\Models\Test\ReservationItemModel();
-
-                        /* fill reservation item data */
-                        $reservationItem->CartItem = $cartItem;
-                        $reservationItem->Reservation = $reservation;
-                        $reservationItem->Service = $cartItem->Service;
-                        $reservationItem->CustomerName = $cartItem->CustomerName;
-                        $reservationItem->PreferedDate = $cartItem->PreferedDate;
-                        $reservationItem->PreferedTime = $cartItem->PreferedTime;
-                        $reservationItem->Price = $cartItem->Service->getPrice($reservation->Hotel->Id);
-
-                        $reservationItem->Cabin = $cartItem->Cabin;
-                        $reservationItem->Created = new \DateTime();
-                        $reservationItem->Modified = new \DateTime();
-                        $reservationItem->IsDeleted = false;
-
-                        $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
-                        $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
-                        
-                        $reservation->ServicesDetails[] = $reservationItem;
-                    }
-                }
-                else if ($reservationType == 2){
+            /* check if the region, hotel and status are valid */
+            if($hotel == null or $region == null or $status == null)   
+                return redirect()->route("cart.myCart")->with("failure", "An error found. Invalid data.", 1);
                 
+            /* fill reservation data */
+            $reservation = new \App\Models\Test\ReservationModel();
+            $reservation->Type = $reservationType;
+            $reservation->Region = $region;
+            $reservation->Hotel = $hotel;
+            $reservation->ConfirmationNumber = $this->getConfirmationNumber(8);
+            $reservation->Arrival = new \DateTime(); // FIXME
+            $reservation->Departure = new \DateTime(); // FIXME
+            $reservation->Subtotal = 0;
+            $reservation->Total = 0;
+            $reservation->Status = $status;
+            $reservation->Created = new \DateTime();
+            $reservation->Modified = new \DateTime();
+            $reservation->IsDeleted = false;
 
-                    //$reservation->CustomerName = $_POST['customer_first_name'].' '.$_POST["customer_last_name"];
-                    //$reservation->CustomerMI = $_POST['customer_MI'];
+            /* add payment information */
+            $paymentInformation = new \App\Models\Test\PaymentInformationModel();
 
-                    // if(isset($_POST['not_my_info']))
-                    //     $reservation->NotMyInfo = true;
-                    // else
-                    //     $reservation->NotMyInfo = false;
+            /* save reservation */
+            $this->entityManager->persist($reservation);
 
-                    foreach($_POST['certificate_number'] as $key => $value){
-                        $certificateItem = new \App\Models\Test\CertificateDetailModel();
+            /* get shopping cart */
+            $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
 
-                        $certType = $session->get('certificate_type');
-                        $totalValue = 0;
+            if($reservationType == 1){
+
+                foreach($_POST['id'] as $key => $item){
+
+                    if(empty($_POST['id'][$key]) or 
+                       count($_POST['customer_name'][$key]) <= 0 or
+                       empty($_POST['prefered_date'][$key]) or
+                       empty($_POST['prefered_time'][$key]) or
+                       empty($_POST["cabin_type"][$key]))
+                        return redirect()->route("cart.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
                         
-                        $certificateItem->Reservation = $reservation;
-                        $certificateItem->Type = $certType;
+                    /* get cart item */
+                    $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
+                    $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
+                    $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
+                    $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+                    $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
 
-                        /* if services based */
-                        if($certType == 1){
-                            /* cart items */
-                            $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
-                                                         ->findBy(['Cart' => $cart->Id, 'CertificateNumber' => $value]);
+                    $this->entityManager->persist($cartItem);
 
-                            /* get total price*/
-                            foreach($cartItems as $item){
-                                $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
+                    $reservationItem = null;
+                    $reservationItemExists = $this->entityManager->getRepository('App\Models\Test\ReservationItemModel')->findOneBy(['CartItem' => $item]);
 
-                                /* add services to certificate item */
-                                $certificateDetailService = new \App\Models\Test\CertificateDetailServiceModel();
-                                $certificateDetailService->CertificateDetail = $certificateItem;
-                                $certificateDetailService->Service = $item->Service;
+                    if($reservationItemExists != null)
+                        $reservationItem = $reservationItemExists;
+                    else
+                        $reservationItem = new \App\Models\Test\ReservationItemModel();
 
-                                $certificateItem->CertificateDetailServices[] = $certificateDetailService;
-                            }
-                        }
-                        /* if value based */
-                        else if($certType == 2){
-                            $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
-                                                         ->findOneBy(['Cart' => $cart->Id, 'CertificateNumber' => $value + 1]);
+                    /* fill reservation item data */
+                    $reservationItem->CartItem = $cartItem;
+                    $reservationItem->Reservation = $reservation;
+                    $reservationItem->Service = $cartItem->Service;
+                    $reservationItem->CustomerName = $cartItem->CustomerName;
+                    $reservationItem->PreferedDate = $cartItem->PreferedDate;
+                    $reservationItem->PreferedTime = $cartItem->PreferedTime;
+                    $reservationItem->Price = $cartItem->Service->getPrice($reservation->Hotel->Id);
 
-                            if($cartItem == null)
-                                return redirect()->route('certificate.registration')->with("failure", "Invalid certificate data");
-                                
-                            $totalValue = $cartItem->Value;
-                        }
-                        else
-                            return redirect()->route('home.home')->with("failure", "Error Processing Request");
-                            
-                        
-                        $certificateItem->Value = $totalValue;
-                        $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
-                        $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
-                        $certificateItem->Message = $_POST['message'][$key];
-                        $certificateItem->SendType = $_POST['sendType'][$key];
-                        $certificateItem->Arrival = new \DateTime();
-                        $certificateItem->Departure = new \DateTime();
-                        $certificateItem->OtherFields = "";
-                        $certificateItem->Created = new \DateTime();
-                        $certificateItem->Modified = new \DateTime();
-                        $certificateItem->Enabled = true;
-                        $certificateItem->IsDeleted = false;
+                    $reservationItem->Cabin = $cartItem->Cabin;
+                    $reservationItem->Created = new \DateTime();
+                    $reservationItem->Modified = new \DateTime();
+                    $reservationItem->IsDeleted = false;
 
-                        $reservation->Subtotal += $certificateItem->Value;
-                        $reservation->Total += $certificateItem->Value;
-
-                        $reservation->CertificateDetails[] = $certificateItem;  
-                    } 
+                    $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
+                    $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
+                    
+                    $reservation->ServicesDetails[] = $reservationItem;
                 }
-
-                $this->entityManager->flush();
-
-                $session->put('current_reservation_id', $reservation->Id);
             }
+            else if ($reservationType == 2){
+            
+                foreach($_POST['certificate_number'] as $key => $value){
+                    $certificateItem = new \App\Models\Test\CertificateDetailModel();
+
+                    $certType = $session->get('certificate_type');
+                    $totalValue = 0;
+                    
+                    $certificateItem->Reservation = $reservation;
+                    $certificateItem->Type = $certType;
+
+                    /* if services based */
+                    if($certType == 1){
+                        /* cart items */
+                        $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                     ->findBy(['Cart' => $cart->Id, 'CertificateNumber' => $value]);
+
+                        /* get total price*/
+                        foreach($cartItems as $item){
+                            $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
+
+                            /* add services to certificate item */
+                            $certificateDetailService = new \App\Models\Test\CertificateDetailServiceModel();
+                            $certificateDetailService->CertificateDetail = $certificateItem;
+                            $certificateDetailService->Service = $item->Service;
+
+                            $certificateItem->CertificateDetailServices[] = $certificateDetailService;
+                        }
+                    }
+                    /* if value based */
+                    else if($certType == 2){
+                        $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                     ->findOneBy(['Cart' => $cart->Id, 'CertificateNumber' => $value + 1]);
+
+                        if($cartItem == null)
+                            return redirect()->route('certificate.registration')->with("failure", "Invalid certificate data");
+                            
+                        $totalValue = $cartItem->Value;
+                    }
+                    else
+                        return redirect()->route('home.home')->with("failure", "Error Processing Request");
+                        
+                    
+                    $certificateItem->Value = $totalValue;
+                    $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
+                    $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
+                    $certificateItem->Message = $_POST['message'][$key];
+                    $certificateItem->SendType = $_POST['sendType'][$key];
+                    $certificateItem->Arrival = new \DateTime();
+                    $certificateItem->Departure = new \DateTime();
+                    $certificateItem->OtherFields = "";
+                    $certificateItem->Created = new \DateTime();
+                    $certificateItem->Modified = new \DateTime();
+                    $certificateItem->Enabled = true;
+                    $certificateItem->IsDeleted = false;
+
+                    $reservation->Subtotal += $certificateItem->Value;
+                    $reservation->Total += $certificateItem->Value;
+
+                    $reservation->CertificateDetails[] = $certificateItem;  
+                } 
+            }
+
+            $this->entityManager->flush();
+
+            $session->put('current_reservation_id', $reservation->Id);
 
             $breadcrumps = [
                 'SHOPPING CART' => '#fakelink',
@@ -234,10 +219,10 @@ class ReservationController extends Controller
 
             $paymentMethods = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findAll();
             return view("reservation.checkout", [ 'model' => $reservation, 'breadcrumps' => $breadcrumps,  'paymentMethods' => $paymentMethods ]);
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with("failure", 'Your session has expired.');
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with("failure", 'Your session has expired.');
+        }
     }
 
 }

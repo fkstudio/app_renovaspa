@@ -34,13 +34,13 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="{{ route('home.home') }}">{{ trans('navbar.home') }} <span class="sr-only">(current)</span></a></li>
+          <li><a href="{{ route('home.home') }}">{{ trans('navbar.home') }} <span class="sr-only">(current)</span></a></li>
           <li><a href="{{ URL::to('/') }}/select/services">{{ trans('navbar.bookhere') }}</a></li>
           <li><a href="{{ URL::to('/') }}/select/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
           <li class="dropdown">
-            <a href="{{ URL::to('/') }}/select/weddings" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
+            <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">{{ trans('navbar.the_day') }}</a></li>
+              <li><a href="{{ URL::to('/') }}/select/weddings">{{ trans('navbar.the_day') }}</a></li>
               <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
             </ul>
           </li>

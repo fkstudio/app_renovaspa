@@ -18,6 +18,7 @@ return [
     'back_to_cart' => 'BACK TO CART',
     'back_to_services' => 'BACK TO SERVICES',
     'service' => 'Service',
+    'customer_name' => 'Customer name',
     'price' => 'Price',
     'final_price' => 'Final price',
     'unit_price' => 'Unit price',

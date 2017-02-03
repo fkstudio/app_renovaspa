@@ -44,7 +44,8 @@
 			<hr>
 			<strong>Value: {{ $symbol.$item->Value }}</strong>
 			<hr>
-			
+			<a href="#fakelink">Edit </a> <a href="#fakelink"> Delete</a>
+			<hr>	
 			<div class="row">
 				<div class="col-md-8">
 					<div class="form-group">

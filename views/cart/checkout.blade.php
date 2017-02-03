@@ -24,15 +24,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($model->Items as $item)
+								@foreach($model->Items as $key => $item)
 									@for($i = 0; $i < $item->Quantity; $i++)
+										@php
+											$serviceCabin = $item->Service->Cabin;
+										@endphp
 										<tr>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												{{ $item->Service->Name }}
 											</td>
 											<td class="padding-td">
-												<input type="text" name="customer_name[]" placeholder="Ej. Jhon Doe" class="form-control" value="{{ $item->CustomerName }}" />
+												@php
+													$parts = explode(", ", $item->CustomerName);
+												@endphp
+
+												@if($serviceCabin->Name == "Single")
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
+												@elseif ($serviceCabin->Name == "Double")
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="You will shared room with..." class="form-control" value="{{ $parts[1] }}" />
+												@elseif ($serviceCabin->Name == "Package")
+													@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
+														<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[$i] }}" />
+													@endfor
+												@endif
 											</td>
 											<td class="padding-td">
 												<input type="date" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('dd/mm/yyyy') : '' ) }}" class="datepicker form-control" />
@@ -42,16 +58,24 @@
 											</td>
 											
 											<td class="padding-td">
+												@if($item->Service->Cabin->Name != "Package")
 												<select class="form-control blank-select" name="cabin_type[]">
 													@foreach($cabins as $cabin)
-														@if ($item->Cabin != null && $item->Cabin->Id == $cabin->Id)
-															<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
-														@else 
-															<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@if($cabin->Name != "Package")
+															@if ($item->Service != null && $item->Service->Cabin->Id == $cabin->Id)
+																<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+															@else 
+																<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+															@endif
 														@endif
 													
 													@endforeach
 												</select>
+												@else
+												<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control">
+													<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
+												</select>
+												@endif
 											</td>
 										</tr>
 									@endfor
@@ -76,7 +100,6 @@
 	@endsection
 
 	@section('scripts')
-
 	<!-- Moment JS-->
 	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
