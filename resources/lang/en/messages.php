@@ -11,7 +11,9 @@ return [
     // cart controller messages
     'session_expired' => 'Your session has expired.',
     'items_added' => 'Services has been added to your cart',
+    'package_added' => 'Package/s added successfully.',
     'select_some_service' => "Please select at least one service",
+    'select_some_package' => 'You must select at least one package.',
     'cart_item_doesn_exists' => "Cart item doesn't exists",
     'item_removed_from_your_cart' => ' services removed from your shopping cart.',
     'select_payment_method' => 'You must select a valid payment method.',

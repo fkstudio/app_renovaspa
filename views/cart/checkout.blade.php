@@ -32,7 +32,7 @@
 										<tr>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
-												{{ $item->Service->Name }}
+												{{ ($item->Package != null ? $item->Package->Name.' - ' : '' ) .$item->Service->Name }}
 											</td>
 											<td class="padding-td">
 												@php
@@ -42,11 +42,11 @@
 												@if($serviceCabin->Name == "Single")
 													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
 												@elseif ($serviceCabin->Name == "Double")
-													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
-													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="You will shared room with..." class="form-control" value="{{ $parts[1] }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="You will shared room with..." class="form-control" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
 												@elseif ($serviceCabin->Name == "Package")
 													@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
-														<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[$i] }}" />
+														<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
 													@endfor
 												@endif
 											</td>

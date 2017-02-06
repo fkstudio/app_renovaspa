@@ -31,7 +31,7 @@ class DbContext
      */
     public function createEntityManager()
     {
-        $applicationMode = "development";
+        $applicationMode = "production";
 
         if($applicationMode == "development")
             $cache = new \Doctrine\Common\Cache\ArrayCache;
@@ -54,10 +54,10 @@ class DbContext
         // define credentials...
         $connectionOptions = array(
             'driver'   => 'pdo_mysql',
-            'host'     => 'localhost',
-            'dbname'   => 'renovatest',
-            'user'     => 'root',
-            'password' => 'root',
+            'host'     => '66.147.254.159',
+            'dbname'   => 'renovasp_newrenova',
+            'user'     => 'renovasp_renovan',
+            'password' => 'r3n0v42016',
         );
 
         return EntityManager::create($connectionOptions, $config);

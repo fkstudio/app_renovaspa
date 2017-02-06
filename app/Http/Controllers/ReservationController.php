@@ -49,14 +49,6 @@ class ReservationController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-       //  echo '<pre>';
-       // // print_r($_SESSION);
-       //  echo '</pre>';
-       //  echo '===========================';
-       //  echo '<pre>';
-       //  print_r($_POST);
-       //  echo '</pre>';
-       //  exit();
         try {
 
             $reservation = null;
@@ -96,7 +88,7 @@ class ReservationController extends Controller
             /* get shopping cart */
             $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
 
-            if($reservationType == 1){
+            if($reservationType == 1 || $reservationType == 3){
 
                 foreach($_POST['id'] as $key => $item){
 
@@ -217,8 +209,13 @@ class ReservationController extends Controller
                 'INFORMATION' => '#fakelink'
             ];
 
-            $paymentMethods = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findAll();
-            return view("reservation.checkout", [ 'model' => $reservation, 'breadcrumps' => $breadcrumps,  'paymentMethods' => $paymentMethods ]);
+            if($reservationType == 3)
+                return redirect()->route("wedding.checkout");  
+            else {
+                $paymentMethods = $this->entityManager->getRepository('App\Models\Test\PaymentMethodModel')->findAll();
+
+                return view("reservation.checkout", [ 'model' => $reservation, 'breadcrumps' => $breadcrumps,  'paymentMethods' => $paymentMethods ]);    
+            }
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');

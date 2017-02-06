@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jan 31, 2017 at 06:53 PM
+-- Generation Time: Feb 06, 2017 at 03:28 PM
 -- Server version: 5.5.42
 -- PHP Version: 5.6.10
 
@@ -23,6 +23,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `cabin` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `max_cant_persons` int(11) DEFAULT NULL,
   `Created` date NOT NULL,
   `Modified` date NOT NULL,
   `is_deleted` tinyint(1) NOT NULL
@@ -32,9 +33,10 @@ CREATE TABLE `cabin` (
 -- Dumping data for table `cabin`
 --
 
-INSERT INTO `cabin` (`id`, `Name`, `Created`, `Modified`, `is_deleted`) VALUES
-('b0c7c658-c7ea-11e6-915d-39adba9ad86b', 'Single', '2016-12-21', '2016-12-21', 0),
-('b6eb160c-c7ea-11e6-915d-39adba9ad86b', 'Double', '2016-12-21', '2016-12-21', 0);
+INSERT INTO `cabin` (`id`, `Name`, `max_cant_persons`, `Created`, `Modified`, `is_deleted`) VALUES
+('a1b4c658-c9ea-11e6-915d-39adba9ad86x', 'Package', 4, '2016-12-21', '2016-12-21', 0),
+('b0c7c658-c7ea-11e6-915d-39adba9ad86b', 'Single', 1, '2016-12-21', '2016-12-21', 0),
+('b6eb160c-c7ea-11e6-915d-39adba9ad86b', 'Double', 2, '2016-12-21', '2016-12-21', 0);
 
 -- --------------------------------------------------------
 
@@ -98,14 +100,6 @@ CREATE TABLE `certificate_detail_service` (
   `service_id` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `certificate_detail_service`
---
-
-INSERT INTO `certificate_detail_service` (`id`, `certificate_detail_id`, `service_id`) VALUES
-('846ff8a0-e725-11e6-950e-4cfe156feb4d', '846f6052-e725-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b'),
-('8470039a-e725-11e6-950e-4cfe156feb4d', '846f6052-e725-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b');
-
 -- --------------------------------------------------------
 
 --
@@ -130,14 +124,6 @@ CREATE TABLE `certificate_item` (
   `modified` datetime NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `certificate_item`
---
-
-INSERT INTO `certificate_item` (`id`, `reservation_id`, `type`, `service_id`, `value`, `from_customer_name`, `to_customer_name`, `message`, `send_type`, `arrival`, `departure`, `other_fields`, `enabled`, `created`, `modified`, `is_deleted`) VALUES
-('846f6052-e725-11e6-950e-4cfe156feb4d', '8467e782-e725-11e6-950e-4cfe156feb4d', 1, NULL, 52.5, 'Franklyn Perez', 'Dulce Perez', 'Felicidades', 1, '2017-01-30', '2017-01-30', '', 1, '2017-01-30 19:51:40', '2017-01-30 19:51:40', 0),
-('972ba034-e70c-11e6-950e-4cfe156feb4d', '9725da32-e70c-11e6-950e-4cfe156feb4d', 2, NULL, 100, 'franklyn Perez', 'Dulce Perez', 'Felicidades', 1, '2017-01-30', '2017-01-30', '', 1, '2017-01-30 16:53:14', '2017-01-30 16:53:14', 0);
 
 -- --------------------------------------------------------
 
@@ -259,10 +245,35 @@ CREATE TABLE `payment_information` (
 --
 
 INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `country`, `town_city`, `phone_number`, `company_name`, `street_address`, `apartment_unit`, `post_code`) VALUES
+('02a0141e-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('0dfbba2a-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('40b33f14-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('42d31274-ea4f-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('4538e540-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('5204037e-e898-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('592dfff0-ea51-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('59de35bc-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('5db94ab6-ea51-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('67ba6844-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('72d7f214-ebc1-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('7a8c4c6e-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('7e586d98-ea50-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('831c9652-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('8468b766-e725-11e6-950e-4cfe156feb4d', 'Franklyn', 'Perez', 'fkop@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('8a98adf2-ea50-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('97268798-e70c-11e6-950e-4cfe156feb4d', 'Franklyn', 'Salcedo', 'fkop04@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Calle #18', 'Apartamento Buenos Aires', '10010'),
+('b50193a2-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('c9354e4e-ea50-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('cd73e8f2-ea51-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('d5f24946-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('db690fe6-e7e0-11e6-b6d5-cce00160de3c', 'Franklyn', 'Perez', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('de0c80f6-e71e-11e6-950e-4cfe156feb4d', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
-('f727124e-e70b-11e6-950e-4cfe156feb4d', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Calle #18, sector Naco', 'Apartamento Los Prados', '10010');
+('e382f3c2-ebd2-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('e3e1e0f2-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('ebc90a9c-ea4e-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('f02263f0-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('f727124e-e70b-11e6-950e-4cfe156feb4d', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Calle #18, sector Naco', 'Apartamento Los Prados', '10010'),
+('f871d7de-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -377,11 +388,10 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `type`, `region_id`, `hotel_id`, `payment_information_id`, `confirmation_number`, `certificate_first_name`, `certificate_last_name`, `certificate_MI`, `certificate_email`, `certificate_not_my_info`, `arrival`, `departure`, `subtotal`, `discount`, `total`, `payment_method_id`, `last_four_card_numbers`, `status_id`, `created`, `modified`, `is_deleted`) VALUES
-('8467e782-e725-11e6-950e-4cfe156feb4d', 2, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '8468b766-e725-11e6-950e-4cfe156feb4d', 'DeFdCgaA', 'David', 'Salcedo', '', 'hiobairo1993@gmail.com', NULL, '2017-01-30', '2017-01-30', 52.5, NULL, 52.5, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', NULL, '6b5263c2-c7bc-11e6-915d-39adba9ad86b', '2017-01-30 19:51:40', '2017-01-30 19:51:40', 0),
-('9725da32-e70c-11e6-950e-4cfe156feb4d', 2, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '97268798-e70c-11e6-950e-4cfe156feb4d', 'aBbeg7cD', 'David', 'Salcedo', 'DS', 'hiobairo1993@gmail.com', NULL, '2017-01-30', '2017-01-30', 100, NULL, 100, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', NULL, '6b5263c2-c7bc-11e6-915d-39adba9ad86b', '2017-01-30 16:53:14', '2017-01-30 16:53:14', 0),
-('d8259d30-e70a-11e6-950e-4cfe156feb4d', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '', '159Fc6GA', NULL, NULL, NULL, NULL, NULL, '2017-01-30', '2017-01-30', 60, NULL, 52.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-01-30 16:40:44', '2017-01-30 16:40:44', 0),
-('de0bafbe-e71e-11e6-950e-4cfe156feb4d', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'de0c80f6-e71e-11e6-950e-4cfe156feb4d', 'ag4DbeGa', NULL, NULL, NULL, NULL, NULL, '2017-01-30', '2017-01-30', 60, NULL, 52.5, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', NULL, '6b5263c2-c7bc-11e6-915d-39adba9ad86b', '2017-01-30 19:04:04', '2017-01-30 19:04:04', 0),
-('f7260250-e70b-11e6-950e-4cfe156feb4d', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'f727124e-e70b-11e6-950e-4cfe156feb4d', '38Aa7284', NULL, NULL, NULL, NULL, NULL, '2017-01-30', '2017-01-30', 30, NULL, 27, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-01-30 16:48:45', '2017-01-30 16:48:45', 0);
+('40b2608a-ebda-11e6-8e07-23d1aff8cd1a', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '40b33f14-ebda-11e6-8e07-23d1aff8cd1a', 'Gff833Aa', NULL, NULL, NULL, NULL, NULL, '2017-02-05', '2017-02-05', 0, NULL, 0, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-05 19:35:30', '2017-02-05 19:35:30', 0),
+('67b9b3ea-ebda-11e6-8e07-23d1aff8cd1a', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '67ba6844-ebda-11e6-8e07-23d1aff8cd1a', '51D333c4', NULL, NULL, NULL, NULL, NULL, '2017-02-05', '2017-02-05', 0, NULL, 0, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-05 19:36:35', '2017-02-05 19:36:35', 0),
+('831bc326-ebda-11e6-8e07-23d1aff8cd1a', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '831c9652-ebda-11e6-8e07-23d1aff8cd1a', '23feBegB', NULL, NULL, NULL, NULL, NULL, '2017-02-05', '2017-02-05', 0, NULL, 0, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-05 19:37:21', '2017-02-05 19:37:21', 0),
+('b500d48a-ebda-11e6-8e07-23d1aff8cd1a', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'b50193a2-ebda-11e6-8e07-23d1aff8cd1a', 'Ac6Dd17B', NULL, NULL, NULL, NULL, NULL, '2017-02-05', '2017-02-05', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-05 19:38:45', '2017-02-05 19:38:45', 0);
 
 -- --------------------------------------------------------
 
@@ -409,11 +419,8 @@ CREATE TABLE `reservation_item` (
 --
 
 INSERT INTO `reservation_item` (`id`, `reservation_id`, `cart_item_id`, `service_id`, `customer_name`, `prefered_date`, `prefered_time`, `price`, `cabin_id`, `created`, `modified`, `is_deleted`) VALUES
-('d82b6ad0-e70a-11e6-950e-4cfe156feb4d', 'd8259d30-e70a-11e6-950e-4cfe156feb4d', 'cf1df48a-e70a-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', '2017-02-01', '12:00:00', 27, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-01-30 16:40:44', '2017-01-30 16:40:44', 0),
-('d82b7908-e70a-11e6-950e-4cfe156feb4d', 'd8259d30-e70a-11e6-950e-4cfe156feb4d', 'cf1e449e-e70a-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'Franklyn Perez', '2017-02-01', '12:00:00', 25.5, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-01-30 16:40:44', '2017-01-30 16:40:44', 0),
-('de137c62-e71e-11e6-950e-4cfe156feb4d', 'de0bafbe-e71e-11e6-950e-4cfe156feb4d', 'c89a5fe0-e71e-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', '2017-02-01', '12:00:00', 27, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-01-30 19:04:04', '2017-01-30 19:04:04', 0),
-('de138ed2-e71e-11e6-950e-4cfe156feb4d', 'de0bafbe-e71e-11e6-950e-4cfe156feb4d', 'c89adb28-e71e-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'Carlos Burgos', '2017-02-11', '13:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-01-30 19:04:04', '2017-01-30 19:04:04', 0),
-('f72c7e1e-e70b-11e6-950e-4cfe156feb4d', 'f7260250-e70b-11e6-950e-4cfe156feb4d', 'f247adf6-e70b-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', '2017-02-01', '12:00:00', 27, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-01-30 16:48:45', '2017-01-30 16:48:45', 0);
+('b5091cbc-ebda-11e6-8e07-23d1aff8cd1a', 'b500d48a-ebda-11e6-8e07-23d1aff8cd1a', '2dd8ba36-ebda-11e6-8e07-23d1aff8cd1a', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David Salcedo, Franklyn Perez', '2017-02-10', '12:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-05 19:38:45', '2017-02-05 19:38:45', 0),
+('b509293c-ebda-11e6-8e07-23d1aff8cd1a', 'b500d48a-ebda-11e6-8e07-23d1aff8cd1a', '2dd8c594-ebda-11e6-8e07-23d1aff8cd1a', '1a298596-c659-11e6-915d-39adba9ad86b', 'Jose Contreras', '2017-02-11', '13:00:00', 0, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-02-05 19:38:45', '2017-02-05 19:38:45', 0);
 
 -- --------------------------------------------------------
 
@@ -423,18 +430,19 @@ INSERT INTO `reservation_item` (`id`, `reservation_id`, `cart_item_id`, `service
 
 CREATE TABLE `service` (
   `id` varchar(128) NOT NULL,
-  `name` varchar(200) NOT NULL
+  `name` varchar(200) NOT NULL,
+  `cabin_id` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `service`
 --
 
-INSERT INTO `service` (`id`, `name`) VALUES
-('1a298596-c659-11e6-915d-39adba9ad86b', 'Flash Facial'),
-('9a263a3e-c659-11e6-915d-39adba9ad86b', 'Vita Cura - Anti Aging Facial'),
-('9e298596-c659-11e6-915d-39adba9ad86b', 'MASSAGES'),
-('d877950a-c6ca-11e6-915d-39adba9ad86b', 'Collagen Puls Facial');
+INSERT INTO `service` (`id`, `name`, `cabin_id`) VALUES
+('1a298596-c659-11e6-915d-39adba9ad86b', 'Flash Facial', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b'),
+('9a263a3e-c659-11e6-915d-39adba9ad86b', 'Vita Cura - Anti Aging Facial', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b'),
+('9e298596-c659-11e6-915d-39adba9ad86b', 'MASSAGES', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b'),
+('d877950a-c6ca-11e6-915d-39adba9ad86b', 'Collagen Puls Facial', 'a1b4c658-c9ea-11e6-915d-39adba9ad86x');
 
 -- --------------------------------------------------------
 
@@ -521,11 +529,8 @@ CREATE TABLE `shopping_cart` (
 --
 
 INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
-('6fa0eb96-e725-11e6-950e-4cfe156feb4d', 'emtpYTP1NDlGbZsScnNJoU29EQALaxai0o20RQ5d', '2017-01-30 19:51:05', 0),
-('8b2fad2a-e70c-11e6-950e-4cfe156feb4d', '60iQijD8EwCh8WhVV3mpsk44SYU5Vb34jGJqOGdV', '2017-01-30 16:52:54', 0),
-('c89a6d64-e71e-11e6-950e-4cfe156feb4d', '6uE2jEXtOhYPj7zAjarOEq1uMslBilQqP9vYD1Lx', '2017-01-30 19:03:28', 0),
-('cf1dfd5e-e70a-11e6-950e-4cfe156feb4d', 'Tl8kCvtSH1nSVMTq24HrMzJXOYXz2f6PVIx7H7G5', '2017-01-30 16:40:29', 0),
-('f247b58a-e70b-11e6-950e-4cfe156feb4d', 'MC56icFjQcXld7thgVQJPQk2aiB1NiF05wrpnywR', '2017-01-30 16:48:37', 0);
+('2dd77630-ebda-11e6-8e07-23d1aff8cd1a', '75BhN26OhIyc5iHVhF2QTAPzPtqaAXxWCGvekA9b', '2017-02-05 19:34:58', 0),
+('ad7bdd04-ec75-11e6-8e07-23d1aff8cd1a', 'npGkB24P1L1K2RcSkYZHKLt8kgjp9WrsjQdSCZmM', '2017-02-06 14:08:04', 0);
 
 -- --------------------------------------------------------
 
@@ -537,6 +542,7 @@ CREATE TABLE `shopping_cart_item` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cart_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `service_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `package_id` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `customer_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cabin_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Quantity` int(11) NOT NULL,
@@ -553,15 +559,11 @@ CREATE TABLE `shopping_cart_item` (
 -- Dumping data for table `shopping_cart_item`
 --
 
-INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
-('6fa0e1b4-e725-11e6-950e-4cfe156feb4d', '6fa0eb96-e725-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', NULL, NULL, 1, NULL, NULL, 2, 1, NULL, '2017-01-30', 0),
-('6fa14a3c-e725-11e6-950e-4cfe156feb4d', '6fa0eb96-e725-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, 1, NULL, NULL, 2, 1, NULL, '2017-01-30', 0),
-('8b313c3a-e70c-11e6-950e-4cfe156feb4d', '8b2fad2a-e70c-11e6-950e-4cfe156feb4d', NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '100', '2017-01-30', 0),
-('c89a5fe0-e71e-11e6-950e-4cfe156feb4d', 'c89a6d64-e71e-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-01', '12:00:00', 1, NULL, NULL, '2017-01-30', 0),
-('c89adb28-e71e-11e6-950e-4cfe156feb4d', 'c89a6d64-e71e-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'Carlos Burgos', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-11', '13:00:00', 1, NULL, NULL, '2017-01-30', 0),
-('cf1df48a-e70a-11e6-950e-4cfe156feb4d', 'cf1dfd5e-e70a-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-01', '12:00:00', 1, NULL, NULL, '2017-01-30', 0),
-('cf1e449e-e70a-11e6-950e-4cfe156feb4d', 'cf1dfd5e-e70a-11e6-950e-4cfe156feb4d', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'Franklyn Perez', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-01', '12:00:00', 1, NULL, NULL, '2017-01-30', 0),
-('f247adf6-e70b-11e6-950e-4cfe156feb4d', 'f247b58a-e70b-11e6-950e-4cfe156feb4d', 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'David Salcedo', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-01', '12:00:00', 1, NULL, NULL, '2017-01-30', 0);
+INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
+('2dd8ba36-ebda-11e6-8e07-23d1aff8cd1a', '2dd77630-ebda-11e6-8e07-23d1aff8cd1a', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'e652673e-eada-11e6-8e07-23d1aff8cd12', 'David Salcedo, Franklyn Perez', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-10', '12:00:00', 3, NULL, NULL, '2017-02-05', 0),
+('2dd8c594-ebda-11e6-8e07-23d1aff8cd1a', '2dd77630-ebda-11e6-8e07-23d1aff8cd1a', '1a298596-c659-11e6-915d-39adba9ad86b', 'e652673e-eada-11e6-8e07-23d1aff8cd12', 'Jose Contreras', 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-11', '13:00:00', 3, NULL, NULL, '2017-02-05', 0),
+('ad7d5a8a-ec75-11e6-8e07-23d1aff8cd1a', 'ad7bdd04-ec75-11e6-8e07-23d1aff8cd1a', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'e652673e-eada-11e6-8e07-23d1aff8cd12', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-06', 0),
+('ad7d65ca-ec75-11e6-8e07-23d1aff8cd1a', 'ad7bdd04-ec75-11e6-8e07-23d1aff8cd1a', '1a298596-c659-11e6-915d-39adba9ad86b', 'e652673e-eada-11e6-8e07-23d1aff8cd12', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-06', 0);
 
 -- --------------------------------------------------------
 
@@ -585,6 +587,120 @@ INSERT INTO `status` (`id`, `name`) VALUES
 ('6f646118-c7bc-11e6-915d-39adba9ad86b', 'Incompleted'),
 ('73b45b4c-c7bc-11e6-915d-39adba9ad86b', 'Canceled'),
 ('80becb88-c7bc-11e6-915d-39adba9ad86b', 'Declined');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package`
+--
+
+CREATE TABLE `wedding_package` (
+  `id` varchar(128) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package`
+--
+
+INSERT INTO `wedding_package` (`id`, `name`, `description`, `is_active`, `created`, `is_deleted`) VALUES
+('e652673e-eada-11e6-8e07-23d1aff8cd12', 'Glamorous Package', 'For the ones that prefer to apply their own make up. Obtain soft hands and feet, show beautiful nails and get the perfect hairstyle to be gorgeous on the big day', 1, '2017-02-04 00:00:00', 0),
+('f052673e-eada-11e6-8e07-23d1aff8cd1a', 'Pretty Style Package', 'The basic grooming for a special occasion. Select the style that will make you shine', 1, '2017-02-04 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package_category`
+--
+
+CREATE TABLE `wedding_package_category` (
+  `id` varchar(128) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `ordinal` int(11) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_category`
+--
+
+INSERT INTO `wedding_package_category` (`id`, `name`, `description`, `ordinal`, `is_active`, `created`, `is_deleted`) VALUES
+('0ded836c-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE GUYS', 'The gentlemen in the party need to look perfect as well! This is the time to pamper them. These packages are for the groom and any other men in the party. They have to be used by one person only ( cannot be shared) and the services can be split up in different days.', 1, 1, '2017-02-04 00:00:00', 0),
+('1915c4b6-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE COUPLE', 'The wedding trip is all about the couple! Enjoy a romantic and indulgent experience with your loved one.', 1, 1, '2017-02-04 00:00:00', 0),
+('2531cbd2-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR EVERYONE', 'Celebrate with your guests and have a delicious relaxing treat!', 1, 1, '2017-02-04 00:00:00', 0),
+('fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE GIRLS', 'This is the time to enjoy with the most important ladies in your life! Renova Spa wishes to make you look beautiful and to pamper you all. These packages are for the bride and any other lady in the party. They have to be used by one person only ( cannot be shared) and the services can be split up in different days.', 1, 1, '2017-02-04 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package_category_hotel`
+--
+
+CREATE TABLE `wedding_package_category_hotel` (
+  `id` varchar(128) NOT NULL,
+  `hotel_id` varchar(128) NOT NULL,
+  `wedding_package_category_id` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_category_hotel`
+--
+
+INSERT INTO `wedding_package_category_hotel` (`id`, `hotel_id`, `wedding_package_category_id`) VALUES
+('18926a58-eafe-11e6-8e07-23d1aff8acu7', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '0ded836c-ead8-11e6-8e07-23d1aff8cd1a'),
+('29467a58-eafe-11e6-8e07-23d1aff8cd1a', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a'),
+('g1267a58-eafe-11e6-8e07-23d1aff8ca13', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '1915c4b6-ead8-11e6-8e07-23d1aff8cd1a'),
+('jio98a58-eafe-11e6-8e07-23d1aff8ca13', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '2531cbd2-ead8-11e6-8e07-23d1aff8cd1a');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package_category_relation`
+--
+
+CREATE TABLE `wedding_package_category_relation` (
+  `id` varchar(128) NOT NULL,
+  `wedding_package_id` varchar(128) NOT NULL,
+  `wedding_package_category_id` varchar(128) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `discount` decimal(10,0) NOT NULL,
+  `active_discount` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_category_relation`
+--
+
+INSERT INTO `wedding_package_category_relation` (`id`, `wedding_package_id`, `wedding_package_category_id`, `price`, `discount`, `active_discount`) VALUES
+('368dbea0-eadc-11e6-8e07-23d1aff8cd1a', 'f052673e-eada-11e6-8e07-23d1aff8cd1a', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', '166', '0', 0),
+('js98bea0-eadc-11e6-8e07-23d1aff8cd1d', 'e652673e-eada-11e6-8e07-23d1aff8cd12', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', '231', '0', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package_service`
+--
+
+CREATE TABLE `wedding_package_service` (
+  `id` varchar(128) NOT NULL,
+  `wedding_package_id` varchar(128) NOT NULL,
+  `service_id` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_service`
+--
+
+INSERT INTO `wedding_package_service` (`id`, `wedding_package_id`, `service_id`) VALUES
+('1966d550-eaf4-11e6-8e07-23d1aff8cd13', 'e652673e-eada-11e6-8e07-23d1aff8cd12', '9a263a3e-c659-11e6-915d-39adba9ad86b'),
+('5866d550-eaf7-11e6-8e07-23d1aff8cd1a', 'e652673e-eada-11e6-8e07-23d1aff8cd12', '1a298596-c659-11e6-915d-39adba9ad86b');
 
 --
 -- Indexes for dumped tables
@@ -739,6 +855,36 @@ ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `wedding_package`
+--
+ALTER TABLE `wedding_package`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wedding_package_category`
+--
+ALTER TABLE `wedding_package_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wedding_package_category_hotel`
+--
+ALTER TABLE `wedding_package_category_hotel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wedding_package_category_relation`
+--
+ALTER TABLE `wedding_package_category_relation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wedding_package_service`
+--
+ALTER TABLE `wedding_package_service`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Constraints for dumped tables
 --
 
@@ -746,8 +892,8 @@ ALTER TABLE `status`
 -- Constraints for table `category_country`
 --
 ALTER TABLE `category_country`
-  ADD CONSTRAINT `category_country_ibfk_2` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
-  ADD CONSTRAINT `category_country_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `category_country_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `category_country_ibfk_2` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`);
 
 --
 -- Constraints for table `country`
@@ -759,44 +905,44 @@ ALTER TABLE `country`
 -- Constraints for table `hotel_region`
 --
 ALTER TABLE `hotel_region`
-  ADD CONSTRAINT `hotel_region_ibfk_4` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
   ADD CONSTRAINT `hotel_region_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
   ADD CONSTRAINT `hotel_region_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
-  ADD CONSTRAINT `hotel_region_ibfk_3` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`);
+  ADD CONSTRAINT `hotel_region_ibfk_3` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
+  ADD CONSTRAINT `hotel_region_ibfk_4` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`);
 
 --
 -- Constraints for table `photo`
 --
 ALTER TABLE `photo`
-  ADD CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
-  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`);
+  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
+  ADD CONSTRAINT `photo_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`);
 
 --
 -- Constraints for table `reservation_item`
 --
 ALTER TABLE `reservation_item`
-  ADD CONSTRAINT `reservation_item_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
-  ADD CONSTRAINT `reservation_item_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`);
+  ADD CONSTRAINT `reservation_item_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`),
+  ADD CONSTRAINT `reservation_item_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
 
 --
 -- Constraints for table `service_category_hotel`
 --
 ALTER TABLE `service_category_hotel`
-  ADD CONSTRAINT `service_category_hotel_ibfk_4` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
   ADD CONSTRAINT `service_category_hotel_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`),
   ADD CONSTRAINT `service_category_hotel_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
-  ADD CONSTRAINT `service_category_hotel_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+  ADD CONSTRAINT `service_category_hotel_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  ADD CONSTRAINT `service_category_hotel_ibfk_4` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
 
 --
 -- Constraints for table `service_price`
 --
 ALTER TABLE `service_price`
-  ADD CONSTRAINT `service_price_ibfk_2` FOREIGN KEY (`hotel_region_id`) REFERENCES `hotel_region` (`id`),
-  ADD CONSTRAINT `service_price_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+  ADD CONSTRAINT `service_price_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  ADD CONSTRAINT `service_price_ibfk_2` FOREIGN KEY (`hotel_region_id`) REFERENCES `hotel_region` (`id`);
 
 --
 -- Constraints for table `service_region`
 --
 ALTER TABLE `service_region`
-  ADD CONSTRAINT `service_region_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
-  ADD CONSTRAINT `service_region_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+  ADD CONSTRAINT `service_region_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  ADD CONSTRAINT `service_region_ibfk_2` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`);

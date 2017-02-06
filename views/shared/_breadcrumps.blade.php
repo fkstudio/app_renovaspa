@@ -25,7 +25,13 @@
 	<a href="{{ URL::to('/') }}"> HOME</a>
 	<a href="{{ URL::to('/') . $label_url }}"> / {{ $label }}</a>
 	@foreach($breadcrumps as $key => $value)
-		<a href="{{ URL::to('/') . $value }}"> / {{ $key }}</a>
+		@php
+			if($value == "#fakelink")
+				$newUrl = "#fakelink";
+			else
+				$newUrl = URL::to('/') . $value;
+		@endphp
+		<a href="{{ $newUrl }}"> / {{ $key }}</a>
 	@endforeach
 </p>
 @endif

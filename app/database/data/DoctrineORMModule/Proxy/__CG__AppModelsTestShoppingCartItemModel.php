@@ -36,7 +36,7 @@ class ShoppingCartItemModel extends \App\Models\Test\ShoppingCartItemModel imple
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = ['Cart' => NULL, 'Quantity' => NULL, 'Service' => NULL, 'CustomerName' => NULL, 'PreferedDate' => NULL, 'PreferedTime' => NULL, 'Cabin' => NULL, 'Type' => NULL, 'CertificateNumber' => NULL, 'Value' => NULL, 'Created' => NULL, 'IsDeleted' => NULL];
+    public static $lazyPropertiesDefaults = ['Cart' => NULL, 'Quantity' => NULL, 'Package' => NULL, 'Service' => NULL, 'CustomerName' => NULL, 'PreferedDate' => NULL, 'PreferedTime' => NULL, 'Cabin' => NULL, 'Type' => NULL, 'CertificateNumber' => NULL, 'Value' => NULL, 'Created' => NULL, 'IsDeleted' => NULL];
 
 
 
@@ -46,7 +46,7 @@ class ShoppingCartItemModel extends \App\Models\Test\ShoppingCartItemModel imple
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->Cart, $this->Quantity, $this->Service, $this->CustomerName, $this->PreferedDate, $this->PreferedTime, $this->Cabin, $this->Type, $this->CertificateNumber, $this->Value, $this->Created, $this->IsDeleted);
+        unset($this->Cart, $this->Quantity, $this->Package, $this->Service, $this->CustomerName, $this->PreferedDate, $this->PreferedTime, $this->Cabin, $this->Type, $this->CertificateNumber, $this->Value, $this->Created, $this->IsDeleted);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
@@ -108,7 +108,7 @@ class ShoppingCartItemModel extends \App\Models\Test\ShoppingCartItemModel imple
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'Id', 'Cart', 'Quantity', 'TotalQuantity', 'Service', 'CustomerName', 'PreferedDate', 'PreferedTime', 'Cabin', 'Type', 'CertificateNumber', 'Value', 'Created', 'IsDeleted'];
+            return ['__isInitialized__', 'Id', 'Cart', 'Quantity', 'TotalQuantity', 'Package', 'Service', 'CustomerName', 'PreferedDate', 'PreferedTime', 'Cabin', 'Type', 'CertificateNumber', 'Value', 'Created', 'IsDeleted'];
         }
 
         return ['__isInitialized__', 'Id', 'TotalQuantity'];
@@ -133,7 +133,7 @@ class ShoppingCartItemModel extends \App\Models\Test\ShoppingCartItemModel imple
                 }
             };
 
-            unset($this->Cart, $this->Quantity, $this->Service, $this->CustomerName, $this->PreferedDate, $this->PreferedTime, $this->Cabin, $this->Type, $this->CertificateNumber, $this->Value, $this->Created, $this->IsDeleted);
+            unset($this->Cart, $this->Quantity, $this->Package, $this->Service, $this->CustomerName, $this->PreferedDate, $this->PreferedTime, $this->Cabin, $this->Type, $this->CertificateNumber, $this->Value, $this->Created, $this->IsDeleted);
         }
     }
 

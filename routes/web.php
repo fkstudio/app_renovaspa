@@ -110,6 +110,16 @@ Route::get('/reservation/bookhere', [ 'as' => 'reservation.bookhere', 'uses' => 
 
 Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
 
+
+/*
+|----------------------------------------------------------------------------
+| Wedding controller routes
+|----------------------------------------------------------------------------
+*/
+Route::get('/wedding/services', [ 'as' => 'wedding.services', 'uses' => 'WeddingController@weddingServices' ]);
+
+Route::get('/wedding/checkout', [ 'as' => 'wedding.checkout', 'uses' => 'WeddingController@checkout' ]);
+
 /*
 |----------------------------------------------------------------------------
 | Payment controller routes

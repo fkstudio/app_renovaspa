@@ -79,7 +79,7 @@
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								{{ csrf_field() }}
-								<button class="btn btn-interline block-button">{{ trans('shared.add_to_cart') }}</button>	
+								<button type="submit" name="services" class="btn btn-interline block-button">{{ trans('shared.add_to_cart') }}</button>	
 							</div>
 							<br class="visible-xs" />
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

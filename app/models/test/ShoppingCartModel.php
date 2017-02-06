@@ -20,7 +20,7 @@
 		public $Session;
 
 		/** 
-		 * @OneToMany(targetEntity="ShoppingCartItemModel", mappedBy="Cart")
+		 * @OneToMany(targetEntity="ShoppingCartItemModel", cascade={"persist"}, mappedBy="Cart")
 		*/
 		public $Items;
 

@@ -10,11 +10,12 @@
 		@foreach($model as $hotelRegion)
 		    @php
 		    	$url = "";
-			    if ($reservationType == 1){
-			    	$url = "/hotel/".$hotelRegion->Hotel->Id."/categories";
-			    }
-			    elseif ($reservationType == 2){
+			    
+			    if ($reservationType == 2){
 			    	$url = "/certificate/options/".$hotelRegion->Hotel->Id;
+			    }
+			    else {
+			    	$url = "/hotel/".$hotelRegion->Hotel->Id."/categories";
 			    }
 			    
 		    @endphp

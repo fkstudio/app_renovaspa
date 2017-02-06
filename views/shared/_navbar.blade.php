@@ -77,6 +77,9 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
+          @if(session('reservation_type') == 3)
+          <li><a href="{{ URL::to('/') }}/wedding/services">RENOVA WEDDING PACKAGE</a></li>
+          @endif
           @foreach($categories as $categoryRegion)
           <li><a href="{{ URL::to('/') }}/category/{{ $categoryRegion->Category->Id }}/services">{{ $categoryRegion->Category->Name }}</a></li>
           @endforeach
