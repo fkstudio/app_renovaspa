@@ -37,6 +37,31 @@
 		/** @Column(name="confirmation_number", type="string") */
 		public $ConfirmationNumber;		
 
+		// ================== Wedding data =====================
+		/** @Column(name="bride_name", type="string") */
+		public $BrideName;
+
+		/** @Column(name="groom_name", type="string") */
+		public $GroomName;
+
+		/** @Column(name="email", type="string") */
+		public $Email;
+
+		/** @Column(name="wedding_bill_delivery", type="integer") */
+		public $WeddingBillDelivery;
+
+		/** @Column(name="remarks", type="string") */
+		public $Remarks;
+
+		/** @Column(name="wedding_date", type="date") */
+		public $WeddingDate;
+
+		/** @Column(name="wedding_time", type="time") */
+		public $WeddingTime;		
+		//================== wedding data end ===================
+
+
+		// ================= certificate data ======================
 		/** @Column(name="certificate_first_name", type="string") */
 		public $CertificateFirstName;
 
@@ -51,7 +76,7 @@
 
 		/** @Column(name="certificate_email", type="string") */
 		public $CertificateEmail;
-
+		// ================= certificate data end ====================
 		
 		/** @arrival @Column(type="date") */
 		public $Arrival;
