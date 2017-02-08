@@ -22,7 +22,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "PHPMAILER":[
+            "vendor/phpmailer/phpmailer/PHPMailerAutoload.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [

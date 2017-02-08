@@ -10,9 +10,6 @@
 				@include('shared._messages')
 				<div class="row">
 					<div class="col-md-12">
-						@if (session('status'))
-						<p>{{ session('status') }}</p>
-						@endif
 						<div class="col-md-12 text-center">
 							<h3>Payment your order</h3>
 							<h3><small>Total amount</small></h3>

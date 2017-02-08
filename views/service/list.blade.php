@@ -62,7 +62,7 @@
 									@endif
 									
 								</td>
-								<td>{{ $region->Country->Currency->Symbol.number_format($categoryRegion->Service->getPrice($hotel->Id)) }}</td>
+								<td>{{ $region->Country->Currency->Symbol.number_format($categoryRegion->Service->getPrice($hotel->Id), 2) }}</td>
 								<td>
 									<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />
 								</td>

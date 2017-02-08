@@ -183,7 +183,7 @@
 						<tbody style="font-size: 20px;">
 							<tr>
 								<td>Subtotal</td>
-								<td>{{ $country->Currency->Symbol }}{{ $model->Subtotal }}</td>
+								<td>{{ $country->Currency->Symbol }}{{ number_format($model->Subtotal, 2) }}</td>
 							</tr>
 							@if ($hotel_region->ActiveDiscount)
 							<tr>
@@ -192,7 +192,7 @@
 							@endif
 							<tr>
 								<td><strong>Total</strong></td>
-								<td>{{ $country->Currency->Symbol }}{{ $model->Total }}</td>
+								<td>{{ $country->Currency->Symbol }}{{ number_format($model->Total, 2) }}</td>
 							</tr>
 						</tbody>
 					</table>

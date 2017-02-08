@@ -1,9 +1,4 @@
-	@extends('layout/baseLayout')
-
-	@section('title', 'Voucher')
-
-	@section("content")
-	<br/>
+<br/>
 	<div style="width: 90%;
 				max-width: 700px;
     			margin: 0 auto;
@@ -229,4 +224,3 @@
 		</div>
 		<p class="text-center"><a href="{{ URL::to('/') }}">GO TO HOME</a></p>
 	</div>
-	@endsection

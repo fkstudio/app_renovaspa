@@ -73,7 +73,7 @@
 									<td class="padding-td">
 										<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
 									</td>
-									<td class="padding-td">{{ $country->Currency->Symbol }}{{ $item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity }}</td>
+									<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity, 2) }}</td>
 									<td class="padding-td">
 										<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
 									</td>
@@ -92,7 +92,7 @@
 									<tbody>
 										<tr>
 											<td>Subtotal</td>
-											<td>{{ $country->Currency->Symbol }}{{ $subtotal }}</td>
+											<td>{{ $country->Currency->Symbol }}{{ number_format($subtotal, 2) }}</td>
 										</tr>
 										@if ($hotel_region->ActiveDiscount)
 										<tr>
@@ -101,7 +101,7 @@
 										@endif
 										<tr>
 											<td><strong>Total</strong></td>
-											<td>{{ $country->Currency->Symbol }}{{ $total }}</td>
+											<td>{{ $country->Currency->Symbol }}{{ number_format($total, 2) }}</td>
 										</tr>
 									</tbody>
 								</table>

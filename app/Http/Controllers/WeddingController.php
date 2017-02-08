@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\DbContext;
 use App\Models\CountryModel;
+use Mail;
 
 
 class WeddingController extends Controller
@@ -81,6 +83,8 @@ class WeddingController extends Controller
         $reservation_id = $session->get('current_reservation_id');
 
         try {
+            /* cart */
+            $cart = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(["Session" => $session_id]);
             /* get current reservation */
             $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')
                                            ->findOneBy(['Id' => $reservation_id]);
@@ -88,10 +92,9 @@ class WeddingController extends Controller
             if($reservation == null)
                 return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
 
-            //print_r($_POST);
-            //exit();
-
             /* complete reservation data */
+            $reservation->CertificateLastName = $_POST['first_name'];
+            $reservation->CertificateLastName = $_POST['last_name'];
             $reservation->BrideName = $_POST['bride_full_name'];
             $reservation->GroomName = $_POST['groom_full_name'];
             $reservation->Email = $_POST['email'];
@@ -104,11 +107,60 @@ class WeddingController extends Controller
 
             $this->entityManager->flush();
 
-            if(empty($_POST['bride_full_name']) || empty($_POST['groom_full_name']) || empty($_POST['email']) || $_POST['email_confirmation'] || empty($_POST['wedding_date']) || empty($_POST['wedding_time']) || empty($_POST['bill_delivery']))
+            if( empty($_POST['first_name']) || 
+                empty($_POST['last_name']) || 
+                empty($_POST['bride_full_name']) || 
+                empty($_POST['groom_full_name']) || 
+                empty($_POST['email']) || 
+                empty($_POST['email_confirmation']) || 
+                empty($_POST['wedding_date']) || 
+                empty($_POST['wedding_time']) || 
+                empty($_POST['bill_delivery']))
                 return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_data'));
 
             if($_POST['email'] != $_POST['email_confirmation'])
                 return redirect()->route('wedding.checkout')->with('failure', trans('messages.email_doesn_match'));
+
+
+            /* change reservation status to complete */
+            $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
+
+            $this->entityManager->persist($reservation);
+
+            $this->entityManager->flush();
+
+            /* view data */
+            $viewData = [
+                'model' => $reservation,
+                'cart' => $cart
+            ];
+
+            /* get wedding quotation as html string */
+            $voucher = (string) \View::make('wedding._quotation', $viewData)->render();
+
+            /* mail object */
+            $mail = app()['mailer'];
+
+            $mailData = [
+                'voucher' => $voucher,
+                'reservation' => $reservation
+            ];
+
+            /* send voucher view */
+            $mail->send([],[], function($message) use ($mailData) {
+                $reservation = $mailData['reservation'];
+                $message->setBody($mailData['voucher'], 'text/html');
+                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->sender('info@renovaspa.com', 'Renovaspa');
+                $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
+                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->subject("Online Reservations - Wedding groups # " . $reservation->ConfirmationNumber);
+            });
+
+            /* clear session data */
+            $session->flush();
+
+            return view('wedding.quotation_content', $viewData);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\DbContext;
 use App\Models\CountryModel;
 use App\Classes\gwapi;
+use Mail;
 
 
 class PaymentController extends Controller
@@ -19,6 +21,7 @@ class PaymentController extends Controller
 
     private $dbcontext;
     private $entityManager;
+    private $emailService;
 
     /* ============================= PUBLIC METHODS ============================= */
     
@@ -218,6 +221,7 @@ class PaymentController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
         $reservation_id = $session->get('current_reservation_id');
+        $voucher = "";
 
         try {
             /* if reservation id is null return an error */
@@ -267,6 +271,9 @@ class PaymentController extends Controller
                       "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
                     );
                 }    
+
+                /* get services voucher as html sring */
+                $voucher = (string) \View::make('payment._voucher', $model)->render();
             }
             /* certificate voucher info */
             else if ($reservation->Type == 2){
@@ -288,17 +295,41 @@ class PaymentController extends Controller
                         $model['details'][$key]['type'] = "Hotel";
                     }
                 }
+
+                /* get certificate voucher as html string */
+                $voucher = (string) \View::make('payment._certificate_voucher', $model)->render();
             }
+
+
 
             /* clear session data */
             $session->flush();
 
+            /* mail object */
+            $mail = app()['mailer'];
+
+            $mailData = [
+                'voucher' => $voucher,
+                'reservation' => $reservation
+            ];
+
+            /* send voucher view */
+            $mail->send([],[], function($message) use ($mailData) {
+                $reservation = $mailData['reservation'];
+                $message->setBody($mailData['voucher'], 'text/html');
+                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->sender('info@renovaspa.com', 'Renovaspa');
+                $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->subject("Renova Spa voucher confirmation # " . $reservation->ConfirmationNumber);
+            });
+
             if($reservation->Type == 1){
                 /* show voucher */
-                return view('payment.voucher', $model);
+                return view('payment.voucher_content', $model);
             }
             else if ($reservation->Type == 2){
-                return view('payment.certificate_voucher', $model);
+                return view('payment.certificate_voucher_content', $model);
             }
         }
         catch (\Exception $e){
