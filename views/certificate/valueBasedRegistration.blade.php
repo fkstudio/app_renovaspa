@@ -17,27 +17,12 @@
 		<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
 		<br/>
 		<form action="{{ URL::to('/') }}/reservation/checkout" method="POST">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label>A) Who will receive this gift certificate?</label>
-					</div>
-					<div class="form-group">
-						<label class="custom-label">* First name</label>
-						<input type="text" class="form-control input-border" name="first_name" />
-					</div>
-					<div class="form-group">
-						<label class="custom-label">* Last name</label>
-						<input type="text" class="form-control input-border" name="last_name" />
-					</div>
-				</div>
-			</div>
 
 			<div class="clearfix"></div>
 			<hr class="custom-hr" > 
 			
 			<div class="form-group">
-				<label>B) Personalize by adding a message:</label>
+				<label>A) Personalize by adding a message:</label>
 			</div>
 			@foreach($model as $key => $item)
 			<h3>Certificate #{{ $item->CertificateNumber }}</h3>
@@ -71,7 +56,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label>C) Select delivery method:</label>
+						<label>B) Select delivery method:</label>
 						<p>* Choose from Renova Spa s flexible delivery options</p>
 					</div>
 					<div class="clearfix"></div>

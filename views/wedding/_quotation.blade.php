@@ -1,6 +1,5 @@
 @inject("dbcontext", "App\Database\DbContext")
 
-
 <!-- App -->
 <link href="{{ URL::to('/') }}/css/app.css" rel="stylesheet">
 

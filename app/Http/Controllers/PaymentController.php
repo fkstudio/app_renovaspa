@@ -41,11 +41,6 @@ class PaymentController extends Controller
 
 
         try {
-            // check valid data
-            if(!isset($_POST["payment_method"]) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email']) || empty($_POST["country"])){
-                return redirect()->route("reservation.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
-            }
-
             
             $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
             $session->put('reservation_email', $_POST['email']);
@@ -63,22 +58,14 @@ class PaymentController extends Controller
             /* if reservation is != null proceed with the logic */
             if($reservation != null){
 
+                // add payment method to reservation
                 $reservation->PaymentMethod = $paymentMethod;
 
-                if($reservationType == 2){
-                    if(empty($_POST['customer_first_name']) or
-                       empty($_POST['customer_last_name']) or
-                       empty($_POST['customer_email']) or
-                       empty($_POST["customer_email_confirmation"]) )
-                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.invalid_data"));
-                    else if ($_POST["customer_email"] != $_POST["customer_email_confirmation"])
-                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.email_doesn_match"));
-
-                    $reservation->CertificateFirstName = $_POST["customer_first_name"];
-                    $reservation->CertificateLastName = $_POST["customer_last_name"];
-                    $reservation->CertificateEmail = $_POST["customer_email"];
-                    $reservation->CertificateMI = $_POST["customer_MI"];
-                }
+                // comlete reservation data
+                $reservation->CertificateFirstName = $_POST["customer_first_name"];
+                $reservation->CertificateLastName = $_POST["customer_last_name"];
+                $reservation->CertificateEmail = $_POST["customer_email"];
+                $reservation->CertificateMI = $_POST["customer_MI"];
 
                 // complete reservation data
                 $reservation->PaymentInformation->FirstName = $_POST['first_name'];
@@ -93,7 +80,23 @@ class PaymentController extends Controller
                 $reservation->PaymentInformation->ApartmentUnit = $_POST["apartment_unit"];
 
                 $this->entityManager->persist($reservation);
-                $this->entityManager->flush();    
+                $this->entityManager->flush(); 
+
+                // check valid data
+                if(!isset($_POST["payment_method"]) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email']) || empty($_POST["country"])){
+                    return redirect()->route("reservation.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
+                }   
+
+                if($reservationType == 2){
+                    if(empty($_POST['customer_first_name']) or
+                       empty($_POST['customer_last_name']) or
+                       empty($_POST['customer_email']) or
+                       empty($_POST["customer_email_confirmation"]) )
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.invalid_data"));
+
+                    else if ($_POST["customer_email"] != $_POST["customer_email_confirmation"])
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.email_doesn_match"));
+                }
 
                 if($paymentMethod->Name == 'Paypal'){
                     // redirect
@@ -119,6 +122,7 @@ class PaymentController extends Controller
     /* return a view to fill credit card data */
     public function gatewayPayment(Request $request){
         $session = $request->session();
+    
 
         try {
             $reservation_id = $session->get('current_reservation_id');
@@ -321,7 +325,11 @@ class PaymentController extends Controller
                 $message->sender('info@renovaspa.com', 'Renovaspa');
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
-                $message->subject("Renova Spa voucher confirmation # " . $reservation->ConfirmationNumber);
+
+                if($reservation->Type == 1)
+                    $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                else
+                    $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
             });
 
             if($reservation->Type == 1){

@@ -17,9 +17,9 @@
 
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner"role="listbox">
-					<div class="item active" style="height: 700px;">
+					<div class="item active">
 						<img src="{{ URL::to('/') }}/images/carousel/facial_treatment.jpg" alt="Flower">
-						<div class="carousel-caption" style="margin-bottom: 250px;">
+						<div class="carousel-caption" style="margin-bottom: 370px;">
 				        <h3 style="font-size: 60px;text-shadow: none;">RELAX MODE: <span style="color:#00CCCC;">ON</span></h3>
 				      </div>
 					</div>

@@ -83,6 +83,7 @@ class WeddingController extends Controller
         $reservation_id = $session->get('current_reservation_id');
 
         try {
+
             /* cart */
             $cart = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(["Session" => $session_id]);
             /* get current reservation */
@@ -93,7 +94,7 @@ class WeddingController extends Controller
                 return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
 
             /* complete reservation data */
-            $reservation->CertificateLastName = $_POST['first_name'];
+            $reservation->CertificateFirstName = $_POST['first_name'];
             $reservation->CertificateLastName = $_POST['last_name'];
             $reservation->BrideName = $_POST['bride_full_name'];
             $reservation->GroomName = $_POST['groom_full_name'];
@@ -154,11 +155,11 @@ class WeddingController extends Controller
                 $message->sender('info@renovaspa.com', 'Renovaspa');
                 $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
-                $message->subject("Online Reservations - Wedding groups # " . $reservation->ConfirmationNumber);
+                $message->subject("Online Reservations - Wedding groups #" . $reservation->ConfirmationNumber);
             });
 
             /* clear session data */
-            $session->flush();
+            //$session->flush();
 
             return view('wedding.quotation_content', $viewData);
         }

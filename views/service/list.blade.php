@@ -83,7 +83,7 @@
 							</div>
 							<br class="visible-xs" />
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-								@if (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
+								@if (session('reservation_type') == 1 || session('reservation_type') == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">{{ trans('shared.go_to_cart') }}</a>
 								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)
 								<a href="#fakelink" class="disabled btn btn-default block-button">COMPLETE TO VIEW THE CART</a>
