@@ -24,7 +24,7 @@
 				      </div>
 					</div>
 
-					<div class="item" style="height: 700px;">
+					<div class="item">
 						<img src="{{ URL::to('/') }}/images/carousel/body_treatment.jpg" alt="Flower" />
 					</div>
 				</div>

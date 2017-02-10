@@ -1,6 +1,6 @@
 <br/>
 <div style="width: 90%;
-			max-width: 700px;
+			max-width: 800px;
 			margin: 0 auto;
 			font-size: 14px;
 			padding: 16px;
@@ -93,14 +93,6 @@
 			<tr>
 				<td><strong>Destination:</strong></td>
 				<td style="float: right;">{{ $hotel_name }}</td>
-			</tr>
-			<tr>
-				<td><strong>Check in:</strong></td>
-				<td style="float: right;">{{ $check_in }}</td>
-			</tr>
-			<tr>
-				<td><strong>Check out:</strong></td>
-				<td style="float: right;">{{ $check_out }}</td>
 			</tr>
 		</tbody>
 	</table>

@@ -10,6 +10,19 @@ use App\Models\CountryModel;
 use App\Classes\gwapi;
 use Mail;
 
+/* paypal namespaces */
+use PayPal\Api\Payer;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Details;
+use PayPal\Api\Amount;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+
+
 
 class PaymentController extends Controller
 {
@@ -22,11 +35,13 @@ class PaymentController extends Controller
     private $dbcontext;
     private $entityManager;
     private $emailService;
+    private $siteUrl;
 
     /* ============================= PUBLIC METHODS ============================= */
     
     /* public class construct */
     public function __construct(){
+        $this->siteUrl = 'http://cydeck.com/public';
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
@@ -61,11 +76,22 @@ class PaymentController extends Controller
                 // add payment method to reservation
                 $reservation->PaymentMethod = $paymentMethod;
 
-                // comlete reservation data
-                $reservation->CertificateFirstName = $_POST["customer_first_name"];
-                $reservation->CertificateLastName = $_POST["customer_last_name"];
-                $reservation->CertificateEmail = $_POST["customer_email"];
-                $reservation->CertificateMI = $_POST["customer_MI"];
+                if($reservationType == 2){
+                    if(empty($_POST['customer_first_name']) or
+                       empty($_POST['customer_last_name']) or
+                       empty($_POST['customer_email']) or
+                       empty($_POST["customer_email_confirmation"]) )
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.invalid_data"));
+
+                    else if ($_POST["customer_email"] != $_POST["customer_email_confirmation"])
+                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.email_doesn_match"));
+
+                    // comlete reservation data
+                    $reservation->CertificateFirstName = $_POST["customer_first_name"];
+                    $reservation->CertificateLastName = $_POST["customer_last_name"];
+                    $reservation->CertificateEmail = $_POST["customer_email"];
+                    $reservation->CertificateMI = $_POST["customer_MI"];
+                }
 
                 // complete reservation data
                 $reservation->PaymentInformation->FirstName = $_POST['first_name'];
@@ -85,17 +111,6 @@ class PaymentController extends Controller
                 // check valid data
                 if(!isset($_POST["payment_method"]) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email']) || empty($_POST["country"])){
                     return redirect()->route("reservation.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
-                }   
-
-                if($reservationType == 2){
-                    if(empty($_POST['customer_first_name']) or
-                       empty($_POST['customer_last_name']) or
-                       empty($_POST['customer_email']) or
-                       empty($_POST["customer_email_confirmation"]) )
-                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.invalid_data"));
-
-                    else if ($_POST["customer_email"] != $_POST["customer_email_confirmation"])
-                        return redirect()->route("reservation.checkout")->with("failure", trans("messages.email_doesn_match"));
                 }
 
                 if($paymentMethod->Name == 'Paypal'){
@@ -178,6 +193,11 @@ class PaymentController extends Controller
                     "LA",'21000','DR','809-747-2992',"","sales@renovaspa.com",
                     "");
 
+                // add the last four card numbers to reservation
+                $reservation->LastFourCardNumbers = substr($cardNumber, -4);
+                $this->entityManager->persist($reservation);
+                $this->entityManager->flush();
+
                 /* set order */
                 $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
 
@@ -191,13 +211,6 @@ class PaymentController extends Controller
                     return redirect()->route('payment.gateway');
                 }   
                 else {
-                    /* success case */
-                    $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
-
-                    /* update reservation status to completed */
-                    $this->entityManager->persist($reservation);
-                    $this->entityManager->flush();
-
                     return redirect()->route('payment.serviceVoucher');
                 } 
             }
@@ -214,8 +227,132 @@ class PaymentController extends Controller
         echo 'redsysPayment';
     }
 
-    public function paypalPayment(){
-        echo 'paypalPayment';
+    /* POST payment method */
+    public function paypalPayment(Request $request){
+        $session = $request->session();
+        $sessionId = $session->getId();
+        $reservation_id = $session->get('current_reservation_id');
+        $subtotal = 0.00;
+        $total = 0.00;
+
+
+        DEFINE("__SITE_URL__", \App::make('url')->to('/'));
+       
+        try {
+            /* if reservation id is null return an error */
+            if(!isset($reservation_id) || empty($reservation_id)){
+                return redirect()->route('/')->with('failure', 'There is not voucher to show.');
+            }
+
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
+
+            /* if reservation is null return an error */
+            if($reservation == null){
+                return redirect()->route('/')->with('failure', 'There is not voucher to show.');
+            }
+
+            // store currency object to reuse it
+            $currency = $reservation->Region->Country->Currency;
+            // store hotel object to reuse it
+            $hotel = $reservation->Hotel;
+
+            // create a paypal object
+            $paypal = new ApiContext(
+                new OAuthTokenCredential(
+                    'Aar8WECVhZvVFwq9ZjdA5q7hJeXPgmj-6koCAuget_3bTflEzM3spiw68XgJtvkD1lSCyQU89N1wh-1H', 
+                    'EAsfhOeskbDnBGBnznoyRwO0zRCWoYE3vz7TldjWsxRdxMdAgBkIkHalY2RwSedNTvkI-97w2zlh-w2s')
+            );
+
+            // create paypal payer
+            $payer = new Payer();
+            $payer->setPaymentMethod('paypal');
+
+            // array items
+            $items = [];
+
+            // create paypal item list to add array item
+            $itemList = new ItemList();
+
+            switch($reservation->Type){
+                case 1:
+                    // iterate over services details
+                    foreach($reservation->ServicesDetails as $detail):
+                        // store servies in var to reuse it
+                        $currentService = $detail->Service;
+
+                        $currentServicePlanePrice = $currentService->getPlanePrice($hotel->Id);
+                        $currentServicePrice = $currentService->getPrice($hotel->Id);
+                        // create paypal item object by iteration item
+                        $item = new Item();
+                        $item->setName($detail->Service->Name)
+                             ->setCurrency($currency->Name)
+                             ->setQuantity(1)
+                             ->setSku(substr($currentService->Id, -7))
+                             ->setPrice($currentServicePrice);
+
+                        // add item to array items
+                        $items[] = $item;
+
+                        $subtotal += $currentServicePlanePrice;
+                        $total += $currentServicePrice;
+
+
+                    endforeach;
+                    break;
+                case 2:
+                    break;
+            }
+
+            // add array items to paypal item list
+            $itemList->setItems($items);
+
+            // create paypal detials item
+            $details = new Details();
+            $details->setShipping(0.00)
+                    ->setTax(0.0)
+                    ->setSubtotal($total);
+
+            // create paypal amount object
+            $amount = new Amount();
+            $amount->setCurrency($currency->Name)
+                   ->setTotal($total)
+                   ->setDetails($details);
+
+            // create paypal transaction object
+            $transaction = new Transaction();
+            $transaction->setAmount($amount)
+                        ->setItemList($itemList)
+                        ->setInvoiceNumber($reservation->ConfirmationNumber);
+
+            if($reservation->Type == 1)
+                $transaction->setDescription("Individual services reservation");
+            else if ($reservation->Type == 2)
+                $transaction->setDescription("Gift certificate reservation");
+
+            // create paypal redirect object
+            $redirectUrls = new RedirectUrls();
+            $redirectUrls->setReturnUrl(__SITE_URL__."/payment/voucher") // FIXME
+                         ->setCancelUrl(__SITE_URL__."/reservation/canceled"); // FIXME
+
+
+            // create paypal payment object
+            $payment = new Payment();
+            $payment->setIntent("sale")
+                    ->setRedirectUrls($redirectUrls)
+                    ->setPayer($payer)
+                    ->setTransactions([$transaction]);
+
+            // create payment
+            $payment->create($paypal);
+            
+            $approvalUrl = $payment->getApprovalLink();
+
+            return \Redirect::to($approvalUrl);
+        }
+        catch (\PayPal\Exception\PayPalConnectionException $e) {
+            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+        }
+
     }
 
 
@@ -240,6 +377,15 @@ class PaymentController extends Controller
                 return redirect()->route('/')->with('failure', 'There is not voucher to show.');
             }
 
+            /* change reservation status to complete and it will appear in admin reservation section */
+            $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
+
+            // save reservation with new status
+            $this->entityManager->persist($reservation);
+            $this->entityManager->flush();
+
+
+            $paymentInfo = $reservation->PaymentInformation;
             /* set voucher data */
             $model = [
                 'customer_name' => $reservation->PaymentInformation->FirstName,
@@ -247,8 +393,8 @@ class PaymentController extends Controller
                 'current_date' => new \DateTime("now"),
                 'confirmation_number' => $reservation->ConfirmationNumber,
                 'author_code' => uniqid(),
-                'card_type' => "Credit Card",
-                'billing_details' => $reservation->Region->Country->Name,
+                'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' - *****'.$reservation->LastFourCardNumbers ),
+                'billing_details' => $paymentInfo->CountryName.', '.', '.$paymentInfo->TownCity.', '.$paymentInfo->StreetAddress.', '.$paymentInfo->ApartmentUnit.', '.$paymentInfo->PostCode,
                 'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
                 'hotel_email' => $reservation->Hotel->NotifyEmail,
                 'customer_service_name' => $reservation->Hotel->CustomerServiceName,
@@ -304,8 +450,6 @@ class PaymentController extends Controller
                 $voucher = (string) \View::make('payment._certificate_voucher', $model)->render();
             }
 
-
-
             /* clear session data */
             $session->flush();
 
@@ -323,6 +467,7 @@ class PaymentController extends Controller
                 $message->setBody($mailData['voucher'], 'text/html');
                 $message->from('hiobairo1993@gmail.com', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
+                //$message->bcc('hiobairo1993@gmail.com', 'David Salcedo');
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
 

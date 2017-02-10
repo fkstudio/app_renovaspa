@@ -31,7 +31,7 @@ class DbContext
      */
     public function createEntityManager()
     {
-        $applicationMode = "development";
+        $applicationMode = "production";
 
         if($applicationMode == "development")
             $cache = new \Doctrine\Common\Cache\ArrayCache;
