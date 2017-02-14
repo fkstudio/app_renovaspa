@@ -5,18 +5,18 @@
 	@section("content")
 		<div class="container-fluid">
 			<div class="container">
-				<h3>CREDIT CARD INFORMATION</h3>
+				<h3>{{ trans('titles.card_info') }}</h3>
 				<hr>
 				@include('shared._messages')
 				<div class="row">
 					<div class="col-md-12">
 						<div class="col-md-12 text-center">
-							<h3>Payment your order</h3>
-							<h3><small>Total amount</small></h3>
+							<h3>{{ trans('messages.payment_your_order') }}</h3>
+							<h3><small>Total</small></h3>
 							<h2 style="margin-bottom: 20px;">{{ $country->Currency->Symbol.$total.' '.$country->Currency->Name }} </h2>
 						</div>
 						<div class="col-md-offset-3 col-md-6" style="padding: 20px;background: #EEE;">
-							<p class="text-center">Please fill your Credit Card Information</p>
+							<p class="text-center">{{ trans('messages.fill_card_data') }}</p>
 							<div class='card-wrapper'></div>
 							<form action="{{ URL::to('/') }}/payment/gateway/proceed" method="POST">
 								<div class="form-group">
@@ -51,7 +51,7 @@
 						</div>
 						<div class="clearfix"></div>
 						<br/>
-						<p style="font-size: 10px;" class="text-center"><a href="{{ URL::to('/') }}/reservation/checkout">BACK TO CHECKOUT</a></p>
+						<p style="font-size: 10px;" class="text-center"><a href="{{ URL::to('/') }}/reservation/checkout">{{ trans('shared.back_to_checkout') }}</a></p>
 					</div>
 				</div>
 			</div>

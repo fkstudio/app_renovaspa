@@ -36,4 +36,9 @@ class ServiceCategoryHotelModel {
 	*/
 	public $Hotel;
 
+	/** 
+	 * @OneToOne(targetEntity="ServiceInformationModel", mappedBy="ServiceCategoryHotel")
+	*/
+	public $ServiceInformation;
+
 }

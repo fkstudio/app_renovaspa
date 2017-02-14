@@ -57,8 +57,7 @@ class ShoppingCartController extends Controller
             $cabins = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findAll();
 
             $breadcrumps = [
-                'SHOPPING CART' => '#fakelink',
-                'MY CART' => '#fakelink',
+                'SHOPPING CART' => '/shopping/cart',
                 'CHECKOUT' => '#fakelink'
             ];
 
@@ -75,7 +74,7 @@ class ShoppingCartController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-        //try {
+        try {
             switch ($reservationType) {
                 // individual services
                 case 1:
@@ -129,15 +128,14 @@ class ShoppingCartController extends Controller
             $country = $this->entityManager->getRepository('\App\Models\Test\CountryModel')->findOneBy(['Id' => $session->get('country_id')]);
 
             $breadcrumps = [
-                'SHOPPING CART' => '#fakelink',
-                'MY CART' => '#fakelink'
+                'SHOPPING CART' => '#fakelink'
             ];
 
             return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
+        }
     }
 
     /* add items to current user cart */

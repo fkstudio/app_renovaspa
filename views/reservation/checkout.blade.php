@@ -38,7 +38,7 @@
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="checkbox" name="not_my_info" /> This is not my information. I am making this purchase for another person.
+								<input type="checkbox" name="not_my_info" /> {{ trans('checkout.not_my_info') }}
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -169,9 +169,9 @@
 								@else
 								<br/>
 								@endif
-								<span>Message: {{ $detail->Message }}</span>
+								<span>{{ trans('checkout.message') }}: {{ $detail->Message }}</span>
 								<br/>
-								<span>Value: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
+								<span>{{ trans('checkout.value') }}: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
 							</div>
 						</div>
 						<div class="clearfix"></div>

@@ -107,6 +107,8 @@ Route::get('/region/{region_id}/hotels', [ 'as' => 'hotel.hotelsByRegion', 'uses
 */
 Route::get('/reservation/bookhere', [ 'as' => 'reservation.bookhere', 'uses' => 'ReservationController@bookhere' ]);
 
+Route::get('/reservation/canceled', [ 'as' => 'reservation.canceled', 'uses' => 'ReservationController@canceled' ]);
+
 
 Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
 
@@ -132,6 +134,8 @@ Route::post('/payment', [ 'as' => 'payment.payment', 'uses' => 'PaymentControlle
 Route::get('/payment/gateway', [ 'as' => 'payment.gateway', 'uses' => 'PaymentController@gatewayPayment' ]);
 
 Route::get('/payment/paypal', [ 'as' => 'payment.paypal', 'uses' => 'PaymentController@paypalPayment' ]);
+
+Route::get('/payment/redsys', [ 'as' => 'payment.redsysPayment', 'uses' => 'PaymentController@redsysPayment' ]);
 
 Route::post('/payment/gateway/proceed', [ 'as' => 'payment.execGatewayPayment', 'uses' => 'PaymentController@execGatewayPayment' ]);
 

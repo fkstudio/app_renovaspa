@@ -82,7 +82,7 @@
 							</tbody>
 						</table>
 						@if (count($model->Items) <= 0)
-						<p style="text-align: center;">There is not item at your cart</p>
+						<p style="text-align: center;">{{ trans('messages.there_is_no_items_in_cart') }}</p>
 						@endif
 						<div class="clearfix"></div>
 						<div class="col-lg-offset-7 col-lg-5 col-md-offset-5 col-md-7 col-sm-12">

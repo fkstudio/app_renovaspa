@@ -203,8 +203,8 @@ class ReservationController extends Controller
             
 
             $breadcrumps = [
-                'SHOPPING CART' => '#fakelink',
-                'RESERVATION' => '#fakelink',
+                'SHOPPING CART' => '/shopping/cart',
+                'CHECKOUT' => '/shopping/cart/checkout',
                 'INFORMATION' => '#fakelink'
             ];
 
@@ -219,6 +219,13 @@ class ReservationController extends Controller
         catch (\Exception $e){
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
+    }
+
+    /* GET */
+    public function canceled(Request $request){
+        $session = $request->session();
+        $session->flush();
+        return view('reservation.canceled');
     }
 
 }

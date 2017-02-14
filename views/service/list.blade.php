@@ -20,58 +20,81 @@
 		@include('shared._messages')
 		<div class="row">
 			<br/>
-			<div class="col-md-5">
+			<div class="col-lg-4 col-md-12 col-sm-12">
 				@if ($category->Photo != null)
 				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $category->Id }}/{{ $category->Photo->Path }}" class="img-responsive" alt='{{ $category->Name }}' />
 				@endif
 				<br class="hidden-lg" />
 			</div>
-			<div class="col-md-7">
+			<div class="col-lg-8 col-md-12 col-sm-12">
 				<h4>{{ trans('titles.service_list_title') }}</h5>
+				<br/>
 				<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
-					<table class="table table-responsive table-borderless">
-						<thead>
-							<tr>
-								<th>{{ trans('shared.service') }}</th>
-								<th></th>
-								<th></th>
-								<th>{{ trans('shared.price') }}</th>
-								<th>{{ trans('shared.quantity') }}</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($model as $categoryRegion)
-							<tr>
-								<td>
-									<input type="hidden" name="id[]" value="{{ $categoryRegion->Service->Id }}" /> 
-									{{ $categoryRegion->Service->Name }} +info
-								</td>
-								<td></td>
-								<td>
-									@if ($categoryRegion->Service->hasDiscount($hotel->Id))
-										@php
-											$discount = $categoryRegion->Service->getDiscount($hotel->Id)
-										@endphp
-									<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
-									@endif
+					@foreach($model as $key => $serviceCategoryHotelModel)
+					@php
+						$serviceInformation = $serviceCategoryHotelModel->ServiceInformation;
+					@endphp
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							<label>Service</label>
+							<br/>
+							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}">+info</a>
+							<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
+						</div>
+						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+							<label>Duration</label>
+							<br/>
+							{{ $serviceInformation->Duration }}
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+							@if ($serviceCategoryHotelModel->Service->hasDiscount($hotel->Id))
+								@php
+									$discount = $serviceCategoryHotelModel->Service->getDiscount($hotel->Id)
+								@endphp
+							<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+							@endif
 
-									@if ($categoryRegion->Service->hasHotelDiscount($hotel->Id))
-									<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-									@elseif ($hotel_region->ActiveDiscount)
-									<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-									@endif
-									
-								</td>
-								<td>{{ $region->Country->Currency->Symbol.number_format($categoryRegion->Service->getPrice($hotel->Id), 2) }}</td>
-								<td>
-									<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />
-								</td>
-							</tr>
-						    @endforeach
-						</tbody>
-					</table>
+							@if ($serviceCategoryHotelModel->Service->hasHotelDiscount($hotel->Id))
+							<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+							@elseif ($hotel_region->ActiveDiscount)
+							<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+							@endif
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+							<label>Price</label>
+							<br/>
+							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPrice($hotel->Id), 2) }}
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+							<label>Quantity</label>
+							<br/>
+							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="input-border input-cart" />
+						</div>
+						<div class="clearfix"></div>
+						<div class="col-md-12 collapse" id="service-{{ $key }}">
+							<hr/>
+							<strong>Description:</strong>
+							<blockquote>
+								{{ $serviceInformation->Description }}
+							</blockquote>
+							<strong>Schedules:</strong>
+							<blockquote>
+								From {{ $serviceInformation->OpeningTime->format('h:m a') }} to {{ $serviceInformation->EndingTime->format('h:m a') }}
+							</blockquote>
+							<strong>Restrictions:</strong>
+							<blockquote>
+								Pregnant restriction: {{ ($serviceInformation->PregnantRestriction == true ? 'Yes' : 'No') }}
+								<br/>
+								Age restriction: {{ ( $serviceInformation->AgeRestriction == true ? 'Yes' : 'No') }}
+							</blockquote>
+							<hr/>
+						</div>
+					</div>
+					@endforeach
+					<div class="clearfix"></div>
+					<br/>
 					@if (count($model) <= 0)
-					<p style="text-align: center;">There is not item at your cart</p>
+					<p style="text-align: center;">{{ trans('messages.there_is_no_items_to_show') }}</p>
 					<br/>
 					@endif
 					<div class="clearfix"></div>
@@ -81,14 +104,15 @@
 								{{ csrf_field() }}
 								<button type="submit" name="services" class="btn btn-interline block-button">{{ trans('shared.add_to_cart') }}</button>	
 							</div>
+							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs" />
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								@if (session('reservation_type') == 1 || session('reservation_type') == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">{{ trans('shared.go_to_cart') }}</a>
 								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)
-								<a href="#fakelink" class="disabled btn btn-default block-button">COMPLETE TO VIEW THE CART</a>
+								<a href="#fakelink" class="disabled btn btn-default block-button">{{ trans('shared.complete_to_go_cart') }}</a>
 								@else
-								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default block-button">GO TO NEXT CERTIFICATE</a>
+								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default block-button">{{ trans('shared.go_to_next_certificate') }}</a>
 								@endif	
 								
 								 

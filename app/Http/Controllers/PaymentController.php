@@ -41,7 +41,7 @@ class PaymentController extends Controller
     
     /* public class construct */
     public function __construct(){
-        $this->siteUrl = 'http://cydeck.com/public';
+        $this->siteUrl = \App::make('url')->to('/');
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
@@ -55,7 +55,7 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
 
 
-        try {
+        //try {
             
             $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
             $session->put('reservation_email', $_POST['email']);
@@ -119,18 +119,20 @@ class PaymentController extends Controller
                 }
                 else if($paymentMethod->Name == 'Credit card'){
                     // redirect
-                    return redirect()->route('payment.gateway');
+                    if($reservation->Region->Country->Currency->Name == "EUR")
+                        return redirect()->route('payment.redsysPayment');
+                    else
+                        return redirect()->route('payment.gateway');
                 }
             }
             else{
                 // redirect to reservation error
-                echo 'reservation error';
-                return;
+                return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
             }
-        }
-        catch (\Exception $e){
-            return redirect()->route('reservation.checkout')->with('failure', trans('messages.session_expired'));
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('reservation.checkout')->with('failure', trans('messages.session_expired'));
+        // }
     }
 
     /* /GET */ 
@@ -223,8 +225,61 @@ class PaymentController extends Controller
         }
     }
 
-    public function redsysPayment(){
-        echo 'redsysPayment';
+
+    /* POST Redys (Caxia) payment method */
+    public function redsysPayment(Request $request){
+        $session = $request->session();
+        $sessionId = $session->getId();
+        $reservation_id = $session->get('current_reservation_id');
+
+        /* ApiRedsys Object*/
+        $redsys = new \App\Classes\ApiRedsys();
+
+        // Redsys payment url
+        //$redsysUrl = "https://sis-t.redsys.es:25443/sis/realizarPago"; // UCOOMENT TO TEST
+        $redsysUrl = "https://sis.sermepa.es/sis/realizarPago";
+
+        /* get current reservation */
+        $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
+
+        /* if reservation is null return an error */
+        if($reservation == null){
+            return redirect()->route('/')->with('failure', trans('messages.session_expired'));
+        }
+
+        // Redsys configuration
+        $version = "HMAC_SHA256_V1";
+        $sha256Key = "Wpe3AaiANFa7KEZpXJHTge+/Ugs6HJG4";
+        $comercialKey = "RP5854MUO552O293";
+
+        $referenceNumber = $reservation->ConfirmationNumber;
+
+        // Input values
+        $comercialCodeFunc = "266971159";
+        $terminal = "1";
+        $currencyCode = "978";
+        $transactionType = "0";
+
+        /* redirects url */
+        $merchantUrlOk = $this->siteUrl.'/payment/voucher';
+        $merchantUrlKo = $this->siteUrl."/reservation/canceled";
+
+        /* set reservation data */
+        $redsys->setParameter("DS_MERCHANT_AMOUNT",$reservation->Total);
+        $redsys->setParameter("DS_MERCHANT_ORDER", $reservation->ConfirmationNumber);
+        $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
+        $redsys->setParameter("DS_MERCHANT_CURRENCY",$currencyCode);
+        $redsys->setParameter("DS_MERCHANT_TRANSACTIONTYPE",$transactionType);
+        $redsys->setParameter("DS_MERCHANT_TERMINAL",$terminal);
+        $redsys->setParameter("DS_MERCHANT_MERCHANTURL", $redsysUrl);
+        $redsys->setParameter("DS_MERCHANT_URLOK",$merchantUrlOk);
+        $redsys->setParameter("DS_MERCHANT_URLKO",$merchantUrlKo);
+
+        $params = $redsys->createMerchantParameters();
+        $signature = $redsys->createMerchantSignature($sha256Key);
+
+        /* redirect to temp view  */
+        return view("payment.redsys", [ 'url' => $redsysUrl, 'version' => $version, 'params' => $params, 'signature' => $signature ]);
     }
 
     /* POST payment method */
@@ -234,14 +289,11 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
         $subtotal = 0.00;
         $total = 0.00;
-
-
-        DEFINE("__SITE_URL__", \App::make('url')->to('/'));
        
         try {
             /* if reservation id is null return an error */
             if(!isset($reservation_id) || empty($reservation_id)){
-                return redirect()->route('/')->with('failure', 'There is not voucher to show.');
+                return redirect()->route('/')->with('failure', trans('messages.session_expired'));
             }
 
             $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
@@ -331,8 +383,8 @@ class PaymentController extends Controller
 
             // create paypal redirect object
             $redirectUrls = new RedirectUrls();
-            $redirectUrls->setReturnUrl(__SITE_URL__."/payment/voucher") // FIXME
-                         ->setCancelUrl(__SITE_URL__."/reservation/canceled"); // FIXME
+            $redirectUrls->setReturnUrl($this->siteUrl."/payment/voucher") // FIXME
+                         ->setCancelUrl($this->siteUrl."/reservation/canceled"); // FIXME
 
 
             // create paypal payment object

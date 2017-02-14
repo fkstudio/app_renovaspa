@@ -41,6 +41,7 @@ class ServiceController extends Controller
 
             $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id]);
 
+
             $breadcrumps = [
                 $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
                 $region->Name => '/region/'. $region->Id . '/hotels',

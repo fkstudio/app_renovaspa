@@ -2,6 +2,10 @@
  	font-family: 'Montserrat', sans-serif;
  }
 
+ blockquote {
+ 	font-size: 15px !important;
+ }
+
  .custom-hr {
  	border-color:#5fc7ae;
  }
@@ -51,11 +55,11 @@
  .top-menu .navbar-nav>li>a{
  	padding-top: 8px !important;
 	padding-bottom: 8px !important;
-	color: #aeaeae !important;
+	color: #9a9a9a !important;
 	font-size: 12px;
  }
  .navbar-default .navbar-nav>li>a {
- 	color: #aeaeae !important;
+ 	color: #9a9a9a !important;
 	font-weight: bold;
 	font-size: 12px;
  }
@@ -139,7 +143,7 @@
 
  /* breadcrumbs */
  .breadcrumps {
- 	font-size: 15px;
+ 	font-size: 13px;
 	margin-top: 25px
  }
  .breadcrumps a {
@@ -239,6 +243,11 @@
  .input-border {
  	border: solid 1px !important;
 	border-color: rgb(217, 217, 212) !important;
+ }
+
+ .input-cart {
+ 	padding: 2px;
+	padding-left: 25px
  }
 
  .padding-td {

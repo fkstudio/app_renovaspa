@@ -51,10 +51,10 @@
 												@endif
 											</td>
 											<td class="padding-td">
-												<input type="date" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('dd/mm/yyyy') : '' ) }}" class="datepicker form-control" />
+												<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control" />
 											</td>
 											<td class="padding-td">
-												<input type="time" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
+												<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
 											</td>
 											
 											<td class="padding-td">
@@ -114,6 +114,9 @@
 	<script>
 		$(function() {
 		    $('.datepicker').daterangepicker({
+		    	locale: {
+			      format: 'MM/D/YYYY'
+			    },
 		        minDate: moment().add(2, "days"),
 		        singleDatePicker: true,
 		        showDropdowns: true,

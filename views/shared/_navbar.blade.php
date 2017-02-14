@@ -3,8 +3,7 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
-          <li><a href="#fakelink">(829) 837-1892</a></li>
-          <li><a href="#fakelink">info@renovaspa.com</a></li>
+          <li><a>info@renovaspa.com</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">

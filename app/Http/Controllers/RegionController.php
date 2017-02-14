@@ -30,6 +30,10 @@ class RegionController extends Controller
     /* /GET */
     /* get all regions by current country */
     public function regionsByCountry(Request $request, $country_id){
+        
+        if(empty($country_id))
+            return redirect()->route('country.list')->with('failure', trans('messages.select_country'));
+
         $session = $request->session();
         $session->put("country_id", $country_id);
 

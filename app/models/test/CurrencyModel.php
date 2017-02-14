@@ -16,7 +16,7 @@
 		*/
 		public $Id;
 
-		/** @name @Column(type="string") */
+		/** @Column(name="name", type="string") */
 		public $Name;
 
 		/** @Column(name="symbol", type="string") */

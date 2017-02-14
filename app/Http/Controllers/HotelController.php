@@ -29,6 +29,10 @@ class HotelController extends Controller
 
     /* get all hotels by current region */
     public function hotelsByRegion(Request $request, $region_id){
+        
+        if(empty($region_id))
+            return redirect()->route('region.listByCountry')->with('failure', trans('messages.select_hotel'));
+
         $session = $request->session();
         $session->put('region_id', $region_id);
 
