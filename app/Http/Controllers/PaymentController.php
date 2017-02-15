@@ -55,7 +55,7 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
 
 
-        //try {
+        try {
             
             $session->put('reservation_customer_name',  $_POST['first_name'] . ' ' . $_POST['last_name']);
             $session->put('reservation_email', $_POST['email']);
@@ -129,17 +129,16 @@ class PaymentController extends Controller
                 // redirect to reservation error
                 return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
             }
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('reservation.checkout')->with('failure', trans('messages.session_expired'));
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('reservation.checkout')->with('failure', trans('messages.session_expired'));
+        }
     }
 
     /* /GET */ 
     /* return a view to fill credit card data */
     public function gatewayPayment(Request $request){
         $session = $request->session();
-    
 
         try {
             $reservation_id = $session->get('current_reservation_id');
@@ -334,12 +333,13 @@ class PaymentController extends Controller
 
                         $currentServicePlanePrice = $currentService->getPlanePrice($hotel->Id);
                         $currentServicePrice = $currentService->getPrice($hotel->Id);
+                        
                         // create paypal item object by iteration item
                         $item = new Item();
                         $item->setName($detail->Service->Name)
                              ->setCurrency($currency->Name)
                              ->setQuantity(1)
-                             ->setSku(substr($currentService->Id, -7))
+                             ->setSku(substr($currentService->Id, 0, 8))
                              ->setPrice($currentServicePrice);
 
                         // add item to array items
@@ -352,6 +352,22 @@ class PaymentController extends Controller
                     endforeach;
                     break;
                 case 2:
+                    /* iterate over certificate details */
+                    foreach($reservation->CertificateDetails as $key => $certificate):
+                        // create paypal item object by iteration item
+                        $item = new Item();
+                        $item->setName("Certificate #" . ( $key + 1 ) )
+                             ->setCurrency($currency->Name)
+                             ->setQuantity(1)
+                             ->setSku(substr($certificate->Id, 0, 8))
+                             ->setPrice($certificate->Value);
+
+                        // add item to array items
+                        $items[] = $item;
+
+                        $subtotal += $certificate->Value;
+                        $total += $certificate->Value;
+                    endforeach;
                     break;
             }
 

@@ -65,7 +65,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label>C) Select delivery method:</label>
+						<label>B) Select delivery method:</label>
 						<p>* Choose from Renova Spa s flexible delivery options</p>
 					</div>
 					<div class="clearfix"></div>
@@ -73,26 +73,121 @@
 					<div class="col-md-4 delivery-type-content">
 						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-envelope"></span>
 						<br/>
-						<input type="radio" name="sendType[{{ $key }}]" value=1 > Email
+						<input class="collapse-button" data-toggle="collapse" data-target="#certificate-{{ $key }}-email" type="radio" name="sendType[{{ $key }}]" value=1 ><br/> Email
 						<br/>
 						<p>Instantly send it to the recipient's e-mail.</p>
 					</div>
 					<div class="col-md-4 delivery-type-content">
 						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-print"></span>
 						<br/>
-						<input type="radio" name="sendType[{{ $key }}]" value=2 > Print
+						<input class="collapse-button" data-toggle="collapse" data-target="#certificate-{{ $key }}-print" type="radio" name="sendType[{{ $key }}]" value=2 ><br/> Print
 						<br/>
 						<p>Receive the gift certificate in your mail and print it off.</p>
 					</div>
 					<div class="col-md-4 delivery-type-content">
 						<span style="font-size: 30px;margin-left: 12px" class="glyphicon glyphicon-home"></span>
 						<br/>
-						<input type="radio" name="sendType[{{ $key }}]" value=3 > Hotel
+						<input class="collapse-button" data-toggle="collapse" data-target="#certificate-{{ $key }}-hotel" type="radio" name="sendType[{{ $key }}]" value=3 ><br/> Hotel
 						<br/>
 						<p>Let us deliver your certificate at your recipient's hotel room*.</p>
 					</div>
 				</div>
+				<div class="clearfix"></div>
+				<div id="certificate-{{ $key }}-email" class="collapse col-md-12">
+					<hr>
+					<label>D) Enter delivery information</label>
+					<p>Please provide the recipient's email addres</p>
+					<div class="clearfix"></div>
+					<div class="col-md-4">
+						<div class="row">
+							<table class="table table-responsive">
+								<tbody>
+									<tr>
+										<td>
+											<label>E-mail</label>
+										</td>
+										<td>
+											<input type="email" name="delivery_email[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>E-mail confirmation</label>
+										</td>
+										<td>
+											<input type="email" name="delivery_email_confirmation[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+								</tbody>
+							</table>	
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div id="certificate-{{ $key }}-print" class="collapse col-md-12">
+					<hr>
+					<p><strong>NOTA:</strong><br/>Your gift certificates will be sent to your e-mail account as soon as your order is complete.</p>
+				</div>
+				<div class="clearfix"></div>
+				<div id="certificate-{{ $key }}-hotel" class="collapse col-md-12">
+					<hr>
+					<label>D) Enter delivery information</label>
+					<p><strong>Important notes:</strong></p>
+					<ul>
+						<li>Certificates will be delivered only in hotels that have a Renova Spa.</li>
+						<li>Certificates will be delivered at the recipient's room by Renova Spa within 12 hours after arrival, not at the hotel check-in.</li>
+						<li>Certificated to be delivered for guests staying at the hotel by the time of purchase may need up to 24 hours for delivery.</li>
+					</ul>
+					<br/>
+					<p><strong>Completing the following information will facilitate the location of the guest. Please provide at least one of the following:</strong></p>
+					<br/>
+					<div class="clearfix"></div>
+					<div class="col-md-7">
+						<div class="row">
+							<table class="table table-responsive">
+								<tbody>
+									<tr>
+										<td>
+											<label>Hotel reservation number or travel agency</label>
+										</td>
+										<td>
+											<input type="text" name="delivery_number_or_agency[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Companion name</label>
+										</td>
+										<td>
+											<input type="text" name="delivery_company_name[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Departure date</label>
+										</td>
+										<td>
+											<input type="text" name="delivery_departure_date[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Other information</label>
+										</td>
+										<td>
+											<input type="text" name="delivery_other_info[{{ $key }}]" class="form-control input-border" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>	
+					</div>
+				</div>
 			</div>
+
+			
+			<div class="clearfix"></div>
+			<hr>
 			@endforeach
 			<div class="col-md-12 certificate-terms">
 				<p> <input type="checkbox" name="terms"> {{ trans('shared.certificate_terms') }}</p>

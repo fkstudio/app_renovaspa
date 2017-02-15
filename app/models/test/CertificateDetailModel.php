@@ -50,11 +50,17 @@ class CertificateDetailModel {
 	/** @Column(name="send_type", type="integer") */
 	public $SendType;
 
-	/** @arrival @Column(type="date") */
-	public $Arrival;
+	/**  @Column(name="delivery_number_or_agency", type="string") */
+	public $DeliveryNumberOrAgency;
 
-	/** @Column(name="departure", type="date") */
-	public $Departure;
+	/** @Column(name="delivery_company_name", type="string") */
+	public $DeliveryCompanyName;
+
+	/** @Column(name="delivery_departure_date", type="date") */
+	public $DeliveryDepartureDate;
+
+	/** @Column(name="delivery_other_info", type="string") */
+	public $DeliveryOtherInfo;
 
 	/** @Column(name="other_fields", type="string") */
 	public $OtherFields;

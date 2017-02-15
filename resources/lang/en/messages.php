@@ -12,7 +12,7 @@ return [
     'session_expired' => 'Your session has expired.',
     'items_added' => 'Services has been added to your cart',
     'there_is_no_items_in_cart' => 'There is not item at your cart',
-    'there_is_no_items_to_show' => 'THere is not items to show',
+    'there_is_no_items_to_show' => 'There is not items to show',
     'package_added' => 'Package/s added successfully.',
     'select_some_service' => "Please select at least one service",
     'select_some_package' => 'You must select at least one package.',

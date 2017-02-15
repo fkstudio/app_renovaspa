@@ -53,38 +53,43 @@ class CertificateController extends Controller
         $session->put('current_certificate', 1);
         $session->put('can_go_to_cart', false);
 
-        if($certificateType == 1){
-            return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $session->get('hotel_id') ]);
-        }
-        else {
-
-            // create cart
-            $cart = new \App\Models\Test\ShoppingCartModel();
-            $cart->Session = $session->getId();
-            $cart->Created = new \DateTime();
-            $cart->IsDeleted = false;
-
-            $this->entityManager->persist($cart);
-
-            $quantity = $_POST['quantity'];
-            
-            for($i = 0; $i < $quantity; $i++){
-                $certificateItem = new \App\Models\Test\ShoppingCartItemModel();
-                $certificateItem->CertificateNumber = $i + 1;
-                $certificateItem->Value = $_POST['value'][$i];
-                $certificateItem->Cart = $cart;
-                $certificateItem->Quantity = 1;
-                $certificateItem->Type = 2;
-                $certificateItem->Created = new \DateTime('now');
-                $certificateItem->IsDeleted = false;
-
-                $this->entityManager->persist($certificateItem);
+        try {
+            if($certificateType == 1){
+                return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $session->get('hotel_id') ]);
             }
+            else {
 
-            $this->entityManager->flush();
+                // create cart
+                $cart = new \App\Models\Test\ShoppingCartModel();
+                $cart->Session = $session->getId();
+                $cart->Created = new \DateTime();
+                $cart->IsDeleted = false;
 
-            return redirect()->route('certificate.registration');
+                $this->entityManager->persist($cart);
 
+                $quantity = $_POST['quantity'];
+                
+                for($i = 0; $i < $quantity; $i++){
+                    $certificateItem = new \App\Models\Test\ShoppingCartItemModel();
+                    $certificateItem->CertificateNumber = $i + 1;
+                    $certificateItem->Value = $_POST['value'][$i];
+                    $certificateItem->Cart = $cart;
+                    $certificateItem->Quantity = 1;
+                    $certificateItem->Type = 2;
+                    $certificateItem->Created = new \DateTime('now');
+                    $certificateItem->IsDeleted = false;
+
+                    $this->entityManager->persist($certificateItem);
+                }
+
+                $this->entityManager->flush();
+
+                return redirect()->route('certificate.registration');
+
+            }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }
 
@@ -92,32 +97,37 @@ class CertificateController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
 
-        $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
+        try {
+            $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
         
-        if($session->get('certificate_type') == 1 ){
-            $services = [];
+            if($session->get('certificate_type') == 1 ){
+                $services = [];
 
-            $items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart  GROUP BY u.CertificateNumber, u.Service')
-                             ->setParameter('cart', $cart->Id)
-                             ->getResult();
+                $items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart  GROUP BY u.CertificateNumber, u.Service')
+                                 ->setParameter('cart', $cart->Id)
+                                 ->getResult();
 
-            foreach($items as $item){
-                if(!isset($services[$item->CertificateNumber])){
-                    $services[$item->CertificateNumber] = [];
+                foreach($items as $item){
+                    if(!isset($services[$item->CertificateNumber])){
+                        $services[$item->CertificateNumber] = [];
+                    }
+
+                    $quantity = $this->entityManager
+                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
+                                                ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
+                                                ->getSingleResult()['Total'];
+                
+                    $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $quantity ];
                 }
-
-                $quantity = $this->entityManager
-                                            ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
-                                            ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
-                                            ->getSingleResult()['Total'];
-            
-                $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $quantity ];
+                                                                                  
+                return view('certificate.serviceBasedRegistration', ['model' => $services]);
             }
-                                                                              
-            return view('certificate.serviceBasedRegistration', ['model' => $services]);
-        }
-        else {
-            return view('certificate.valueBasedRegistration', ['model' => $cart->Items]);
+            else {
+                return view('certificate.valueBasedRegistration', ['model' => $cart->Items]);
+            }
+        }   
+        catch(\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
 
     }

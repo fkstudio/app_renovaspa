@@ -160,7 +160,8 @@
 								@endif
 								<span>From {{ $detail->FromCustomerName }} to {{ $detail->ToCustomerName }}</span>
 								@if($detail->Type == 1)
-									{{ count($detail->CertificateDetailServices) }}
+								<br/>
+								<span>Services:</span>
 									<ul style="list-style: none;margin-bottom: 0px;">
 										@foreach($detail->CertificateDetailServices as $certificateDetailService)
 										<li>- {{ $certificateDetailService->Service->Name }}</li>

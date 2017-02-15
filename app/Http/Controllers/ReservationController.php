@@ -130,7 +130,7 @@ class ReservationController extends Controller
                     }
                 }
                 else if ($reservationType == 2){
-                
+                    
                     foreach($_POST['certificate_number'] as $key => $value){
                         $certificateItem = new \App\Models\Test\CertificateDetailModel();
 
@@ -177,14 +177,29 @@ class ReservationController extends Controller
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
                         $certificateItem->Message = $_POST['message'][$key];
                         $certificateItem->SendType = $_POST['sendType'][$key];
-                        $certificateItem->Arrival = new \DateTime();
-                        $certificateItem->Departure = new \DateTime();
                         $certificateItem->OtherFields = "";
                         $certificateItem->Created = new \DateTime();
                         $certificateItem->Modified = new \DateTime();
                         $certificateItem->Enabled = true;
                         $certificateItem->IsDeleted = false;
 
+                        if($certificateItem->SendType == 1){
+                            /* verify if the emails are equals */
+                            if($_POST['delivery_email'][$key] != $_POST['delivery_email_confirmation'][$key])
+                                return redirect()->route('')->with('failure', trans(''));
+
+                            /* complete email delivery information */
+                            $certificateItem->DeliveryEmail = $_POST['delivery_email'][$key];
+                        }
+                        else {
+                            /* complete hotel delivery information */
+                            $certificateItem->DeliveryNumberOrAgency = $_POST['delivery_number_or_agency'][$key];
+                            $certificateItem->DeliveryCompanyName = $_POST['delivery_company_name'][$key];
+                            $certificateItem->DeliveryDepartureDate = new \DateTime($_POST['delivery_departure_date'][$key]);
+                            $certificateItem->DeliveryOtherInfo = $_POST['delivery_other_info'][$key];
+                        }
+
+                        /* set subtotal and total certificate item */
                         $reservation->Subtotal += $certificateItem->Value;
                         $reservation->Total += $certificateItem->Value;
 
@@ -199,8 +214,6 @@ class ReservationController extends Controller
             else {
                 $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
             }
-
-            
 
             $breadcrumps = [
                 'SHOPPING CART' => '/shopping/cart',
@@ -221,7 +234,7 @@ class ReservationController extends Controller
         }
     }
 
-    /* GET */
+    /* GET transaction canceled view */
     public function canceled(Request $request){
         $session = $request->session();
         $session->flush();
