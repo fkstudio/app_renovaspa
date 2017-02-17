@@ -105,12 +105,17 @@
 		<hr/>
 		<div class="row">
 			@foreach($cart->Items as $item)
-			<div class="col-md-12">
-				<h5>1 {{ ( $item->Package != null ? $item->Package->Name . ' - ' : '').$item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Cabin->Name }} )</h5>
-				<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
-			</div>
-			<div class="clearfix"></div>
-			<hr/>
+				@php
+					$packageRelation = $item->PackageCategoryRelation;
+				@endphp
+				@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
+					<div class="col-md-12">
+						<h5>1 {{ ( $packageRelation != null ? $packageRelation->WeddingPackage->Name . ' - ' : '').$packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+					</div>
+					<div class="clearfix"></div>
+					<hr/>
+				@endforeach
 			@endforeach
 		</div>
 		<h3>CART TOTAL</h3>

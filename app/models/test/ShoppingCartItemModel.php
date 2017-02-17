@@ -28,10 +28,10 @@
 		public $TotalQuantity = 0;
 
 		/** 
-		 * @OneToOne(targetEntity="WeddingPackageModel", cascade={"persist"})
-		 * @JoinColumn(name="package_id", referencedColumnName="id")
+		 * @OneToOne(targetEntity="WeddingPackageCategoryRelationModel", cascade={"persist"})
+		 * @JoinColumn(name="package_category_relation_id", referencedColumnName="id")
 		*/
-		public $Package;
+		public $PackageCategoryRelation;
 
 		/** 
 		 * @OneToOne(targetEntity="ServiceModel", cascade={"persist"})

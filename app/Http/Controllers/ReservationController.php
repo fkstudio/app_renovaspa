@@ -41,6 +41,11 @@ class ReservationController extends Controller
         $reservationType = $session->get('reservation_type');
         $reservation_id = $session->get('current_reservation_id');
 
+        //echo '<pre>';
+        //print_r($_POST);
+        //echo '</pre>';
+        //exit();
+        
         try {
 
             $reservation = null;
@@ -84,7 +89,6 @@ class ReservationController extends Controller
                 if($reservationType == 1 || $reservationType == 3){
 
                     foreach($_POST['id'] as $key => $item){
-
                         if(empty($_POST['id'][$key]) or 
                            count($_POST['customer_name'][$key]) <= 0 or
                            empty($_POST['prefered_date'][$key]) or
@@ -94,13 +98,20 @@ class ReservationController extends Controller
                             
                         /* get cart item */
                         $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
+
+                        if($cartItem == null)
+                            //return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+
+                        /* complete cart item data */
                         $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
                         $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
                         $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
                         $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
 
+                        /* save cart item with new data */
                         $this->entityManager->persist($cartItem);
 
+                        /* create reservation or loocking for it in database */
                         $reservationItem = null;
                         $reservationItemExists = $this->entityManager->getRepository('App\Models\Test\ReservationItemModel')->findOneBy(['CartItem' => $item]);
 
@@ -109,24 +120,48 @@ class ReservationController extends Controller
                         else
                             $reservationItem = new \App\Models\Test\ReservationItemModel();
 
-                        /* fill reservation item data */
-                        $reservationItem->CartItem = $cartItem;
-                        $reservationItem->Reservation = $reservation;
-                        $reservationItem->Service = $cartItem->Service;
-                        $reservationItem->CustomerName = $cartItem->CustomerName;
-                        $reservationItem->PreferedDate = $cartItem->PreferedDate;
-                        $reservationItem->PreferedTime = $cartItem->PreferedTime;
-                        $reservationItem->Price = $cartItem->Service->getPrice($reservation->Hotel->Id);
-
-                        $reservationItem->Cabin = $cartItem->Cabin;
-                        $reservationItem->Created = new \DateTime();
-                        $reservationItem->Modified = new \DateTime();
-                        $reservationItem->IsDeleted = false;
-
-                        $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
-                        $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
                         
-                        $reservation->ServicesDetails[] = $reservationItem;
+                        $packageRelation = $cartItem->PackageCategoryRelation;
+                        if($packageRelation != null){
+                            foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService){
+                                /* fill reservation item data */
+                                $reservationItem->CartItem = $cartItem;
+                                $reservationItem->Reservation = $reservation;
+                                $reservationItem->Service = $packageService->Service;
+                                $reservationItem->CustomerName = $cartItem->CustomerName;
+                                $reservationItem->PreferedDate = $cartItem->PreferedDate;
+                                $reservationItem->PreferedTime = $cartItem->PreferedTime;
+                                $reservationItem->Price = $packageService->Service->getPrice($reservation->Hotel->Id);
+                                $reservationItem->Cabin = $cartItem->Cabin;
+                                $reservationItem->Created = new \DateTime();
+                                $reservationItem->Modified = new \DateTime();
+                                $reservationItem->IsDeleted = false;
+
+                                $reservation->Subtotal += $packageService->Service->getPlanePrice($hotel->Id);
+                                $reservation->Total += $packageService->Service->getPrice($hotel->Id);
+                                
+                                $reservation->ServicesDetails[] = $reservationItem;
+                            }
+                        }
+                        else{
+                            /* fill reservation item data */
+                            $reservationItem->CartItem = $cartItem;
+                            $reservationItem->Reservation = $reservation;
+                            $reservationItem->Service = $cartItem->Service;
+                            $reservationItem->CustomerName = $cartItem->CustomerName;
+                            $reservationItem->PreferedDate = $cartItem->PreferedDate;
+                            $reservationItem->PreferedTime = $cartItem->PreferedTime;
+                            $reservationItem->Price = $cartItem->Service->getPrice($reservation->Hotel->Id);
+                            $reservationItem->Cabin = $cartItem->Cabin;
+                            $reservationItem->Created = new \DateTime();
+                            $reservationItem->Modified = new \DateTime();
+                            $reservationItem->IsDeleted = false;
+
+                            $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
+                            $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
+                            
+                            $reservation->ServicesDetails[] = $reservationItem;
+                        }
                     }
                 }
                 else if ($reservationType == 2){

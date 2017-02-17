@@ -36,7 +36,7 @@ class WeddingPackageModel extends \App\Models\Test\WeddingPackageModel implement
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Description' => NULL, 'IsActive' => NULL, 'Created' => NULL, 'IsDeleted' => NULL, 'WeddingPackageServices' => NULL];
+    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Description' => NULL, 'Type' => NULL, 'IsActive' => NULL, 'Created' => NULL, 'IsDeleted' => NULL, 'WeddingPackageServices' => NULL, 'WeddingPackageFeatures' => NULL];
 
 
 
@@ -46,7 +46,7 @@ class WeddingPackageModel extends \App\Models\Test\WeddingPackageModel implement
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->Name, $this->Description, $this->IsActive, $this->Created, $this->IsDeleted, $this->WeddingPackageServices);
+        unset($this->Name, $this->Description, $this->Type, $this->IsActive, $this->Created, $this->IsDeleted, $this->WeddingPackageServices, $this->WeddingPackageFeatures);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
@@ -108,7 +108,7 @@ class WeddingPackageModel extends \App\Models\Test\WeddingPackageModel implement
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'Id', 'Name', 'Description', 'IsActive', 'Created', 'IsDeleted', 'WeddingPackageServices'];
+            return ['__isInitialized__', 'Id', 'Name', 'Description', 'Type', 'IsActive', 'Created', 'IsDeleted', 'WeddingPackageServices', 'WeddingPackageFeatures'];
         }
 
         return ['__isInitialized__', 'Id'];
@@ -133,7 +133,7 @@ class WeddingPackageModel extends \App\Models\Test\WeddingPackageModel implement
                 }
             };
 
-            unset($this->Name, $this->Description, $this->IsActive, $this->Created, $this->IsDeleted, $this->WeddingPackageServices);
+            unset($this->Name, $this->Description, $this->Type, $this->IsActive, $this->Created, $this->IsDeleted, $this->WeddingPackageServices, $this->WeddingPackageFeatures);
         }
     }
 

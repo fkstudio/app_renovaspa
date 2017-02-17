@@ -10,14 +10,22 @@
 		
 	
 	@foreach($model as $country)
+		@php
+			$photoPath = '/noimage.jpg';
+
+			if($country->Photo != null)
+			{
+				$photoPath = '/countries/country-'.$country->Id.'/'.$country->Photo->Path;
+			}
+
+		@endphp
 		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/country/{{ $country->Id }}/regions">
 		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-		    	<div style="background: url({{ URL::to('/images') }}/countries/country-{{ $country->Id  }}/{{ $country->Photo->Path }});background-size: cover;" class="col-md-12 block-content" >
+		    	<div style="background: url({{ URL::to('/images') . $photoPath }});background-size: cover;" class="col-md-12 block-content" >
 					<span>{{ $country->Name }}	</span>
 				</div>
 		    </div>
 		</a>
-		@break
     @endforeach
     </div>
 </div>

@@ -74,7 +74,7 @@ class ShoppingCartController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-        try {
+        //try {
             switch ($reservationType) {
                 // individual services
                 case 1:
@@ -122,6 +122,20 @@ class ShoppingCartController extends Controller
                                                 ->getSingleResult()['Total'];
                 }
             }
+            else if($reservationType == 3){
+                $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.PackageCategoryRelation')
+                             ->setParameter('cart', $cart->Id)
+                             ->getResult();
+
+                foreach($cart->Items as $item){
+                    $item->Quantity = $this->entityManager
+                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.PackageCategoryRelation = :relation')
+                                                ->setParameters([ 'cart' => $cart->Id, 'relation' => $item->PackageCategoryRelation ])
+                                                ->getSingleResult()['Total'];
+                }
+
+
+            }
 
             
             
@@ -132,10 +146,10 @@ class ShoppingCartController extends Controller
             ];
 
             return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
+        // }
     }
 
     /* add items to current user cart */
@@ -148,7 +162,7 @@ class ShoppingCartController extends Controller
         $isWedding = (isset($_POST['weddings'])) ? true : false;
 
 
-        try {
+        //try {
             /* get current user cart */
             $cart = $this->getCart($sessionId);
 
@@ -186,17 +200,16 @@ class ShoppingCartController extends Controller
                             return redirect()->route("wedding.services", $data)->with('failure', 'messages.select_some_package');     
 
                         for($i = 1; $i <= $serviceQuantity; $i++){
-                            $package = $packageRelation->WeddingPackage;
                             
                             // iterate by package items
-                            foreach($package->WeddingPackageServices as $service){
+                            //foreach($packageRelation->WeddingPackage->WeddingPackageServices as $service){
                                 // create cart item
                                 $cartItem = new \App\Models\Test\ShoppingCartItemModel();
                                 $cartItem->Cart = $cart;
-                                $cartItem->Package = $package;
-                                $cartItem->Service = $service->Service;
+                                $cartItem->PackageCategoryRelation = $packageRelation;
+                                $cartItem->Service = null;
                                 $cartItem->Quantity = 1;
-                                $cartItem->Price = 0;
+                                $cartItem->Price = $packageRelation->Price;
                                 $cartItem->PreferedDate = null;
                                 $cartItem->PreferedTime = null;
                                 $cartItem->Type = $reservationType;
@@ -205,7 +218,7 @@ class ShoppingCartController extends Controller
 
                                 // save cart item
                                 $cart->Items[] = $cartItem;
-                            }
+                            //}
                         }
                     }  
                 }
@@ -257,10 +270,10 @@ class ShoppingCartController extends Controller
             }
 
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
+        // }
     }
 
     /* remove group same items from current user cart */

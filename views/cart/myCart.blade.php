@@ -36,48 +36,76 @@
 									$hotel_id = session('hotel_id');
 									$subtotal = 0;
 									$total = 0;
+									$reservation_type = session('reservation_type');
 
 									$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 								@endphp
 
 								@foreach($model->Items as $item)
-									@php
-										$subtotal += $item->Service->getPlanePrice($hotel_region->Hotel->Id) * $item->Quantity;
-										$total += $item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity;
+									
 
-                         			@endphp	
-								<tr>
-									<td><img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
-									<td class="padding-td">
-										<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
-										<span>{{ $item->Service->Name }}</span>
-									</td>
-									<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->Service->getPlanePrice($hotel_region->Hotel->Id)) }}</td>
-									@if (session('reservation_type') == 2)
-									<td class="padding-td">Certificate #{{ $item->CertificateNumber }}</td>
-									@endif
-									<td class="padding-td">
-										@if ($item->Service->hasDiscount($hotel_region->Hotel->Id))
-										@php
-											$discount = $item->Service->getDiscount($hotel_region->Hotel->Id)
-										@endphp
-										<span class="discount">{{ "-".$discount. "% discount" }}</span>
-										@endif
+                         			@if($reservation_type == 3)
+                         				@php
+											$subtotal += $item->PackageCategoryRelation->Price * $item->Quantity;
+											$total += $item->PackageCategoryRelation->Price * $item->Quantity;
+	                         			@endphp	
+                         				<tr>
+                         					<td>
+                         					<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
+											<td class="padding-td">
+												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
+												<span>{{ $item->PackageCategoryRelation->WeddingPackage->Name }}</span>
+											</td>
+											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->PackageCategoryRelation->Price) }}</td>
+											<td></td>
+											<td class="padding-td">
+												<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
+											</td>
+											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->PackageCategoryRelation->Price * $item->Quantity, 2) }}</td>
+											<td class="padding-td">
+												<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $item->PackageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
+											</td>
+                         				</tr>
+                         			@else
+                         				@php
+											$subtotal += $item->Service->getPlanePrice($hotel_region->Hotel->Id) * $item->Quantity;
+											$total += $item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity;
+	                         			@endphp	
+                         				<tr>
+											<td>
+											<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
+											<td class="padding-td">
+												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
+												<span>{{ $item->Service->Name }}</span>
+											</td>
+											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->Service->getPlanePrice($hotel_region->Hotel->Id)) }}</td>
+											@if (session('reservation_type') == 2)
+											<td class="padding-td">Certificate #{{ $item->CertificateNumber }}</td>
+											@endif
+											<td class="padding-td">
+												@if ($item->Service->hasDiscount($hotel_region->Hotel->Id))
+												@php
+													$discount = $item->Service->getDiscount($hotel_region->Hotel->Id)
+												@endphp
+												<span class="discount">{{ "-".$discount. "% discount" }}</span>
+												@endif
 
-										@if ($item->Service->hasHotelDiscount($hotel_region->Hotel->Id))
-										<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-										@elseif ($hotel_region->ActiveDiscount)
-										<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-										@endif
-									</td>
-									<td class="padding-td">
-										<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
-									</td>
-									<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity, 2) }}</td>
-									<td class="padding-td">
-										<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
-									</td>
-								</tr>
+												@if ($item->Service->hasHotelDiscount($hotel_region->Hotel->Id))
+												<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+												@elseif ($hotel_region->ActiveDiscount)
+												<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+												@endif
+											</td>
+											<td class="padding-td">
+												<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
+											</td>
+											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->Service->getPrice($hotel_region->Hotel->Id) * $item->Quantity, 2) }}</td>
+											<td class="padding-td">
+												<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
+											</td>
+										</tr>
+                         			@endif
+								
 							    @endforeach
 							</tbody>
 						</table>

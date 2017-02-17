@@ -22,6 +22,11 @@
 		/** @description @Column(type="string") */
 		public $Description;
 
+		// 1 = RIU WEDDING PACKAGE
+		// 2 = RENOVA WEDDING PACKAGE
+		/** @Column(name="type", type="integer") */
+		public $Type;
+
 		/** @Column(name="is_active", type="boolean") */
 		public $IsActive;
 
@@ -35,6 +40,11 @@
 		 * @OneToMany(targetEntity="WeddingPackageServiceModel", mappedBy="WeddingPackage")
 		*/
 		public $WeddingPackageServices;
+
+		/** 
+		 * @OneToMany(targetEntity="WeddingPackageFeatureModel", mappedBy="WeddingPackage")
+		*/
+		public $WeddingPackageFeatures;
 
 		public function __construct(){
 			$this->WeddingPackageServices = [];

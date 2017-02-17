@@ -84,7 +84,7 @@ class HotelController extends Controller
 
             $breadcrumps = [
                 'HOTELS' => '#fakelink', 
-                $hotel->Name => '#fakelink'
+                strtoupper($hotel->Name) => '#fakelink'
             ];
 
             return view("hotel.details", ['model' => $hotel, 'breadcrumps' => $breadcrumps]);

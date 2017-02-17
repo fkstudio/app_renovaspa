@@ -41,4 +41,8 @@ class ServiceCategoryHotelModel {
 	*/
 	public $ServiceInformation;
 
+	public function __construct(){
+		$this->ServiceInformation = new App\Models\Test\ServiceInformationModel();
+	}
+
 }
