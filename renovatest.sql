@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 15, 2017 at 06:18 PM
+-- Generation Time: Feb 17, 2017 at 09:55 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -198,6 +198,7 @@ CREATE TABLE `hotel` (
 --
 
 INSERT INTO `hotel` (`id`, `name`, `address`, `notify_email`, `customer_service_name`, `open_at`, `closed_At`, `description`, `enabled`, `created`, `is_deleted`, `discount`, `active_discount`) VALUES
+('44fda1ce-f452-11e6-935c-349b705c7f66', 'Riu Palace Paradise Island', '6307 Casino Drive Paradise Island, Paradise Island, Bahamas', 'info@renovaspa.com', 'Paula Casas', '08:00:00', '20:00:00', '6307 Casino Drive Paradise Island, Paradise Island, Bahamas', 1, '2017-02-16 00:00:00', 0, 0, 0),
 ('50c5f852-c667-11e6-915d-39adba9ad86b', 'RIU PALACE ARUBA', 'J.E. Irasquin Blvd 77 Palm Beach, Aruba.', 'info.aruba@renovaspa.com', 'Paula Casas', '09:00:00', '07:00:00', '', 1, '2016-12-23 00:00:00', 0, NULL, 0),
 ('f1c5f852-c667-11e6-915d-39adba9ad86b', 'RIU PALACE ANTILLAS', 'J.E. Irasquin Blvd 77 Palm Beach, Aruba.', 'info.aruba@renovaspa.com', 'Paula Casas', '09:00:00', '07:00:00', '<p>We&rsquo;re located inside the Riu Palace Antillas.</p>    <p><br /> The spa will not be able to make reservations for you by phone.</p>     <p>The Fitness Centre is open from 7:00 am to 8:00 pm.</p>    <p>We do not close at any holidays.</p>     <p>&nbsp;     <p>     <h3>SPA FACILITIES<br /><br /></h3>     <p style=\"text-align: justify;\">This elegant and modern Spa features different locations for you to enjoy all type of massages, body treatments and facials.<br /><br /></p>    <p style=\"text-align: justify;\">Two single treatment rooms and four double rooms for couple treatments are located inside the spa surrounded by a tranquil atmosphere.<br /><br /></p>    <p style=\"text-align: justify;\">Check out our Spa programs for singles or couples and have a spa experience as part of an unforgettable vacation!</p>     <p style=\"text-align: justify;\">One beautiful beach pavilion offers massages with an incredible ocean view during daytime or at night. <br /><br />Let the breeze be the background music during your relaxation massages!<br /><br /></p>    <p style=\"text-align: justify;\">We also offer manicure and pedicure services and a full beauty salon, <br />whereour expert stylists will make you look perfect and pamper you.<br /><br /></p>     <p style=\"text-align: justify;\">To wrap up your spa experience, before or after any spa treatment, Renova Spa features a steam room located inside the changing rooms for ladies and gentlemen respectively. <br /><br />These facilities in conjunction with the gym are available free of charge for guests of the all-inclusive program.<br /><br /></p>     <p>&nbsp;The salon equipment includes:</p>    <ul>      <li>3 dressing tables</li>      <li>1 hair washbasin</li>       <li>2 manicure tables</li>    <li>2 pedicure stations</li>    </ul>     <div>&nbsp;</div>     <div>&nbsp;</div>     <div>&nbsp;</div>     <div>&nbsp;</div>     <h3>FITNESS CENTER</h3>     <p><span>The gym includes the following</span>&nbsp;exercise equipment:&nbsp;</p>     <ul type=\"disc\">      <li>mats&nbsp;</li>       <li>pilates balls</li>      <li>free weights</li>       <li>2 abdominal crunches</li>       <li>2 cross-trainers</li>       <li>1 squat</li>      <li>1 seated leg curl</li>      <li>1 chest press</li>      <li>1 pull down</li>      <li>1 leg extension</li>      <li>2&nbsp;95 R Lifecycle Bikes</li>      <li>4&nbsp;x 95 X&nbsp;Eliptics</li>      <li>5 Treadmills 5 x 95T</li>     </ul>', 1, '2016-12-23 00:00:00', 0, 10, 1);
 
@@ -221,7 +222,8 @@ CREATE TABLE `hotel_region` (
 
 INSERT INTO `hotel_region` (`id`, `hotel_id`, `region_id`, `discount`, `active_discount`) VALUES
 ('06826546-c668-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 15, 1),
-('10826546-c668-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', '8fc7e7b8-c659-11e6-915d-39adba9ad86b', NULL, 0);
+('10826546-c668-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', '8fc7e7b8-c659-11e6-915d-39adba9ad86b', NULL, 0),
+('450191da-f452-11e6-935c-349b705c7f66', '44fda1ce-f452-11e6-935c-349b705c7f66', '3d22c3ce-c65a-11e6-915d-39adba9ad86b', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -250,12 +252,15 @@ CREATE TABLE `payment_information` (
 INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `country`, `town_city`, `phone_number`, `company_name`, `street_address`, `apartment_unit`, `post_code`) VALUES
 ('02a0141e-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('07977476-ee09-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('095e8d86-f3e4-11e6-935c-349b705c7f66', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('0c4bd930-ef49-11e6-aaea-026c172da098', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('0ce2657e-f54f-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('0dfbba2a-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('1328e852-ee2b-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('1b6b4d96-f256-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('1ce9f042-f322-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('24eb02fc-ee10-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('29d54784-f552-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2a99ea2e-f315-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2d7b4064-ed73-11e6-ab30-97c0fcae753e', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('2f01520c-ee09-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -312,6 +317,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('b43a6ba0-ef3c-11e6-b416-b502e98c0160', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('b4ae62ba-f254-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('b50193a2-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('b953d1a6-f551-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('bce45972-f073-11e6-b261-d1f041727803', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('bfa1e6ba-ef3e-11e6-aaea-026c172da098', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('bfde1c2a-f326-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -337,10 +343,13 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('ee57e9e4-ee0a-11e6-ab30-97c0fcae753e', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('f02263f0-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('f3e317d6-ee09-11e6-ab30-97c0fcae753e', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('f41a1690-f54e-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('f727124e-e70b-11e6-950e-4cfe156feb4d', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Calle #18, sector Naco', 'Apartamento Los Prados', '10010'),
 ('f871d7de-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('f9025348-f3eb-11e6-935c-349b705c7f66', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('fb02ad9c-f255-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('fb99e380-ee11-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('fb99e380-ee11-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('fd74216c-f54a-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -457,6 +466,13 @@ CREATE TABLE `reservation` (
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `type`, `region_id`, `hotel_id`, `payment_information_id`, `confirmation_number`, `bride_name`, `groom_name`, `email`, `wedding_bill_delivery`, `remarks`, `wedding_date`, `wedding_time`, `certificate_first_name`, `certificate_last_name`, `certificate_MI`, `certificate_email`, `certificate_not_my_info`, `arrival`, `departure`, `subtotal`, `discount`, `total`, `payment_method_id`, `last_four_card_numbers`, `status_id`, `created`, `modified`, `is_deleted`) VALUES
+('29d4c1ec-f552-11e6-aeef-4c960d7c4b01', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '29d54784-f552-11e6-aeef-4c960d7c4b01', '8b7AB1dd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-17', '2017-02-17', 60, NULL, 51, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-17 20:46:31', '2017-02-17 20:46:31', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -477,6 +493,14 @@ CREATE TABLE `reservation_item` (
   `modified` datetime NOT NULL,
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservation_item`
+--
+
+INSERT INTO `reservation_item` (`id`, `reservation_id`, `cart_item_id`, `service_id`, `customer_name`, `prefered_date`, `prefered_time`, `price`, `cabin_id`, `created`, `modified`, `is_deleted`) VALUES
+('29dc64ce-f552-11e6-aeef-4c960d7c4b01', '29d4c1ec-f552-11e6-aeef-4c960d7c4b01', '1fc9d322-f552-11e6-aeef-4c960d7c4b01', '1a298596-c659-11e6-915d-39adba9ad86b', NULL, '2017-02-19', '12:00:00', 0, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-17 20:46:31', '2017-02-17 20:46:31', 0),
+('29dc6fbe-f552-11e6-aeef-4c960d7c4b01', '29d4c1ec-f552-11e6-aeef-4c960d7c4b01', '1fc9d322-f552-11e6-aeef-4c960d7c4b01', '1a298596-c659-11e6-915d-39adba9ad86b', NULL, '2017-02-19', '12:00:00', 0, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', '2017-02-17 20:46:31', '2017-02-17 20:46:31', 0);
 
 -- --------------------------------------------------------
 
@@ -604,6 +628,13 @@ CREATE TABLE `shopping_cart` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `shopping_cart`
+--
+
+INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
+('1fc91d9c-f552-11e6-aeef-4c960d7c4b01', 'x80JuaUWDDk8xCh83IZahi9VUkZkPp1FulOd2ZiW', '2017-02-17 20:46:15', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -614,7 +645,7 @@ CREATE TABLE `shopping_cart_item` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cart_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `service_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `package_id` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `package_category_relation_id` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `customer_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cabin_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Quantity` int(11) NOT NULL,
@@ -626,6 +657,13 @@ CREATE TABLE `shopping_cart_item` (
   `Created` date NOT NULL,
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `shopping_cart_item`
+--
+
+INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_category_relation_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
+('1fc9d322-f552-11e6-aeef-4c960d7c4b01', '1fc91d9c-f552-11e6-aeef-4c960d7c4b01', NULL, 'js98bea0-eadc-11e6-8e07-23d1aff8cd1d', NULL, 'b0c7c658-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-19', '12:00:00', 3, NULL, NULL, '2017-02-17', 0);
 
 -- --------------------------------------------------------
 
@@ -660,6 +698,7 @@ CREATE TABLE `wedding_package` (
   `id` varchar(128) NOT NULL,
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
+  `type` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
@@ -669,9 +708,9 @@ CREATE TABLE `wedding_package` (
 -- Dumping data for table `wedding_package`
 --
 
-INSERT INTO `wedding_package` (`id`, `name`, `description`, `is_active`, `created`, `is_deleted`) VALUES
-('e652673e-eada-11e6-8e07-23d1aff8cd12', 'Glamorous Package', 'For the ones that prefer to apply their own make up. Obtain soft hands and feet, show beautiful nails and get the perfect hairstyle to be gorgeous on the big day', 1, '2017-02-04 00:00:00', 0),
-('f052673e-eada-11e6-8e07-23d1aff8cd1a', 'Pretty Style Package', 'The basic grooming for a special occasion. Select the style that will make you shine', 1, '2017-02-04 00:00:00', 0);
+INSERT INTO `wedding_package` (`id`, `name`, `description`, `type`, `is_active`, `created`, `is_deleted`) VALUES
+('e652673e-eada-11e6-8e07-23d1aff8cd12', 'Glamorous Package', 'For the ones that prefer to apply their own make up. Obtain soft hands and feet, show beautiful nails and get the perfect hairstyle to be gorgeous on the big day', 1, 1, '2017-02-04 00:00:00', 0),
+('f052673e-eada-11e6-8e07-23d1aff8cd1a', 'Pretty Style Package', 'The basic grooming for a special occasion. Select the style that will make you shine', 1, 1, '2017-02-04 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -743,6 +782,26 @@ CREATE TABLE `wedding_package_category_relation` (
 INSERT INTO `wedding_package_category_relation` (`id`, `wedding_package_id`, `wedding_package_category_id`, `price`, `discount`, `active_discount`) VALUES
 ('368dbea0-eadc-11e6-8e07-23d1aff8cd1a', 'f052673e-eada-11e6-8e07-23d1aff8cd1a', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', '166', '0', 0),
 ('js98bea0-eadc-11e6-8e07-23d1aff8cd1d', 'e652673e-eada-11e6-8e07-23d1aff8cd12', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', '231', '0', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wedding_package_feature`
+--
+
+CREATE TABLE `wedding_package_feature` (
+  `id` varchar(128) NOT NULL,
+  `wedding_package_id` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `created` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_feature`
+--
+
+INSERT INTO `wedding_package_feature` (`id`, `wedding_package_id`, `description`, `created`) VALUES
+('fbbf655a-f3fd-11e6-935c-349b705c7f66', 'e652673e-eada-11e6-8e07-23d1aff8cd12', '10% discount on any Renova Spa service for the wedding couple.', '2017-02-16 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -944,6 +1003,12 @@ ALTER TABLE `wedding_package_category_hotel`
 -- Indexes for table `wedding_package_category_relation`
 --
 ALTER TABLE `wedding_package_category_relation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wedding_package_feature`
+--
+ALTER TABLE `wedding_package_feature`
   ADD PRIMARY KEY (`id`);
 
 --
