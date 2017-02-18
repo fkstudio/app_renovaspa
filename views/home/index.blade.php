@@ -122,18 +122,18 @@
 <!-- JQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$( function() {
-		var availableCountries = [
-			"ARUBA",
-			"BAHAMAS"
-		];
+	// $( function() {
+	// 	var availableCountries = [
+	// 		"ARUBA",
+	// 		"BAHAMAS"
+	// 	];
 
-		$( "#country" ).autocomplete({
-			source: availableCountries
-		});
+	// 	$( "#country" ).autocomplete({
+	// 		source: availableCountries
+	// 	});
 
-		// date range
-		$('input[id="daterange"]').daterangepicker();
-	});
+	// 	// date range
+	// 	$('input[id="daterange"]').daterangepicker();
+	// });
 </script>
 @endsection

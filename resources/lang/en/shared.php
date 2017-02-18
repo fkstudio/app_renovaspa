@@ -11,6 +11,7 @@ return [
     'country' => 'Country',
     'destination' => 'Destination',
     'hotel' => 'Hotel',
+    'wedding_package' => 'Wedding package',
     'arrival' => 'Arrival',
     'departure' => 'Departure',
     'confirm' => 'CONFIRM',

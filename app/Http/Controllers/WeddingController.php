@@ -56,6 +56,28 @@ class WeddingController extends Controller
         }
     }
 
+    /* POST */
+    public function getWeddingPackagesByHotel(Request $request, $hotel_id){
+        $session = $request->session();
+        $model = [];
+
+        $categoryPackages = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryHotelModel')->findBy(['Hotel' => $hotel_id]);
+
+        
+        
+        foreach($categoryPackages as $categoryPackage){
+            $packageRelations = $categoryPackage->WeddingPackageCategory->WeddingPackageCategoryRelations;
+
+            foreach($packageRelations as $packageRelation){
+                array_push($model, [ "id" => $packageRelation->WeddingPackage->Id, "name" => $packageRelation->WeddingPackage->Name ]);    
+            }
+            
+        }
+
+        return json_encode($model);
+
+    }
+
     public function weddingServices(Request $request){
         $session = $request->session();
         $hotel_id = $session->get('hotel_id');

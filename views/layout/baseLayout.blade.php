@@ -39,6 +39,17 @@
     <!-- Bootstrap submenu js -->
     <script src="{{ URL::to('/') }}/js/bootstrap-submenu.min.js"></script>
 
+    <script>
+      $(document).ready(function(){
+        $('.dropdown-submenu .dropdown-action').on("click", function(e){
+          $('.dropdown-hide').css('display', 'none');
+          $(this).next('ul').toggle();
+          e.stopPropagation();
+          e.preventDefault();
+        });
+      });
+    </script>
+
     @yield("scripts")
   </body>
 </html>

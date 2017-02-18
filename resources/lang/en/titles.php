@@ -15,6 +15,9 @@ return [
     'reservation_checkout_left_title' => 'PAYMENT INFORMATION',
     'reservation_checkout_right_title' => 'ORDER SUMMARY',
     'cart_total' => 'CART TOTAL',
-    'card_info' => 'CREDIT CARD INFORMATION'
+    'card_info' => 'CREDIT CARD INFORMATION',
+    'book_your_treatment' => 'BOOK YOUR TREATMENT',
+    'treat_someone' => 'TREAT SOMEONE',
+    'the_day' => 'THE DAY'
 
 ];

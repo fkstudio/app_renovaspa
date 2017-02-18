@@ -1,4 +1,5 @@
 @inject("dbcontext", "App\Database\DbContext")
+
 <nav class="navbar top-menu">
   <div class="container-fluid">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
@@ -34,6 +35,31 @@
       <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
           <li><a href="{{ route('home.home') }}">{{ trans('navbar.home') }} <span class="sr-only">(current)</span></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.destinations') }}</a>
+            
+
+            <ul class="dropdown-menu">
+              @foreach($dbcontext->getEntityManager()->getRepository("App\Models\Test\CountryModel")->findAll() as $country)
+
+                <li class="dropdown-submenu">
+                <a class="dropdown-action" tabindex="-1" href="#">{{ $country->Name }}</a>
+                <ul class="dropdown-menu dropdown-hide">
+                  @foreach($country->Regions as $region)
+                    <li class="dropdown-submenu">
+                      <a href="#">{{ $region->Name }}</a>
+                      <ul class="dropdown-menu">
+                        @foreach($region->HotelRegions as $hotelRegion)
+                          <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }}</a></li>
+                        @endforeach
+                      </ul>
+                    </li>
+                  @endforeach
+                </ul>
+              </li>
+              @endforeach
+              </ul>
+          </li>
           <li><a href="{{ URL::to('/') }}/select/services">{{ trans('navbar.bookhere') }}</a></li>
           <li><a href="{{ URL::to('/') }}/select/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
           <li class="dropdown">
@@ -42,26 +68,6 @@
               <li><a href="{{ URL::to('/') }}/select/weddings">{{ trans('navbar.the_day') }}</a></li>
               <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
             </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.destinations') }} <span class="caret"></span></a>
-              <ul class="dropdown-menu" style="width: 300px"> 
-                @foreach($dbcontext->getEntityManager()->getRepository("App\Models\Test\CountryModel")->findAll() as $country)
-                <li class="dropdown-submenu">
-                  <a href="#fakelink" tabindex="-1" class="dropdown-submenu-item">{{ $country->Name }} <span class="caret"></span></a>
-                  <ul class="dropdown-submenu">
-                    @foreach($country->Regions as $region)
-                      <a href="#fakelink" tabindex="-1" class="dropdown-submenu-item">{{ $region->Name }} <span class="caret"></span></a>
-                      <ul class="dropdown-submenu">
-                        @foreach($region->HotelRegions as $hotelRegion)
-                          <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }} <span class="caret"></span></a></li>
-                        @endforeach
-                      </ul>
-                    @endforeach
-                  </ul>
-                </li>
-                @endforeach 
-              </ul>
           </li>
           <li><a href="{{ route('home.about') }}">{{ trans('navbar.about_us') }}</a></li>
           <li><a href="#">{{ trans('navbar.contact_us') }}</a></li>
@@ -87,3 +93,4 @@
   </div>
 </nav>
 @endif
+

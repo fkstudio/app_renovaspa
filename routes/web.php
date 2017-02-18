@@ -85,7 +85,7 @@ Route::get('/certificate/registration', [ 'as' => 'certificate.registration', 'u
 | Region controller routes
 |----------------------------------------------------------------------------
 */
-Route::get('/region/all/{country_id}', [ 'as' => 'region.all', 'uses' => 'RegionController@getAll' ]);
+Route::get('/async/region/by/country/{country_id}', [ 'as' => 'region.all', 'uses' => 'RegionController@getAll' ]);
 
 Route::get('/country/{country_id}/regions', [ 'as' => 'region.listByCountry', 'uses' => 'RegionController@regionsByCountry' ]);
 
@@ -96,7 +96,7 @@ Route::get('/country/{country_id}/regions', [ 'as' => 'region.listByCountry', 'u
 */
 Route::get('/hotel/details/{id}', [ 'as' => 'hotel.details', 'uses' => 'HotelController@details' ]);
 
-Route::get('/hotel/all/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
+Route::get('/async/hotel/by/region/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
 
 Route::get('/region/{region_id}/hotels', [ 'as' => 'hotel.hotelsByRegion', 'uses' => 'HotelController@HotelsByRegion' ]);
 
@@ -109,8 +109,11 @@ Route::get('/reservation/bookhere', [ 'as' => 'reservation.bookhere', 'uses' => 
 
 Route::get('/reservation/canceled', [ 'as' => 'reservation.canceled', 'uses' => 'ReservationController@canceled' ]);
 
+Route::post('/reservation/select/book', [ 'as' => 'reservation.selectBook', 'uses' => 'ReservationController@selectBook' ]);
 
 Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.checkout', 'uses' => 'ReservationController@checkout' ]);
+
+
 
 
 /*
@@ -119,6 +122,8 @@ Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.ch
 |----------------------------------------------------------------------------
 */
 Route::get('/wedding/services', [ 'as' => 'wedding.services', 'uses' => 'WeddingController@weddingServices' ]);
+
+Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);
 
 Route::get('/wedding/checkout', [ 'as' => 'wedding.checkout', 'uses' => 'WeddingController@checkout' ]);
 

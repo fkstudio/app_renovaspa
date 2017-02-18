@@ -34,6 +34,35 @@ class ReservationController extends Controller
         return view("reservation.bookhere", [ 'countries' => $countries ]);
     }
 
+    /* POST */
+    public function selectBook(Request $request){
+        $session = $request->session();
+        $sessionId = $session->getId();
+
+        if(empty($_POST['reservation_type']) || empty($_POST['country_id']) || empty($_POST['region_id']) || empty($_POST['hotel_id'])){
+            return \Redirect::to(\URL::previous());
+        }
+
+        $session->put('country_id', $_POST["country_id"]);
+        $session->put('region_id', $_POST["region_id"]);
+        $session->put('hotel_id', $_POST["hotel_id"]);
+
+        switch ($_POST['reservation_type']) {
+            case 1:
+                return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $_POST['hotel_id'] ]);
+                break;
+                
+            case 2:
+                return redirect()->route('certificate.options', [ 'hotel_id' => $_POST['hotel_id'] ]);
+                break;
+            case 3:
+                return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $_POST['hotel_id'] ]);
+                break;
+        }
+        
+
+    }
+
     /* return a view to complete reservation data */
     public function checkout(Request $request){
         $session = $request->session();

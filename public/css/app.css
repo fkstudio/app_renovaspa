@@ -31,6 +31,23 @@
       padding-top: 70px;
   }
 
+ .dropdown-menu {
+ 	background: rgb(55, 55, 55) !important;
+	border-radius: 0px !important;
+	padding: 0px !important;
+	border: none !important;
+ }
+
+ .dropdown-submenu .dropdown-menu {
+ 	margin-top: 0px !important;
+ 	width: 250px;
+ }
+
+ .dropdown-menu>li>a {
+ 	color: rgb(178, 178, 178) !important;
+	padding: 10px 20px 10px 20px !important;
+ }
+
  .navbar {
  	margin-bottom: 0px !important;
  }

@@ -62,11 +62,12 @@ class HotelController extends Controller
 
     /* get all hotels in json format */
     public function getAll($region_id){
-        $hotels = $this->entityManager->getRepository("App\Models\HotelModel")->findBy([ 'Region' => $region_id ]);
+        
+        $hotelRegions = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
         $model = [];
 
-        foreach($hotels as $hotel){
-            array_push($model, [ "id" => $hotel->Id, "name" => $hotel->Name ]);
+        foreach($hotelRegions as $hotelRegion){
+            array_push($model, [ "id" => $hotelRegion->Hotel->Id, "name" => $hotelRegion->Hotel->Name ]);
         }
 
         return json_encode($model);
