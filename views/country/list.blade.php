@@ -130,6 +130,7 @@
 	                var regionSelect = $("#region_id");
 	                regionSelect.html("<option></option>");
 	                $("#hotel_id").html("<option></option>");
+	                $("#wedding_package_id").html("<option></option>");
 
 	                for(var i in regionList){
 	                    regionSelect.append("<option value='"+regionList[i].id+"'>"+regionList[i].name+"</option>");
@@ -145,6 +146,7 @@
 	            }).done(function(response){
 	                var hotelList = JSON.parse(response);
 	                var hotelSelect = $("#hotel_id");
+	                $("#wedding_package_id").html("<option></option>");
 
 	                for(var i in hotelList){
 	                    hotelSelect.append("<option value='"+hotelList[i].id+"'>"+hotelList[i].name+"</option>");
@@ -154,16 +156,12 @@
 	        getWeddingPackages: function(){
 	            var self = this;
 
-	            console.log(self.hotel_id);
-	            
 	            $.ajax({
 	                url: '{{ URL::to("/") }}/async/wedding/packages/by/hotel/' + self.hotel_id,
 	                method: 'GET'
 	            }).done(function(response){
 	                var weddingPackages = JSON.parse(response);
 	                var pacakgeSelect = $("#wedding_package_id");
-
-	                console.log(response);
 
 	                for(var i in weddingPackages){
 	                    pacakgeSelect.append("<option value='"+weddingPackages[i].id+"'>"+weddingPackages[i].name+"</option>");
