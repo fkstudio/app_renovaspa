@@ -55,6 +55,8 @@ Route::post('/cart/add/services', [ 'as' => 'cart.addServices', 'uses' => 'Shopp
 
 Route::get('/shopping/cart', [ 'as' => 'cart.myCart', 'uses' => 'ShoppingCartController@myCart' ]);
 
+Route::get('/shopping/cart/add/riu/package', [ 'as' => 'cart.addRiuPackage', 'uses' => 'ShoppingCartController@addRiuPackageToCart' ]);
+
 Route::get('/shopping/cart/remove/item/{itemId}', [ 'as' => 'cart.removeItem', 'uses' => 'ShoppingCartController@removeItem' ]);
 
 Route::match(['post', 'get'], '/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'ShoppingCartController@checkout' ]);
@@ -126,6 +128,7 @@ Route::get('/wedding/services', [ 'as' => 'wedding.services', 'uses' => 'Wedding
 Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);
 
 Route::get('/wedding/checkout', [ 'as' => 'wedding.checkout', 'uses' => 'WeddingController@checkout' ]);
+
 
 Route::post('/wedding/send/quotation', [ 'as' => 'wedding.sendQuotation', 'uses' => 'WeddingController@sendQuotation' ]);
 

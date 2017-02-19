@@ -11,8 +11,9 @@
 			<div class="row">
 				<br/>
 				<div class="col-md-12">
+					<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
 				    @include('shared._messages')
-					<form action="{{ URL::to('/') }}/reservation/checkout" method="post">
+					<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="post">
 						<table class="table table-responsive">
 							<thead>
 								<tr>
@@ -66,26 +67,26 @@
 															@endphp
 
 															@if($serviceCabin->Name == "Single")
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ $parts[0] }}" />
 															@elseif ($serviceCabin->Name == "Double")
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="You will shared room with..." class="form-control" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="You will shared room with..." class="form-control required-input" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
 															@elseif ($serviceCabin->Name == "Package")
 																@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
-																	<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
+																	<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
 																@endfor
 															@endif
 														</td>
 														<td class="padding-td">
-															<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control" />
+															<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
 														</td>
 														<td class="padding-td">
-															<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
+															<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
 														</td>
 														
 														<td class="padding-td">
 															@if($weddingPackageService->Service->Cabin->Name != "Package")
-															<select class="form-control blank-select" name="cabin_type[]">
+															<select class="form-control required-input blank-select" name="cabin_type[]">
 																@foreach($cabins as $cabin)
 																	@if($cabin->Name != "Package")
 																		@if ($weddingPackageService->Service != null && $weddingPackageService->Service->Cabin->Id == $cabin->Id)
@@ -98,7 +99,7 @@
 																@endforeach
 															</select>
 															@else
-															<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control">
+															<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
 																<option value="{{ $weddingPackageService->Service->Cabin->Id }}">{{ $weddingPackageService->Service->Cabin->Name }}</option>
 															</select>
 															@endif
@@ -125,26 +126,26 @@
 												@endphp
 
 												@if($serviceCabin->Name == "Single")
-													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ $parts[0] }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ $parts[0] }}" />
 												@elseif ($serviceCabin->Name == "Double")
-													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
-													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="You will shared room with..." class="form-control" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
+													<input type="text" required name="customer_name[{{ $key }}][]" placeholder="You will shared room with..." class="form-control required-input" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
 												@elseif ($serviceCabin->Name == "Package")
 													@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
-														<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
+														<input type="text" required name="customer_name[{{ $key }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
 													@endfor
 												@endif
 											</td>
 											<td class="padding-td">
-												<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control" />
+												<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
 											</td>
 											<td class="padding-td">
-												<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control" />
+												<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
 											</td>
 											
 											<td class="padding-td">
 												@if($item->Service->Cabin->Name != "Package")
-												<select class="form-control blank-select" name="cabin_type[]">
+												<select class="form-control required-input blank-select" name="cabin_type[]">
 													@foreach($cabins as $cabin)
 														@if($cabin->Name != "Package")
 															@if ($item->Service != null && $item->Service->Cabin->Id == $cabin->Id)
@@ -157,7 +158,7 @@
 													@endforeach
 												</select>
 												@else
-												<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control">
+												<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
 													<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
 												</select>
 												@endif
@@ -168,7 +169,16 @@
 							</tbody>
 						</table>
 						<div class="clearfix"></div>
-						<div class="form-group">
+						<div class="col-lg-4 col-lg-offset-8">
+							<h4 class="pull-right">{{ trans('checkout.upon_availability') }}</h4>
+							<div class="clearfix"></div>
+							<p class="pull-right">
+								<input type="checkbox" id="accept_terms" name="accept_terms">
+								<a href="#fakielink">I have added a spa service and I agree...</a>
+							</p>	
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group pull-right">
 							{{ csrf_field() }}
 							<a href="{{ URL::to('/') }}/shopping/cart" class="btn btn-default">{{ trans('shared.back_to_cart') }}</a>
 							@if (count($model->Items) > 0)
@@ -196,6 +206,29 @@
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 	<script>
+		function validateTerms(){
+			var pass = true;
+
+			if (!$("#accept_terms").is(":checked")) {
+				pass = false;
+		    }
+
+		    var requiredInputs = $('.required-input');
+
+		    $.each(requiredInputs, function(key, value){
+		    	if($(value).val() == "")
+		    		pass = false;
+		    });
+
+		    
+		    if(!pass){
+		    	$("#errorMessageContent").fadeTo(2000, 500).slideUp(500, function(){
+		            $("#errorMessageContent").slideUp(500);
+		        });
+		    }
+		    return pass;
+		}
+
 		$(function() {
 		    $('.datepicker').daterangepicker({
 		    	locale: {

@@ -74,7 +74,7 @@ class ShoppingCartController extends Controller
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
 
-        //try {
+        try {
             switch ($reservationType) {
                 // individual services
                 case 1:
@@ -92,7 +92,7 @@ class ShoppingCartController extends Controller
                     $action = '/shopping/cart/checkout';
                     break;
                 default:
-                    # code...
+                    return redirect()->route("home.home")->with('failure', 'messages.session_expired');
                     break;
             }
 
@@ -146,10 +146,52 @@ class ShoppingCartController extends Controller
             ];
 
             return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
+        }
+    }
+
+    /* add riu wedding package to cart */
+    public function addRiuPackageToCart(Request $request){
+        $session = $request->session();
+        $sessionId = $session->getId();
+
+        try {
+            /* get current user cart */
+            $cart = $this->getCart($sessionId);
+
+            // get package relation
+            $packageRelation = $this->entityManager->getRepository("App\Models\Test\WeddingPackageCategoryRelationModel")->findOneBy(['Id' => $session->get('riu_wedding_package_id')]);
+
+            if($packageRelation == null)
+                return redirect()->route("home.home")->with('failure', trans('messages.session_expired'));    
+            
+            // create cart item
+            $cartItem = new \App\Models\Test\ShoppingCartItemModel();
+            $cartItem->Cart = $cart;
+            $cartItem->PackageCategoryRelation = $packageRelation;
+            $cartItem->Service = null;
+            $cartItem->Quantity = 1;
+            $cartItem->Price = $packageRelation->Price;
+            $cartItem->PreferedDate = null;
+            $cartItem->PreferedTime = null;
+            $cartItem->Type = $session->get('reservation_type');
+            $cartItem->Created = new \DateTime();
+            $cartItem->IsDeleted = false;    
+
+            // save cart item
+            $cart->Items[] = $cartItem;
+
+            $this->entityManager->persist($cart);
+            $this->entityManager->flush();
+
+            /* redirect to category list */
+            return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $session->get('hotel_id') ]);
+        }
+        catch (\Exception $e){
+            return redirect()->route("home.home")->with('failure', trans('messages.session_expired'));
+        }
     }
 
     /* add items to current user cart */
@@ -161,8 +203,7 @@ class ShoppingCartController extends Controller
         $reservationType = $session->get('reservation_type');
         $isWedding = (isset($_POST['weddings'])) ? true : false;
 
-
-        //try {
+        try {
             /* get current user cart */
             $cart = $this->getCart($sessionId);
 
@@ -270,10 +311,10 @@ class ShoppingCartController extends Controller
             }
 
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
+        }
     }
 
     /* remove group same items from current user cart */

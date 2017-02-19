@@ -13,6 +13,9 @@
     <!-- Bootstrap -->
     <link href="{{ URL::to('/') }}/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Font awesome -->
+    <link href="{{ URL::to('/') }}/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Bootstrap submenu -->
     <link href="{{ URL::to('/') }}/css/bootstrap-submenu.min.css" rel="stylesheet">
 
@@ -46,6 +49,10 @@
           $(this).next('ul').toggle();
           e.stopPropagation();
           e.preventDefault();
+        });
+
+        $(".open-message").fadeTo(2000, 500).slideUp(500, function(){
+            $(".open-message").slideUp(500);
         });
       });
     </script>

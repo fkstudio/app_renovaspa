@@ -8,7 +8,8 @@
 	<div class="container">
 		<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
 		<br/>
-		<form action="{{ URL::to('/') }}/reservation/checkout" method="POST">
+		<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
+		<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">
@@ -16,11 +17,11 @@
 					</div>
 					<div class="form-group">
 						<label>First name</label>
-						<input type="text" class="form-control input-border" name="first_name" />
+						<input type="text" class="form-control required-input input-border" name="first_name" />
 					</div>
 					<div class="form-group">
 						<label>Last name</label>
-						<input type="text" class="form-control input-border" name="last_name" />
+						<input type="text" class="form-control required-input input-border" name="last_name" />
 					</div>
 				</div>
 			</div>
@@ -42,18 +43,18 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div class="form-group">
-						<input type="hidden" class="form-control input-border" name="certificate_number[{{ $key }}]" value="{{ $key }}" />
+						<input type="hidden" class="form-control required-input input-border" name="certificate_number[{{ $key }}]" value="{{ $key }}" />
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">
 								<label> To (as it will appear on the gift certificate):</label>
-								<input type="text" class="form-control input-border" name="to_customer[{{ $key }}]" />
+								<input type="text" class="form-control required-input input-border" name="to_customer[{{ $key }}]" />
 							</div>
 							<div class="col-md-6">
 								<label>* From (as it will appear on the gift certificate):</label>
-								<input type="text" class="form-control input-border" name="from_customer[{{ $key }}]" />
+								<input type="text" class="form-control required-input input-border" name="from_customer[{{ $key }}]" />
 							</div>	
 							<div class="clearfix"></div>
 							<div class="col-md-12">
@@ -190,7 +191,7 @@
 			<hr>
 			@endforeach
 			<div class="col-md-12 certificate-terms">
-				<p> <input type="checkbox" name="terms"> {{ trans('shared.certificate_terms') }}</p>
+				<p> <input type="checkbox" id="accept_terms" name="terms"> {{ trans('shared.certificate_terms') }}</p>
 			</div>
 			<div class="col-md-3">
 				<div class="row">
@@ -206,6 +207,29 @@
 @section('scripts')
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
+	function validateTerms(){
+		var pass = true;
+
+		if (!$("#accept_terms").is(":checked")) {
+			pass = false;
+	    }
+
+	    var requiredInputs = $('.required-input');
+
+	    $.each(requiredInputs, function(key, value){
+	    	if($(value).val() == "")
+	    		pass = false;
+	    });
+
+	    
+	    if(!pass){
+	    	$("#errorMessageContent").fadeTo(2000, 500).slideUp(500, function(){
+	            $("#errorMessageContent").slideUp(500);
+	        });
+	    }
+	    return pass;
+	}
+
     $(document).ready(function(){
         var vue = new Vue({
             el: '#vue-app',

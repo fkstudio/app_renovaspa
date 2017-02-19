@@ -27,7 +27,8 @@ return [
     'fill_card_data' => 'Please fill your Credit Card Information',
     'payment_your_order' => 'Payment your order',
     'select_country' => 'You must select some country.',
-    'select_region' => 'You must select some region.'
+    'select_region' => 'You must select some region.',
+    'messages.must_select_all_fields' => 'You must select all fields.'
 
     // 
 

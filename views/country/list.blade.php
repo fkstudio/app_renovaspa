@@ -71,6 +71,14 @@
 		<br/>
 		<br/>
 	</div>
+
+	<p class="discount-message-reservation">
+		@if(session('reservation_type') == 2)
+			{{ trans('bookhere.online_certificate_discount_reservation') }}
+		@else
+			{{ trans('bookhere.online_discount_reservation') }}
+		@endif
+	</p>
 </div>
 <div class="container-fluid">
 	<h3 class="text-center">{{ strtoupper(trans('navbar.destinations')) }}</h3>
@@ -162,6 +170,7 @@
 	            }).done(function(response){
 	                var weddingPackages = JSON.parse(response);
 	                var pacakgeSelect = $("#wedding_package_id");
+	                pacakgeSelect.append("<option value='nopackage'>No packages</option>");
 
 	                for(var i in weddingPackages){
 	                    pacakgeSelect.append("<option value='"+weddingPackages[i].id+"'>"+weddingPackages[i].name+"</option>");

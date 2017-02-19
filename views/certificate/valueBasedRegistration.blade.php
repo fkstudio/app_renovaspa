@@ -15,8 +15,9 @@
 <div id="vue-app" class="container-fluid">
 	<div class="container">
 		<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
+		<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
 		<br/>
-		<form action="{{ URL::to('/') }}/reservation/checkout" method="POST">
+		<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
 
 			<div class="clearfix"></div>
 			<hr class="custom-hr" > 
@@ -181,7 +182,7 @@
 			<hr>
 			@endforeach
 			<div class="col-md-12 certificate-terms">
-				<p> <input type="checkbox" name="terms">{{ trans('shared.certificate_terms') }}</p>
+				<p> <input type="checkbox" id="accept_terms" name="terms">{{ trans('shared.certificate_terms') }}</p>
 			</div>
 			<div class="col-md-3">
 				<div class="row">
@@ -197,6 +198,29 @@
 @section('scripts')
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
+	function validateTerms(){
+		var pass = true;
+
+		if (!$("#accept_terms").is(":checked")) {
+			pass = false;
+	    }
+
+	    var requiredInputs = $('.required-input');
+
+	    $.each(requiredInputs, function(key, value){
+	    	if($(value).val() == "")
+	    		pass = false;
+	    });
+
+	    
+	    if(!pass){
+	    	$("#errorMessageContent").fadeTo(2000, 500).slideUp(500, function(){
+	            $("#errorMessageContent").slideUp(500);
+	        });
+	    }
+	    return pass;
+	}
+
     $(document).ready(function(){
         // hidden all collapse when 1 collapse is clicked and then open it
         $('.collapse-button').on('click', function () {

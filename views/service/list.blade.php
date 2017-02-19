@@ -25,6 +25,9 @@
 				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $category->Id }}/{{ $category->Photo->Path }}" class="img-responsive" alt='{{ $category->Name }}' />
 				@endif
 				<br class="hidden-lg" />
+				<p class="text-center">
+					<a href="#fakelink" style="color:#5fc7ae;">+Info</a>
+				</p>
 			</div>
 			<div class="col-lg-8 col-md-12 col-sm-12">
 				<h4>{{ trans('titles.service_list_title') }}</h5>
@@ -38,7 +41,7 @@
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 							<label>Service</label>
 							<br/>
-							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}">+info</a>
+							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}" style="color:#5fc7ae;">+info</a>
 							<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
 						</div>
 						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
@@ -121,6 +124,12 @@
 					</div>	
 				</form>
 				
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+				<p class="text-center">Prices include 16.00 % tax</p>
 			</div>
 		</div>
 	</div>

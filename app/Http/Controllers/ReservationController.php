@@ -40,6 +40,12 @@ class ReservationController extends Controller
         $sessionId = $session->getId();
 
         if(empty($_POST['reservation_type']) || empty($_POST['country_id']) || empty($_POST['region_id']) || empty($_POST['hotel_id'])){
+            $session->flash('failure', trans('messages.must_select_all_fields'));
+            return \Redirect::to(\URL::previous());
+        }
+
+        if($_POST['reservation_type'] == 3 && empty($_POST['wedding_package_id'])){
+            $session->flash('failure', trans('messages.must_select_all_fields'));
             return \Redirect::to(\URL::previous());
         }
 
@@ -56,6 +62,11 @@ class ReservationController extends Controller
                 return redirect()->route('certificate.options', [ 'hotel_id' => $_POST['hotel_id'] ]);
                 break;
             case 3:
+                if($_POST["wedding_package_id"] != 'nopackage'){
+                    $session->flash("riu_wedding_package_id", $_POST["wedding_package_id"]);
+                    return redirect()->route('cart.addRiuPackage');
+                }
+                
                 return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $_POST['hotel_id'] ]);
                 break;
         }
@@ -70,11 +81,6 @@ class ReservationController extends Controller
         $reservationType = $session->get('reservation_type');
         $reservation_id = $session->get('current_reservation_id');
 
-        //echo '<pre>';
-        //print_r($_POST);
-        //echo '</pre>';
-        //exit();
-        
         try {
 
             $reservation = null;
@@ -123,13 +129,13 @@ class ReservationController extends Controller
                            empty($_POST['prefered_date'][$key]) or
                            empty($_POST['prefered_time'][$key]) or
                            empty($_POST["cabin_type"][$key]))
-                            return redirect()->route("cart.checkout")->with("failure", "Invalid data. Please fill the fields correctly.");
+                            return redirect()->route("cart.checkout")->with("failure", trans("messages.invalid_data"));
                             
                         /* get cart item */
                         $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
 
                         if($cartItem == null)
-                            //return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+                            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
 
                         /* complete cart item data */
                         $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
@@ -139,6 +145,7 @@ class ReservationController extends Controller
 
                         /* save cart item with new data */
                         $this->entityManager->persist($cartItem);
+                        $this->entityManager->flush();
 
                         /* create reservation or loocking for it in database */
                         $reservationItem = null;
@@ -248,14 +255,20 @@ class ReservationController extends Controller
                         $certificateItem->IsDeleted = false;
 
                         if($certificateItem->SendType == 1){
+                            /* check if the data is not empty */
+                            if(empty($_POST['delivery_email'][$key]) or empty($_POST['delivery_email_confirmation'][$key]))
+                                return redirect()->route('certificate.registration')->with('failure', trans('messages.invalid_data'));
+                           
                             /* verify if the emails are equals */
                             if($_POST['delivery_email'][$key] != $_POST['delivery_email_confirmation'][$key])
-                                return redirect()->route('')->with('failure', trans(''));
+                                return redirect()->route('certificate.registration')->with('failure', trans('messages.email_doesn_match'));
 
                             /* complete email delivery information */
                             $certificateItem->DeliveryEmail = $_POST['delivery_email'][$key];
                         }
                         else {
+                            /* check it the data is not empty */
+
                             /* complete hotel delivery information */
                             $certificateItem->DeliveryNumberOrAgency = $_POST['delivery_number_or_agency'][$key];
                             $certificateItem->DeliveryCompanyName = $_POST['delivery_company_name'][$key];

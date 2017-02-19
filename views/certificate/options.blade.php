@@ -121,7 +121,8 @@ following Gift Certificates/s.</h6>
 			<hr>
 			<div class="form-group">
 				{{ csrf_field() }}
-				<button type="submit" class="btn btn-primary">CONTINUE</button>
+				<button type="submit" class="pull-right btn btn-primary">CONTINUE</button>
+				<div class="clearfix"></div>
 			</div>
 			<hr>
 		</form>	

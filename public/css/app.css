@@ -14,6 +14,15 @@
  	color: #7f7f7f !important;
  }
 
+ .discount-message-reservation {
+ 	background: #5fc7ae;
+	color: white;
+	padding: 20px;
+	font-size: 20px;
+	float: right;
+	margin-top: 50px
+ }
+
  .container-fluid {
  	width: 85%;
  }
@@ -368,6 +377,16 @@
 	margin-top: 25px;
 	border-right: solid 1px rgb(228, 235, 230);
 	padding-right: 12px;
+ }
+
+ .social-icon {
+ 	font-size: 15px !important;
+	border: solid 1px rgb(196, 183, 187);
+	padding: 20px;
+	color: rgb(196, 183, 187);
+	border-radius: 60%;
+	height: 55px;
+	margin-right: 10px;
  }
 
 

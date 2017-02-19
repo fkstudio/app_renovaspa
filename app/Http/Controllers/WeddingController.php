@@ -62,14 +62,13 @@ class WeddingController extends Controller
         $model = [];
 
         $categoryPackages = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryHotelModel')->findBy(['Hotel' => $hotel_id]);
-
-        
         
         foreach($categoryPackages as $categoryPackage){
             $packageRelations = $categoryPackage->WeddingPackageCategory->WeddingPackageCategoryRelations;
 
             foreach($packageRelations as $packageRelation){
-                array_push($model, [ "id" => $packageRelation->WeddingPackage->Id, "name" => $packageRelation->WeddingPackage->Name ]);    
+                if($packageRelation->WeddingPackage->Type == 1)
+                    array_push($model, [ "id" => $packageRelation->Id, "name" => $packageRelation->WeddingPackage->Name ]);    
             }
             
         }
