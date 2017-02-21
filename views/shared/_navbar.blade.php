@@ -61,12 +61,12 @@
               @endforeach
               </ul>
           </li>
-          <li><a href="{{ URL::to('/') }}/select/services">{{ trans('navbar.bookhere') }}</a></li>
-          <li><a href="{{ URL::to('/') }}/select/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
+          <li><a href="{{ URL::to('/') }}/services">{{ trans('navbar.bookhere') }}</a></li>
+          <li><a href="{{ URL::to('/') }}/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
           <li class="dropdown">
             <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ URL::to('/') }}/select/weddings">{{ trans('navbar.the_day') }}</a></li>
+              <li><a href="{{ URL::to('/') }}/weddings">{{ trans('navbar.the_day') }}</a></li>
               <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
             </ul>
           </li>

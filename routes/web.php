@@ -28,7 +28,11 @@ Route::get('/about', [ 'as' => 'home.about', 'uses' => 'HomeController@about' ])
 
 Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeController@select' ]);
 
+Route::get('/services', [ 'as' => 'home.services', 'uses' => 'HomeController@services' ]);
 
+Route::get('/certificates', [ 'as' => 'home.certificates', 'uses' => 'HomeController@certificates' ]);
+
+Route::get('/weddings', [ 'as' => 'home.weddings', 'uses' => 'HomeController@weddings' ]);
 /*
 |----------------------------------------------------------------------------
 | Category controller routes

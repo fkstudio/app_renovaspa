@@ -56,8 +56,46 @@ class HomeController extends Controller
         return redirect()->route('country.list');
     }
 
+    
+
+    public function services(Request $request){
+        $session = $request->session();
+
+        $request->session()->regenerate();
+
+        $session->put('reservation_type', 1);
+        
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+
+        return view("country.list", [ "model" => $countries, 'margin' => true ]);
+    }
+
+    public function certificates(Request $request){
+        $session = $request->session();
+
+        $request->session()->regenerate();
+
+        $session->put('reservation_type', 2);
+
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+
+        return view("country.list", [ "model" => $countries, 'margin' => true ]);
+    }
+
+    public function weddings(Request $request){
+        $session = $request->session();
+
+        $request->session()->regenerate();
+
+        $session->put('reservation_type', 3);
+
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+
+        return view("country.list", [ "model" => $countries, 'margin' => true ]);
+    }
+
     public function about(){
-    	return view("home/about");
+    	return view("home/about", [ 'margin' => true ]);
     }
 
 }
