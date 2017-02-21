@@ -4,10 +4,13 @@
 
 @php
 	$reservationType = session('reservation_type');
+	$bgs[1] = "bookhere-bg.jpg";
+	$bgs[2] = "certificates-bg.jpg";
+	$bgs[3] = "weddings-bg.jpg";
 @endphp
 
 @section("content")
-<div id="vue-app" class="container-fluid-full" style="background: url(https://www.renovaspa.com/images/content/Depositphotos_3784443_original.jpg);background-size: cover;padding-top: 150px;padding-bottom: 150px;" id="details-hotel-container-book">
+<div id="vue-app" class="container-fluid-full" style="background: url({{ URL::to('/')  }}/images/{{ $bgs[$reservationType]  }});background-size: cover;background-position: center center;padding-top: 300px;padding-bottom: 250px;">
 	<div class="container-fluid-full" style="background: #F5F5F5;">
 		<br/>
 		@if($reservationType == 1)
@@ -79,30 +82,6 @@
 			{{ trans('bookhere.online_discount_reservation') }}
 		@endif
 	</p>
-</div>
-<div class="container-fluid">
-	<h3 class="text-center">{{ strtoupper(trans('navbar.destinations')) }}</h3>
-	<hr>
-	<div class="row">
-	@foreach($model as $country)
-		@php
-			$photoPath = '/noimage.jpg';
-
-			if($country->Photo != null)
-			{
-				$photoPath = '/countries/country-'.$country->Id.'/'.$country->Photo->Path;
-			}
-
-		@endphp
-		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/country/{{ $country->Id }}/regions">
-		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-		    	<div style="background: url({{ URL::to('/images') . $photoPath }});background-size: cover;" class="col-md-12 block-content" >
-					<span>{{ $country->Name }}	</span>
-				</div>
-		    </div>
-		</a>
-    @endforeach
-    </div>
 </div>
 @endsection
 

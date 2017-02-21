@@ -29,7 +29,7 @@ class HomeController extends Controller
 
     public function home(Request $request){
         $request->session()->flush();
-        return view("home/index");
+        return view("home/index", [ 'margin' => true ]);
     }
 
     public function select(Request $request, $selection){

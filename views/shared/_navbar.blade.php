@@ -1,5 +1,6 @@
 @inject("dbcontext", "App\Database\DbContext")
 
+
 <nav class="navbar top-menu">
   <div class="container-fluid">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
@@ -16,7 +17,7 @@
       </div>
   </div>
 </nav>
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="36">
+<nav class="navbar navbar-default"  data-spy="affix" data-offset-top="36" style="margin-bottom: {{ (isset($margin) ? '-110px' : '0' ) }} !important;">
   <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">

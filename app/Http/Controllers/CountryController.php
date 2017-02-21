@@ -35,7 +35,7 @@ class CountryController extends Controller
             'COUNTRIES' => '#fakelink'
         ];
         
-        return view("country.list", [ "model" => $countries, 'breadcrumps' => $breadcrumps ]);
+        return view("country.list", [ "model" => $countries, 'margin' => true, 'breadcrumps' => $breadcrumps ]);
     }
 
     /* get all countries in json format */
