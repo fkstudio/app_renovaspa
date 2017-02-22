@@ -16,19 +16,17 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next)
     {   
-        if($request->input('locale')){
-            \Session::put('locale', $request->input('locale'));
-            \Session::save();
-        }
+        
+        $locale = "en";
 
-        $locale = \Session::get('locale');
+        if(isset($_GET['lang'])){
+            $locale =  $_GET['lang'];
+        }
+        
         $app = App::getFacadeRoot();
 
-        if($locale != null)
-            $app->setLocale($locale);
-        else
-            $app->setLocale($app->config->get('app.fallback_locale'));
-
+        $app->setLocale($locale);
+        
         return $next($request);
     }
 }

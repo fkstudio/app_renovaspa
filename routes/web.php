@@ -10,12 +10,6 @@
 |
 */
 
-Route::get('/setlang/{locale?}', function($locale){
-	\Session::put('locale', $locale);
-	\Session::save();
-
-	return redirect("/");
-});
 
 /*
 |----------------------------------------------------------------------------

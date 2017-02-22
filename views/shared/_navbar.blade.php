@@ -9,8 +9,8 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('/') }}/setlang/es">{{ trans('navbar.es') }}</a></li>
-              <li><a href="{{ url('/') }}/setlang/en">{{ trans('navbar.en') }}</a></li>
+              <li><a href="?lang=es">{{ trans('navbar.es') }}</a></li>
+              <li><a href="?lang=en">{{ trans('navbar.en') }}</a></li>
             </ul>
           </li>
         </ul>
@@ -48,7 +48,7 @@
                 <ul class="dropdown-menu dropdown-hide">
                   @foreach($country->Regions as $region)
                     <li class="dropdown-submenu">
-                      <a href="#">{{ $region->Name }}</a>
+                      <a href="#" class="dropdown-action dropdown-no-action">{{ $region->Name }}</a>
                       <ul class="dropdown-menu">
                         @foreach($region->HotelRegions as $hotelRegion)
                           <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }}</a></li>
@@ -70,7 +70,12 @@
               <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
             </ul>
           </li>
-          <li><a href="{{ route('home.about') }}">{{ trans('navbar.about_us') }}</a></li>
+          <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.about_us') }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ URL::to('/') }}/about">{{ trans('navbar.about_us') }}</a></li>
+              <li><a href="{{ URL::to('/') }}/etiquette">{{ trans('navbar.spa_etiquette') }}</a></li>
+            </ul>
           <li><a href="#">{{ trans('navbar.contact_us') }}</a></li>
         </ul>
       </div>

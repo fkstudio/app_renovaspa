@@ -16,6 +16,7 @@ return [
     'faqs' => 'FAQS',
     'destinations' => 'DESTINATIONS',
     'about_us' => 'ABOUT US',
+    'spa_etiquette' => 'SPA ETIQUETTE',
     'contact_us' => 'CONTACT US',
     'lang' => 'LANG',
     'es' => 'ESP',

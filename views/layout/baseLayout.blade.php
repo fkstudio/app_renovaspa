@@ -45,10 +45,15 @@
     <script>
       $(document).ready(function(){
         $('.dropdown-submenu .dropdown-action').on("click", function(e){
-          $('.dropdown-hide').css('display', 'none');
-          $(this).next('ul').toggle();
-          e.stopPropagation();
-          e.preventDefault();
+            var input = $(this);
+            
+            if(!input.hasClass('dropdown-no-action'))
+              $('.dropdown-hide').css('display', 'none');
+  
+            input.next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();  
+          
         });
 
         $(".open-message").fadeTo(2000, 500).slideUp(500, function(){

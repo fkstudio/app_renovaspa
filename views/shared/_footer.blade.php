@@ -11,7 +11,7 @@
         <a target="_blank" href="https://www.instagram.com/renova.spa/"><i class="social-icon fa fa-instagram"></i></a>
         <a target="_blank" href="https://es.pinterest.com/renovaspa/"><i class="social-icon fa fa-pinterest"></i></a>
       </div>
-      <div class="col-lg-6 col-lg-offset-2">
+      <div class="col-lg-8">
         <p class="text-right">
         © All rights Reserved, Renova Spa 2016. Legal advise, Customer Information, Refund and cookies info
         </p>

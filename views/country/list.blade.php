@@ -148,7 +148,11 @@
 	                method: 'GET'
 	            }).done(function(response){
 	                var weddingPackages = JSON.parse(response);
+
+	                console.log(weddingPackages);
+	                
 	                var pacakgeSelect = $("#wedding_package_id");
+	                pacakgeSelect.html("");
 	                pacakgeSelect.append("<option value='nopackage'>No packages</option>");
 
 	                for(var i in weddingPackages){
