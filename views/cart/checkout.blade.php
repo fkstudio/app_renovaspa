@@ -25,93 +25,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if(session("reservation_type") == 3)
-
-									@foreach($model->Items as $key => $item)
-
-										@if(session('reservation_type') == 3)
-											
-											@php
-												$packageRelation = $item->PackageCategoryRelation;
-												$packageFeatures = $packageRelation->WeddingPackage->WeddingPackageFeatures;
-												$packageFeaturesUsed[$key] = array();	
-											@endphp
-											
-											@foreach($packageFeatures as $feature)
-
-												@if(!in_array($feature->Id, $packageFeaturesUsed[$key]))
-													<tr>
-														<td>{{ $packageRelation->WeddingPackage->Name . ' - '. $feature->Description }}</td>
-														<td>--</td>
-														<td>--</td>
-														<td>--</td>
-														<td>--</td>
-													</tr>
-													@php
-														$packageFeaturesUsed[$key][] = $feature->Id;
-													@endphp
-												@endif
-
-												@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $skey => $weddingPackageService)
-													@php
-														$serviceCabin = $weddingPackageService->Service->Cabin;
-													@endphp
-													<tr>
-														<td class="padding-td">
-															<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
-															{{ ($packageRelation != null ? $packageRelation->WeddingPackage->Name.' - ' : '' ) .$weddingPackageService->Service->Name }}
-														</td>
-														<td class="padding-td">
-															@php
-																$parts = explode(", ", $item->CustomerName);
-															@endphp
-
-															@if($serviceCabin->Name == "Single")
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ $parts[0] }}" />
-															@elseif ($serviceCabin->Name == "Double")
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
-																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="You will shared room with..." class="form-control required-input" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
-															@elseif ($serviceCabin->Name == "Package")
-																@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
-																	<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
-																@endfor
-															@endif
-														</td>
-														<td class="padding-td">
-															<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
-														</td>
-														<td class="padding-td">
-															<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
-														</td>
-														
-														<td class="padding-td">
-															@if($weddingPackageService->Service->Cabin->Name != "Package")
-															<select class="form-control required-input blank-select" name="cabin_type[]">
-																@foreach($cabins as $cabin)
-																	@if($cabin->Name != "Package")
-																		@if ($weddingPackageService->Service != null && $weddingPackageService->Service->Cabin->Id == $cabin->Id)
-																			<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
-																		@else 
-																			<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
-																		@endif
-																	@endif
-																
-																@endforeach
-															</select>
-															@else
-															<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
-																<option value="{{ $weddingPackageService->Service->Cabin->Id }}">{{ $weddingPackageService->Service->Cabin->Name }}</option>
-															</select>
-															@endif
-														</td>
-													</tr>
-												@endforeach
-
-											@endforeach
-										@endif
-									@endforeach
-								@else
-									@foreach($model->Items as $key => $item)
+								@foreach($model->Items as $key => $item)
+									@if($item->Service != null)
 										@php
 											$serviceCabin = $item->Service->Cabin;
 										@endphp
@@ -164,8 +79,79 @@
 												@endif
 											</td>
 										</tr>
-									@endforeach
-								@endif
+									@else
+										@php
+											$packageRelation = $item->PackageCategoryRelation;
+											$packageFeatures = $packageRelation->WeddingPackage->WeddingPackageFeatures;
+										@endphp
+										
+										@foreach($packageFeatures as $feature)
+											<tr>
+												<td>{{ $feature->Description }}</td>
+												<td>--</td>
+												<td>--</td>
+												<td>--</td>
+												<td>--</td>
+											</tr>
+										@endforeach
+
+										@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $skey => $weddingPackageService)
+											@php
+														$serviceCabin = $weddingPackageService->Service->Cabin;
+													@endphp
+													<tr>
+														<td class="padding-td">
+															<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
+															{{ ($packageRelation != null ? $packageRelation->WeddingPackage->Name.' - ' : '' ) .$weddingPackageService->Service->Name }}
+														</td>
+														<td class="padding-td">
+															@php
+																$parts = explode(", ", $item->CustomerName);
+															@endphp
+
+															@if($serviceCabin->Name == "Single")
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ $parts[0] }}" />
+															@elseif ($serviceCabin->Name == "Double")
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
+																<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="You will shared room with..." class="form-control required-input" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
+															@elseif ($serviceCabin->Name == "Package")
+																@for($i = 0; $i < $serviceCabin->MaxCantPersons; $i ++)
+																	<input type="text" required name="customer_name[{{ $skey }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[$i]) ? $parts[$i] : '' ) }}" />
+																@endfor
+															@endif
+														</td>
+														<td class="padding-td">
+															<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
+														</td>
+														<td class="padding-td">
+															<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
+														</td>
+														
+														<td class="padding-td">
+															@if($weddingPackageService->Service->Cabin->Name != "Package")
+															<select class="form-control required-input blank-select" name="cabin_type[]">
+																@foreach($cabins as $cabin)
+																	@if($cabin->Name != "Package")
+																		@if ($weddingPackageService->Service != null && $weddingPackageService->Service->Cabin->Id == $cabin->Id)
+																			<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+																		@else 
+																			<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+																		@endif
+																	@endif
+																
+																@endforeach
+															</select>
+															@else
+															<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
+																<option value="{{ $weddingPackageService->Service->Cabin->Id }}">{{ $weddingPackageService->Service->Cabin->Name }}</option>
+															</select>
+															@endif
+														</td>
+													</tr>
+										@endforeach
+									@endif
+								@endforeach
+								
 							</tbody>
 						</table>
 						<div class="clearfix"></div>

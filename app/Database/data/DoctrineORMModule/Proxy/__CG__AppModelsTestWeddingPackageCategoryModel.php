@@ -36,7 +36,7 @@ class WeddingPackageCategoryModel extends \App\Models\Test\WeddingPackageCategor
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Description' => NULL, 'Ordinal' => NULL, 'IsActive' => NULL, 'Created' => NULL, 'WeddingPackageCategoryRelations' => NULL, 'IsDeleted' => NULL];
+    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Description' => NULL, 'Ordinal' => NULL, 'IsActive' => NULL, 'Created' => NULL, 'IsDeleted' => NULL];
 
 
 
@@ -46,7 +46,7 @@ class WeddingPackageCategoryModel extends \App\Models\Test\WeddingPackageCategor
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->Name, $this->Description, $this->Ordinal, $this->IsActive, $this->Created, $this->WeddingPackageCategoryRelations, $this->IsDeleted);
+        unset($this->Name, $this->Description, $this->Ordinal, $this->IsActive, $this->Created, $this->IsDeleted);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
@@ -108,7 +108,7 @@ class WeddingPackageCategoryModel extends \App\Models\Test\WeddingPackageCategor
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'Id', 'Name', 'Description', 'Ordinal', 'IsActive', 'Created', 'WeddingPackageCategoryRelations', 'IsDeleted'];
+            return ['__isInitialized__', 'Id', 'Name', 'Description', 'Ordinal', 'IsActive', 'Created', 'IsDeleted'];
         }
 
         return ['__isInitialized__', 'Id'];
@@ -133,7 +133,7 @@ class WeddingPackageCategoryModel extends \App\Models\Test\WeddingPackageCategor
                 }
             };
 
-            unset($this->Name, $this->Description, $this->Ordinal, $this->IsActive, $this->Created, $this->WeddingPackageCategoryRelations, $this->IsDeleted);
+            unset($this->Name, $this->Description, $this->Ordinal, $this->IsActive, $this->Created, $this->IsDeleted);
         }
     }
 

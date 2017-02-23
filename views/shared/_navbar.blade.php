@@ -77,6 +77,14 @@
               <li><a href="{{ URL::to('/') }}/etiquette">{{ trans('navbar.spa_etiquette') }}</a></li>
             </ul>
           <li><a href="#">{{ trans('navbar.contact_us') }}</a></li>
+          <li>
+            @if(isset($mycart))
+            <a style="font-size: 20px;" href="#fakelink" data-toggle="modal" data-target="#shoppingCartModal">
+              <span class="glyphicon glyphicon-shopping-cart"></span>
+              <span class="cart-count">{{ count($mycart->Items) }}</span>
+            </a>
+            @endif
+          </li>
         </ul>
       </div>
 
@@ -98,5 +106,8 @@
       </div>
   </div>
 </nav>
+
 @endif
+
+@include('shared.cart')
 

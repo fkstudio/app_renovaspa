@@ -6,7 +6,6 @@
 
 $categories = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CategoryCountryModel")
                                                   ->findBy(["Country" => session('country_id')], ["Order" => "DESC"]);
-$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
 @endphp
 
 @section('title', 'Wedding services')
@@ -27,23 +26,18 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 			<h4>{{ trans('titles.service_list_title') }}</h5>
 			<br/>
 			<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
-				@foreach($model as $categoryHotel)
+				@foreach($model as $key => $categoryHotel)
 					<h5>{{ $categoryHotel->WeddingPackageCategory->Name }}</h5>
 					<p>{{ $categoryHotel->WeddingPackageCategory->Description }}</p>
-					@php
 
-						$packageRelations = $dbcontext->getEntityManager()->getRepository("App\Models\Test\WeddingPackageCategoryRelationModel")
-                                                  ->findBy(['WeddingPackageCategoryHotel' => $categoryHotel->Id])
-					@endphp
-					@foreach($packageRelations as $pkey => $package)
+					@foreach($categoryHotel->WeddingPackageCategory->WeddingPackageCategoryRelations as $pkey => $package)
 					<div class="package-info row">
 						<div class="col-md-8" style="padding-top: 10px;">
 							<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />
-							<strong>{{ $package->WeddingPackage->Name }}</strong>
-							<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $pkey }}">+Info</a>
+							<a data-toggle="collapse" data-target="#package-{{ $pkey }}">{{ $package->WeddingPackage->Name }}</a>
 						</div>
 						<div class="col-md-2" style="padding-top: 10px;">
-							<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->Price, 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
+							<span class="float-right">{{ $country->Currency->Symbol.number_format($package->Price, 2). ' '. $country->Currency->Name }}</span>
 						</div>
 						<div class="col-md-2">
 							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />

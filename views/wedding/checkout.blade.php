@@ -8,15 +8,15 @@
 <div id="vue-app" class="container-fluid">
 	@include('shared._breadcrumps')
 	<hr>
-	<h3 class="green-title">RESERVATION FORM FOR WEDDINGS</h3>
+	<h3 class="green-title">{{ trans('titles.wedding_reservation') }}</h3>
 	<br/>
-	<p><strong>Important:</strong> You will be contacted through e-mail by the online wedding concierge , please make sure Provide the e-mail address that you frequently use</p>
+	<p><strong>{{ trans('wedding.important') }}:</strong> {{ trans('wedding.you_will_be_contacted') }}</p>
 	<form action="{{ URL::to('/') }}/wedding/send/quotation" method="POST">
 		<div class="col-md-12">
 			<div class="row">
 				<div class="row">
 					<div class="col-md-12">
-						<h3>Personal information</h3>
+						<h3>{{ trans('wedding.personal_info') }}</h3>
 						<div class="clearfix"></div>
 						<hr />
 						@include('shared._messages')
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<h3>Couple information</h3>
+						<h3>{{ trans('wedding.couple_info') }}</h3>
 						<div class="clearfix"></div>
 						<hr />
 					</div>
@@ -62,35 +62,35 @@
 					</div>
 
 					<div class="col-md-12">
-						<h3>Reservation information</h3>
+						<h3>{{ trans('wedding.reservation_info') }}</h3>
 						<div class="clearfix"></div>
 						<hr />
 					</div>
 					<div class="clearfix"></div>
 					<div class="col-md-2">
-						<label>Coutry</label>
+						<label>{{ trans('shared.country') }}</label>
 						<br/>
 						<span>{{ $model->Region->Country->Name }}</span>
 					</div>
 					<div class="col-md-2">
-						<label>Destination</label>
+						<label>{{ trans('shared.destination') }}</label>
 						<br/>
 						<span>{{ $model->Region->Name }}</span>
 					</div>
 					<div class="col-md-2">
-						<label>Hotel</label>
+						<label>{{ trans('shared.hotel') }}</label>
 						<br/>
 						<span>{{ $model->Hotel->Name }}</span>
 					</div>
 					<div class="clearfix"></div>
 					<br/>
 					<div class="col-md-3">
-						<label>(*) Wedding Date</label>
+						<label>(*) {{ trans('wedding.wedding_date') }}</label>
 						<br/>
 						<p>We only take reservations within 6 months prior to the wedding date and not before.</p>
 						<input type="text" name="wedding_date" class="datepicker form-control input-border" />
 						<br/>
-						<label>(*) Wedding Time</label>
+						<label>(*) {{ trans('wedding.wedding_time') }}</label>
 						<br/>
 						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:m a') : '' ) }}" name="wedding_time" class="timepicker form-control input-border" />
 					</div>
@@ -99,23 +99,34 @@
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		<h3 class="green-title">QUOTATION</h3>
+		<h3 class="green-title">{{ trans('wedding.quotation') }}</h3>
 		<br/>
-		<h3>Services's information</h3>
+		<h3>{{ trans('wedding.service_info') }}</h3>
 		<hr/>
 		<div class="row">
 			@foreach($cart->Items as $item)
 				@php
 					$packageRelation = $item->PackageCategoryRelation;
 				@endphp
-				@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
+				@if($item->Service != null)
 					<div class="col-md-12">
-						<h5>1 {{ ( $packageRelation != null ? $packageRelation->WeddingPackage->Name . ' - ' : '').$packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+						<h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
 						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
 					</div>
 					<div class="clearfix"></div>
 					<hr/>
-				@endforeach
+				@else
+					@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
+						<div class="col-md-12">
+							<h5>1 {{ ( $packageRelation != null ? $packageRelation->WeddingPackage->Name . ' - ' : '').$packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+							<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+						</div>
+						<div class="clearfix"></div>
+						<hr/>
+					@endforeach
+				@endif
+
+				
 			@endforeach
 		</div>
 		<h3>CART TOTAL</h3>
@@ -140,12 +151,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<hr>
+		<hr/>
+		<a href="{{ URL::to('/') }}/hotel/{{ $hotel_region->Hotel->Id }}/categories">{{ trans('messages.would_you_like') }}</a>
+		<hr/>
 		<p style="color: red;"><strong>50% down payment will be required by the wedding concierge in order to confirm this reservation once this request has been checked out and approved within the next 24 hours For any questions, please, contact: info@renovaspa.com</strong></p>
 		<hr/>
-		<h3>Payment Information</h3>
+		<h3>{{ trans('wedding.payment_info') }}</h3>
 		<hr>
-		<p>How would you like to receive the bill for the requested service?</p>
+		<p>{{ trans('wedding.would_you_like') }}</p>
 		<div class="col-md-7">
 			<div class="row">
 				<select name="bill_delivery" class="form-control custom-select">
@@ -156,12 +169,12 @@
 				</select>
 				<label>Remarks</label>
 				<br>
-				<p>If you need to make additional requests please use this space.</p>
+				<p>{{ trans('wedding.aditional_request') }}</p>
 				<textarea name="remarks" rows="10" resizable='false' class="form-control input-border">{{ $model->Remarks }}</textarea>
 				<hr>
 				{{ csrf_field() }}
-				<button type="submit" class="btn btn-primary">SEND RESERVATION FORM</button>
-				<button type="button" class="btn btn-danger">CANCEL</button>
+				<button type="submit" class="btn btn-primary">{{ trans('wedding.send_reservation_form') }}</button>
+				<a href="{{ URL::to('/') }}/reservation/canceled" class="btn btn-danger">{{ trans('wedding.cancel') }}</a>
 			</div>
 			
 		</div>

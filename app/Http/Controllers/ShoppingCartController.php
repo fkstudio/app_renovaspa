@@ -98,45 +98,50 @@ class ShoppingCartController extends Controller
 
             $cart = $this->getCart($sessionId);
 
-            if($reservationType == 1){
-                $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.Service')
+            switch ($reservationType) {
+                case 1:
+                    /* individual services */
+                    $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.Service')
                              ->setParameter('cart', $cart->Id)
                              ->getResult();
+                    break;
+                
+                case 2:
+                    /* certificates */
+                    $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.CertificateNumber, u.Service')
+                             ->setParameter('cart', $cart->Id)
+                             ->getResult();
+                    break;
+                case 3:
+                    /* weddings */
+                    $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.PackageCategoryRelation')
+                             ->setParameter('cart', $cart->Id)
+                             ->getResult();
+                    break;
 
-                foreach($cart->Items as $item){
-                    $item->Quantity = $this->entityManager
-                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service')
-                                                ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id ])
-                                                ->getSingleResult()['Total'];
-                }
             }
-            else if($reservationType == 2){
-                $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.CertificateNumber, u.Service')
-                             ->setParameter('cart', $cart->Id)
-                             ->getResult();
 
-                foreach($cart->Items as $item){
-                    $item->Quantity = $this->entityManager
-                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
-                                                ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
-                                                ->getSingleResult()['Total'];
-                }
-            }
-            else if($reservationType == 3){
-                $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.PackageCategoryRelation')
-                             ->setParameter('cart', $cart->Id)
-                             ->getResult();
-
-                foreach($cart->Items as $item){
+            foreach($cart->Items as $item){
+                /* if is a wedding service */
+                if($item->PackageCategoryRelation != null){
                     $item->Quantity = $this->entityManager
                                                 ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.PackageCategoryRelation = :relation')
                                                 ->setParameters([ 'cart' => $cart->Id, 'relation' => $item->PackageCategoryRelation ])
                                                 ->getSingleResult()['Total'];
                 }
-
-
+                else if($item->CertificateNumber != null){
+                    $item->Quantity = $this->entityManager
+                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
+                                                ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
+                                                ->getSingleResult()['Total'];
+                }
+                else {
+                    $item->Quantity = $this->entityManager
+                                            ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service')
+                                            ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id ])
+                                            ->getSingleResult()['Total'];
+                }
             }
-
             
             
             $country = $this->entityManager->getRepository('\App\Models\Test\CountryModel')->findOneBy(['Id' => $session->get('country_id')]);

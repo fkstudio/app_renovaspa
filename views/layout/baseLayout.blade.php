@@ -59,6 +59,10 @@
         $(".open-message").fadeTo(2000, 500).slideUp(500, function(){
             $(".open-message").slideUp(500);
         });
+
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover(); 
+        });
       });
     </script>
 

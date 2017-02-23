@@ -26,12 +26,33 @@ class ServiceController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* return current user cart instance */
+    private function getCart($session_id){
+
+        $cart = null;
+        $cartExists = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(['Session' => $session_id]);
+
+        if($cartExists == null){
+            $cart = new \App\Models\Test\ShoppingCartModel();
+            $cart->Session = $session_id;
+            $cart->Created = new \DateTime();
+            $cart->IsDeleted = false;
+        }
+        else
+            $cart = $cartExists;
+
+        return $cart;
+    }
+
     /* get all services in category by hotel */
     public function servicesByCategoryAndHotel(Request $request, $category_id){
 
         $hotel_id = $request->session()->get('hotel_id');
         $region_id = $request->session()->get('region_id');
         $request->session()->put('category_id', $category_id);
+
+
+        $cart = $this->getCart($request->session()->getId());
 
         try {
                 
@@ -55,7 +76,8 @@ class ServiceController extends Controller
                     "hotel" => $hotel, 
                     "category" => $category, 
                     "region" => $region,
-                    "breadcrumps" => $breadcrumps 
+                    "breadcrumps" => $breadcrumps,
+                    'mycart' => $cart
             ];
 
             return view("service.list", $viewData);

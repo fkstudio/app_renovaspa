@@ -29,6 +29,8 @@ class HomeController extends Controller
 
     public function home(Request $request){
         $request->session()->flush();
+        $request->session()->regenerate();
+        
         return view("home/index", [ 'margin' => true ]);
     }
 

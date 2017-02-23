@@ -81,11 +81,15 @@ class ReservationController extends Controller
         $reservationType = $session->get('reservation_type');
         $reservation_id = $session->get('current_reservation_id');
 
+        // echo $reservationType;
+        // exit();
+
         try {
 
             $reservation = null;
 
             if($request->isMethod('post')){
+
                 /* get hotel data */
                 $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
 
@@ -94,8 +98,9 @@ class ReservationController extends Controller
                 $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
 
                 /* check if the region, hotel and status are valid */
-                if($hotel == null or $region == null or $status == null)   
+                if($hotel == null or $region == null or $status == null){  
                     return redirect()->route("cart.myCart")->with("failure", "An error found. Invalid data.", 1);
+                }
                     
                 /* fill reservation data */
                 $reservation = new \App\Models\Test\ReservationModel();
@@ -113,7 +118,7 @@ class ReservationController extends Controller
                 $reservation->IsDeleted = false;
 
                 /* add payment information */
-                $paymentInformation = new \App\Models\Test\PaymentInformationModel();
+                $paymentInformation = new \App\Models\Test\PaymentInformationModel();                
 
                 /* save reservation */
                 $this->entityManager->persist($reservation);
@@ -142,6 +147,7 @@ class ReservationController extends Controller
                         $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
                         $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
                         $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
+
 
                         /* save cart item with new data */
                         $this->entityManager->persist($cartItem);

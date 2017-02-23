@@ -23,10 +23,10 @@
 		public $WeddingPackage;
 
 		/** 
-		 * @OneToOne(targetEntity="WeddingPackageCategoryModel", cascade={"persist"})
-		 * @JoinColumn(name="wedding_package_category_id", referencedColumnName="id")
+		 * @OneToOne(targetEntity="WeddingPackageCategoryHotelModel", cascade={"persist"})
+		 * @JoinColumn(name="wedding_package_category_hotel_id", referencedColumnName="id")
 		*/
-		public $WeddingPackageCategory;	
+		public $WeddingPackageCategoryHotel;	
 
 		/** @Column(name="price", type="integer") */
 		public $Price;

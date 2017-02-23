@@ -19,7 +19,6 @@ class CategoryController extends Controller
     private $entityManager;
 
     /* ============================= PUBLIC METHODS ============================= */
-    
     /* public class construct */
     public function __construct(){
         $this->dbcontext = new DbContext();
@@ -65,13 +64,14 @@ class CategoryController extends Controller
                 "model" => $regionServices, 
                 "hotel" => $hotel, 
                 "region" => $hotelRegion->Region, 
-                'breadcrumps' => $breadcrumps 
+                'breadcrumps' => $breadcrumps
             ];
 
             if($session->get('reservation_type') == 2){
                 $session->flash('success', 'Select a treatment for the certificate #'. $session->get('current_certificate') .' - '. $session->get('certificate_quantity'));
                 return view("category.list", $viewData);
             }
+
 
             return view("category.list", $viewData);
         }

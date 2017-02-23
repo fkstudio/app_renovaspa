@@ -29,6 +29,24 @@ class WeddingController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* return current user cart instance */
+    private function getCart($session_id){
+
+        $cart = null;
+        $cartExists = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(['Session' => $session_id]);
+
+        if($cartExists == null){
+            $cart = new \App\Models\Test\ShoppingCartModel();
+            $cart->Session = $session_id;
+            $cart->Created = new \DateTime();
+            $cart->IsDeleted = false;
+        }
+        else
+            $cart = $cartExists;
+
+        return $cart;
+    }
+
     public function checkout(Request $request){
         $session = $request->session();
         $session_id = $session->getId();
@@ -61,16 +79,19 @@ class WeddingController extends Controller
         $session = $request->session();
         $model = [];
 
-        $categoryPackages = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryHotelModel')->findBy(['Hotel' => $hotel_id]);
-        
-        foreach($categoryPackages as $categoryPackage){
-            $packageRelations = $categoryPackage->WeddingPackageCategory->WeddingPackageCategoryRelations;
+        $queryBuilder = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryRelationModel')->createQueryBuilder('a');
 
-            foreach($packageRelations as $packageRelation){
-                if($packageRelation->WeddingPackage->Type == 1)
-                    array_push($model, [ "id" => $packageRelation->Id, "name" => $packageRelation->WeddingPackage->Name ]);    
-            }
-            
+
+        $queryBuilder->leftJoin('a.WeddingPackageCategoryHotel', 'weddingPackageCategoryHotel')
+                     ->leftJoin('a.WeddingPackage', 'WeddingPackage')
+                     ->where('weddingPackageCategoryHotel.Hotel = :hotel_id')
+                     ->andwhere('WeddingPackage.Type = :package_type')
+                     ->setParameters(['hotel_id' => 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'package_type' => 1]);
+
+        $queryResult = $queryBuilder->getQuery()->getResult();
+        
+        foreach($queryResult as $weddingPackageCategoryRelation){
+            array_push($model, [ "id" => $weddingPackageCategoryRelation->Id, "name" => $weddingPackageCategoryRelation->WeddingPackage->Name ]);   
         }
 
         return json_encode($model);
@@ -81,6 +102,8 @@ class WeddingController extends Controller
         $session = $request->session();
         $hotel_id = $session->get('hotel_id');
         $region_id = $session->get('region_id');
+
+        $cart = $this->getCart($request->session()->getId());
 
         $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
         $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
@@ -93,9 +116,18 @@ class WeddingController extends Controller
                 'WEDDING SERVICES' => '#fakelink'
             ];
 
-        $categories = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryHotelModel')->findBy(['Hotel' => $hotel->Id]);
+        $queryBuilder = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryHotelModel')->createQueryBuilder('c');
 
-        return view('wedding.services', [ 'breadcrumps' => $breadcrumps, 'model' => $categories, 'country' => $country ]);
+        $queryBuilder->leftJoin('c.WeddingPackageCategory', 'weddingPackageCategory')
+                     ->leftJoin('c.Hotel', 'Hotel')
+                     ->where('Hotel.Id = :hotel_id')
+                     ->andwhere('weddingPackageCategory.Name != :category_name')
+                     ->orderBy('weddingPackageCategory.Ordinal', 'ASC')
+                     ->setParameters(['hotel_id' => $hotel->Id, 'category_name' => 'RIU WEDDING PACKAGES']);
+
+        $categories = $queryBuilder->getQuery()->getResult();
+
+        return view('wedding.services', [ 'breadcrumps' => $breadcrumps, 'model' => $categories, 'country' => $country, 'mycart' => $cart ]);
     }
 
     public function sendQuotation(Request $request){

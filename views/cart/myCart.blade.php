@@ -44,14 +44,14 @@
 								@foreach($model->Items as $item)
 									
 
-                         			@if($reservation_type == 3)
+                         			@if($item->PackageCategoryRelation != null && $reservation_type == 3)
                          				@php
 											$subtotal += $item->PackageCategoryRelation->Price * $item->Quantity;
 											$total += $item->PackageCategoryRelation->Price * $item->Quantity;
 	                         			@endphp	
                          				<tr>
                          					<td>
-                         					<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
+                         					<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/wedding_package_icon.png" class="img-responsive" /> </td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												<span>{{ $item->PackageCategoryRelation->WeddingPackage->Name }}</span>

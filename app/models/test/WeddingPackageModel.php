@@ -48,5 +48,6 @@
 
 		public function __construct(){
 			$this->WeddingPackageServices = [];
+			$this->WeddingPackageFeatures = [];
 		}
 	}

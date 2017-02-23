@@ -18,6 +18,7 @@ return [
     'card_info' => 'CREDIT CARD INFORMATION',
     'book_your_treatment' => 'BOOK YOUR TREATMENT',
     'treat_someone' => 'TREAT SOMEONE',
-    'the_day' => 'THE DAY'
+    'the_day' => 'THE DAY',
+    'wedding_reservation' => 'RESERVATION FORM FOR WEDDINGS'
 
 ];

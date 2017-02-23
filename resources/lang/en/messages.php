@@ -28,8 +28,8 @@ return [
     'payment_your_order' => 'Payment your order',
     'select_country' => 'You must select some country.',
     'select_region' => 'You must select some region.',
-    'messages.must_select_all_fields' => 'You must select all fields.'
-
+    'messages.must_select_all_fields' => 'You must select all fields.',
+    'would_you_like' => 'Would you like to book any additional services for the wedding couple or your guests?'
     // 
 
 ];

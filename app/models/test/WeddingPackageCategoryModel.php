@@ -30,11 +30,6 @@
 
 		/** @Column(name="created", type="datetime") */
 		public $Created;
-
-		/** 
-		 * @OneToMany(targetEntity="WeddingPackageCategoryRelationModel", mappedBy="WeddingPackageCategory")
-		*/
-		public $WeddingPackageCategoryRelations;
 		
 		/** @Column(name="is_deleted", type="boolean") */
 		public $IsDeleted;

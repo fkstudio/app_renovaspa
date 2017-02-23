@@ -36,7 +36,7 @@ class WeddingPackageCategoryRelationModel extends \App\Models\Test\WeddingPackag
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = ['WeddingPackage' => NULL, 'WeddingPackageCategory' => NULL, 'Price' => NULL, 'Discount' => NULL, 'ActiveDiscount' => NULL];
+    public static $lazyPropertiesDefaults = ['WeddingPackage' => NULL, 'WeddingPackageCategoryHotel' => NULL, 'Price' => NULL, 'Discount' => NULL, 'ActiveDiscount' => NULL];
 
 
 
@@ -46,7 +46,7 @@ class WeddingPackageCategoryRelationModel extends \App\Models\Test\WeddingPackag
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->WeddingPackage, $this->WeddingPackageCategory, $this->Price, $this->Discount, $this->ActiveDiscount);
+        unset($this->WeddingPackage, $this->WeddingPackageCategoryHotel, $this->Price, $this->Discount, $this->ActiveDiscount);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
@@ -108,7 +108,7 @@ class WeddingPackageCategoryRelationModel extends \App\Models\Test\WeddingPackag
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'Id', 'WeddingPackage', 'WeddingPackageCategory', 'Price', 'Discount', 'ActiveDiscount'];
+            return ['__isInitialized__', 'Id', 'WeddingPackage', 'WeddingPackageCategoryHotel', 'Price', 'Discount', 'ActiveDiscount'];
         }
 
         return ['__isInitialized__', 'Id'];
@@ -133,7 +133,7 @@ class WeddingPackageCategoryRelationModel extends \App\Models\Test\WeddingPackag
                 }
             };
 
-            unset($this->WeddingPackage, $this->WeddingPackageCategory, $this->Price, $this->Discount, $this->ActiveDiscount);
+            unset($this->WeddingPackage, $this->WeddingPackageCategoryHotel, $this->Price, $this->Discount, $this->ActiveDiscount);
         }
     }
 
