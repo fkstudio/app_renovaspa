@@ -36,8 +36,17 @@ class ServiceCategoryHotelModel {
 	*/
 	public $Hotel;
 
+	/** @Column(name="only_for_wedding", type="boolean") */
+	public $OnlyForWedding;	
+
 	/** @Column(name="order", type="integer") */
 	public $Order;
+
+	/** @Column(name="is_active", type="boolean") */
+	public $IsActive;
+
+	/** @Column(name="is_deleted", type="boolean") */
+	public $IsDeleted;
 
 	/** 
 	 * @OneToOne(targetEntity="ServiceInformationModel", mappedBy="ServiceCategoryHotel")

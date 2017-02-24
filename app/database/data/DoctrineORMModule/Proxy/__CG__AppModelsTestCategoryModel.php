@@ -36,7 +36,7 @@ class CategoryModel extends \App\Models\Test\CategoryModel implements \Doctrine\
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Photo' => NULL];
+    public static $lazyPropertiesDefaults = ['Name' => NULL, 'Photo' => NULL, 'IsActive' => NULL, 'IsDeleted' => NULL];
 
 
 
@@ -46,7 +46,7 @@ class CategoryModel extends \App\Models\Test\CategoryModel implements \Doctrine\
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->Name, $this->Photo);
+        unset($this->Name, $this->Photo, $this->IsActive, $this->IsDeleted);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
@@ -108,7 +108,7 @@ class CategoryModel extends \App\Models\Test\CategoryModel implements \Doctrine\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'Id', 'Name', 'Photo'];
+            return ['__isInitialized__', 'Id', 'Name', 'Photo', 'IsActive', 'IsDeleted'];
         }
 
         return ['__isInitialized__', 'Id'];
@@ -133,7 +133,7 @@ class CategoryModel extends \App\Models\Test\CategoryModel implements \Doctrine\
                 }
             };
 
-            unset($this->Name, $this->Photo);
+            unset($this->Name, $this->Photo, $this->IsActive, $this->IsDeleted);
         }
     }
 

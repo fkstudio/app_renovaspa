@@ -60,7 +60,19 @@ class ServiceController extends Controller
             $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(["Id" => $category_id]);
             $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
 
-            $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id], ['Order' => 'ASC']);
+            $filters = [
+                            "Category" => $category->Id, 'Hotel' => $hotel->Id,
+                            "IsActive" => true,
+                            "IsDeleted" => false
+                        ];
+
+            if($request->session()->get('reservation_type') != 3)
+                $filters["OnlyForWedding"] = false;
+
+            $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")
+                ->findBy(
+                        $filters, 
+                        ['Order' => 'ASC']);
 
 
             $breadcrumps = [
@@ -83,6 +95,7 @@ class ServiceController extends Controller
             return view("service.list", $viewData);
         }
         catch (\Exception $e){
+            print_r($e);
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

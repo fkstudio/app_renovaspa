@@ -53,7 +53,15 @@ class CategoryController extends Controller
                                                ->findOneBy(["Hotel" => $hotel_id]);
 
             $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(["Country" => $hotelRegion->Region->Country->Id], ["Order" => "ASC"]);
+                                                  ->findBy(
+                                                        [
+                                                            "Country" => $hotelRegion->Region->Country->Id,
+                                                            "IsActive" => true,
+                                                            "IsDeleted" => false
+                                                        ], 
+                                                        [
+                                                            "Order" => "ASC"
+                                                        ]);
 
             $breadcrumps = [
                 $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',

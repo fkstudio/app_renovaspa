@@ -7,7 +7,12 @@
 @php
 
   $categories = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(["Country" => session('country_id')], ["Order" => "ASC"]);
+                                                  ->findBy(
+                                                  			[
+                                                  				"Country" => session('country_id'),
+                                                  				"IsActive" => true,
+                                                            	"IsDeleted" => false
+                                                  			], ["Order" => "ASC"]);
 
   $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
 

@@ -18,6 +18,7 @@
 			</a>
 			@endif
 			@foreach($model as $categoryRegion)
+				@if($categoryRegion->Category->IsDeleted == false)
 				@php
 
 				$photoPath = '/noimage.jpg';
@@ -34,6 +35,7 @@
 					</div>
 			    </div>
 			</a>
+			@endif
 	    @endforeach
 	    </div>
 	</div>
