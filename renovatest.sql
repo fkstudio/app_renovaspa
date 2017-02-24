@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 24, 2017 at 04:52 AM
+-- Generation Time: Feb 24, 2017 at 07:42 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -84,14 +84,14 @@ CREATE TABLE `category_country` (
 
 INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `ordinal`, `reference_name`) VALUES
 ('203b7aec-cdd7-11e6-8e2f-269ea561f5ac', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '04580784-cdc6-11e6-8e2f-269ea561f5ac', 5, 'aruba/palm beach/body treatment'),
-('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 4, ''),
-('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 2, ''),
-('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 1, ''),
-('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 8, ''),
+('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 4, 'aruba/palm beach/massages'),
+('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 2, 'aruba/palm beach/waxins'),
+('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 1, 'aruba/palm beach/hands and feet treatments'),
+('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/gazebo '),
 ('c4b2af5a-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', 7, 'aruba/palm beach/special for couples'),
 ('cd632378-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/beauty salon services'),
 ('dif96826-c6be-11e6-085d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 6, 'aruba/palm beach/spa experiences'),
-('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, '');
+('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, 'aruba/palm beach/facials');
 
 -- --------------------------------------------------------
 
@@ -305,6 +305,7 @@ CREATE TABLE `photo` (
 --
 
 INSERT INTO `photo` (`id`, `category_id`, `hotel_id`, `country_id`, `region_id`, `service_id`, `path`) VALUES
+('3ef1998c-faa3-11e6-a12a-f46e471cb539', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'waxing.jpg'),
 ('5faa97b4-cb91-11e6-b56e-bd2377eb3445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas.jpg'),
 ('5faa97b4-cb91-11e6-b56e-bd3377eb4445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas3.jpg'),
 ('636b0b9a-cb91-11e6-b56e-bd2377eb3445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas2.jpg'),
@@ -314,6 +315,7 @@ INSERT INTO `photo` (`id`, `category_id`, `hotel_id`, `country_id`, `region_id`,
 ('b4a87bac-c793-11e6-915d-39adba9ad84r', '1b958688-c65a-11e6-915d-39adba9ad86b', NULL, NULL, NULL, NULL, 'massages.jpg'),
 ('b4a87bac-c793-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', NULL, NULL, NULL, NULL, 'facial.jpg'),
 ('b4a87bac-c793-11e6-915d-39adba9ed867', '04580784-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'body-treatment.jpg'),
+('f5ea9798-faa2-11e6-a12a-f46e471cb539', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'hands-and-feet-treatment.jpg'),
 ('i7a87bac-c793-1126-915d-39adba9ed889', NULL, NULL, NULL, NULL, 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'collagen-puls-facial.jpg'),
 ('u7a87bac-c793-11e6-915d-39adba9ed867', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'spa-experiences.jpg'),
 ('u7q87bac-c793-11e6-915d-39adba9ed810', '', NULL, NULL, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', NULL, 'palm-beach.jpg');
@@ -450,6 +452,7 @@ CREATE TABLE `service_category_hotel` (
   `service_id` varchar(128) NOT NULL,
   `category_id` varchar(128) NOT NULL,
   `hotel_id` varchar(128) NOT NULL,
+  `only_for_wedding` tinyint(1) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -457,10 +460,10 @@ CREATE TABLE `service_category_hotel` (
 -- Dumping data for table `service_category_hotel`
 --
 
-INSERT INTO `service_category_hotel` (`id`, `service_id`, `category_id`, `hotel_id`, `order`) VALUES
-('a79eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0),
-('d09eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 0),
-('e0947c0e-c65b-11e6-915d-39adba9ad86b', '1a298596-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0);
+INSERT INTO `service_category_hotel` (`id`, `service_id`, `category_id`, `hotel_id`, `only_for_wedding`, `order`) VALUES
+('a79eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0),
+('d09eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 0, 0),
+('e0947c0e-c65b-11e6-915d-39adba9ad86b', '1a298596-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0);
 
 -- --------------------------------------------------------
 
