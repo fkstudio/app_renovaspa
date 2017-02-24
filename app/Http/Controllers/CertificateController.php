@@ -47,6 +47,8 @@ class CertificateController extends Controller
 
     public function checkOption(Request $request){
         $session = $request->session();
+        $session->regenerate();
+        
         $certificateType = $_POST['type'];
         $session->put('certificate_type', $certificateType);
         $session->put('certificate_quantity', $_POST['quantity']);

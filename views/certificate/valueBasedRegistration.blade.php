@@ -40,11 +40,11 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label>* To (as it will appear on the gift certificate):</label>
-								<input type="text" class="form-control input-border" name="to_customer[{{ $key }}]" />
+								<input type="text" class="required-input form-control input-border" name="to_customer[{{ $key }}]" />
 							</div>
 							<div class="col-md-6">
 								<label>* From (as it will appear on the gift certificate):</label>
-								<input type="text" class="form-control input-border" name="from_customer[{{ $key }}]" />
+								<input type="text" class="required-input form-control input-border" name="from_customer[{{ $key }}]" />
 							</div>	
 							<div class="clearfix"></div>
 							<br/>

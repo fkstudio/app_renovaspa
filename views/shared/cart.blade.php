@@ -40,16 +40,30 @@
               <img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> 
             </div>
             <div class="col-md-9">
-              <h5>{{ $item->Service->Name }} - Certificate #{{ $item->CertificateNumber }}</h5>
+              <h5>
+              {{ ( $item->Service != null ? $item->Service->Name . ' - ' : '' ) }} Certificate #{{ $item->CertificateNumber }}
+              </h5>
+              @if($item->Service != null)
               {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )
+              @else
+              ( Value based )
+              @endif
               <br/>
               @php
-                $itemPrice = $item->Service->getPrice(session('hotel_id'));
+                if($item->Service != null){
+                  $itemPrice = $item->Service->getPrice(session('hotel_id'));
 
-                $subtotal += $item->Service->getPlanePrice(session('hotel_id'));
-                $total += $itemPrice;
+                  $subtotal += $item->Service->getPlanePrice(session('hotel_id'));
+                  $total += $itemPrice;
+                }
+                else {
+                  $itemPrice = $item->Value;
+
+                  $subtotal += $item->Value;
+                  $total += $itemPrice;
+                }
               @endphp
-              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($item->Service->getPrice(session('hotel_id')), 2) }} {{ $country->Currency->Name }}</span>
+              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
             <div class="clearfix"></div>
             <br/>
