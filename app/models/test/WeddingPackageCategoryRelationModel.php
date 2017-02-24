@@ -36,4 +36,23 @@
 
 		/** @Column(name="active_discount", type="boolean") */
 		public $ActiveDiscount;
+
+		public function getPrice(){
+			$finalPrice = $this->Price;
+
+			if($this->ActiveDiscount == true){
+				$finalPrice = $this->Price - $this->getDiscount();
+			}
+
+			return $finalPrice;
+		}
+
+		public function getPlanePrice(){
+			return $this->Price;
+		}
+
+		private function getDiscount(){
+			$totalDiscount =  ( $this->Discount / 100 ) * $this->Price;
+			return $totalDiscount;
+		}
 	}

@@ -52,6 +52,7 @@ class WeddingController extends Controller
         $session_id = $session->getId();
         $reservation_id = $session->get('current_reservation_id');
 
+
         try {
             $reservation = $this->entityManager->getRepository("App\Models\Test\ReservationModel")->findOneBy(["Id" => $reservation_id]);
 

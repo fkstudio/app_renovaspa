@@ -137,7 +137,12 @@
 								<div class="row">
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										{{ csrf_field() }}
-										<a href="{{ URL::to('/') }}/category/{{ $category_id }}/services" class="btn btn-default block-button">{{ trans('shared.back_to_services') }}</a>
+										@if(session('category_id') == null)
+										<a href="{{ URL::to('/') }}/wedding/services" class="btn btn-default block-button">{{ trans('shared.back_to_services') }}</a>
+										@else
+										<a href="{{ URL::to('/') }}/category/{{ session('category_id') }}/services" class="btn btn-default block-button">{{ trans('shared.back_to_services') }}</a>
+										@endif
+										
 									</div>
 									<div class="clearfix visible-xs"></div>
 									<br class="visible-xs" />

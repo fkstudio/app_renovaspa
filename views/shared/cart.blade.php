@@ -57,7 +57,7 @@
           @else
             @php
               $packageRelation = $item->PackageCategoryRelation;
-              $itemPrice = $packageRelation->Price;
+              $itemPrice = $packageRelation->getPrice();
             @endphp
 
             <div class="col-md-3">

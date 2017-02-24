@@ -179,11 +179,11 @@ class ReservationController extends Controller
                                 $reservationItem->Modified = new \DateTime();
                                 $reservationItem->IsDeleted = false;
 
-                                $reservation->Subtotal += $packageService->Service->getPlanePrice($hotel->Id);
-                                $reservation->Total += $packageService->Service->getPrice($hotel->Id);
-                                
                                 $reservation->ServicesDetails[] = $reservationItem;
                             }
+
+                            $reservation->Subtotal += $packageRelation->getPlanePrice();
+                            $reservation->Total += $packageRelation->getPrice();
                         }
                         else{
                             /* fill reservation item data */

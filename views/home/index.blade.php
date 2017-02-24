@@ -16,8 +16,8 @@
 			<div class="carousel-inner"role="listbox">
 				<div class="item active">
 					<img src="{{ URL::to('/') }}/images/carousel/facial_treatment.jpg" alt="Flower">
-					<div class="carousel-caption" style="margin-bottom: 480px;">
-			        <a href="{{ URL::to('/') }}/services">
+					<div class="carousel-caption" >
+			        <a href="{{ URL::to('/') }}/services" style="margin: 0 auto;">
 			        	<h3 style="color:white;font-size: 60px;text-shadow: none;">RELAX MODE: <span style="color:#00CCCC;">ON</span></h3>
 			        </a>
 			      </div>
@@ -25,8 +25,8 @@
 
 				<div class="item">
 					<img src="{{ URL::to('/') }}/images/carousel/body_treatment.jpg" alt="Flower" />
-					<div class="carousel-caption" style="margin-bottom: 500px;">
-						<a href="{{ URL::to('/') }}/certificates">
+					<div class="carousel-caption" >
+						<a href="{{ URL::to('/') }}/certificates" style="margin: 0 auto;">
 				        	<h3 style="color:white;font-size: 40px;text-shadow: none;">ONLINE BOOKING RECEIVES 10% DISCOUNT</span></h3>
 				        </a>
 			        </div>
@@ -34,8 +34,8 @@
 
 				<div class="item">
 					<img src="{{ URL::to('/') }}/images/carousel/wedding_treatment.jpg" alt="Flower" />
-					<div class="carousel-caption" style="margin-bottom: 480px;">
-						<a href="{{ URL::to('/') }}/weddings">
+					<div class="carousel-caption" >
+						<a href="{{ URL::to('/') }}/weddings" style="margin: 0 auto;">
 				        	<h3 style="color:white;font-size: 60px;text-shadow: none;">THE DAY</span></h3>
 				        </a>
 			        </div>

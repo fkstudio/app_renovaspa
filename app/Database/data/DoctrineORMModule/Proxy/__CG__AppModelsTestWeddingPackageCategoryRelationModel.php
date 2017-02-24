@@ -218,4 +218,26 @@ class WeddingPackageCategoryRelationModel extends \App\Models\Test\WeddingPackag
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function getPrice()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrice', []);
+
+        return parent::getPrice();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPlanePrice()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPlanePrice', []);
+
+        return parent::getPlanePrice();
+    }
+
 }

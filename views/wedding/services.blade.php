@@ -43,7 +43,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 							<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $pkey }}">+Info</a>
 						</div>
 						<div class="col-md-2" style="padding-top: 10px;">
-							<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->Price, 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
+							<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->getPrice(), 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
 						</div>
 						<div class="col-md-2">
 							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 22, 2017 at 02:42 PM
+-- Generation Time: Feb 23, 2017 at 02:14 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -274,6 +274,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('1b6b4d96-f256-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('1bd6164a-f6ce-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('1ce9f042-f322-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2012090c-f945-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('214e7e48-f6cc-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('24eb02fc-ee10-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2616e23c-f6cf-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -304,6 +305,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('59de35bc-ea53-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('5a2f7d90-f256-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('5db94ab6-ea51-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('64a60312-f944-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('64b495ee-f327-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('64c2cd58-f327-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('66874796-ee12-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -318,6 +320,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('79617eec-f6cb-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('7a85c84c-f256-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('7a8c4c6e-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('7da34e10-f93f-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('7e586d98-ea50-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('815dc83a-f6cb-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('828c68ce-f6d0-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -332,13 +335,16 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('97268798-e70c-11e6-950e-4cfe156feb4d', 'Franklyn', 'Salcedo', 'fkop04@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Calle #18', 'Apartamento Buenos Aires', '10010'),
 ('97d75aee-f6d1-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('98be3a84-f327-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('9a77e94c-f953-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('9af2efae-ed99-11e6-ab30-97c0fcae753e', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', 'Distrito Nacional', '8298353260', 'Cydeck', 'Roberto Pastoriza #12', '', '10010'),
 ('9c9b4828-ee0d-11e6-ab30-97c0fcae753e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('9cb74982-f327-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('9cd5a700-f6cf-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('9d157a32-ee0b-11e6-ab30-97c0fcae753e', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('a1cbf4ca-f94b-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('a3c16428-f6cf-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('a507f1e8-f329-11e6-96d7-a9350c9deed4', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('a534a482-f94a-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('ab2187d0-f327-11e6-96d7-a9350c9deed4', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('aed294b2-f6d0-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('b27e6a62-ed45-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -350,6 +356,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('b4ae62ba-f254-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('b50193a2-ebda-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('b953d1a6-f551-11e6-aeef-4c960d7c4b01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('ba80aaaa-f942-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('bce45972-f073-11e6-b261-d1f041727803', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('bfa1e6ba-ef3e-11e6-aaea-026c172da098', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('bfde1c2a-f326-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -363,6 +370,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('ccd43cfa-f256-11e6-96d7-a9350c9deed4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('cd73e8f2-ea51-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('d1b6ea50-f257-11e6-96d7-a9350c9deed4', 'David', 'salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('d43d6ffa-f93d-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('d5f24946-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('db690fe6-e7e0-11e6-b6d5-cce00160de3c', 'Franklyn', 'Perez', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('dc2326c4-f6cc-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -372,6 +380,7 @@ INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `co
 ('e3e1e0f2-ea52-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('e4c2ce48-f6d0-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('e53f8f4e-ed9f-11e6-ab30-97c0fcae753e', 'David', 'Salcedo', 'hiobairo1993@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
+('e55f207a-f943-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('e5fa7eba-ee28-11e6-ab30-97c0fcae753e', 'David', 'Salcedo', 'fkop04@gmail.com', 'Republica Dominicana', '', '', '', '', '', ''),
 ('ebc90a9c-ea4e-11e6-8e07-23d1aff8cd1a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('ee2b82d4-f32b-11e6-9695-7c008cbf183a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -527,31 +536,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `type`, `region_id`, `hotel_id`, `payment_information_id`, `confirmation_number`, `bride_name`, `groom_name`, `email`, `wedding_bill_delivery`, `remarks`, `wedding_date`, `wedding_time`, `certificate_first_name`, `certificate_last_name`, `certificate_MI`, `certificate_email`, `certificate_not_my_info`, `arrival`, `departure`, `subtotal`, `discount`, `total`, `payment_method_id`, `last_four_card_numbers`, `status_id`, `created`, `modified`, `is_deleted`) VALUES
-('1bd5b65a-f6ce-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '1bd6164a-f6ce-11e6-a31c-dd14c8af1764', 'FBG785b1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:06:17', '2017-02-19 18:06:17', 0),
-('214e0292-f6cc-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '214e7e48-f6cc-11e6-a31c-dd14c8af1764', 'aad32G94', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:52:07', '2017-02-19 17:52:07', 0),
-('26166a6e-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '2616e23c-f6cf-11e6-a31c-dd14c8af1764', 'FAD7gc1F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:13:43', '2017-02-19 18:13:43', 0),
-('2881ab06-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '28820df8-f6cf-11e6-a31c-dd14c8af1764', 'a2BB4gA9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:13:47', '2017-02-19 18:13:47', 0),
-('2a2c88f4-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '2a2cf4d8-f6cf-11e6-a31c-dd14c8af1764', 'bGCGBF3A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:13:50', '2017-02-19 18:13:50', 0),
-('6f0308d8-f6cd-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '6f039244-f6cd-11e6-a31c-dd14c8af1764', 'BgA533A7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:01:27', '2017-02-19 18:01:27', 0),
-('77f78f96-f8ac-11e6-a12a-f46e471cb539', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '77f7f454-f8ac-11e6-a12a-f46e471cb539', '72A9742e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-22', '2017-02-22', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-22 03:10:31', '2017-02-22 03:10:31', 0),
-('78e3409e-f6d1-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '78e3af70-f6d1-11e6-a31c-dd14c8af1764', '94Dc6A2F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:30:21', '2017-02-19 18:30:21', 0),
-('79610df4-f6cb-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '79617eec-f6cb-11e6-a31c-dd14c8af1764', 'eGAFAb4D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:47:25', '2017-02-19 17:47:25', 0),
-('815d3992-f6cb-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '815dc83a-f6cb-11e6-a31c-dd14c8af1764', 'g8AdCaF7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:47:39', '2017-02-19 17:47:39', 0),
-('828c00a0-f6d0-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '828c68ce-f6d0-11e6-a31c-dd14c8af1764', 'efabd35c', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:23:28', '2017-02-19 18:23:28', 0),
-('90596b20-f6c9-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '9059d42a-f6c9-11e6-a31c-dd14c8af1764', 'G3b4a618', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:33:45', '2017-02-19 17:33:45', 0),
-('93790f06-f8ac-11e6-a12a-f46e471cb539', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '937971d0-f8ac-11e6-a12a-f46e471cb539', 'f5d5G7Ag', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-22', '2017-02-22', 30, NULL, 25.5, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', 5920, '6b5263c2-c7bc-11e6-915d-39adba9ad86b', '2017-02-22 03:11:17', '2017-02-22 03:11:17', 0),
-('97d6eece-f6d1-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '97d75aee-f6d1-11e6-a31c-dd14c8af1764', '975286d6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:31:13', '2017-02-19 18:31:13', 0),
-('9cd53504-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '9cd5a700-f6cf-11e6-a31c-dd14c8af1764', 'Ccc51D53', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:17:03', '2017-02-19 18:17:03', 0),
-('a3c0dc56-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'a3c16428-f6cf-11e6-a31c-dd14c8af1764', '512c829A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:17:14', '2017-02-19 18:17:14', 0),
-('aed233d2-f6d0-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'aed294b2-f6d0-11e6-a31c-dd14c8af1764', 'Cc43CD49', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:24:42', '2017-02-19 18:24:42', 0),
-('b2d26a84-f6cf-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'b2d2ddb6-f6cf-11e6-a31c-dd14c8af1764', 'af6g4GBf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, 'ff97fa8e-c85b-11e6-915d-39adba9ad86b', NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:17:40', '2017-02-19 18:17:40', 0),
-('dc22b2e8-f6cc-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'dc2326c4-f6cc-11e6-a31c-dd14c8af1764', 'bc5daDG2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:57:20', '2017-02-19 17:57:20', 0),
-('e2500164-f6c9-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'e25087ec-f6c9-11e6-a31c-dd14c8af1764', '7FA45G8d', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 17:36:02', '2017-02-19 17:36:02', 0),
-('e4c25efe-f6d0-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'e4c2ce48-f6d0-11e6-a31c-dd14c8af1764', '395g4A8c', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:26:13', '2017-02-19 18:26:13', 0),
-('ef11d24e-f6ea-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'ef123a36-f6ea-11e6-a31c-dd14c8af1764', 'e9ed5CB2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 21:32:37', '2017-02-19 21:32:37', 0),
-('fa101d98-f6ce-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'fa108c88-f6ce-11e6-a31c-dd14c8af1764', '41g4a7G3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:12:30', '2017-02-19 18:12:30', 0),
-('fc719ecc-f6ce-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'fc720240-f6ce-11e6-a31c-dd14c8af1764', '13Bb1Aac', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:12:34', '2017-02-19 18:12:34', 0),
-('ff8be95a-f6ce-11e6-a31c-dd14c8af1764', 1, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'ff8c4a44-f6ce-11e6-a31c-dd14c8af1764', 'agGaaA5G', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-19', '2017-02-19', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-19 18:12:39', '2017-02-19 18:12:39', 0);
+('9a77705c-f953-11e6-a12a-f46e471cb539', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '9a77e94c-f953-11e6-a12a-f46e471cb539', 'c53fA7b6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-22', '2017-02-22', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-22 23:06:55', '2017-02-22 23:06:55', 0),
+('a1cb8eea-f94b-11e6-a12a-f46e471cb539', 3, '8fc7e7b8-c659-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'a1cbf4ca-f94b-11e6-a12a-f46e471cb539', 'AB8a2Beb', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-22', '2017-02-22', 30, NULL, 25.5, NULL, NULL, '5ed5c774-c7bc-11e6-915d-39adba9ad86b', '2017-02-22 22:09:51', '2017-02-22 22:09:51', 0);
 
 -- --------------------------------------------------------
 
@@ -579,12 +565,8 @@ CREATE TABLE `reservation_item` (
 --
 
 INSERT INTO `reservation_item` (`id`, `reservation_id`, `cart_item_id`, `service_id`, `customer_name`, `prefered_date`, `prefered_time`, `price`, `cabin_id`, `created`, `modified`, `is_deleted`) VALUES
-('77fe7b80-f8ac-11e6-a12a-f46e471cb539', '93790f06-f8ac-11e6-a12a-f46e471cb539', '6fa6564c-f8ac-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'david, franklyn', '2017-02-23', '12:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-22 03:11:17', '2017-02-22 03:11:17', 0),
-('82902662-f6d0-11e6-a31c-dd14c8af1764', 'aed233d2-f6d0-11e6-a31c-dd14c8af1764', '78af9e48-f6d0-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, '2017-02-21', '12:01:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-19 18:24:42', '2017-02-19 18:24:42', 0),
-('905dcb52-f6c9-11e6-a31c-dd14c8af1764', 'b2d26a84-f6cf-11e6-a31c-dd14c8af1764', '14f88288-f6c7-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, '2017-02-21', '12:01:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-19 18:17:40', '2017-02-19 18:17:40', 0),
-('97dcab48-f6d1-11e6-a31c-dd14c8af1764', '97d6eece-f6d1-11e6-a31c-dd14c8af1764', '8b022e3e-f6d1-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David Salcedo, Franklyn Perez', '2017-02-25', '13:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-19 18:31:13', '2017-02-19 18:31:13', 0),
-('e4c86524-f6d0-11e6-a31c-dd14c8af1764', '78e3409e-f6d1-11e6-a31c-dd14c8af1764', 'dd5860fa-f6d0-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David, Salcedo', '2017-02-21', '12:01:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-19 18:30:21', '2017-02-19 18:30:21', 0),
-('ef190fe6-f6ea-11e6-a31c-dd14c8af1764', 'ef11d24e-f6ea-11e6-a31c-dd14c8af1764', 'e0adff02-f6ea-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David Salcedo, Franklyn Perez', '2017-02-21', '12:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-19 21:32:37', '2017-02-19 21:32:37', 0);
+('9a7f70f4-f953-11e6-a12a-f46e471cb539', '9a77705c-f953-11e6-a12a-f46e471cb539', '765d29e4-f950-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David Salcedo, Melvin Salcedo', '2017-02-24', '12:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-22 23:06:55', '2017-02-22 23:06:55', 0),
+('a1d4514c-f94b-11e6-a12a-f46e471cb539', 'a1cb8eea-f94b-11e6-a12a-f46e471cb539', '9730f24a-f94b-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', 'David Salcedo, Freddy Santos', '2017-02-24', '12:00:00', 25.5, 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', '2017-02-22 22:09:51', '2017-02-22 22:09:51', 0);
 
 -- --------------------------------------------------------
 
@@ -717,14 +699,14 @@ CREATE TABLE `shopping_cart` (
 --
 
 INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
-('5e967a70-f7ae-11e6-9867-1e874eefc305', 'hd4QWuhDLoRh1iMlD0gBF4LJ0v1zdW2jKkMRRs3G', '2017-02-20 20:51:36', 0),
-('6fa5b764-f8ac-11e6-a12a-f46e471cb539', 'AZsvVKXHDYCyYazRzMOZw7OAikXZmo95tpxUf6OH', '2017-02-22 03:10:17', 0),
-('7ac23b02-f6d3-11e6-a31c-dd14c8af1764', 'VZkRSS1mMIIJTBvwogCkJk3rdDgGdYgMBOy1jM2H', '2017-02-19 18:44:43', 0),
-('8b01994c-f6d1-11e6-a31c-dd14c8af1764', 'H9XY5d0asHlcj91fW2AzHXB5zji7aJ9mvcisL1fg', '2017-02-19 18:30:52', 0),
-('9865f4d0-f892-11e6-a12a-f46e471cb539', 'ujpttzfzvhxVSp2XvmwSEIpNqCBjuZ85Ijks4kLL', '2017-02-22 00:05:18', 0),
-('dbaae3b6-f6d2-11e6-a31c-dd14c8af1764', 'E0WAkkXNg6OC8GPj1oVCDRjXSk2MUDG72JHZXi5W', '2017-02-19 18:40:17', 0),
-('dd57b8c6-f6d0-11e6-a31c-dd14c8af1764', 'H5UFBcPqBzIiU1VbrvCyvkbp2APCmQ9THqxLZv6p', '2017-02-19 18:26:00', 0),
-('e0ad764a-f6ea-11e6-a31c-dd14c8af1764', 'n88btXSkSlg2acOOEGnyMBlElcdLQFHluzaaG0Ec', '2017-02-19 21:32:13', 0);
+('4cd91e1e-f95c-11e6-a12a-f46e471cb539', 'qLnbFPaU2nZ31f2lg8b92bhfDMEwkRZYgCTeIyRC', '2017-02-23 00:09:10', 0),
+('4dc950b6-f950-11e6-a12a-f46e471cb539', 'njSPIfSsGPowAIpekNMH1fsZdshJuBoeFvZ9mfUz', '2017-02-22 22:43:17', 0),
+('6af1decc-f95c-11e6-a12a-f46e471cb539', '3D3Iv0J3hw6h7HNNYjgDpGwbd1bRimHVFRknfWoC', '2017-02-23 00:10:00', 0),
+('8ad92934-f95c-11e6-a12a-f46e471cb539', 'G1iTsBBr0anjDKi95Tu2rPtCyIgO3btDyX6JD0vs', '2017-02-23 00:10:54', 0),
+('93a2faf6-f94b-11e6-a12a-f46e471cb539', 'tW31KWDbBLSAGnZbdpu49SZi6wHS5bB5FYa83Xw9', '2017-02-22 22:09:27', 0),
+('9e40ae46-f959-11e6-a12a-f46e471cb539', 'W1eGmk1i7vSJScR0LWo6m9TSgDGxbBuW8rqeZ9AD', '2017-02-22 23:49:58', 0),
+('b25d717a-f94f-11e6-a12a-f46e471cb539', 'IU1xRrApf9alw8f5MEF0cfSwXPEYM8ZUa7O1M8Wy', '2017-02-22 22:38:57', 0),
+('b8116ccc-f95c-11e6-a12a-f46e471cb539', 'XKjQqqIhUgezh8sPTcX5vdKLM06lXsU3PMjyDMRd', '2017-02-23 00:12:10', 0);
 
 -- --------------------------------------------------------
 
@@ -754,14 +736,10 @@ CREATE TABLE `shopping_cart_item` (
 --
 
 INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_category_relation_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
-('5e9774e8-f7ae-11e6-9867-1e874eefc305', '5e967a70-f7ae-11e6-9867-1e874eefc305', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 1, NULL, NULL, '2017-02-20', 0),
-('6fa6564c-f8ac-11e6-a12a-f46e471cb539', '6fa5b764-f8ac-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, 'david, franklyn', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-23', '12:00:00', 1, NULL, NULL, '2017-02-22', 0),
-('7ac32382-f6d3-11e6-a31c-dd14c8af1764', '7ac23b02-f6d3-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '100', '2017-02-19', 0),
-('8b022e3e-f6d1-11e6-a31c-dd14c8af1764', '8b01994c-f6d1-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, 'David Salcedo, Franklyn Perez', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-25', '13:00:00', 1, NULL, NULL, '2017-02-19', 0),
-('9866cd56-f892-11e6-a12a-f46e471cb539', '9865f4d0-f892-11e6-a12a-f46e471cb539', NULL, '97698a62-f859-11e6-a12a-f46e471cb539', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-22', 0),
-('dbac2a82-f6d2-11e6-a31c-dd14c8af1764', 'dbaae3b6-f6d2-11e6-a31c-dd14c8af1764', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '150', '2017-02-19', 0),
-('dd5860fa-f6d0-11e6-a31c-dd14c8af1764', 'dd57b8c6-f6d0-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, 'David, Salcedo', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-21', '12:01:00', 1, NULL, NULL, '2017-02-19', 0),
-('e0adff02-f6ea-11e6-a31c-dd14c8af1764', 'e0ad764a-f6ea-11e6-a31c-dd14c8af1764', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, 'David Salcedo, Franklyn Perez', 'b6eb160c-c7ea-11e6-915d-39adba9ad86b', 1, '2017-02-21', '12:00:00', 1, NULL, NULL, '2017-02-19', 0);
+('68825b3e-f95d-11e6-a12a-f46e471cb539', 'b8116ccc-f95c-11e6-a12a-f46e471cb539', NULL, 'eeda8850-f912-11e6-a12a-f46e471cb539', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-23', 0),
+('8e9619aa-f95d-11e6-a12a-f46e471cb539', 'b8116ccc-f95c-11e6-a12a-f46e471cb539', NULL, 'eeda8850-f912-11e6-a12a-f46e471cb539', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-23', 0),
+('b8124606-f95c-11e6-a12a-f46e471cb539', 'b8116ccc-f95c-11e6-a12a-f46e471cb539', NULL, 'f6c16fd6-f857-11e6-a12a-f46e471cb539', NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-23', 0),
+('c9538040-f95e-11e6-a12a-f46e471cb539', 'b8116ccc-f95c-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 3, NULL, NULL, '2017-02-23', 0);
 
 -- --------------------------------------------------------
 
@@ -810,7 +788,8 @@ INSERT INTO `wedding_package` (`id`, `name`, `description`, `type`, `is_active`,
 ('35c847c2-f853-11e6-a12a-f46e471cb539', 'Riu Free Wedding Package and Riu Classic Wedding Package', '', 1, 1, '2017-02-21 00:00:00', 0),
 ('35c85988-f853-11e6-a12a-f46e471cb539', 'Riu Royal Wedding Package', '', 1, 1, '2017-02-21 00:00:00', 0),
 ('35c85ae6-f853-11e6-a12a-f46e471cb539', 'Riu Caprice Wedding Package', '', 1, 1, '2017-02-21 00:00:00', 0),
-('35c85ba4-f853-11e6-a12a-f46e471cb539', 'Riu Indulgence Wedding Package', '', 1, 1, '2017-02-21 00:00:00', 0);
+('35c85ba4-f853-11e6-a12a-f46e471cb539', 'Riu Indulgence Wedding Package', '', 1, 1, '2017-02-21 00:00:00', 0),
+('e7988100-f912-11e6-a12a-f46e471cb539', 'Pretty Style Package', 'The basic grooming for a special occasion. Select the style that will make you shine', 2, 1, '2017-02-22 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -833,9 +812,9 @@ CREATE TABLE `wedding_package_category` (
 --
 
 INSERT INTO `wedding_package_category` (`id`, `name`, `description`, `ordinal`, `is_active`, `created`, `is_deleted`) VALUES
-('0ded836c-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE GUYS', 'The gentlemen in the party need to look perfect as well! This is the time to pamper them. These packages are for the groom and any other men in the party. They have to be used by one person only ( cannot be shared) and the services can be split up in different days.', 1, 1, '2017-02-04 00:00:00', 0),
-('1915c4b6-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE COUPLE', 'The wedding trip is all about the couple! Enjoy a romantic and indulgent experience with your loved one.', 1, 1, '2017-02-04 00:00:00', 0),
-('2531cbd2-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR EVERYONE', 'Celebrate with your guests and have a delicious relaxing treat!', 1, 1, '2017-02-04 00:00:00', 0),
+('0ded836c-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE GUYS', 'The gentlemen in the party need to look perfect as well! This is the time to pamper them. These packages are for the groom and any other men in the party. They have to be used by one person only ( cannot be shared) and the services can be split up in different days.', 2, 1, '2017-02-04 00:00:00', 0),
+('1915c4b6-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE COUPLE', 'The wedding trip is all about the couple! Enjoy a romantic and indulgent experience with your loved one.', 3, 1, '2017-02-04 00:00:00', 0),
+('2531cbd2-ead8-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR EVERYONE', 'Celebrate with your guests and have a delicious relaxing treat!', 4, 1, '2017-02-04 00:00:00', 0),
 ('3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', 'RIU WEDDING PACKAGES', 'Riu wedding packages', 1, 1, '2017-02-04 00:00:00', 0),
 ('fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', 'PACKAGES FOR THE GIRLS', 'This is the time to enjoy with the most important ladies in your life! Renova Spa wishes to make you look beautiful and to pamper you all. These packages are for the bride and any other lady in the party. They have to be used by one person only ( cannot be shared) and the services can be split up in different days.', 1, 1, '2017-02-04 00:00:00', 0);
 
@@ -858,7 +837,8 @@ CREATE TABLE `wedding_package_category_hotel` (
 
 INSERT INTO `wedding_package_category_hotel` (`id`, `hotel_id`, `wedding_package_category_id`, `reference_name`) VALUES
 ('2d6a2746-f856-11e6-a12a-f46e471cb539', 'f1c5f852-c667-11e6-915d-39adba9ad86b', '3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', 'Riu Free Wedding Package aruba/riu palace antillas'),
-('2rf2746-f856-11e6-a12a-f46e471cb253', '50c5f852-c667-11e6-915d-39adba9ad86b', '3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', 'Riu Free Wedding Package aruba/riu place aruba');
+('2rf2746-f856-11e6-a12a-f46e471cb253', '50c5f852-c667-11e6-915d-39adba9ad86b', '3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', 'Riu Free Wedding Package aruba/riu place aruba'),
+('956e6f52-f912-11e6-a12a-f46e471cb539', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'fc4d39cc-ead7-11e6-8e07-23d1aff8cd1a', 'aruba/riu palace antillas/for girls');
 
 -- --------------------------------------------------------
 
@@ -869,7 +849,7 @@ INSERT INTO `wedding_package_category_hotel` (`id`, `hotel_id`, `wedding_package
 CREATE TABLE `wedding_package_category_relation` (
   `id` varchar(128) NOT NULL,
   `wedding_package_id` varchar(128) NOT NULL,
-  `wedding_package_category_id` varchar(128) NOT NULL,
+  `wedding_package_category_hotel_id` varchar(128) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `discount` decimal(10,0) NOT NULL,
   `active_discount` tinyint(1) NOT NULL DEFAULT '0',
@@ -880,9 +860,10 @@ CREATE TABLE `wedding_package_category_relation` (
 -- Dumping data for table `wedding_package_category_relation`
 --
 
-INSERT INTO `wedding_package_category_relation` (`id`, `wedding_package_id`, `wedding_package_category_id`, `price`, `discount`, `active_discount`, `reference_name`) VALUES
-('97698a62-f859-11e6-a12a-f46e471cb539', '35c847c2-f853-11e6-a12a-f46e471cb539', '3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', '0', '0', 0, 'aruba/riu palace aruba'),
-('f6c16fd6-f857-11e6-a12a-f46e471cb539', '35c847c2-f853-11e6-a12a-f46e471cb539', '3ebd836c-r0o2-11e6-8e07-23d1aff8cd1a', '0', '0', 0, 'aruba/riu palace antillas');
+INSERT INTO `wedding_package_category_relation` (`id`, `wedding_package_id`, `wedding_package_category_hotel_id`, `price`, `discount`, `active_discount`, `reference_name`) VALUES
+('97698a62-f859-11e6-a12a-f46e471cb539', '35c847c2-f853-11e6-a12a-f46e471cb539', '2rf2746-f856-11e6-a12a-f46e471cb253', '0', '0', 0, 'aruba/riu palace aruba'),
+('eeda8850-f912-11e6-a12a-f46e471cb539', 'e7988100-f912-11e6-a12a-f46e471cb539', '956e6f52-f912-11e6-a12a-f46e471cb539', '155', '0', 0, 'aruba/riu palace antillas/pretty style'),
+('f6c16fd6-f857-11e6-a12a-f46e471cb539', '35c847c2-f853-11e6-a12a-f46e471cb539', '2d6a2746-f856-11e6-a12a-f46e471cb539', '0', '0', 0, 'aruba/riu palace antillas');
 
 -- --------------------------------------------------------
 
@@ -897,6 +878,13 @@ CREATE TABLE `wedding_package_feature` (
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `wedding_package_feature`
+--
+
+INSERT INTO `wedding_package_feature` (`id`, `wedding_package_id`, `description`, `created`) VALUES
+('f319dda0-f915-11e6-a12a-f46e471cb539', '35c847c2-f853-11e6-a12a-f46e471cb539', '10% discount on any Renova Spa service for the wedding couple', '2017-02-22 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -908,6 +896,13 @@ CREATE TABLE `wedding_package_service` (
   `wedding_package_id` varchar(128) NOT NULL,
   `service_id` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wedding_package_service`
+--
+
+INSERT INTO `wedding_package_service` (`id`, `wedding_package_id`, `service_id`) VALUES
+('eac54216-f92e-11e6-a12a-f46e471cb539', 'e7988100-f912-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b');
 
 --
 -- Indexes for dumped tables

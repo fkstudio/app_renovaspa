@@ -3,7 +3,7 @@
 <br/>
 <!--footer start from here-->
 <div class="copyright">
-  <div class="container-fluid" style="padding-top:50px;padding-bottom: 50px;">
+  <div class="container-fluid" style="padding-top:20px;padding-bottom: 20px;">
     <div class="row">
       <div class="col-lg-4 ">
         <a target="_blank" href="https://www.facebook.com/RenovaSpa/"><i style="padding-left: 22px;padding-right: 23px" class="social-icon fa fa-facebook"></i></a>

@@ -150,7 +150,7 @@ class ShoppingCartController extends Controller
                 'SHOPPING CART' => '#fakelink'
             ];
 
-            return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'category_id' => $session->get('category_id'), 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
+            return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
