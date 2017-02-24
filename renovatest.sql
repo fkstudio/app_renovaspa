@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 24, 2017 at 07:42 PM
+-- Generation Time: Feb 24, 2017 at 10:21 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -306,15 +306,18 @@ CREATE TABLE `photo` (
 
 INSERT INTO `photo` (`id`, `category_id`, `hotel_id`, `country_id`, `region_id`, `service_id`, `path`) VALUES
 ('3ef1998c-faa3-11e6-a12a-f46e471cb539', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'waxing.jpg'),
+('4eb50e30-fad5-11e6-a12a-f46e471cb539', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'special-for-couple.jpg'),
 ('5faa97b4-cb91-11e6-b56e-bd2377eb3445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas.jpg'),
 ('5faa97b4-cb91-11e6-b56e-bd3377eb4445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas3.jpg'),
 ('636b0b9a-cb91-11e6-b56e-bd2377eb3445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas2.jpg'),
 ('6faa97b4-cb98-11e6-b56e-bd2377eb3445', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas4.jpg'),
 ('736b0b9a-cb91-11e6-b56e-bd2377eb3480', NULL, 'f1c5f852-c667-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 'antillas-profile.jpg'),
 ('8480d8f0-c6e6-11e6-915d-39adba9ad86b', NULL, NULL, '4e6b7b5e-c663-11e6-915d-39adba9ad86b', NULL, NULL, 'aruba.jpg'),
+('a1ba7830-fad6-11e6-a12a-f46e471cb539', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'gazebo-services.jpg'),
 ('b4a87bac-c793-11e6-915d-39adba9ad84r', '1b958688-c65a-11e6-915d-39adba9ad86b', NULL, NULL, NULL, NULL, 'massages.jpg'),
 ('b4a87bac-c793-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', NULL, NULL, NULL, NULL, 'facial.jpg'),
 ('b4a87bac-c793-11e6-915d-39adba9ed867', '04580784-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'body-treatment.jpg'),
+('c91bbc8c-fad5-11e6-a12a-f46e471cb539', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'beauty-salon-services.jpg'),
 ('f5ea9798-faa2-11e6-a12a-f46e471cb539', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'hands-and-feet-treatment.jpg'),
 ('i7a87bac-c793-1126-915d-39adba9ed889', NULL, NULL, NULL, NULL, 'd877950a-c6ca-11e6-915d-39adba9ad86b', 'collagen-puls-facial.jpg'),
 ('u7a87bac-c793-11e6-915d-39adba9ed867', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', NULL, NULL, NULL, NULL, 'spa-experiences.jpg'),
