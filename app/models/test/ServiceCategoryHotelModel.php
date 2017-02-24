@@ -36,6 +36,9 @@ class ServiceCategoryHotelModel {
 	*/
 	public $Hotel;
 
+	/** @Column(name="order", type="integer") */
+	public $Order;
+
 	/** 
 	 * @OneToOne(targetEntity="ServiceInformationModel", mappedBy="ServiceCategoryHotel")
 	*/

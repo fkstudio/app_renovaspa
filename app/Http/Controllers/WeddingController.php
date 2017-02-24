@@ -218,6 +218,8 @@ class WeddingController extends Controller
             return view('wedding.quotation_content', $viewData);
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }

@@ -38,6 +38,9 @@ class CategoryController extends Controller
         $session->put("hotel_id", $hotel_id);
         $reservationType = $session->get('reservation_type');
 
+        if($reservationType == null)
+            return redirect()->route('home.home');
+
         try {
             if($next != 0){
                 if($reservationType == 2 && $next != $session->get('current_certificate') && $next <= $session->get('certificate_quantity')){
@@ -50,7 +53,7 @@ class CategoryController extends Controller
                                                ->findOneBy(["Hotel" => $hotel_id]);
 
             $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(["Country" => $hotelRegion->Region->Country->Id], ["Order" => "DESC"]);
+                                                  ->findBy(["Country" => $hotelRegion->Region->Country->Id], ["Order" => "ASC"]);
 
             $breadcrumps = [
                 $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',

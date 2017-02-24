@@ -8,7 +8,7 @@
           <li><a>info@renovaspa.com</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-inverse">
               <li><a href="?lang=es">{{ trans('navbar.es') }}</a></li>
               <li><a href="?lang=en">{{ trans('navbar.en') }}</a></li>
             </ul>
@@ -36,20 +36,32 @@
       <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
           <li><a href="{{ route('home.home') }}">{{ trans('navbar.home') }} <span class="sr-only">(current)</span></a></li>
+          <li><a href="{{ URL::to('/') }}/services">{{ trans('navbar.bookhere') }}</a></li>
+          <li><a href="{{ URL::to('/') }}/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
+          <li class="dropdown">
+            <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-inverse">
+              <li><a href="{{ URL::to('/') }}/weddings">{{ trans('navbar.the_day') }}</a></li>
+              <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
+            </ul>
+          </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.destinations') }}</a>
             
 
-            <ul class="dropdown-menu">
-              @foreach($dbcontext->getEntityManager()->getRepository("App\Models\Test\CountryModel")->findAll() as $country)
+            <ul class="dropdown-menu dropdown-inverse">
+              @php
+                $navCountries = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CountryModel")->findBy([], ['Name' => 'ASC'])
+              @endphp
+              @foreach($navCountries as $country)
 
                 <li class="dropdown-submenu">
                 <a class="dropdown-action" tabindex="-1" href="#">{{ $country->Name }}</a>
-                <ul class="dropdown-menu dropdown-hide">
+                <ul class="dropdown-menu dropdown-inverse dropdown-hide">
                   @foreach($country->Regions as $region)
                     <li class="dropdown-submenu">
                       <a href="#" class="dropdown-action dropdown-no-action">{{ $region->Name }}</a>
-                      <ul class="dropdown-menu">
+                      <ul class="dropdown-menu dropdown-inverse">
                         @foreach($region->HotelRegions as $hotelRegion)
                           <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }}</a></li>
                         @endforeach
@@ -61,18 +73,9 @@
               @endforeach
               </ul>
           </li>
-          <li><a href="{{ URL::to('/') }}/services">{{ trans('navbar.bookhere') }}</a></li>
-          <li><a href="{{ URL::to('/') }}/certificates">{{ trans('navbar.gift_certificates') }}</a></li>
-          <li class="dropdown">
-            <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ URL::to('/') }}/weddings">{{ trans('navbar.the_day') }}</a></li>
-              <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
-            </ul>
-          </li>
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.about_us') }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-inverse">
               <li><a href="{{ URL::to('/') }}/about">{{ trans('navbar.about_us') }}</a></li>
               <li><a href="{{ URL::to('/') }}/etiquette">{{ trans('navbar.spa_etiquette') }}</a></li>
             </ul>

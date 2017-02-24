@@ -60,7 +60,7 @@ class ServiceController extends Controller
             $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(["Id" => $category_id]);
             $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
 
-            $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id]);
+            $serviceCategories = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")->findBy(["Category" => $category->Id, 'Hotel' => $hotel->Id], ['Order' => 'ASC']);
 
 
             $breadcrumps = [
