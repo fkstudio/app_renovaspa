@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 24, 2017 at 10:21 PM
+-- Generation Time: Feb 25, 2017 at 12:25 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -46,23 +46,25 @@ INSERT INTO `cabin` (`id`, `Name`, `max_cant_persons`, `Created`, `Modified`, `i
 
 CREATE TABLE `category` (
   `id` varchar(128) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `name`) VALUES
-('04580784-cdc6-11e6-8e2f-269ea561f5ac', 'BODY TREATMENTS'),
-('0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 'SPA EXPERIENCES'),
-('1072aa4c-c65a-11e6-915d-39adba9ad86b', 'FACIALS'),
-('1b958688-c65a-11e6-915d-39adba9ad86b', 'MASSAGES'),
-('1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 'BEAUTY SALON SERVICES'),
-('2921548a-cdc6-11e6-8e2f-269ea561f5ac', 'SPECIAL FOR COUPLES'),
-('34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 'GAZEBO SERVICES'),
-('dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 'HANDS & FEET TREATMENTS'),
-('e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 'WAXING');
+INSERT INTO `category` (`id`, `name`, `is_active`, `is_deleted`) VALUES
+('04580784-cdc6-11e6-8e2f-269ea561f5ac', 'BODY TREATMENTS', 1, 0),
+('0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 'SPA EXPERIENCES', 1, 0),
+('1072aa4c-c65a-11e6-915d-39adba9ad86b', 'FACIALS', 1, 0),
+('1b958688-c65a-11e6-915d-39adba9ad86b', 'MASSAGES', 1, 0),
+('1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 'BEAUTY SALON SERVICES', 1, 0),
+('2921548a-cdc6-11e6-8e2f-269ea561f5ac', 'SPECIAL FOR COUPLES', 1, 0),
+('34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 'GAZEBO SERVICES', 1, 0),
+('dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 'HANDS & FEET TREATMENTS', 1, 0),
+('e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 'WAXING', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -75,23 +77,25 @@ CREATE TABLE `category_country` (
   `country_id` varchar(128) NOT NULL,
   `category_id` varchar(128) NOT NULL,
   `ordinal` int(11) DEFAULT '0',
-  `reference_name` varchar(100) NOT NULL
+  `reference_name` varchar(100) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category_country`
 --
 
-INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `ordinal`, `reference_name`) VALUES
-('203b7aec-cdd7-11e6-8e2f-269ea561f5ac', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '04580784-cdc6-11e6-8e2f-269ea561f5ac', 5, 'aruba/palm beach/body treatment'),
-('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 4, 'aruba/palm beach/massages'),
-('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 2, 'aruba/palm beach/waxins'),
-('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 1, 'aruba/palm beach/hands and feet treatments'),
-('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/gazebo '),
-('c4b2af5a-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', 7, 'aruba/palm beach/special for couples'),
-('cd632378-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/beauty salon services'),
-('dif96826-c6be-11e6-085d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 6, 'aruba/palm beach/spa experiences'),
-('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, 'aruba/palm beach/facials');
+INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `ordinal`, `reference_name`, `is_active`, `is_deleted`) VALUES
+('203b7aec-cdd7-11e6-8e2f-269ea561f5ac', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '04580784-cdc6-11e6-8e2f-269ea561f5ac', 5, 'aruba/palm beach/body treatment', 1, 0),
+('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 4, 'aruba/palm beach/massages', 1, 0),
+('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 2, 'aruba/palm beach/waxins', 1, 0),
+('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 1, 'aruba/palm beach/hands and feet treatments', 1, 0),
+('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 9, 'aruba/palm beach/gazebo ', 1, 0),
+('c4b2af5a-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', 7, 'aruba/palm beach/special for couples', 1, 0),
+('cd632378-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/beauty salon services', 1, 0),
+('dif96826-c6be-11e6-085d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 6, 'aruba/palm beach/spa experiences', 1, 0),
+('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, 'aruba/palm beach/facials', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -456,17 +460,19 @@ CREATE TABLE `service_category_hotel` (
   `category_id` varchar(128) NOT NULL,
   `hotel_id` varchar(128) NOT NULL,
   `only_for_wedding` tinyint(1) NOT NULL DEFAULT '0',
-  `order` int(11) NOT NULL DEFAULT '0'
+  `order` int(11) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `service_category_hotel`
 --
 
-INSERT INTO `service_category_hotel` (`id`, `service_id`, `category_id`, `hotel_id`, `only_for_wedding`, `order`) VALUES
-('a79eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0),
-('d09eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 0, 0),
-('e0947c0e-c65b-11e6-915d-39adba9ad86b', '1a298596-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0);
+INSERT INTO `service_category_hotel` (`id`, `service_id`, `category_id`, `hotel_id`, `only_for_wedding`, `order`, `is_active`, `is_deleted`) VALUES
+('a79eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0, 1, 0),
+('d09eb382-c65b-11e6-915d-39adba9ad86b', '9a263a3e-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 'f1c5f852-c667-11e6-915d-39adba9ad86b', 0, 0, 1, 0),
+('e0947c0e-c65b-11e6-915d-39adba9ad86b', '1a298596-c659-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', '50c5f852-c667-11e6-915d-39adba9ad86b', 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -549,6 +555,20 @@ CREATE TABLE `shopping_cart` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `shopping_cart`
+--
+
+INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
+('145a91c6-fae2-11e6-a12a-f46e471cb539', 'mo1596mvFgTavt2HDFaToc8QW0S2QEBw6Y8ai4rS', '2017-02-24 22:39:19', 0),
+('64185cbc-fadc-11e6-a12a-f46e471cb539', 'PvHczjEyRcjBTjPeGwpIyud9jBGQ7JzmlZqs9TEp', '2017-02-24 21:58:36', 0),
+('72fca428-fadb-11e6-a12a-f46e471cb539', 'fJ0EAVGMJ5jmuu0be27AIiDzmlCUqsgxo5P5h6ub', '2017-02-24 21:51:51', 0),
+('85a9bb10-fae0-11e6-a12a-f46e471cb539', 'c66g8erApGaYpbevDGgiSSJVfHTYRNtAwf3h78IT', '2017-02-24 22:28:10', 0),
+('b36247b0-fae1-11e6-a12a-f46e471cb539', '2dlEFWJdabAu455sqIhiEvvkle5HuB3hBo3tp5zM', '2017-02-24 22:36:36', 0),
+('b57ca256-fad8-11e6-a12a-f46e471cb539', 'KQvQ23yeKTiO7MIQEenHXk23Y1VJWmwNKRszO4Dk', '2017-02-24 21:32:14', 0),
+('c6937592-fae2-11e6-a12a-f46e471cb539', '0hxBiu96usYvqHp5CinPwRkofA99KKCUPQvIMNq0', '2017-02-24 22:44:18', 0),
+('f05dc17a-fadd-11e6-a12a-f46e471cb539', 'Gtg8OFkce7PMSdQJWG3AdPQ8LtwBCgrNkhxbOuNh', '2017-02-24 22:09:40', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -571,6 +591,17 @@ CREATE TABLE `shopping_cart_item` (
   `Created` date NOT NULL,
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `shopping_cart_item`
+--
+
+INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_category_relation_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
+('145bc64a-fae2-11e6-a12a-f46e471cb539', '145a91c6-fae2-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
+('85aab8b2-fae0-11e6-a12a-f46e471cb539', '85a9bb10-fae0-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
+('b3635de4-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '200', '2017-02-24', 0),
+('c575e006-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 2, 1, NULL, '2017-02-24', 0),
+('c694606a-fae2-11e6-a12a-f46e471cb539', 'c6937592-fae2-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0);
 
 -- --------------------------------------------------------
 
