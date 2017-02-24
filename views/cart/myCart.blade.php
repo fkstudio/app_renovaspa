@@ -51,7 +51,7 @@
 	                         			@endphp	
                          				<tr>
                          					<td>
-                         					<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/wedding_package_icon.png" class="img-responsive" /> </td>
+                         					<img style="max-width: 80px;" src="{{ URL::to('/images/categories') }}/category-{{ $PackageCategoryRelation->WeddingCategoryHotel->Category->Id }}/{{ $PackageCategoryRelation->WeddingCategoryHotel->category->Photo->Path }}" class="img-responsive" /> </td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												<span>{{ $item->PackageCategoryRelation->WeddingPackage->Name }}</span>

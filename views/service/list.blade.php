@@ -7,7 +7,7 @@
 @php
 
   $categories = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(["Country" => session('country_id')], ["Order" => "DESC"]);
+                                                  ->findBy(["Country" => session('country_id')], ["Order" => "ASC"]);
 
   $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
 
@@ -47,7 +47,7 @@
 						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
 							<label>Duration</label>
 							<br/>
-							{{ $serviceInformation->Duration }}
+							{{ ($serviceInformation != null ? $serviceInformation->Duration : 'N/A' ) }}
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
 							@if ($serviceCategoryHotelModel->Service->hasDiscount($hotel->Id))
@@ -78,17 +78,17 @@
 							<hr/>
 							<strong>Description:</strong>
 							<blockquote>
-								{{ $serviceInformation->Description }}
+								{{ ($serviceInformation != null ? $serviceInformation->Description : 'N/A' ) }}
 							</blockquote>
 							<strong>Schedules:</strong>
 							<blockquote>
-								From {{ $serviceInformation->OpeningTime->format('h:m a') }} to {{ $serviceInformation->EndingTime->format('h:m a') }}
+								From {{ ($serviceInformation != null ? $serviceInformation->OpeningTime->format('h:m a') : 'N/A' ) }} to {{ ($serviceInformation != null ? $serviceInformation->EndingTime->format('h:m a') : 'N/A' ) }}
 							</blockquote>
 							<strong>Restrictions:</strong>
 							<blockquote>
-								Pregnant restriction: {{ ($serviceInformation->PregnantRestriction == true ? 'Yes' : 'No') }}
+								Pregnant restriction: {{ ($serviceInformation && $serviceInformation->PregnantRestriction == true ? 'Yes' : 'No') }}
 								<br/>
-								Age restriction: {{ ( $serviceInformation->AgeRestriction == true ? 'Yes' : 'No') }}
+								Age restriction: {{ ($serviceInformation && $serviceInformation->AgeRestriction == true ? 'Yes' : 'No') }}
 							</blockquote>
 							<hr/>
 						</div>

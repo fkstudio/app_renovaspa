@@ -5,15 +5,17 @@
 
 @section("content")
 <div id="vue-app" class="container-fluid">
+	
 	@include('shared._breadcrumps')
 	<hr>
+	<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please select at least one certificate.</p>
 	<h3 class="green-title">GIFT CERTIFICATE OPTIONS</h3>
 	<br/>
 	<div class="col-md-3">
 		
 	</div>
 	<div class="col-md-9">
-		<form action="{{ URL::to('/') }}/certificate/check/option" method="POST">
+		<form onsubmit="return validateForm()" action="{{ URL::to('/') }}/certificate/check/option" method="POST">
 			<div class="form-group">
 				<label>A) What type of gifts are you interested in?</label>
 				<p>Choose between value-based or service-based gift certificates</p>
@@ -29,7 +31,7 @@
 					How many?
 				</div>
 				<div class="col-md-2">
-					<input type="number" min=0 class="form-control input-border" v-on:change='add_certificate()' v-model='quantity' name="quantity" />
+					<input type="number" min=0 class="form-control input-border" v-on:change='add_certificate()' v-model='quantity' id="quantity" name="quantity" />
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -49,7 +51,7 @@
 							USD
 						</div>
 						<div class="col-md-3">
-							<select name="value[]" v-model='certificate.value'>
+							<select name="value[]" class="values" v-model='certificate.value'>
 								<option selected value="0">Select a gift amount</option>
 								<option value="50" >$ 50 + bonus discount</option>
 								<option value="100" >$ 100 + bonus discount</option>
@@ -134,6 +136,32 @@ following Gift Certificates/s.</h6>
 @section('scripts')
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
+	function validateForm(){
+		var pass = true;
+
+		if(parseInt($('#quantity').val()) <= 0)
+			pass = false;
+		
+		var values = $('.values');
+		
+		if(values != null){
+			$.each(values, function(key, value){
+				var current_value = $(value);
+				
+				if(parseInt(current_value.val()) <= 0){
+					pass = false;
+				}
+			});
+		}
+	    
+	    if(!pass){
+	    	$("#errorMessageContent").fadeTo(2000, 500).slideUp(500, function(){
+	            $("#errorMessageContent").slideUp(500);
+	        });
+	    }
+	    return pass;
+	}
+
     $(document).ready(function(){
         var vue = new Vue({
             el: '#vue-app',
