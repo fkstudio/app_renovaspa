@@ -41,7 +41,7 @@ class CategoryController extends Controller
         if($reservationType == null)
             return redirect()->route('home.home');
 
-        try {
+        //try {
             if($next != 0){
                 if($reservationType == 2 && $next != $session->get('current_certificate') && $next <= $session->get('certificate_quantity')){
                     $session->put('current_certificate', ( $session->pull('current_certificate') + 1 ));
@@ -85,10 +85,10 @@ class CategoryController extends Controller
 
 
             return view("category.list", $viewData);
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        // }
     }
 
 }

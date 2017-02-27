@@ -30,6 +30,15 @@ class CategoryCountryModel {
 	*/
 	public $Country;		
 
+	/** @Column(name="is_special", type="boolean") */
+	public $IsSpecial;
+
+	/** @Column(name="special_begin_date", type="datetime") */
+	public $SpecialBeginDate;
+
+	/** @Column(name="special_end_date", type="datetime") */
+	public $SpecialEndDate;
+
 	/** @Column(name="ordinal", type="integer") */
 	public $Order;
 
