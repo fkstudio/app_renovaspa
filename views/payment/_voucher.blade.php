@@ -90,6 +90,14 @@
 					<td><strong>Destination:</strong></td>
 					<td style="float: right;">{{ $hotel_name }}</td>
 				</tr>
+				<tr>
+					<td><strong>Check in:</strong></td>
+					<td style="float: right;">{{ $check_in }}</td>
+				</tr>
+				<tr>
+					<td><strong>Check out:</strong></td>
+					<td style="float: right;">{{ $check_out }}</td>
+				</tr>
 			</tbody>
 		</table>
 		<h3 style=" margin-top: 25px;

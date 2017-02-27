@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 25, 2017 at 12:25 AM
+-- Generation Time: Feb 27, 2017 at 05:26 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -63,6 +63,7 @@ INSERT INTO `category` (`id`, `name`, `is_active`, `is_deleted`) VALUES
 ('1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 'BEAUTY SALON SERVICES', 1, 0),
 ('2921548a-cdc6-11e6-8e2f-269ea561f5ac', 'SPECIAL FOR COUPLES', 1, 0),
 ('34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 'GAZEBO SERVICES', 1, 0),
+('c8fcf7a2-fcfb-11e6-a12a-f46e471cb539', 'FEBRUARY SPECIAL', 1, 0),
 ('dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 'HANDS & FEET TREATMENTS', 1, 0),
 ('e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 'WAXING', 1, 0);
 
@@ -76,6 +77,9 @@ CREATE TABLE `category_country` (
   `id` varchar(128) NOT NULL,
   `country_id` varchar(128) NOT NULL,
   `category_id` varchar(128) NOT NULL,
+  `is_special` tinyint(1) NOT NULL DEFAULT '0',
+  `special_begin_date` datetime DEFAULT NULL,
+  `special_end_date` datetime DEFAULT NULL,
   `ordinal` int(11) DEFAULT '0',
   `reference_name` varchar(100) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
@@ -86,16 +90,17 @@ CREATE TABLE `category_country` (
 -- Dumping data for table `category_country`
 --
 
-INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `ordinal`, `reference_name`, `is_active`, `is_deleted`) VALUES
-('203b7aec-cdd7-11e6-8e2f-269ea561f5ac', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '04580784-cdc6-11e6-8e2f-269ea561f5ac', 5, 'aruba/palm beach/body treatment', 1, 0),
-('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 4, 'aruba/palm beach/massages', 1, 0),
-('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 2, 'aruba/palm beach/waxins', 1, 0),
-('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 1, 'aruba/palm beach/hands and feet treatments', 1, 0),
-('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 9, 'aruba/palm beach/gazebo ', 1, 0),
-('c4b2af5a-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', 7, 'aruba/palm beach/special for couples', 1, 0),
-('cd632378-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 8, 'aruba/palm beach/beauty salon services', 1, 0),
-('dif96826-c6be-11e6-085d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 6, 'aruba/palm beach/spa experiences', 1, 0),
-('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, 'aruba/palm beach/facials', 1, 0);
+INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `is_special`, `special_begin_date`, `special_end_date`, `ordinal`, `reference_name`, `is_active`, `is_deleted`) VALUES
+('203b7aec-cdd7-11e6-8e2f-269ea561f5ac', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '04580784-cdc6-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 5, 'aruba/palm beach/body treatment', 1, 0),
+('3dbe23ae-c6ce-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1b958688-c65a-11e6-915d-39adba9ad86b', 0, NULL, NULL, 4, 'aruba/palm beach/massages', 1, 0),
+('481c64f4-fcfd-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'c8fcf7a2-fcfb-11e6-a12a-f46e471cb539', 1, '2017-02-01 00:00:00', '2017-02-27 00:00:00', 0, 'aruba/palm beach/february special', 1, 0),
+('822cb02c-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'e7ac8484-cdc5-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 2, 'aruba/palm beach/waxins', 1, 0),
+('910d65be-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', 'dd528ccc-cdc5-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 1, 'aruba/palm beach/hands and feet treatments', 1, 0),
+('980197a0-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '34c3474e-cdc6-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 9, 'aruba/palm beach/gazebo ', 1, 0),
+('c4b2af5a-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '2921548a-cdc6-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 7, 'aruba/palm beach/special for couples', 1, 0),
+('cd632378-fa3c-11e6-a12a-f46e471cb539', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1d33f6b4-cdc6-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 8, 'aruba/palm beach/beauty salon services', 1, 0),
+('dif96826-c6be-11e6-085d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '0dcaf61e-cdc6-11e6-8e2f-269ea561f5ac', 0, NULL, NULL, 6, 'aruba/palm beach/spa experiences', 1, 0),
+('f0f96826-c6be-11e6-915d-39adba9ad86b', '4e6b7b5e-c663-11e6-915d-39adba9ad86b', '1072aa4c-c65a-11e6-915d-39adba9ad86b', 0, NULL, NULL, 0, 'aruba/palm beach/facials', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -561,6 +566,7 @@ CREATE TABLE `shopping_cart` (
 
 INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
 ('145a91c6-fae2-11e6-a12a-f46e471cb539', 'mo1596mvFgTavt2HDFaToc8QW0S2QEBw6Y8ai4rS', '2017-02-24 22:39:19', 0),
+('2700b076-fb96-11e6-a12a-f46e471cb539', 'O2E7b6t09yBTIJfKrMeXFq1YZ1PcVnbrEK3P0KX6', '2017-02-25 20:08:19', 0),
 ('64185cbc-fadc-11e6-a12a-f46e471cb539', 'PvHczjEyRcjBTjPeGwpIyud9jBGQ7JzmlZqs9TEp', '2017-02-24 21:58:36', 0),
 ('72fca428-fadb-11e6-a12a-f46e471cb539', 'fJ0EAVGMJ5jmuu0be27AIiDzmlCUqsgxo5P5h6ub', '2017-02-24 21:51:51', 0),
 ('85a9bb10-fae0-11e6-a12a-f46e471cb539', 'c66g8erApGaYpbevDGgiSSJVfHTYRNtAwf3h78IT', '2017-02-24 22:28:10', 0),
@@ -598,6 +604,7 @@ CREATE TABLE `shopping_cart_item` (
 
 INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_category_relation_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
 ('145bc64a-fae2-11e6-a12a-f46e471cb539', '145a91c6-fae2-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
+('270186a4-fb96-11e6-a12a-f46e471cb539', '2700b076-fb96-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 1, NULL, NULL, '2017-02-25', 0),
 ('85aab8b2-fae0-11e6-a12a-f46e471cb539', '85a9bb10-fae0-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
 ('b3635de4-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '200', '2017-02-24', 0),
 ('c575e006-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 2, 1, NULL, '2017-02-24', 0),

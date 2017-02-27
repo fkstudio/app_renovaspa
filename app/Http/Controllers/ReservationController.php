@@ -52,6 +52,8 @@ class ReservationController extends Controller
         $session->put('country_id', $_POST["country_id"]);
         $session->put('region_id', $_POST["region_id"]);
         $session->put('hotel_id', $_POST["hotel_id"]);
+        $session->put('arrival', $_POST['arrival']);
+        $session->put('departure', $_POST['departure']);
 
         switch ($_POST['reservation_type']) {
             case 1:
@@ -108,8 +110,8 @@ class ReservationController extends Controller
                 $reservation->Region = $region;
                 $reservation->Hotel = $hotel;
                 $reservation->ConfirmationNumber = \App\Classes\Utilities::getConfirmationNumber(8);
-                $reservation->Arrival = new \DateTime(); // FIXME
-                $reservation->Departure = new \DateTime(); // FIXME
+                $reservation->Arrival = new \DateTime($session->get('arrival'));
+                $reservation->Departure = new \DateTime($session->get('departure'));
                 $reservation->Subtotal = 0;
                 $reservation->Total = 0;
                 $reservation->Status = $status;

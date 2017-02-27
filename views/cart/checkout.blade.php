@@ -230,7 +230,8 @@
 		    	locale: {
 			      format: 'MM/D/YYYY'
 			    },
-		        minDate: moment().add(2, "days"),
+		        minDate: moment('{{ session("arrival") }}'),
+		        maxDate: moment('{{ session("departure") }}'),
 		        singleDatePicker: true,
 		        showDropdowns: true,
 		        

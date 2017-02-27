@@ -46,6 +46,18 @@
                 </select>
 			</div>
 
+			<div class="form-group text-left">
+				<label class="custom-label">{{ trans('shared.arrival') }}</label>
+				<div class="clearfix"></div>
+				<input type="text" id="arrival" name='arrival' class="datepicker form-control custom-select" />
+			</div>
+
+			<div class="form-group text-left">
+				<label class="custom-label">{{ trans('shared.departure') }}</label>
+				<div class="clearfix"></div>
+				<input type="text" id="departure" name='departure' class="datepicker form-control custom-select" />
+			</div>
+
 			@if($reservationType == 3)
 			<div class="form-group text-left">
 				<label class="custom-label">{{ trans('shared.wedding_package') }}</label>
@@ -86,8 +98,28 @@
 @endsection
 
 @section('scripts')
+<!-- Moment JS-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
+
+
+	$(function() {
+	    $('.datepicker').daterangepicker({
+	    	locale: {
+		      format: 'MM/D/YYYY'
+		    },
+	        minDate: moment().add(3, "days"),
+	        singleDatePicker: true,
+	        showDropdowns: true,
+	        
+		});
+	});
 
 	var vue = new Vue({
 	    el: '#vue-app',
