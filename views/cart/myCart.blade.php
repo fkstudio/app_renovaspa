@@ -42,12 +42,14 @@
 								@endphp
 
 								@foreach($model->Items as $item)
-									
+									@php
+										$packageCategoryRelation = $item->PackageCategoryRelation;
+									@endphp
 
-                         			@if($item->PackageCategoryRelation != null && $reservation_type == 3)
+                         			@if($packageCategoryRelation != null && $reservation_type == 3)
                          				@php
-											$subtotal += $item->PackageCategoryRelation->Price * $item->Quantity;
-											$total += $item->PackageCategoryRelation->Price * $item->Quantity;
+											$subtotal += $packageCategoryRelation->Price * $item->Quantity;
+											$total += $packageCategoryRelation->Price * $item->Quantity;
 	                         			@endphp	
                          				<tr>
                          					<td>
@@ -55,16 +57,34 @@
                          					</td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
-												<span>{{ $item->PackageCategoryRelation->WeddingPackage->Name }}</span>
+												<span>{{ $packageCategoryRelation->WeddingPackage->Name }}</span>
 											</td>
-											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->PackageCategoryRelation->Price) }}</td>
-											<td></td>
 											<td class="padding-td">
-												<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
+												@if($packageCategoryRelation->WeddingPackage->Type == 2)
+													{{ $country->Currency->Symbol }}{{ number_format($packageCategoryRelation->Price) }}</td>
+												@else
+													--
+												@endif
+											<td>
+												
 											</td>
-											<td class="padding-td">{{ $country->Currency->Symbol }}{{ number_format($item->PackageCategoryRelation->Price * $item->Quantity, 2) }}</td>
 											<td class="padding-td">
-												<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $item->PackageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
+												@if($packageCategoryRelation->WeddingPackage->Type == 2)
+													<input style="width: 80px;margin-top: -5px;" constorls=false type="number" name="quantity[]" value="{{ $item->Quantity }}" min=0 class="form-control input-border" />
+												@else
+													<input constorls=false type="hidden" name="quantity[]" value="1" min=0 class="form-control input-border" />
+													--
+												@endif
+											</td>
+											<td class="padding-td">
+												@if($packageCategoryRelation->WeddingPackage->Type == 2)
+													{{ $country->Currency->Symbol }}{{ number_format($packageCategoryRelation->Price * $item->Quantity, 2) }}
+												@else
+													--
+												@endif
+											</td>
+											<td class="padding-td">
+												<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $packageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
 											</td>
                          				</tr>
                          			@else
