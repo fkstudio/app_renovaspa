@@ -119,7 +119,7 @@ class CertificateController extends Controller
                                                 ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
                                                 ->getSingleResult()['Total'];
                 
-                    $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $quantity ];
+                    $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $quantity, 'price' => $item->Service->getPrice($session->get('hotel_id')) ];
                 }
                                                                                   
                 return view('certificate.serviceBasedRegistration', ['model' => $services]);
@@ -132,6 +132,43 @@ class CertificateController extends Controller
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
 
+    }
+
+    /* delete a certificate item from a reserve and go to referer url */
+    public function deleteCertificate(Request $request, $id, $referer){
+        /* get certificate item to delete */
+        $certificateItem = $this->entityManager->getRepository('App\Models\Test\CertificateDetailModel')->findOneBy(['Id' => $id]);
+
+        /* redirect to home if the certificate item doesnt exists */
+        if($certificateItem == null)
+            return redirect()->route('home.home');
+
+        /* get shopping cart related items */
+        $cartItems = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findBy(['CertificateNumber' => $certificateItem->CertificateNumber]);
+
+        /* delete shopping cart items */
+        foreach ($cartItems as $item) {
+            $this->entityManager->remove($item);
+        }
+
+        /* remove certificate item */
+        $this->entityManager->remove($certificateItem);
+
+        /* save changes */
+        $this->entityManager->flush();
+
+        switch ($referer) {
+            case 'checkout':
+                return redirect()->route('reservation.checkout');
+                break;
+            
+            case 'registration':
+                return redirect()->route('certificate.registration');
+                break;
+            default:
+                return redirect()->route('home.home');
+                break;
+        }
     }
 
 }

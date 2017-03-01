@@ -18,15 +18,12 @@
 		<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
 		<br/>
 		<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
-
-			<div class="clearfix"></div>
-			<hr class="custom-hr" > 
-			
+			@foreach($model as $key => $item)
+			<h3>Certificate #{{ $item->CertificateNumber }}</h3>
+			<br/>
 			<div class="form-group">
 				<label>A) Personalize by adding a message:</label>
 			</div>
-			@foreach($model as $key => $item)
-			<h3>Certificate #{{ $item->CertificateNumber }}</h3>
 			<hr>
 			<strong style="font-size:18px;">Value: {{ $symbol.$item->Value }}</strong>
 			<hr>

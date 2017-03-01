@@ -173,6 +173,9 @@
 								<span>{{ trans('checkout.message') }}: {{ $detail->Message }}</span>
 								<br/>
 								<span>{{ trans('checkout.value') }}: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
+								<br/>
+								<a href="#fakelink" style="margin-right: 10px;">Edit</a>
+								<a href="{{ URL::to('/') }}/certificate/delete/item/{{ $detail->Id }}/checkout">Remove</a>
 							</div>
 						</div>
 						<div class="clearfix"></div>

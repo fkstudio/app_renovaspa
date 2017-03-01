@@ -1,3 +1,6 @@
+@php
+  $reservationType = session('reservation_type');
+@endphp
 @if(isset($mycart))
 <!-- Modal -->
 <div id="shoppingCartModal" class="modal fade" role="dialog">
@@ -26,11 +29,13 @@
               <br/>
               @php
                 $itemPrice = $item->Service->getPrice(session('hotel_id'));
-
-                $subtotal += $item->Service->getPlanePrice(session('hotel_id'));
+                $itemPlanePrice = $item->Service->getPlanePrice(session('hotel_id'));
+                $subtotal += $itemPlanePrice;
                 $total += $itemPrice;
               @endphp
-              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
+              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPlanePrice, 2) }} {{ $country->Currency->Name }}</span>
+              <br/>
+              <span>{{ trans('shared.final_price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
             <div class="clearfix"></div>
             <br/>
@@ -115,8 +120,29 @@
       </table>
       </div>
       <div class="modal-footer">
-        <a href="{{ URL::to('/') }}/shopping/cart" class="btn btn-default" >{{ trans('shared.go_to_cart') }}</a>
-        <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="btn btn-primary" >{{ trans('shared.checkout') }}</a>
+        @if ($reservationType == 1 || $reservationType == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
+        <a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default">{{ trans('shared.go_to_cart') }}</a>
+        @elseif ($reservationType == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)
+        <a href="#fakelink" class="disabled btn btn-default">{{ trans('shared.complete_to_go_cart') }}</a>
+        @else
+        <a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default">{{ trans('shared.go_to_next_certificate') }}</a>
+        @endif
+
+        @if ($reservationType == 1 || $reservationType == 3) 
+          @if ($total > 0)
+            <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="btn btn-primary" >{{ trans('shared.checkout') }}</a>
+          @else
+            <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="disabled btn btn-primary" >{{ trans('shared.checkout') }}</a>
+          @endif
+
+        @elseif ($reservationType == 2)
+          @if ($total > 0)
+            <a href="{{ URL::to('/') }}/certificate/registration" class="btn btn-primary" >{{ trans('shared.go_to_gift_registration') }}</a>
+          @else
+            <a href="{{ URL::to('/') }}/certificate/registration" class="disabled btn btn-primary" >{{ trans('shared.go_to_gift_registration') }}</a>
+          @endif
+        
+        @endif
       </div>
     </div>
 

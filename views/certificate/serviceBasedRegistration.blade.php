@@ -3,6 +3,14 @@
 
 @section('title', 'Complete certificate information')
 
+@inject("dbcontext", "App\Database\DbContext")
+
+@php
+	$country = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CountryModel")->findOneBy([ 'Id' => session('country_id') ]);
+
+	$symbol = $country->Currency->Symbol;
+@endphp
+
 @section("content")
 <div id="vue-app" class="container-fluid">
 	<div class="container">
@@ -10,36 +18,26 @@
 		<br/>
 		<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
 		<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label>A) Who will receive this gift certificate?</label>
-					</div>
-					<div class="form-group">
-						<label>First name</label>
-						<input type="text" class="form-control required-input input-border" name="first_name" />
-					</div>
-					<div class="form-group">
-						<label>Last name</label>
-						<input type="text" class="form-control required-input input-border" name="last_name" />
-					</div>
-				</div>
-			</div>
-
-			<div class="clearfix"></div>
-			<hr>
 			
-			<div class="form-group">
-				<label>B) Personalize by adding a message:</label>
-			</div>
 			@foreach($model as $key => $item)
-			<h3>Certificate #{{ $key }}</h3>
+			<h3 class="green-title">Certificate #{{ $key }}</h3>
+			<br/>
+			<div class="form-group">
+				<label>A) Personalize by adding a message:</label>
+			</div>
 			<hr>
+				@php
+					$certTotal = 0;
+				@endphp
 				@foreach($item as $service)
 				<p><strong>Service based value:</strong> {{ $service['quantity'] .' '. $service['name'] }}</p>
+					@php
+						$certTotal += $service['price'];
+					@endphp
 				@endforeach
 			<hr>
-			
+			<strong style="font-size:18px;">Total: {{ $symbol.$certTotal }}</strong>
+			<hr>
 			<div class="row">
 				<div class="col-md-8">
 					<div class="form-group">

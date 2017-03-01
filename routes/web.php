@@ -80,6 +80,8 @@ Route::post('/certificate/check/option', [ 'as' => 'certificate.checkOption', 'u
 
 Route::get('/certificate/registration', [ 'as' => 'certificate.registration', 'uses' => 'CertificateController@registration' ]);
 
+Route::get('/certificate/delete/item/{id}/{referer}', [ 'as' => 'certificate.delete', 'uses' => 'CertificateController@deleteCertificate' ]);
+
 /*
 |----------------------------------------------------------------------------
 | Region controller routes

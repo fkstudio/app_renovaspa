@@ -17,6 +17,12 @@ class CertificateDetailModel {
 	public $Id;
 
 	/** 
+	 * @OneToOne(targetEntity="ShoppingCartItemModel", cascade={"persist"})
+	 * @JoinColumn(name="cart_item_id", referencedColumnName="id")
+	*/
+	public $CartItem;
+
+	/** 
 	 * @OneToOne(targetEntity="ReservationModel", cascade={"persist"})
 	 * @JoinColumn(name="reservation_id", referencedColumnName="id")
 	*/
@@ -31,6 +37,9 @@ class CertificateDetailModel {
 	 * @OneToMany(targetEntity="CertificateDetailServiceModel", cascade="persist",  mappedBy="CertificateDetail")
 	*/
 	public $CertificateDetailServices;
+
+	/**  @Column(name="certificate_number", type="integer") */
+	public $CertificateNumber;
 
 	/** @value @Column(type="decimal") */
 	public $Value;

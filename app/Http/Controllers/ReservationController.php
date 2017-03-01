@@ -83,9 +83,6 @@ class ReservationController extends Controller
         $reservationType = $session->get('reservation_type');
         $reservation_id = $session->get('current_reservation_id');
 
-        // echo $reservationType;
-        // exit();
-
         try {
 
             $reservation = null;
@@ -166,6 +163,7 @@ class ReservationController extends Controller
 
                         
                         $packageRelation = $cartItem->PackageCategoryRelation;
+
                         if($packageRelation != null){
                             foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService){
                                 /* fill reservation item data */
@@ -252,6 +250,7 @@ class ReservationController extends Controller
                             
                         
                         $certificateItem->Value = $totalValue;
+                        $certificateItem->CertificateNumber = $key;
                         $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
                         $certificateItem->Message = $_POST['message'][$key];
