@@ -52,8 +52,10 @@ class ReservationController extends Controller
         $session->put('country_id', $_POST["country_id"]);
         $session->put('region_id', $_POST["region_id"]);
         $session->put('hotel_id', $_POST["hotel_id"]);
-        $session->put('arrival', $_POST['arrival']);
-        $session->put('departure', $_POST['departure']);
+
+        $dates = explode(' - ', $_POST['arrival_departure']);
+        $session->put('arrival', $dates[0]);
+        $session->put('departure', $dates[1]);
 
         switch ($_POST['reservation_type']) {
             case 1:

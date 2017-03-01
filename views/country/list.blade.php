@@ -56,7 +56,7 @@
 			<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 				<label class="custom-label">*{{ trans('shared.arrival') }} - *{{ trans('shared.departure') }}</label>
 				<div class="clearfix"></div>
-				<input type="text" id="arrival" name='arrival' class="datepicker form-control custom-select" />
+				<input type="text" id="arrival" name='arrival_departure' class="datepicker form-control custom-select" />
 			</div>
 
 			<div class="clearfix hidden-lg"></div>

@@ -51,7 +51,8 @@
 	                         			@endphp	
                          				<tr>
                          					<td>
-                         					<img style="max-width: 80px;" src="{{ URL::to('/images/categories') }}/category-{{ $PackageCategoryRelation->WeddingCategoryHotel->Category->Id }}/{{ $PackageCategoryRelation->WeddingCategoryHotel->category->Photo->Path }}" class="img-responsive" /> </td>
+                         						<img style="max-width: 80px;" src="{{ URL::to('/images/') }}/wedding_package_icon.png" class="img-responsive" /> 
+                         					</td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												<span>{{ $item->PackageCategoryRelation->WeddingPackage->Name }}</span>
@@ -73,7 +74,15 @@
 	                         			@endphp	
                          				<tr>
 											<td>
-											<img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> </td>
+											@php
+												$photoPath = '/noimage.jpg';
+
+												if($category->Photo != null)
+												{
+													$photoPath = '/categories/category-'.$category->Id.'/'.$category->Photo->Path;
+												}
+											@endphp
+											<img style="max-width: 80px;" src="{{ URL::to('/images/') . $photoPath }}" class="img-responsive" /> </td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 												<span>{{ $item->Service->Name }}</span>

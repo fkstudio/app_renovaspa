@@ -146,11 +146,13 @@ class ShoppingCartController extends Controller
             
             $country = $this->entityManager->getRepository('\App\Models\Test\CountryModel')->findOneBy(['Id' => $session->get('country_id')]);
 
+            $category = $this->entityManager->getRepository('\App\Models\Test\CategoryModel')->findOneBy(['Id' => $session->get('category_id')]);
+
             $breadcrumps = [
                 'SHOPPING CART' => '#fakelink'
             ];
 
-            return view('cart.myCart', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
+            return view('cart.myCart', [ 'model' => $cart, 'category' => $category, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
