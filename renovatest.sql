@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 27, 2017 at 05:26 PM
+-- Generation Time: Mar 01, 2017 at 01:38 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -122,9 +122,11 @@ CREATE TABLE `certificate_detail_service` (
 
 CREATE TABLE `certificate_item` (
   `id` varchar(128) NOT NULL,
+  `cart_item_id` varchar(128) DEFAULT NULL,
   `reservation_id` varchar(128) NOT NULL,
   `type` int(11) NOT NULL,
   `service_id` varchar(128) DEFAULT NULL,
+  `certificate_number` int(11) NOT NULL,
   `value` double NOT NULL,
   `from_customer_name` varchar(100) NOT NULL,
   `to_customer_name` varchar(100) NOT NULL,
@@ -272,6 +274,21 @@ CREATE TABLE `payment_information` (
   `apartment_unit` varchar(200) DEFAULT NULL,
   `post_code` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `payment_information`
+--
+
+INSERT INTO `payment_information` (`id`, `first_name`, `last_name`, `email`, `country`, `town_city`, `phone_number`, `company_name`, `street_address`, `apartment_unit`, `post_code`) VALUES
+('16b9671e-fe14-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2443fe10-fe07-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('249f20ae-fe13-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('4d80577c-fe13-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('5115bbd4-fe09-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('b57738ee-fe06-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('b58c0c60-fe06-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('b6669064-fe11-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('f7694a08-fe06-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -560,21 +577,6 @@ CREATE TABLE `shopping_cart` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `shopping_cart`
---
-
-INSERT INTO `shopping_cart` (`id`, `session`, `created`, `is_deleted`) VALUES
-('145a91c6-fae2-11e6-a12a-f46e471cb539', 'mo1596mvFgTavt2HDFaToc8QW0S2QEBw6Y8ai4rS', '2017-02-24 22:39:19', 0),
-('2700b076-fb96-11e6-a12a-f46e471cb539', 'O2E7b6t09yBTIJfKrMeXFq1YZ1PcVnbrEK3P0KX6', '2017-02-25 20:08:19', 0),
-('64185cbc-fadc-11e6-a12a-f46e471cb539', 'PvHczjEyRcjBTjPeGwpIyud9jBGQ7JzmlZqs9TEp', '2017-02-24 21:58:36', 0),
-('72fca428-fadb-11e6-a12a-f46e471cb539', 'fJ0EAVGMJ5jmuu0be27AIiDzmlCUqsgxo5P5h6ub', '2017-02-24 21:51:51', 0),
-('85a9bb10-fae0-11e6-a12a-f46e471cb539', 'c66g8erApGaYpbevDGgiSSJVfHTYRNtAwf3h78IT', '2017-02-24 22:28:10', 0),
-('b36247b0-fae1-11e6-a12a-f46e471cb539', '2dlEFWJdabAu455sqIhiEvvkle5HuB3hBo3tp5zM', '2017-02-24 22:36:36', 0),
-('b57ca256-fad8-11e6-a12a-f46e471cb539', 'KQvQ23yeKTiO7MIQEenHXk23Y1VJWmwNKRszO4Dk', '2017-02-24 21:32:14', 0),
-('c6937592-fae2-11e6-a12a-f46e471cb539', '0hxBiu96usYvqHp5CinPwRkofA99KKCUPQvIMNq0', '2017-02-24 22:44:18', 0),
-('f05dc17a-fadd-11e6-a12a-f46e471cb539', 'Gtg8OFkce7PMSdQJWG3AdPQ8LtwBCgrNkhxbOuNh', '2017-02-24 22:09:40', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -597,18 +599,6 @@ CREATE TABLE `shopping_cart_item` (
   `Created` date NOT NULL,
   `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `shopping_cart_item`
---
-
-INSERT INTO `shopping_cart_item` (`id`, `cart_id`, `service_id`, `package_category_relation_id`, `customer_name`, `cabin_id`, `Quantity`, `PreferedDate`, `PreferedTime`, `Type`, `certificate_number`, `value`, `Created`, `is_deleted`) VALUES
-('145bc64a-fae2-11e6-a12a-f46e471cb539', '145a91c6-fae2-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
-('270186a4-fb96-11e6-a12a-f46e471cb539', '2700b076-fb96-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 1, NULL, NULL, '2017-02-25', 0),
-('85aab8b2-fae0-11e6-a12a-f46e471cb539', '85a9bb10-fae0-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0),
-('b3635de4-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '200', '2017-02-24', 0),
-('c575e006-fae1-11e6-a12a-f46e471cb539', 'b36247b0-fae1-11e6-a12a-f46e471cb539', '9a263a3e-c659-11e6-915d-39adba9ad86b', NULL, NULL, NULL, 1, NULL, NULL, 2, 1, NULL, '2017-02-24', 0),
-('c694606a-fae2-11e6-a12a-f46e471cb539', 'c6937592-fae2-11e6-a12a-f46e471cb539', NULL, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, '50', '2017-02-24', 0);
 
 -- --------------------------------------------------------
 

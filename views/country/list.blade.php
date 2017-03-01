@@ -13,7 +13,8 @@
 <div id="vue-app" class="container-fluid-full" style="background: url({{ URL::to('/')  }}/images/{{ $bgs[$reservationType]  }});background-size: cover;background-position: center center;padding-top: 300px;padding-bottom: 250px;">
 	<div class="container-fluid-full" style="background: #F5F5F5;">
 		<br/>
-		@if($reservationType == 1)
+		<div class="container-fluid">
+			@if($reservationType == 1)
 		<h2 style="color: #5fc7ae;" class="text-center">{{ trans('titles.book_your_treatment') }}</h2>
 		@elseif($reservationType == 2)
 		<h2 style="color: #5fc7ae;" class="text-center">{{ trans('titles.treat_someone') }}</h2>
@@ -22,7 +23,7 @@
 		@endif
 		<br/>
 		<form action="{{ URL::to('/') }}/reservation/select/book" method="POST" class="form-inline text-center">
-			<div class="form-group text-left">
+			<div class="col-lg-2 col-md-12 col-sm-12 {{ ($reservationType != 3 ? 'col-lg-offset-1' : '' ) }}">
 				<label class="custom-label">{{ trans('shared.country') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='country_id' id='country_id' name="country_id" v-on:change='getRegions()' class="form-control custom-select">
@@ -32,34 +33,37 @@
 				</select>
 			</div>
 
-			<div class="form-group text-left">
+			<div class="clearfix hidden-lg"></div>
+			<br class="hidden-lg" />
+
+			<div class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
 				<label class="custom-label">{{ trans('shared.destination') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='region_id' v-on:change='getHotels()' id="region_id" name='region_id' class="form-control custom-select">
                 </select>
 			</div>
 			
-			<div class="form-group text-left">
+			<div class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
 				<label class="custom-label">{{ trans('shared.hotel') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='hotel_id' v-on:change='getWeddingPackages()' id="hotel_id" name='hotel_id' class="form-control custom-select">
                 </select>
 			</div>
 
-			<div class="form-group text-left">
-				<label class="custom-label">{{ trans('shared.arrival') }}</label>
+			<div class="clearfix hidden-lg"></div>
+			<br class="hidden-lg" />
+
+			<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+				<label class="custom-label">*{{ trans('shared.arrival') }} - *{{ trans('shared.departure') }}</label>
 				<div class="clearfix"></div>
 				<input type="text" id="arrival" name='arrival' class="datepicker form-control custom-select" />
 			</div>
 
-			<div class="form-group text-left">
-				<label class="custom-label">{{ trans('shared.departure') }}</label>
-				<div class="clearfix"></div>
-				<input type="text" id="departure" name='departure' class="datepicker form-control custom-select" />
-			</div>
+			<div class="clearfix hidden-lg"></div>
+			<br class="hidden-lg" />
 
 			@if($reservationType == 3)
-			<div class="form-group text-left">
+			<div class="col-lg-2">
 				<label class="custom-label">{{ trans('shared.wedding_package') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='wedding_package_id' id="wedding_package_id" name='wedding_package_id' class="form-control custom-select">
@@ -67,7 +71,7 @@
 			</div>
 			@endif
 
-			<div class="form-group">
+			<div class="col-lg-2">
 				<label class="custom-label"></label>
 				<div class="clearfix"></div>
 				{{ csrf_field() }}
@@ -79,9 +83,10 @@
 				@else
 				<input type="hidden" name="reservation_type" value="3" />
 				@endif
-				<button type="submit" class="btn-confirm-book btn btn-primary" style="margin-top: 10px;">{{ trans('shared.confirm') }}</button>
+				<button type="submit" class="btn-block btn-confirm-book btn btn-primary" style="margin-top: 10px;">{{ trans('shared.confirm') }}</button>
 			</div>
 		</form>
+		</div>
 		<br/>
 		<br/>
 		<br/>
@@ -110,15 +115,7 @@
 
 
 	$(function() {
-	    $('.datepicker').daterangepicker({
-	    	locale: {
-		      format: 'MM/D/YYYY'
-		    },
-	        minDate: moment().add(3, "days"),
-	        singleDatePicker: true,
-	        showDropdowns: true,
-	        
-		});
+	    $('.datepicker').daterangepicker();
 	});
 
 	var vue = new Vue({
