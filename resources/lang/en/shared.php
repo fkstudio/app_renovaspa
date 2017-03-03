@@ -18,6 +18,7 @@ return [
     'whyweask' => 'Why we ask?',
     'back_to_cart' => 'BACK TO CART',
     'back_to_services' => 'BACK TO SERVICES',
+    'back_to_registration' => 'BACK TO REGISTRATION',
     'service' => 'Service',
     'customer_name' => 'Person receiving the treatment',
     'price' => 'Price',

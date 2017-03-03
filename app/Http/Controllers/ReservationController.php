@@ -183,9 +183,6 @@ class ReservationController extends Controller
 
                                 $reservation->ServicesDetails[] = $reservationItem;
                             }
-
-                            $reservation->Subtotal += $packageRelation->getPlanePrice();
-                            $reservation->Total += $packageRelation->getPrice();
                         }
                         else{
                             /* fill reservation item data */
@@ -200,9 +197,6 @@ class ReservationController extends Controller
                             $reservationItem->Created = new \DateTime();
                             $reservationItem->Modified = new \DateTime();
                             $reservationItem->IsDeleted = false;
-
-                            $reservation->Subtotal += $reservationItem->Service->getPlanePrice($hotel->Id);
-                            $reservation->Total += $reservationItem->Service->getPrice($hotel->Id);
                             
                             $reservation->ServicesDetails[] = $reservationItem;
                         }
@@ -252,7 +246,7 @@ class ReservationController extends Controller
                             
                         
                         $certificateItem->Value = $totalValue;
-                        $certificateItem->CertificateNumber = $key;
+                        $certificateItem->CertificateNumber = $key + 1;
                         $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
                         $certificateItem->Message = $_POST['message'][$key];
@@ -284,10 +278,6 @@ class ReservationController extends Controller
                             $certificateItem->DeliveryDepartureDate = new \DateTime($_POST['delivery_departure_date'][$key]);
                             $certificateItem->DeliveryOtherInfo = $_POST['delivery_other_info'][$key];
                         }
-
-                        /* set subtotal and total certificate item */
-                        $reservation->Subtotal += $certificateItem->Value;
-                        $reservation->Total += $certificateItem->Value;
 
                         $reservation->CertificateDetails[] = $certificateItem;  
                     } 

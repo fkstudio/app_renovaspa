@@ -20,6 +20,16 @@ Route::get('/', [ 'as' => 'home.home', 'uses' => 'HomeController@home' ]);
 
 Route::get('/about', [ 'as' => 'home.about', 'uses' => 'HomeController@about' ]);
 
+Route::get('/etiquette', [ 'as' => 'home.etiquette', 'uses' => 'HomeController@etiquette' ]);
+
+Route::get('/faq', [ 'as' => 'home.faq', 'uses' => 'HomeController@faq' ]);
+
+Route::get('/contact', [ 'as' => 'home.contact', 'uses' => 'HomeController@contact' ]);
+
+Route::post('/send/contact/form', [ 'as' => 'home.sendContactForm', 'uses' => 'HomeController@sendContactForm' ]);
+
+Route::post('/send/join/form', [ 'as' => 'home.sendJoinForm', 'uses' => 'HomeController@sendJoinToOurTeamForm' ]);
+
 Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeController@select' ]);
 
 Route::get('/services', [ 'as' => 'home.services', 'uses' => 'HomeController@services' ]);
@@ -42,6 +52,8 @@ Route::get('/hotel/{hotel_id}/categories/{next?}', [ 'as' => 'category.categorie
 |----------------------------------------------------------------------------
 */
 Route::get('/category/{category_id}/services', [ 'as' => 'service.listByCategory', 'uses' => 'ServiceController@servicesByCategoryAndHotel' ]);
+
+Route::get('/reservation/service/delete/item/{id}', [ 'as' => 'service.deleteReservationItem', 'uses' => 'ServiceController@deleteReservationItem' ]);
 
 
 /*
@@ -80,7 +92,7 @@ Route::post('/certificate/check/option', [ 'as' => 'certificate.checkOption', 'u
 
 Route::get('/certificate/registration', [ 'as' => 'certificate.registration', 'uses' => 'CertificateController@registration' ]);
 
-Route::get('/certificate/delete/item/{id}/{referer}', [ 'as' => 'certificate.delete', 'uses' => 'CertificateController@deleteCertificate' ]);
+Route::get('/reservation/certificate/delete/item/{id}/{referer}', [ 'as' => 'certificate.delete', 'uses' => 'CertificateController@deleteCertificate' ]);
 
 /*
 |----------------------------------------------------------------------------

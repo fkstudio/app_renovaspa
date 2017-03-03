@@ -42,7 +42,7 @@
             <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.weddings') }} <span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-inverse">
               <li><a href="{{ URL::to('/') }}/weddings">{{ trans('navbar.the_day') }}</a></li>
-              <li><a href="#">{{ trans('navbar.faqs') }}</a></li>
+              <li><a href="{{ URL::to('/') }}/faq">{{ trans('navbar.faqs') }}</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -79,7 +79,7 @@
               <li><a href="{{ URL::to('/') }}/about">{{ trans('navbar.about_us') }}</a></li>
               <li><a href="{{ URL::to('/') }}/etiquette">{{ trans('navbar.spa_etiquette') }}</a></li>
             </ul>
-          <li><a href="#">{{ trans('navbar.contact_us') }}</a></li>
+          <li><a href="{{ URL::to('/') }}/contact">{{ trans('navbar.contact_us') }}</a></li>
           <li>
             @if(isset($mycart))
             <a style="font-size: 20px;" href="#fakelink" data-toggle="modal" data-target="#shoppingCartModal">

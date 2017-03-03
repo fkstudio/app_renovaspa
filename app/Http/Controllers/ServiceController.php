@@ -44,6 +44,26 @@ class ServiceController extends Controller
         return $cart;
     }
 
+    public function deleteReservationItem(Request $request, $id){
+        $session = $request->session();
+        $sessionId = $session->getId();
+
+        /* get reservation item to delete */
+        $certificateItem = $this->entityManager->getRepository('App\Models\Test\ReservationItemModel')->findOneBy(['Id' => $id]);
+
+        /* redirect to home if the reservation item doesnt exists */
+        if($certificateItem == null)
+            return redirect()->route('home.home');
+
+        /* remove certificate item */
+        $this->entityManager->remove($certificateItem);
+
+        /* save changes */
+        $this->entityManager->flush();
+        return redirect()->route('reservation.checkout');
+        
+    }
+
     /* get all services in category by hotel */
     public function servicesByCategoryAndHotel(Request $request, $category_id){
 

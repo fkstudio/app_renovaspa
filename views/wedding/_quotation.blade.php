@@ -1,5 +1,8 @@
 @inject("dbcontext", "App\Database\DbContext")
-
+@php
+	$subtotal = 0;
+	$total = 0;
+@endphp
 <!-- App -->
 <link href="{{ URL::to('/') }}/css/app.css" rel="stylesheet">
 
@@ -120,6 +123,10 @@
 				$packageRelation = $item->PackageCategoryRelation;
 			@endphp
 			@if($item->Service != null)
+				@php
+					$subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
+					$total += $item->Service->getPrice($model->Hotel->Id);
+				@endphp
 				<div class="col-md-12">
 					<h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
 					<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
@@ -127,14 +134,30 @@
 				<div class="clearfix"></div>
 				<hr/>
 			@else
-				@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
-					<div class="col-md-12">
-						<h5>1 {{ ( $packageRelation != null ? $packageRelation->WeddingPackage->Name . ' - ' : '').$packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
-						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
-					</div>
-					<div class="clearfix"></div>
-					<hr/>
-				@endforeach
+				@php
+					$weddingPackage = $packageRelation->WeddingPackage;
+					
+					$subtotal += $packageRelation->getPlanePrice();
+					$total += $packageRelation->getPrice();
+				@endphp
+				<div class="col-md-12">
+					<h5>{{ $weddingPackage->Name }}</h5>
+					<ul style="list-style: none;">
+						@foreach($weddingPackage->WeddingPackageFeatures as $feature)
+						<li>{{ $feature->Description }}</li>
+						@endforeach	
+						@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
+							<li>
+								<div class="col-md-12">
+									<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+									<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+								</div>
+							</li>
+						@endforeach
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+				<hr/>
 			@endif
 		@endforeach
 	</div>
@@ -146,7 +169,7 @@
 		<tbody>
 			<tr>
 				<td>Subtotal</td>
-				<td><span class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $model->Subtotal }}</span></td>
+				<td><span class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $subtotal }}</span></td>
 			</tr>
 			@if ($hotel_region->ActiveDiscount)
 			<tr>
@@ -156,7 +179,7 @@
 			@endif
 			<tr>
 				<td><strong>Total</strong></td>
-				<td><strong class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $model->Total }}</strong></td>
+				<td><strong class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $total }}</strong></td>
 			</tr>
 		</tbody>
 	</table>

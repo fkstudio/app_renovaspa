@@ -144,7 +144,7 @@ class PaymentController extends Controller
             $reservation_id = $session->get('current_reservation_id');
             $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
 
-            $total = $reservation->Total;
+            $total = $reservation->getTotal();
             $country = $reservation->Region->Country;
 
             return view('payment.cardinfo', [ 'country' => $country, 'total' => number_format($total, 2) ]);
@@ -159,7 +159,7 @@ class PaymentController extends Controller
     public function execGatewayPayment(Request $request){
         /* if each filed is fill proceed with the logic */
 
-        try {
+        //try {
             if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['month_year']) or !empty($_POST['cvc'])){
 
                 $session = $request->session();
@@ -179,7 +179,7 @@ class PaymentController extends Controller
                 //$paymentGateway->setLogin("renovaspa", "heath1098");
 
                 /* payment data */
-                $total = $reservation->Total;
+                $total = $reservation->getTotal();
 
                 $expData = explode(' / ', $_POST['month_year']);
                 if(count($expData) <= 0)
@@ -218,10 +218,10 @@ class PaymentController extends Controller
             else {
                 return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_data'));
             }
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+        // }
     }
 
 
@@ -264,7 +264,7 @@ class PaymentController extends Controller
         $merchantUrlKo = $this->siteUrl."/reservation/canceled";
 
         /* set reservation data */
-        $redsys->setParameter("DS_MERCHANT_AMOUNT",$reservation->Total);
+        $redsys->setParameter("DS_MERCHANT_AMOUNT",$reservation->getTotal());
         $redsys->setParameter("DS_MERCHANT_ORDER", $reservation->ConfirmationNumber);
         $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
         $redsys->setParameter("DS_MERCHANT_CURRENCY",$currencyCode);
@@ -432,7 +432,7 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
         $voucher = "";
 
-        try {
+        //try {
             /* if reservation id is null return an error */
             if(!isset($reservation_id) || empty($reservation_id)){
                 return redirect()->route('/')->with('failure', 'There is not voucher to show.');
@@ -460,7 +460,6 @@ class PaymentController extends Controller
                 'customer_email' => $reservation->PaymentInformation->CustomerEmail,
                 'current_date' => new \DateTime("now"),
                 'confirmation_number' => $reservation->ConfirmationNumber,
-                'author_code' => uniqid(),
                 'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' - *****'.$reservation->LastFourCardNumbers ),
                 'billing_details' => $paymentInfo->CountryName.', '.', '.$paymentInfo->TownCity.', '.$paymentInfo->StreetAddress.', '.$paymentInfo->ApartmentUnit.', '.$paymentInfo->PostCode,
                 'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
@@ -469,8 +468,8 @@ class PaymentController extends Controller
                 'check_in' => $session->get("arrival"),
                 'check_out' => $session->get("departure"),
                 'discount' => number_format($reservation->Discount, 2),
-                'subtotal' => $reservation->Subtotal,
-                'total' => $reservation->Total,
+                'subtotal' => $reservation->getSubTotal(),
+                'total' => $reservation->getTotal(),
                 'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
                 'details' => []
             ];
@@ -499,7 +498,7 @@ class PaymentController extends Controller
                     $model['details'][$key] = array(
                         'from_customer' => $detail->FromCustomerName,
                         'to_customer' => $detail->ToCustomerName,
-                        'confirmation_number' => $reservation->ConfirmationNumber,
+                        'confirmation_number' => substr($detail->Id, 0, 7),
                         'price' => number_format($detail->Value)
                     );
 
@@ -519,7 +518,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            $session->flush();
+            //$session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -535,7 +534,7 @@ class PaymentController extends Controller
                 $message->setBody($mailData['voucher'], 'text/html');
                 $message->from('hiobairo1993@gmail.com', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
-                //$message->bcc('hiobairo1993@gmail.com', 'David Salcedo');
+                $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
 
@@ -543,8 +542,37 @@ class PaymentController extends Controller
                     $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
                 else
                     $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
-            });
+            }); 
 
+            if($reservation->Type == 2){
+                foreach($reservation->CertificateDetails as $key => $detail){
+                    if($detail->SendType == 1){
+                        /* store detail object */
+                        $mailData['detail'] = $detail;
+                        
+                        /* send voucher view */
+                        $mail->send([],[], function($message) use ($mailData) {
+                            $reservation = $mailData['reservation'];
+                            $detail = $mailData['detail'];
+
+                            $message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
+                            //$message->setBody($mailData['voucher'], 'text/html');
+                            $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                            $message->sender('info@renovaspa.com', 'Renovaspa');
+                            $message->to($detail->DeliveryEmail, 'recipient');
+                            $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                            $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                            $message->replyTo('info@renovaspa.com', 'Renovaspa');
+
+                            if($reservation->Type == 1)
+                                $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                            else
+                                $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name);
+                        });   
+                    } 
+                }    
+            }
+        
             if($reservation->Type == 1){
                 /* show voucher */
                 return view('payment.voucher_content', $model);
@@ -552,9 +580,9 @@ class PaymentController extends Controller
             else if ($reservation->Type == 2){
                 return view('payment.certificate_voucher_content', $model);
             }
-        }
-        catch (\Exception $e){
-            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        }
+        // }
+        // catch (\Exception $e){
+        //     return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        // }
     }
 }

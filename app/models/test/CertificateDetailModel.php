@@ -41,7 +41,7 @@ class CertificateDetailModel {
 	/**  @Column(name="certificate_number", type="integer") */
 	public $CertificateNumber;
 
-	/** @value @Column(type="decimal") */
+	/** @Column(name="value", type="decimal") */
 	public $Value;
 
 	/** @Column(name="from_customer_name", type="string") */
@@ -58,6 +58,9 @@ class CertificateDetailModel {
 	// hotel = 3
 	/** @Column(name="send_type", type="integer") */
 	public $SendType;
+
+	/**  @Column(name="delivery_email", type="string") */
+	public $DeliveryEmail;
 
 	/**  @Column(name="delivery_number_or_agency", type="string") */
 	public $DeliveryNumberOrAgency;

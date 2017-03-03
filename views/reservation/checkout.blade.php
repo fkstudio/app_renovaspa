@@ -8,6 +8,8 @@
 	@php
 		$country = $dbcontext->getEntityManager()->getRepository('App\Models\Test\CountryModel')->findOneBy(['Id' => session('country_id')]);
 		$hotel_region = $dbcontext->getEntityManager()->getRepository('App\Models\Test\HotelRegionModel')->findOneBy(['Hotel' => session('hotel_id'), 'Region' => session('region_id')]);
+
+		$reservationType = session('reservation_type');
 	@endphp
 
 	@section("content")
@@ -141,6 +143,9 @@
 								<span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol.number_format($detail->Service->getPlanePrice($hotel_id), 2) }}</span>
 								<br/>
 								<span>{{ trans('shared.final_price') }}: <strong>{{ $country->Currency->Symbol.number_format($detail->Service->getPrice($hotel_id), 2) }}</strong></span>
+								<br/>
+								<a href="#fakelink" style="margin-right: 10px;">Edit</a>
+								<a href="{{ URL::to('/') }}/reservation/service/delete/item/{{ $detail->Id }}">Remove</a>
 							</div>
 						</div>
 						<div class="clearfix"></div>
@@ -175,7 +180,7 @@
 								<span>{{ trans('checkout.value') }}: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
 								<br/>
 								<a href="#fakelink" style="margin-right: 10px;">Edit</a>
-								<a href="{{ URL::to('/') }}/certificate/delete/item/{{ $detail->Id }}/checkout">Remove</a>
+								<a href="{{ URL::to('/') }}/reservation/certificate/delete/item/{{ $detail->Id }}/checkout">Remove</a>
 							</div>
 						</div>
 						<div class="clearfix"></div>
@@ -187,7 +192,7 @@
 						<tbody style="font-size: 20px;">
 							<tr>
 								<td>Subtotal</td>
-								<td>{{ $country->Currency->Symbol }}{{ number_format($model->Subtotal, 2) }}</td>
+								<td>{{ $country->Currency->Symbol }}{{ number_format($model->getSubtotal(), 2) }}</td>
 							</tr>
 							@if ($hotel_region->ActiveDiscount)
 							<tr>
@@ -196,7 +201,7 @@
 							@endif
 							<tr>
 								<td><strong>Total</strong></td>
-								<td>{{ $country->Currency->Symbol }}{{ number_format($model->Total, 2) }}</td>
+								<td>{{ $country->Currency->Symbol }}{{ number_format($model->getTotal(), 2) }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -213,6 +218,15 @@
 					<div class="col-md-12">
 						{{ csrf_field() }}
 						<button type="submit" class="btn btn-primary btn-block">{{ trans('checkout.place_order') }}</button>
+					</div>
+					<div class="clearfix"></div>
+					<br/>
+					<div class="col-md-12">
+						@if($reservationType == 1 || $reservationType == 3)
+						<a href="{{ URL::to('/') }}/shopping/cart/checkout" class="btn btn-default btn-block">{{ trans('shared.back_to_checkout') }}</a>
+						@elseif($reservationType == 2)
+						<a href="{{ URL::to('/') }}/certificate/registration" class="btn btn-default btn-block">{{ trans('shared.back_to_registration') }}</a>
+						@endif
 					</div>
 				</div>
 			</form>

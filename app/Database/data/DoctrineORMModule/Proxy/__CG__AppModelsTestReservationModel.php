@@ -218,4 +218,26 @@ class ReservationModel extends \App\Models\Test\ReservationModel implements \Doc
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function getTotal()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTotal', []);
+
+        return parent::getTotal();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSubtotal()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubtotal', []);
+
+        return parent::getSubtotal();
+    }
+
 }

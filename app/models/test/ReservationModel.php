@@ -133,6 +133,56 @@
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
 
+		public function getTotal(){
+			/* reset total */
+			$this->Total = 0;
+
+			if($this->Type == 1){
+				foreach($this->ServicesDetails as $detail){
+					$this->Total += $detail->Service->getPrice($this->Hotel->Id);
+				}
+			}
+			else if($this->Type == 2){
+				foreach($this->CertificateDetails as $detail){
+					if($detail->Type == 1){
+						foreach($detail->CertificateDetailServices as $certService){
+							$this->Total += $certService->Service->getPrice($this->Hotel->Id);	
+						}
+					}
+					else {
+						$this->Total += $detail->Value;
+					}
+				}
+			}
+
+			return $this->Total;
+		}
+
+		public function getSubtotal(){
+			/* reset subtotal */
+			$this->Subtotal = 0;
+
+			if($this->Type == 1){
+				foreach($this->ServicesDetails as $detail){
+					$this->Subtotal += $detail->Service->getPlanePrice($this->Hotel->Id);
+				}
+			}
+			else if($this->Type == 2){
+				foreach($this->CertificateDetails as $detail){
+					if($detail->Type == 1){
+						foreach($detail->CertificateDetailServices as $certService){
+							$this->Subtotal += $certService->Service->getPlanePrice($this->Hotel->Id);	
+						}
+					}
+					else{
+						$this->Subtotal += $detail->Value;
+					}
+				}
+			}
+
+			return $this->Subtotal;
+		}
+
 		public function __construct(){
 			$this->ServicesDetails = [];
 			$this->CertificateDetailModel = [];

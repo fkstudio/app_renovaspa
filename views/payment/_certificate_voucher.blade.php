@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<td><strong>Payment:</strong></td>
-				<td style="float: right;">{{ $card_type }} - {{ $author_code }}</td>
+				<td style="float: right;">{{ $card_type }}</td>
 			</tr>
 			<tr>
 				<td><strong>Email:</strong></td>
@@ -125,7 +125,7 @@ font-weight: normal;
 font-size: 16px;">Delivery method</th>
 				<th style="    text-align: left;
 font-weight: normal;
-font-size: 16px;">Certificate number</th>
+font-size: 16px;">Confirmation number</th>
 				<th style="    text-align: left;
 font-weight: normal;
 font-size: 16px;">Price</th>

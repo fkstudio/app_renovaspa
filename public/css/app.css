@@ -263,6 +263,7 @@
  	width: 100% !important;
  	min-height: 45px;
  	margin-right: 10px;
+ 	text-align: center;
  }
 
  .blank-select {
@@ -395,6 +396,12 @@
 	padding-right: 12px;
  }
 
+ .social-icon:hover {
+ 	background: #5fc7ae;
+ 	color:white;
+ 	border-color: #5fc7ae;
+ }
+
  .social-icon {
  	font-size: 15px !important;
 	border: solid 1px rgb(196, 183, 187);
@@ -412,7 +419,7 @@
 	padding: 5px 10px;
 	border-radius: 50%;
  }
-
+/*
  .carousel-caption {
     position: absolute;
     top: 0;
@@ -427,6 +434,12 @@
     -webkit-align-items: center;
     align-items: center;
     height: 100%;
+}*/
+
+.bx-wrapper {
+	margin-bottom: 0px !important;
+	border: none !important;
+	box-shadow: none !important;
 }
 
 

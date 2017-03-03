@@ -4,6 +4,11 @@
 
 @section('title', 'Wedding services')
 
+@php
+	$subtotal = 0;
+	$total = 0;
+@endphp
+
 @section("content")
 <div id="vue-app" class="container-fluid">
 	@include('shared._breadcrumps')
@@ -109,6 +114,10 @@
 					$packageRelation = $item->PackageCategoryRelation;
 				@endphp
 				@if($item->Service != null)
+					@php
+						$subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
+						$total += $item->Service->getPrice($model->Hotel->Id);
+					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
 						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
@@ -118,6 +127,9 @@
 				@else
 					@php
 						$weddingPackage = $packageRelation->WeddingPackage;
+						
+						$subtotal += $packageRelation->getPlanePrice();
+						$total += $packageRelation->getPrice();
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $weddingPackage->Name }}</h5>
@@ -148,7 +160,7 @@
 			<tbody>
 				<tr>
 					<td>Subtotal</td>
-					<td><span class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $model->Subtotal }}</span></td>
+					<td><span class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $subtotal }}</span></td>
 				</tr>
 				@if ($hotel_region->ActiveDiscount)
 				<tr>
@@ -158,7 +170,7 @@
 				@endif
 				<tr>
 					<td><strong>Total</strong></td>
-					<td><strong class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $model->Total }}</strong></td>
+					<td><strong class="pull-right">{{ $model->Region->Country->Currency->Symbol }}{{ $total }}</strong></td>
 				</tr>
 			</tbody>
 		</table>
