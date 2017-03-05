@@ -18,6 +18,8 @@
 */
 Route::get('/', [ 'as' => 'home.home', 'uses' => 'HomeController@home' ]);
 
+Route::get('/pdf', [ 'as' => 'home.pdf', 'uses' => 'HomeController@createPDF' ]);
+
 Route::get('/about', [ 'as' => 'home.about', 'uses' => 'HomeController@about' ]);
 
 Route::get('/etiquette', [ 'as' => 'home.etiquette', 'uses' => 'HomeController@etiquette' ]);

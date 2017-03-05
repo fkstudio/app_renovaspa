@@ -46,6 +46,130 @@ class PaymentController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* create pdf from a certificateDetail object */
+    private function createPDF($certificateDetail){
+        
+        $pdf = new \App\Classes\FPDF("L","cm", array(17 , 21));
+        
+        $pdf_path = public_path() . '/images/pdf/';
+        $cabecera = $pdf_path . "header2.jpg"; 
+        $lado = $pdf_path . "validopor.jpg"; 
+        $depara = $pdf_path . "depara.jpg"; 
+
+        $reservation_number  = substr($certificateDetail->Reservation->Id, 0, 7);
+        $certificate_number = substr($certificateDetail->Id, 0, 7);
+        $destination_hotel = $certificateDetail->Reservation->Hotel->Name;
+        $total_value = $certificateDetail->Reservation->Region->Country->Currency->Symbol.$certificateDetail->Value;
+        $de=$certificateDetail->FromCustomerName;
+        $customer_to=$certificateDetail->ToCustomerName;
+        $check_date=$certificateDetail->Reservation->Arrival->Format('d/m/Y');
+        $message=$certificateDetail->Message;
+        $paymentMethod = $certificateDetail->Reservation->PaymentMethod->Name;
+
+        $conditons_terms_title="GIFT CERTIFICATES TERMS AND CONDITIONS";
+        $cancellation_title="CANCELLATION POLICY";
+        $redemption_title="Gift Certificate Redemption:";
+        $exchange_rate="Exchange Rate";
+
+        $customer_must_present_title = " Customers must present a copy of the gift certificate at the selected Renova Spa in order to choose and schedule their services.
+        -A copy of the gift certificate is always sent to the purchaser after the payment process has been completed.
+        -Appointments are subject to availability and must be requested directly at the Spa's reception.
+        -If you do not use the full value on your initial visit, the spa partner will issue you a credit towards a future appointment, which needs to be redeemed during the stay.
+        -You can purchase spa treatments or products for the receiver and/or any other person.
+        -No partial refunds apply for unused amounts and these cannot be used for tips. ";
+        
+        $certificate_issued_title=" 
+
+        Gift Certificates are issued in US dollars (U$) or Euros (�$), based on the location. When redeeming a Renova SPA gift certificate, the spa will convert the value into the currency of their respective country. It will buy a service or services of equivalent value. " ;
+        
+        $certificate_valid_title="This certificate is not valid until it is signed by one of the recipient listed on it.Treat this certificate like cash. You must present this certificate to redeem your purchase. Purchaser is responsible for any misuse of this";
+        $hr="_______________________________________";
+        
+        $Signature="Signature";
+        $no_refund_title="No refunds apply for unused Gift Certificates.";
+        $pocision=0;
+        $pdf->AddPage();
+        $pdf->SetFont("arial","",9);
+        $pdf->Image($cabecera,0,0,15);
+
+        $pdf->Image($lado,15,0,5,'jpg');
+
+        $pdf->Image($depara,1,3.5,13,'jpg');
+
+        $pdf->SetFont("arial","",12);
+        $pdf->SetXY(16.6,3.5);
+        $pdf->multicell(5,.5,$total_value,0,'L');
+
+        $pdf->SetXY(15.3,5.6);
+        $pdf->cell(5,0,$certificate_number,0);
+
+        $pdf->SetFont("arial","",9);
+        $pdf->SetXY(15.3,8.4);
+        $pdf->cell(5,0,$check_date,0);
+
+        $pdf->SetXY(4,5.1);
+        $pdf->cell(5,0,$de,0);
+
+        $pdf->SetXY(4,4.2);
+        $pdf->cell(5,0,$customer_to,0);
+
+        $pdf->SetFontsize(9);
+        $pdf->SetXY(4,5.8);
+        $pdf->multicell(9,.5,$message,0);
+
+        $pdf->SetFontsize(6);
+        $pdf->SetXY(15.3,7);
+        $pdf->cell(5,0,$destination_hotel,0);
+
+        $pdf->SetFontsize(11);
+        $pdf->SetXY(1,9);
+        $pdf->cell(13,.3,$conditons_terms_title,0);
+
+        $pdf->SetFontsize(11);
+        $pdf->SetXY(1,9.5);
+        $pdf->cell(13,.3,$redemption_title,0);
+
+        $pdf->SetFontsize(6);
+        $pdf->SetXY(1,10);
+        $pdf->multicell(13,.3,$customer_must_present_title,0);
+
+        $pdf->SetFontsize(11);
+        $pdf->SetXY(1,12.5);
+        $pdf->cell(13,.3,$exchange_rate,0);
+
+        $pdf->SetFontsize(6);
+        $pdf->SetXY(1,13);
+        $pdf->multicell(13,.3,$certificate_issued_title,0);
+
+        $pdf->SetXY(1,14.5);
+        $pdf->multicell(5,.3,$cancellation_title,0);
+
+        $pdf->SetXY(1,14.68);
+        $pdf->multicell(5,.3,$no_refund_title,0);
+
+        $pdf->SetFontsize(9);
+        $pdf->SetXY(15,10);
+        $pdf->SetFillColor(123,120,128,1);
+        $pdf->multicell(5,.6,$paymentMethod,1);
+
+        $pdf->SetFontsize(6);
+        $pdf->SetXY(15,11);
+        $pdf->multicell(5,.3,$certificate_valid_title,0);
+
+
+
+        $pdf->SetXY(15,14);
+        $pdf->multicell(5,.3,$hr,0);
+
+        $pdf->SetXY(17,14.5);
+        $pdf->cell(5,.3,$Signature,0);
+
+        $pdf_path = storage_path() .'/app/public/pdf/cert_'.$reservation_number.'_'.$certificate_number.'.pdf';
+        $pdf->Output('F', $pdf_path);
+
+        return $pdf_path;
+    }
+
     /* /POST */
     /* save reservation data and choose about the next step, paypal, redsys or paymentGateway */
     public function payment(Request $request){
@@ -159,7 +283,7 @@ class PaymentController extends Controller
     public function execGatewayPayment(Request $request){
         /* if each filed is fill proceed with the logic */
 
-        //try {
+        try {
             if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['month_year']) or !empty($_POST['cvc'])){
 
                 $session = $request->session();
@@ -218,10 +342,10 @@ class PaymentController extends Controller
             else {
                 return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_data'));
             }
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+        }
     }
 
 
@@ -432,7 +556,7 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
         $voucher = "";
 
-        //try {
+        try {
             /* if reservation id is null return an error */
             if(!isset($reservation_id) || empty($reservation_id)){
                 return redirect()->route('/')->with('failure', 'There is not voucher to show.');
@@ -502,13 +626,13 @@ class PaymentController extends Controller
                         'price' => number_format($detail->Value)
                     );
 
-                    if($detail->Type == 1){
+                    if($detail->SendType == 1){
                         $model['details'][$key]['type'] = 'Email';
                     }
-                    else if($detail->Type == 2){
+                    else if($detail->SendType == 2){
                         $model['details'][$key]['type'] = "Print";
                     }
-                    else if ($detail->Type == 3){
+                    else if ($detail->SendType == 3){
                         $model['details'][$key]['type'] = "Hotel";
                     }
                 }
@@ -518,7 +642,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -532,10 +656,20 @@ class PaymentController extends Controller
             $mail->send([],[], function($message) use ($mailData) {
                 $reservation = $mailData['reservation'];
                 $message->setBody($mailData['voucher'], 'text/html');
+                
+                /* this mail will be send from? */
                 $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+
+                /* the sender's data is? */
                 $message->sender('info@renovaspa.com', 'Renovaspa');
+                
+                /* this mail is in hidden copy fro? */
                 $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+
+                /* the recipient of this mail is?  */
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                
+                /* this mail should be replie to? */
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
 
                 if($reservation->Type == 1)
@@ -547,8 +681,10 @@ class PaymentController extends Controller
             if($reservation->Type == 2){
                 foreach($reservation->CertificateDetails as $key => $detail){
                     if($detail->SendType == 1){
+
                         /* store detail object */
                         $mailData['detail'] = $detail;
+                        $mailData['pdf_path'] = $this->createPDF($detail);
                         
                         /* send voucher view */
                         $mail->send([],[], function($message) use ($mailData) {
@@ -556,13 +692,24 @@ class PaymentController extends Controller
                             $detail = $mailData['detail'];
 
                             $message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
-                            //$message->setBody($mailData['voucher'], 'text/html');
+                            
+                            /* this mail will be send from? */
                             $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                            
+                            /* the sender's data is? */
                             $message->sender('info@renovaspa.com', 'Renovaspa');
-                            $message->to($detail->DeliveryEmail, 'recipient');
+                            
+                            /* this mail is in hidden copy fro? */
                             $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
                             $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                            
+                            /* this mail should be replie to? */
                             $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                            
+                            /* the recipient of this mail is?  */
+                            $message->to($detail->DeliveryEmail, 'recipient');
+                            
+                            $message->attach($mailData['pdf_path']);
 
                             if($reservation->Type == 1)
                                 $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
@@ -580,9 +727,9 @@ class PaymentController extends Controller
             else if ($reservation->Type == 2){
                 return view('payment.certificate_voucher_content', $model);
             }
-        // }
-        // catch (\Exception $e){
-        //     return redirect()->route('home.home')->with('failure', 'Your session has expired.');
-        // }
+        }
+        catch (\Exception $e){
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+        }
     }
 }

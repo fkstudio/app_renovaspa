@@ -72,32 +72,32 @@
 				</div>
 			</div>
 			<div class="clearfix"></div>
-			<div class="col-md-6">
-				<div class="col-md-12 certificate-block">
-					<h6>VALUED BASED CERTIFICATE</h6>
-					<P style="font-size: 10px">Value Based Gift Certificates are Renova Spa Credits in a specific currency amount of your choice.
-						<ul>
-							<li>Can purchase spa treatments or spa products for him/herself or any other</li>
-							<li>Will make his/her choice of treatment and schedule it at the spa directly upon arrivalto the hotel</li>
-							<li>Will obtain a 10% bonus on top of the paid value.</li>
-						</ul>
-						<h6 style="font-size: 12px">PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>
-						<ul>
-							<li>Select the amount of gift certificate/s</li>
-							<li>Select the value for each gift certificate/s</li>
-							<li>Enter the gift certificate/s details:</li>
-							<li>Who will receive it</li>
-							<li>Include personal message</li>
-							<li>Select delivery method</li>
-							<li>Complete your purchase: pay for your gift certificate/s and receive an instant 
+			<div class="col-md-12">
+				<h6>VALUED BASED CERTIFICATE</h6>
+				<P>Value Based Gift Certificates are Renova Spa Credits in a specific currency amount of your choice.
+					<ul>
+						<li>Can purchase spa treatments or spa products for him/herself or any other</li>
+						<li>Will make his/her choice of treatment and schedule it at the spa directly upon arrivalto the hotel</li>
+						<li>Will obtain a 10% bonus on top of the paid value.</li>
+					</ul>
+					<h6>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>
+					<ul>
+						<li>Select the amount of gift certificate/s</li>
+						<li>Select the value for each gift certificate/s</li>
+						<li>Enter the gift certificate/s details:</li>
+						<li>Who will receive it</li>
+						<li>Include personal message</li>
+						<li>Select delivery method</li>
+						<li>Complete your purchase: pay for your gift certificate/s and receive an instant 
 confirmation of purchase and a copy of the gift certificate/s online.</li>
-						</ul>
-					</P>
-				</div>
+					</ul>
+				</P>
 			</div>
-			<div class="col-md-6 certificate-block">
+			<div class="clearfix"></div>
+			<hr>
+			<div class="col-md-12">
 				<h6>SERVICE BASED CERTIFICATE</h6>
-				<P style="font-size: 10px">Service Based Gift Certificates are for a specific spa treatment/s or spa package/s and include a 10% discount.<br/><br/>
+				<P>Service Based Gift Certificates are for a specific spa treatment/s or spa package/s and include a 10% discount.<br/><br/>
 					Will schedule the selected treatment/s at the spa directly upon arrival to the hotel.
 					<h6>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>
 					<ul style="list-style: number;">

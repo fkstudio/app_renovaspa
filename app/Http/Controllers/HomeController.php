@@ -148,13 +148,13 @@ class HomeController extends Controller
         /* get file by input file name */
         $f = $request->resume;
 
-        // if($resume->extension() != 'txt' && $resume->extension() != 'doc')
-        //     return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');
+        if($resume->extension() != 'txt' && $resume->extension() != 'doc')
+            return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');
 
         /* file identifier */
         $uniqid = uniqid();
         $file_name = $uniqid . '-'.str_replace(' ', '-', $_POST['name']).'-'.$_POST['position'].'-'.$_POST['email'].'-resume.'.$f->extension();
-        $file_path =  storage_path() .'/public/'. $file_name;
+        $file_path =  storage_path() .'/app/public/resumes/'. $file_name;
 
         /* store file in public storage */
         $f->storeAs('public/resumes', $file_name);
@@ -182,8 +182,6 @@ class HomeController extends Controller
             return redirect()->route('home.contact')->with('success', 'Message sent successfully.');
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.contact')->with('failure', 'Error sending message. Please try again.');
         }
     }
