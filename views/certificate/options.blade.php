@@ -22,10 +22,10 @@
 			</div>
 			<div class="row">
 				<div class="col-md-5">
-					<input type="radio" name="type" value="1" v-model='type' /> Service based  (No price will be shown)
+					<input type="radio" name="type" value="1" v-model='type' /> <strong>Service based</strong>  (No price will be shown)
 				</div>
 				<div class="col-md-3">
-					<input type="radio" name="type" value="2" v-model='type' /> Value based
+					<input type="radio" name="type" value="2" v-model='type' /> <strong>Value based</strong>
 				</div>
 				<div class="col-md-2">
 					How many?
@@ -73,7 +73,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-md-12">
-				<h6>VALUED BASED CERTIFICATE</h6>
+				<h6><strong>VALUED BASED CERTIFICATE</strong></h6>
 				<P>Value Based Gift Certificates are Renova Spa Credits in a specific currency amount of your choice.
 					<ul>
 						<li>Can purchase spa treatments or spa products for him/herself or any other</li>
@@ -96,7 +96,7 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 			<div class="clearfix"></div>
 			<hr>
 			<div class="col-md-12">
-				<h6>SERVICE BASED CERTIFICATE</h6>
+				<h6><strong>SERVICE BASED CERTIFICATE</strong></h6>
 				<P>Service Based Gift Certificates are for a specific spa treatment/s or spa package/s and include a 10% discount.<br/><br/>
 					Will schedule the selected treatment/s at the spa directly upon arrival to the hotel.
 					<h6>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>

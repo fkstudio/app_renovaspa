@@ -66,22 +66,23 @@ class ServiceController extends Controller
 
     /* get all services in category by hotel */
     public function servicesByCategoryAndHotel(Request $request, $category_id){
+        $session = $request->session();
 
-        $hotel_id = $request->session()->get('hotel_id');
-        $region_id = $request->session()->get('region_id');
-        $request->session()->put('category_id', $category_id);
+        $hotel_id = $session->get('hotel_id');
+        $region_id = $session->get('region_id');
+        $session->put('category_id', $category_id);
 
 
-        $cart = $this->getCart($request->session()->getId());
+        $cart = $this->getCart($session->getId());
 
         try {
                 
             $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
-            $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(["Id" => $category_id]);
+            $categoryCountry = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findOneBy(["Category" => $category_id, 'Country' => $session->get('country_id')]);
             $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
 
             $filters = [
-                            "Category" => $category->Id, 'Hotel' => $hotel->Id,
+                            "Category" => $category_id, 'Hotel' => $hotel->Id,
                             "IsActive" => true,
                             "IsDeleted" => false
                         ];
@@ -99,14 +100,14 @@ class ServiceController extends Controller
                 $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
                 $region->Name => '/region/'. $region->Id . '/hotels',
                 $hotel->Name => '/hotel/' . $hotel->Id . '/categories',
-                $category->Name => '/category/'. $category->Id . '/services',
+                $categoryCountry->Category->Name => '/category/'. $categoryCountry->Category->Id . '/services',
                 'SERVICES' => '#fakelink'
             ];
 
             $viewData = [ 
                     "model" => $serviceCategories, 
                     "hotel" => $hotel, 
-                    "category" => $category, 
+                    "categoryCountry" => $categoryCountry, 
                     "region" => $region,
                     "breadcrumps" => $breadcrumps,
                     'mycart' => $cart

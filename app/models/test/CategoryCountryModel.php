@@ -30,6 +30,9 @@ class CategoryCountryModel {
 	*/
 	public $Country;		
 
+	/** @Column(name="description", type="string") */
+	public $Description;
+
 	/** @Column(name="is_special", type="boolean") */
 	public $IsSpecial;
 

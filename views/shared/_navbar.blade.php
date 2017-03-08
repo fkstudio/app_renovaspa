@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
-          <li><a>info@renovaspa.com</a></li>
+          <li><a href="mailto:info@renovaspa.com">info@renovaspa.com</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-inverse">
@@ -63,7 +63,7 @@
                       <a href="#" class="dropdown-action dropdown-no-action">{{ $region->Name }}</a>
                       <ul class="dropdown-menu dropdown-inverse">
                         @foreach($region->HotelRegions as $hotelRegion)
-                          <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ $hotelRegion->Hotel->Name }}</a></li>
+                          <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ strtoupper($hotelRegion->Hotel->Name) }}</a></li>
                         @endforeach
                       </ul>
                     </li>
@@ -96,9 +96,9 @@
 </nav>
 @if (isset($categories))
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top: 9px;">
     <div class="collapse navbar-collapse navbar-right" id="navbar">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-categories">
           @if(session('reservation_type') == 3)
           <li><a href="{{ URL::to('/') }}/wedding/services">RENOVA WEDDING PACKAGE</a></li>
           @endif

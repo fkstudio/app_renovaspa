@@ -52,21 +52,21 @@ class DbContext
             $config->setAutoGenerateProxyClasses(false);
 
         // define credentials...
-        // $connectionOptions = array(
-        //     'driver'   => 'pdo_mysql',
-        //     'host'     => '66.147.254.159',
-        //     'dbname'   => 'renovasp_newrenova',
-        //     'user'     => 'renovasp_renovan',
-        //     'password' => 'r3n0v42016',
-        // );
-
         $connectionOptions = array(
             'driver'   => 'pdo_mysql',
-            'host'     => 'localhost',
-            'dbname'   => 'renovatest',
-            'user'     => 'root',
-            'password' => 'root',
+            'host'     => '66.147.254.159',
+            'dbname'   => 'renovasp_newrenova',
+            'user'     => 'renovasp_renovan',
+            'password' => 'r3n0v42016',
         );
+
+        // $connectionOptions = array(
+        //     'driver'   => 'pdo_mysql',
+        //     'host'     => 'localhost',
+        //     'dbname'   => 'renovatest',
+        //     'user'     => 'root',
+        //     'password' => 'root',
+        // );
 
         return EntityManager::create($connectionOptions, $config);
     }

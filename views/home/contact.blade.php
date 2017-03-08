@@ -15,7 +15,7 @@
                 <p style="color: white;">
                    <span style="font-size:30px;" class="glyphicon glyphicon-envelope"></span>
                    <br/>
-                   info@renovaspa.com</br>
+                   <a style="color:white;" href="mailto:info@renovaspa.com">info@renovaspa.com</a> </br>
                    Plaza Progreso - Local 21</br>
                    Bavaro - Higuey, Dominican Republic</p>
             </div>

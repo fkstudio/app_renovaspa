@@ -19,6 +19,24 @@
 @endphp
 
 @section("content")
+	<!-- category modal -->
+	<div id="categoryModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center">ABOUT {{ $categoryCountry->Category->Name }}</h4>
+				</div>
+				<div class="modal-body">
+					<p style="line-height: 25px">{!! $categoryCountry->Description !!}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container-fluid">
 		@include('shared._breadcrumps')
 		<hr>
@@ -26,12 +44,12 @@
 		<div class="row">
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
-				@if ($category->Photo != null)
-				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $category->Id }}/{{ $category->Photo->Path }}" class="img-responsive" alt='{{ $category->Name }}' />
+				@if ($categoryCountry->Category->Photo != null)
+				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $categoryCountry->Category->Id }}/{{ $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
 				@endif
 				<br class="hidden-lg" />
 				<p class="text-center">
-					<a href="#fakelink" style="color:#5fc7ae;">+Info</a>
+					<a href="#fakelink" data-toggle="modal" data-target="#categoryModal" style="color:#5fc7ae;">+Info</a>
 				</p>
 			</div>
 			<div class="col-lg-8 col-md-12 col-sm-12">
@@ -122,8 +140,6 @@
 								@else
 								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default block-button">{{ trans('shared.go_to_next_certificate') }}</a>
 								@endif	
-								
-								 
 							</div>
 						</div>
 					</div>	

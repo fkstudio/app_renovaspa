@@ -17,6 +17,10 @@
           $total = 0;
         @endphp
 
+        @if(count($mycart->Items) <= 0)
+        <p style="text-align: center;">{{ trans('messages.there_is_no_items_in_cart') }}</p>
+        @endif
+
         @foreach($mycart->Items as $item)
           <!-- individual services -->
           @if($item->Service != null && $item->CertificateNumber == null)

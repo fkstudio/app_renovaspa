@@ -70,6 +70,14 @@
 	padding: 10px 20px 10px 20px !important;
  }
 
+ .navbar-categories>li>a {
+ 	padding-top: 7px !important;
+ 	padding-bottom: 7px !important;
+ 	font-size: 12px;
+ 	padding-left: 10px !important;
+	padding-right: 10px !important;
+ }
+
  .navbar {
  	margin-bottom: 0px !important;
  }
@@ -164,7 +172,7 @@
  /* block content */
  .block-content {
  	-webkit-transition: opacity 0.3s,  padding-top 0.3s;
-	height: 220px;
+	height: 300px;
 	padding-top: 20%;
 	text-align: center;
 	margin-bottom: 20px;
@@ -175,7 +183,7 @@
  }
  .block-content:hover {
  	opacity: 0.7;
- 	padding-top: 30%;
+ 	padding-top: 40%;
  }
  .block-content:hover > span {
  	
@@ -405,10 +413,10 @@
  .social-icon {
  	font-size: 15px !important;
 	border: solid 1px rgb(196, 183, 187);
-	padding: 20px;
+	padding: 15px;
 	color: rgb(196, 183, 187);
 	border-radius: 60%;
-	height: 55px;
+	height: 45px;
 	margin-right: 10px;
  }
 
