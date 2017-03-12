@@ -115,7 +115,12 @@
 
 
 	$(function() {
-	    $('.datepicker').daterangepicker();
+	    $('.datepicker').daterangepicker({
+	    	locale: {
+		      format: 'MM/D/YYYY'
+		    },
+	        minDate: moment(),
+	    });
 	});
 
 	var vue = new Vue({
@@ -162,6 +167,8 @@
 	            }).done(function(response){
 	                var hotelList = JSON.parse(response);
 	                var hotelSelect = $("#hotel_id");
+
+	               	$("#hotel_id").html("<option></option>");
 	                $("#wedding_package_id").html("<option></option>");
 
 	                for(var i in hotelList){
@@ -178,8 +185,6 @@
 	            }).done(function(response){
 	                var weddingPackages = JSON.parse(response);
 
-	                console.log(weddingPackages);
-	                
 	                var pacakgeSelect = $("#wedding_package_id");
 	                pacakgeSelect.html("");
 	                pacakgeSelect.append("<option value='nopackage'>No packages</option>");

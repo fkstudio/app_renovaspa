@@ -39,7 +39,7 @@ class RegionController extends Controller
 
         try {
             $country = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findOneBy([ 'Id' => $country_id ]);
-            $regions = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findBy([ 'Country' => $country_id ]);
+            $regions = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findBy([ 'Country' => $country_id ], ['Name' => 'ASC']);
 
             $session->put('currency', $country->Currency->Name);
             $session->put('currency_symbol', $country->Currency->Symbol);

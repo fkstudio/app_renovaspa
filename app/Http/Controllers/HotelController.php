@@ -38,7 +38,7 @@ class HotelController extends Controller
 
         try {
             $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(['Id' => $region_id]);
-            $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
+            $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ], ['Name' => 'ASC']);
 
             $breadcrumps = [
                 $region->Country->Name => '/country/'. $region->Country->Id . '/regions',

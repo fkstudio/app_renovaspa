@@ -59,7 +59,6 @@ class PaymentController extends Controller
         $reservation_number  = substr($certificateDetail->Reservation->Id, 0, 7);
         $certificate_number = substr($certificateDetail->Id, 0, 7);
         $destination_hotel = $certificateDetail->Reservation->Hotel->Name;
-        $total_value = $certificateDetail->Reservation->Region->Country->Currency->Symbol.$certificateDetail->Value;
         $de=$certificateDetail->FromCustomerName;
         $customer_to=$certificateDetail->ToCustomerName;
         $check_date=$certificateDetail->Reservation->Arrival->Format('d/m/Y');
@@ -85,7 +84,7 @@ class PaymentController extends Controller
         $certificate_valid_title="This certificate is not valid until it is signed by one of the recipient listed on it.Treat this certificate like cash. You must present this certificate to redeem your purchase. Purchaser is responsible for any misuse of this";
         $hr="_______________________________________";
         
-        $Signature="Signature";
+        $signature="Signature";
         $no_refund_title="No refunds apply for unused Gift Certificates.";
         $pocision=0;
         $pdf->AddPage();
@@ -93,12 +92,26 @@ class PaymentController extends Controller
         $pdf->Image($cabecera,0,0,15);
 
         $pdf->Image($lado,15,0,5,'jpg');
-
         $pdf->Image($depara,1,3.5,13,'jpg');
 
-        $pdf->SetFont("arial","",12);
-        $pdf->SetXY(16.6,3.5);
-        $pdf->multicell(5,.5,$total_value,0,'L');
+        $pdf->SetFont("arial","",9);
+
+        if($certificateDetail->Type == 1){
+            foreach ($certificateDetail->CertificateDetailServices as $key => $ServicesDetail) {
+                $total_value = $ServicesDetail->Service->Name;
+                
+                $pdf->SetFontsize(8);
+                $pdf->SetXY(15.2,3.5);
+                $pdf->multicell(5,.5,$total_value,0,'L');
+            }
+        }
+        else{
+            $total_value = $certificateDetail->Reservation->Region->Country->Currency->Symbol.$certificateDetail->Value;
+            $pdf->SetXY(16.6,3.5);
+            $pdf->multicell(5,.5,$total_value,0,'L');
+        }
+
+        
 
         $pdf->SetXY(15.3,5.6);
         $pdf->cell(5,0,$certificate_number,0);
@@ -162,7 +175,7 @@ class PaymentController extends Controller
         $pdf->multicell(5,.3,$hr,0);
 
         $pdf->SetXY(17,14.5);
-        $pdf->cell(5,.3,$Signature,0);
+        $pdf->cell(5,.3,$signature,0);
 
         $pdf_path = storage_path() .'/app/public/pdf/cert_'.$reservation_number.'_'.$certificate_number.'.pdf';
         $pdf->Output('F', $pdf_path);
@@ -642,7 +655,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            $session->flush();
+            //$session->flush();
 
             /* mail object */
             $mail = app()['mailer'];

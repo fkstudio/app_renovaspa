@@ -83,6 +83,12 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 			</form>
 			
 		</div>
+		<div class="clearfix"></div>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4">
+			<p class="text-center">Prices include 16.00 % tax</p>
+		</div>
 	</div>
 </div>
 @endsection

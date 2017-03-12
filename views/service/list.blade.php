@@ -45,7 +45,7 @@
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
 				@if ($categoryCountry->Category->Photo != null)
-				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/category-{{ $categoryCountry->Category->Id }}/{{ $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
+				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/{{ $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
 				@endif
 				<br class="hidden-lg" />
 				<p class="text-center">
@@ -56,20 +56,32 @@
 				<h4>{{ trans('titles.service_list_title') }}</h5>
 				<br/>
 				<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							<label>Service</label>
+						</div>
+						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+							<label>Duration</label>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+							<label>Price</label>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+							<label>Quantity</label>
+						</div>
+					</div>
 					@foreach($model as $key => $serviceCategoryHotelModel)
 					@php
 						$serviceInformation = $serviceCategoryHotelModel->ServiceInformation;
 					@endphp
-					<div class="row">
+					<div class="row" style="margin-bottom: 5px">
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<label>Service</label>
-							<br/>
 							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}" style="color:#5fc7ae;">+info</a>
 							<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
 						</div>
 						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
-							<label>Duration</label>
-							<br/>
 							{{ ($serviceInformation != null ? $serviceInformation->Duration : 'N/A' ) }}
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
@@ -87,13 +99,9 @@
 							@endif
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
-							<label>Price</label>
-							<br/>
 							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPrice($hotel->Id), 2) }}
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-							<label>Quantity</label>
-							<br/>
 							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="input-border input-cart" />
 						</div>
 						<div class="clearfix"></div>
@@ -116,6 +124,7 @@
 							<hr/>
 						</div>
 					</div>
+					<div class="clearfix"></div>
 					@endforeach
 					<div class="clearfix"></div>
 					<br/>

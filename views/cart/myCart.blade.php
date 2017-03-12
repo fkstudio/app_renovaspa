@@ -99,7 +99,7 @@
 
 												if($category->Photo != null)
 												{
-													$photoPath = '/categories/category-'.$category->Id.'/'.$category->Photo->Path;
+													$photoPath = '/categories/'.$category->Photo->Path;
 												}
 											@endphp
 											<img style="max-width: 80px;" src="{{ URL::to('/images/') . $photoPath }}" class="img-responsive" /> </td>

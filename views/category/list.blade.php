@@ -26,7 +26,7 @@
 
 					if($categoryCountry->Category->Photo != null)
 					{
-						$photoPath = '/categories/category-'.$categoryCountry->Category->Id.'/'.$categoryCountry->Category->Photo->Path;
+						$photoPath = '/categories/'.$categoryCountry->Category->Photo->Path;
 					}
 					
 					if($categoryCountry->IsSpecial == true && $categoryCountry->SpecialBeginDate != null && $categoryCountry->SpecialEndDate != null)

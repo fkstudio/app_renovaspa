@@ -44,7 +44,7 @@ class HomeController extends Controller
 
         $session->put('reservation_type', 1);
         
-        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findBy([], ['Name' => 'ASC']);
 
         return view("country.list", [ "model" => $countries, 'margin' => true ]);
     }
@@ -57,7 +57,7 @@ class HomeController extends Controller
 
         $session->put('reservation_type', 2);
 
-        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findBy([], ['Name' => 'ASC']);
 
         return view("country.list", [ "model" => $countries, 'margin' => true ]);
     }
@@ -70,7 +70,7 @@ class HomeController extends Controller
 
         $session->put('reservation_type', 3);
 
-        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findAll();
+        $countries = $this->entityManager->getRepository("App\Models\Test\CountryModel")->findBy([], ['Name' => 'ASC']);
 
         return view("country.list", [ "model" => $countries, 'margin' => true ]);
     }

@@ -32,7 +32,7 @@
 				@foreach($item as $service)
 				<p><strong>Service based value:</strong> {{ $service['quantity'] .' '. $service['name'] }}</p>
 					@php
-						$certTotal += $service['price'];
+						$certTotal += $service['price'] * $service['quantity'];
 					@endphp
 				@endforeach
 			<hr>
