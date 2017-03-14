@@ -23,7 +23,7 @@
 		@endif
 		<br/>
 		<form action="{{ URL::to('/') }}/reservation/select/book" method="POST" class="form-inline text-center">
-			<div class="col-lg-2 col-md-12 col-sm-12 {{ ($reservationType != 3 ? 'col-lg-offset-1' : '' ) }}">
+			<div class="col-lg-2 col-md-12 col-sm-12">
 				<label class="custom-label">{{ trans('shared.country') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='country_id' id='country_id' name="country_id" v-on:change='getRegions()' class="form-control custom-select">
@@ -53,7 +53,7 @@
 			<div class="clearfix hidden-lg"></div>
 			<br class="hidden-lg" />
 
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+			<div class="{{ ($reservationType != 3 ? 'col-lg-3' : 'col-lg-2' ) }} col-md-12 col-sm-12 col-xs-12">
 				<label class="custom-label">*{{ trans('shared.arrival') }} - *{{ trans('shared.departure') }}</label>
 				<div class="clearfix"></div>
 				<input type="text" id="arrival" name='arrival_departure' class="datepicker form-control custom-select" />
@@ -63,7 +63,7 @@
 			<br class="hidden-lg" />
 
 			@if($reservationType == 3)
-			<div class="col-lg-2">
+			<div class="{{ ($reservationType != 3 ? 'col-lg-3' : 'col-lg-2' ) }}">
 				<label class="custom-label">{{ trans('shared.wedding_package') }}</label>
 				<div class="clearfix"></div>
 				<select v-model='wedding_package_id' id="wedding_package_id" name='wedding_package_id' class="form-control custom-select">
@@ -71,7 +71,7 @@
 			</div>
 			@endif
 
-			<div class="col-lg-1">
+			<div class="col-lg-2">
 				<label class="custom-label"></label>
 				<div class="clearfix"></div>
 				{{ csrf_field() }}
