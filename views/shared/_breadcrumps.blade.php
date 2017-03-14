@@ -8,15 +8,15 @@
 		switch($reservation_type){
 			case 1:
 				$label = "SERVICES";
-				$label_url = "/select/services";
+				$label_url = "/services";
 				break;
 			case 2:
 				$label = "CERTIFICATES";
-				$label_url = "/select/certificates";
+				$label_url = "/certificates";
 				break;
 			case 3:
 				$label = "WEDDINGS";
-				$label_url = "/select/weddings";
+				$label_url = "/weddings";
 				break;
 		}
 

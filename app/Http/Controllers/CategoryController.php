@@ -66,7 +66,7 @@ class CategoryController extends Controller
             $breadcrumps = [
                 $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',
                 $hotelRegion->Region->Name => '/region/'. $hotelRegion->Region->Id . '/hotels',
-                $hotelRegion->Hotel->Name => 'hotel/' . $hotelRegion->Hotel->Id . '/categories',
+                $hotelRegion->Hotel->Name => '/hotel/' . $hotelRegion->Hotel->Id . '/categories',
                 'TREATMENTS' => '#fakelink'
             ];
 

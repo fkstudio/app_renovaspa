@@ -35,9 +35,9 @@ class CertificateController extends Controller
         $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $hotel_id ]);
 
         $breadcrumps = [
-            $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
-            $region->Name => '/region/'. $region->Id . '/hotels',
-            $hotel->Name => 'hotel/' . $hotel->Id . '/categories',
+            $region->Country->Name => '#fakelink',
+            $region->Name => '#fakelink',
+            $hotel->Name => '#fakelink',
             'CERTIFICATES' => '#fakelink',
             'CERTIFICATE OPTIONS' => '#fakelink'
         ];
