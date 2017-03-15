@@ -170,12 +170,16 @@
  }
 
  /* block content */
+ .block-content-responsive {
+ 	position: absolute;
+	margin-top: -160px;
+	text-align: center;
+ }
  .block-content {
  	-webkit-transition: opacity 0.3s,  padding-top 0.3s;
-	height: 300px;
+	height: 250px;
 	padding-top: 20%;
 	text-align: center;
-	margin-bottom: 20px;
  }
  .block-content span {
  	-webkit-transition: opacity 0.2s linear;

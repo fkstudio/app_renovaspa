@@ -39,6 +39,12 @@
 		*/
 		public $Service;
 
+		/** 
+		 * @OneToOne(targetEntity="CategoryModel", cascade={"persist"})
+		 * @JoinColumn(name="category_id", referencedColumnName="id")
+		*/
+		public $Category;
+
 		/** @Column(name="customer_name", type="string") */
 		public $CustomerName;
 

@@ -272,6 +272,9 @@ class ShoppingCartController extends Controller
                 }
             }
             else {
+                // get current category
+                $category = $this->entityManager->getRepository("App\Models\Test\CategoryModel")->findOneBy(['Id' => $session->get("category_id")]);
+
                 foreach($_POST['id'] as $key => $id){
                     $serviceId = $id;
                     $serviceQuantity = $_POST['quantity'][$key];
@@ -285,6 +288,7 @@ class ShoppingCartController extends Controller
                             $cartItem = new \App\Models\Test\ShoppingCartItemModel();
                             $cartItem->Cart = $cart;
                             $cartItem->Service = $service;
+                            $cartItem->Category = $category;
                             $cartItem->Quantity = 1;
                             $cartItem->Price = $service->getPrice($session->get('hotel_id'));
                             $cartItem->PreferedDate = null;
