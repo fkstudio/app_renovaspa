@@ -5,9 +5,15 @@
 @section('content')
 	<div class="container-fluid-full">
 		<ul class="bxslider">
-		  <li><img title="RELAX MODE" src="{{ URL::to('/') }}/images/carousel/facial_treatment.jpg" /></li>
-		  <li><img src="{{ URL::to('/') }}/images/carousel/body_treatment.jpg" /></li>
-		  <li><img src="{{ URL::to('/') }}/images/carousel/wedding_treatment.jpg" /></li>
+		  <li>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/facial_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  </li>
+		  <li>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/body_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  </li>
+		  <li>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/wedding_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  </li>
 		</ul>
 	</div>
 @endsection
@@ -28,8 +34,12 @@
 <script>
 	function adjustSize(){
 		var height = $(window).height();  //getting windows height
-		$('.bx-viewport').css('height',height+'px');   //and setting height of 
+		var width = $(window).width();
+		$('.bxslider li').css('height',height+'px');   //and setting height of 
+		$('.bxslider li div').css('width',width+'px');
 	}
+
+	adjustSize();
 
 	$(document).ready(function(){
 		$('.bxslider').bxSlider({
@@ -40,10 +50,9 @@
 		  easing : [ 'linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out', 'cubic-bezier(n,n,n,n)' ]
 		});
 
-		adjustSize();
+		
 
 		$(window).resize(function(){
-			console.log('w');
 			adjustSize();
 		})
 	});

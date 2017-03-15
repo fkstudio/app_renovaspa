@@ -57,15 +57,15 @@
 				<br/>
 				<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
 					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div class="col-lg-5 col-md-4 col-sm-4 col-xs-5">
 							<label>Service</label>
 						</div>
 						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
 							<label>Duration</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+						<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
 							<label>Price</label>
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
@@ -77,14 +77,14 @@
 						$serviceInformation = $serviceCategoryHotelModel->ServiceInformation;
 					@endphp
 					<div class="row" style="margin-bottom: 5px">
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div class="col-lg-5 col-md-4 col-sm-4 col-xs-5">
 							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}" style="color:#5fc7ae;">+info</a>
 							<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
 						</div>
 						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
 							{{ ($serviceInformation != null ? $serviceInformation->Duration : 'N/A' ) }}
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+						<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
 							@if ($serviceCategoryHotelModel->Service->hasDiscount($hotel->Id))
 								@php
 									$discount = $serviceCategoryHotelModel->Service->getDiscount($hotel->Id)
@@ -98,7 +98,7 @@
 							<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 							@endif
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
 							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPrice($hotel->Id), 2) }}
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">

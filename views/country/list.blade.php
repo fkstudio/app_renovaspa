@@ -10,8 +10,8 @@
 @endphp
 
 @section("content")
-<div id="vue-app" class="container-fluid-full" style="background: url({{ URL::to('/')  }}/images/{{ $bgs[$reservationType]  }});background-size: cover;background-position: center center;padding-top: 300px;padding-bottom: 250px;">
-	<div class="container-fluid-full" style="background: #F5F5F5;">
+<div id="vue-app" class="container-fluid-full" style="background: url({{ URL::to('/')  }}/images/{{ $bgs[$reservationType]  }});background-size: cover;background-position: center center;">
+	<div class="container-fluid-full" id="form-content" style="background: #F5F5F5;">
 		<br/>
 		<div class="container-fluid">
 			@if($reservationType == 1)
@@ -112,7 +112,23 @@
 
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
+	function adjustSize(){
+		var form = $("#form-content").height();
+		var height = $(window).height();  //getting windows height
 
+		var porcent = ( height - form ) / 2;
+
+		$('#vue-app').css('padding-top',porcent+'px');   //and setting height of 
+		$('#vue-app').css('padding-bottom',porcent+'px');
+	}
+
+	adjustSize();
+
+	$(document).ready(function(){
+		$(window).resize(function(){
+			adjustSize();
+		})
+	});
 
 	$(function() {
 	    $('.datepicker').daterangepicker({
