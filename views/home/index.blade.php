@@ -6,13 +6,19 @@
 	<div class="container-fluid-full">
 		<ul class="bxslider">
 		  <li>
-		  	<div style="background:url({{ URL::to('/') }}/images/carousel/facial_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/facial_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
+		  		<h3 class="custom-caption">RELAX MODE: <span style="color:#5fc7ae;">ON</span></h3>
+		  	</div>
 		  </li>
 		  <li>
-		  	<div style="background:url({{ URL::to('/') }}/images/carousel/body_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/body_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
+		  		<h3 class="custom-caption" style="font-weight: 200;">ONLINE BOOKING RECEIVES 10% DISCOUNT</h3>
+		  	</div>
 		  </li>
 		  <li>
-		  	<div style="background:url({{ URL::to('/') }}/images/carousel/wedding_treatment.jpg);background-size: cover;background-position:center;height: 100%;" ></div>
+		  	<div style="background:url({{ URL::to('/') }}/images/carousel/wedding_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
+		  		<h3 class="custom-caption">THE DAY</h3>
+		  	</div>
 		  </li>
 		</ul>
 	</div>
@@ -37,6 +43,7 @@
 		var width = $(window).width();
 		$('.bxslider li').css('height',height+'px');   //and setting height of 
 		$('.bxslider li div').css('width',width+'px');
+		$('.custom-caption').css("margin-top", ( ( height / 2 ) - 40 ) + 'px');
 	}
 
 	adjustSize();
