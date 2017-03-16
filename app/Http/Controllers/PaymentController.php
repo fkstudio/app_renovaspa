@@ -101,73 +101,73 @@ class PaymentController extends Controller
                 $total_value = $ServicesDetail->Service->Name;
                 
                 $pdf->SetFontsize(8);
-                $pdf->SetXY(15.2,3.5);
-                $pdf->multicell(5,.5,$total_value,0,'L');
+                $pdf->SetXY(15.2, 3.0 + ( 0.4 * $key ));
+                $pdf->multicell(5,.5, $total_value,0,'L');
             }
         }
         else{
             $total_value = $certificateDetail->Reservation->Region->Country->Currency->Symbol.$certificateDetail->Value;
             $pdf->SetXY(16.6,3.5);
-            $pdf->multicell(5,.5,$total_value,0,'L');
+            $pdf->multicell(5,.5, $total_value,0,'L');
         }
 
         
 
         $pdf->SetXY(15.3,5.6);
-        $pdf->cell(5,0,$certificate_number,0);
+        $pdf->cell(5,0, $certificate_number,0);
 
         $pdf->SetFont("arial","",9);
         $pdf->SetXY(15.3,8.4);
-        $pdf->cell(5,0,$check_date,0);
+        $pdf->cell(5,0, $check_date,0);
 
         $pdf->SetXY(4,5.1);
-        $pdf->cell(5,0,$de,0);
+        $pdf->cell(5,0, $de,0);
 
         $pdf->SetXY(4,4.2);
-        $pdf->cell(5,0,$customer_to,0);
+        $pdf->cell(5,0, $customer_to,0);
 
         $pdf->SetFontsize(9);
         $pdf->SetXY(4,5.8);
-        $pdf->multicell(9,.5,$message,0);
+        $pdf->multicell(9,.5, $message,0);
 
         $pdf->SetFontsize(6);
         $pdf->SetXY(15.3,7);
-        $pdf->cell(5,0,$destination_hotel,0);
+        $pdf->cell(5,0, $destination_hotel,0);
 
         $pdf->SetFontsize(11);
         $pdf->SetXY(1,9);
-        $pdf->cell(13,.3,$conditons_terms_title,0);
+        $pdf->cell(13,.3, $conditons_terms_title,0);
 
         $pdf->SetFontsize(11);
         $pdf->SetXY(1,9.5);
-        $pdf->cell(13,.3,$redemption_title,0);
+        $pdf->cell(13,.3, $redemption_title,0);
 
         $pdf->SetFontsize(6);
         $pdf->SetXY(1,10);
-        $pdf->multicell(13,.3,$customer_must_present_title,0);
+        $pdf->multicell(13,.3, $customer_must_present_title,0);
 
         $pdf->SetFontsize(11);
         $pdf->SetXY(1,12.5);
-        $pdf->cell(13,.3,$exchange_rate,0);
+        $pdf->cell(13,.3, $exchange_rate,0);
 
         $pdf->SetFontsize(6);
         $pdf->SetXY(1,13);
-        $pdf->multicell(13,.3,$certificate_issued_title,0);
+        $pdf->multicell(13,.3, $certificate_issued_title,0);
 
         $pdf->SetXY(1,14.5);
-        $pdf->multicell(5,.3,$cancellation_title,0);
+        $pdf->multicell(5,.3, $cancellation_title,0);
 
         $pdf->SetXY(1,14.68);
-        $pdf->multicell(5,.3,$no_refund_title,0);
+        $pdf->multicell(5,.3, $no_refund_title,0);
 
         $pdf->SetFontsize(9);
         $pdf->SetXY(15,10);
         $pdf->SetFillColor(123,120,128,1);
-        $pdf->multicell(5,.6,$paymentMethod,1);
+        $pdf->multicell(5,.6, $paymentMethod,1);
 
         $pdf->SetFontsize(6);
         $pdf->SetXY(15,11);
-        $pdf->multicell(5,.3,$certificate_valid_title,0);
+        $pdf->multicell(5,.3, $certificate_valid_title,0);
 
 
 
@@ -655,7 +655,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -679,7 +679,7 @@ class PaymentController extends Controller
                 /* this mail is in hidden copy fro? */
                 $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
 
-                /* the recipient of this mail is?  */
+                /* the recipient of this mail is? */  
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 
                 /* this mail should be replie to? */
@@ -704,7 +704,7 @@ class PaymentController extends Controller
                             $reservation = $mailData['reservation'];
                             $detail = $mailData['detail'];
 
-                            $message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
+                            //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                             
                             /* this mail will be send from? */
                             $message->from('hiobairo1993@gmail.com', 'Renovaspa');
@@ -720,7 +720,7 @@ class PaymentController extends Controller
                             $message->replyTo('info@renovaspa.com', 'Renovaspa');
                             
                             /* the recipient of this mail is?  */
-                            $message->to($detail->DeliveryEmail, 'recipient');
+                            $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
                             
                             $message->attach($mailData['pdf_path']);
 

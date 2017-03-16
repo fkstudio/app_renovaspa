@@ -14,7 +14,11 @@
                     <div class="carousel slide" id="hotel-carousel">    	
                         <!-- Carousel items -->
                         <div class="carousel-inner">
-
+                            @php
+                                $countryName = "";
+                                $regionName = "";
+                                $hotelName = str_replace(' ', '-', $model->Name);
+                            @endphp
                         	<!-- Carousel items -->
 	                        @foreach($model->Photos as $key => $photo)
 						  		@php
@@ -23,7 +27,7 @@
 
 						  		@endphp
 	                                <div class="{{ $active }} item" data-slide-number="{{ $key }}">
-	                                    <img style="height: 300px;" src="{{ URL::to('/images/hotels') }}/hotel-{{ $model->Id }}/{{ $photo->Path }}">
+	                                    <img style="height: 300px;" src="{{ URL::to('/images/hotels') }}/{{  $countryName. '/' . $regionName . '/' . $hotelName }}/{{ $photo->Path }}">
 	                                </div>
 						  	@endforeach
                         </div>
