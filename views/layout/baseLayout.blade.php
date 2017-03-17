@@ -44,7 +44,7 @@
 
     <script>
       $(document).ready(function(){
-        $('.dropdown-submenu .dropdown-action').on("click", function(e){
+        $('.dropdown-submenu .dropdown-action').hover(function(e){
             var input = $(this);
             
             if(!input.hasClass('dropdown-no-action'))

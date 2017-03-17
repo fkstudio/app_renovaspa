@@ -375,7 +375,7 @@
 	-webkit-transition: border .2s ease-in-out;
 	-o-transition: border .2s ease-in-out;
 	transition: border .2s ease-in-out;
-	max-height: 123px;
+	height: 123px;
  }
 
  .carousel-inner>.item>img, .carousel-inner>.item>a>img {
