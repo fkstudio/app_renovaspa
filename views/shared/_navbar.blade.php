@@ -61,7 +61,7 @@
                   @foreach($country->Regions as $region)
                     <li class="dropdown-submenu">
                       <a href="#" class="dropdown-action dropdown-no-action">{{ $region->Name }}</a>
-                      <ul class="dropdown-menu dropdown-inverse">
+                      <ul class="dropdown-menu dropdown-inverse sub-sub-menu">
                         @foreach($region->HotelRegions as $hotelRegion)
                           <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ strtoupper($hotelRegion->Hotel->Name) }}</a></li>
                         @endforeach

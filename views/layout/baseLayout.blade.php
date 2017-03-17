@@ -48,7 +48,10 @@
             var input = $(this);
             
             if(!input.hasClass('dropdown-no-action'))
-              $('.dropdown-hide').css('display', 'none');
+                $('.dropdown-hide').css('display', 'none');
+            else
+                $('.sub-sub-menu').css('display', 'none');
+
   
             input.next('ul').toggle();
             e.stopPropagation();
