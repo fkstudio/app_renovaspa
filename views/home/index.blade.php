@@ -7,17 +7,27 @@
 		<ul class="bxslider">
 		  <li>
 		  	<div style="background:url({{ URL::to('/') }}/images/carousel/facial_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
-		  		<h3 class="custom-caption">RELAX MODE: <span style="color:#5fc7ae;">ON</span></h3>
+		  		<h3 class="custom-caption">
+		  			<a style="color: white;" href="{{ URL::to('/') }}/services">
+		  				RELAX MODE: <span style="color:#5fc7ae;">ON</span>
+		  			</a>
+		  		</h3>
 		  	</div>
 		  </li>
 		  <li>
 		  	<div style="background:url({{ URL::to('/') }}/images/carousel/body_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
-		  		<h3 class="custom-caption" style="font-weight: 200;">ONLINE BOOKING RECEIVES 10% DISCOUNT</h3>
+		  		<h3 class="custom-caption" style="font-weight: 200;">
+		  			<a  style="color: white;"href="{{ URL::to('/') }}/certificates">ONLINE BOOKING RECEIVES 10% DISCOUNT</a>
+		  		</h3>
 		  	</div>
 		  </li>
 		  <li>
 		  	<div style="background:url({{ URL::to('/') }}/images/carousel/wedding_treatment.jpg);background-size: cover;background-position:center;height: 100%;" >
-		  		<h3 class="custom-caption">THE DAY</h3>
+		  		<h3 class="custom-caption">
+		  			<a  style="color: white;"href="{{ URL::to('/') }}/weddings">
+		  				THE DAY
+		  			</a>
+		  		</h3>
 		  	</div>
 		  </li>
 		</ul>

@@ -29,10 +29,7 @@
 					<h4 class="modal-title text-center">ABOUT {{ $categoryCountry->Category->Name }}</h4>
 				</div>
 				<div class="modal-body">
-					<p style="line-height: 25px">{!! $categoryCountry->Description !!}</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<p style="line-height: 25px;text-align: center;">{!! ( $categoryCountry->Description ? $categoryCountry->Description : 'No description to show.' ) !!}</p>
 				</div>
 			</div>
 		</div>

@@ -26,6 +26,12 @@ Route::get('/etiquette', [ 'as' => 'home.etiquette', 'uses' => 'HomeController@e
 
 Route::get('/faq', [ 'as' => 'home.faq', 'uses' => 'HomeController@faq' ]);
 
+Route::get('/privacy-policy', [ 'as' => 'home.privacyPolicy', 'uses' => 'HomeController@privacyPolicy' ]);
+
+Route::get('/legal-terms', [ 'as' => 'home.legalTerms', 'uses' => 'HomeController@legalTerms' ]);
+
+Route::get('/refund', [ 'as' => 'home.refund', 'uses' => 'HomeController@refund' ]);
+
 Route::get('/contact', [ 'as' => 'home.contact', 'uses' => 'HomeController@contact' ]);
 
 Route::post('/send/contact/form', [ 'as' => 'home.sendContactForm', 'uses' => 'HomeController@sendContactForm' ]);

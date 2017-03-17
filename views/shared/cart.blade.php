@@ -22,16 +22,18 @@
         @endif
 
         @foreach($mycart->Items as $item)
+          @php
+                $photoPath = '/noimage.jpg';
+
+                if($item->Category != null && $item->Category->Photo != null)
+                {
+                  $photoPath = '/categories/'.$item->Category->Photo->Path;
+                }
+              
+            @endphp
+
           <!-- individual services -->
           @if($item->Service != null && $item->CertificateNumber == null)
-            @php
-              $photoPath = '/noimage.jpg';
-
-              if($item->Category->Photo != null)
-              {
-                $photoPath = '/categories/'.$item->Category->Photo->Path;
-              }
-            @endphp
             <div class="col-md-3">
               <img style="max-width: 80px;" src="{{ URL::to('/images') . $photoPath }}" class="img-responsive" /> 
             </div>
@@ -53,8 +55,9 @@
             <br/>
           <!-- Certificate services -->
           @elseif($item->CertificateNumber != null)
+
             <div class="col-md-3">
-              <img style="max-width: 80px;" src="{{ URL::to('/') }}/images/services/collagen-puls-facial.jpg" class="img-responsive" /> 
+              <img style="max-width: 80px;" src="{{ URL::to('/images') . $photoPath }}" class="img-responsive" /> 
             </div>
             <div class="col-md-9">
               <h5>
@@ -92,7 +95,7 @@
             @endphp
 
             <div class="col-md-3">
-              <img style="max-width: 80px;" src="{{ URL::to('/') }}/images/wedding_package_icon.png" class="img-responsive" /> 
+              <img style="max-width: 80px;margin-left: 15px;" src="{{ URL::to('/') }}/images/wedding_package_icon.png" class="img-responsive" /> 
             </div>
             <div class="col-md-9">
               <h5>{{ $packageRelation->WeddingPackage->Name }}</h5>

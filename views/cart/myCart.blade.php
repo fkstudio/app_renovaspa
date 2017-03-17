@@ -53,7 +53,7 @@
 	                         			@endphp	
                          				<tr>
                          					<td>
-                         						<img style="max-width: 80px;" src="{{ URL::to('/images/') }}/wedding_package_icon.png" class="img-responsive" /> 
+                         						<img style="max-width: 80px;margin-left: 10px;" src="{{ URL::to('/images/') }}/wedding_package_icon.png" class="img-responsive" /> 
                          					</td>
 											<td class="padding-td">
 												<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
@@ -84,7 +84,7 @@
 												@endif
 											</td>
 											<td class="padding-td">
-												<a style="margin-top: -6px" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $packageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
+												<a style="margin-top: -6px;" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $packageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
 											</td>
                          				</tr>
                          			@else
