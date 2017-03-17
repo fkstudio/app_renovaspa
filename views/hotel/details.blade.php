@@ -15,19 +15,28 @@
                         <!-- Carousel items -->
                         <div class="carousel-inner">
                             @php
-                                $countryName = "";
-                                $regionName = "";
+                                $countryName = strtolower(str_replace(' ', '-', $region->Country->Name));
+                                $regionName = strtolower(str_replace(' ', '-', $region->Name));
                                 $hotelName = str_replace(' ', '-', $model->Name);
+
+                                $folderPath = '/images/hotels/'.$countryName .'/'. $regionName .'/'.$hotelName;
+                                $photoPath = base_path().'/public'.$folderPath;
+                                $urlPath = URL::to('/').$folderPath;
+
+                                $files = scandir($photoPath);
+
+                                array_shift($files);
+                                array_shift($files);
                             @endphp
                         	<!-- Carousel items -->
-	                        @foreach($model->Photos as $key => $photo)
-						  		@php
+	                        @foreach($files as $key => $file)
+						  		    @php
 
-						  		$active = ($key == 0 ? 'active' : '');
+    						  		$active = ($key == 0 ? 'active' : '');
 
-						  		@endphp
+    						  		@endphp
 	                                <div class="{{ $active }} item" data-slide-number="{{ $key }}">
-	                                    <img style="height: 300px;" src="{{ URL::to('/images/hotels') }}/{{  $countryName. '/' . $regionName . '/' . $hotelName }}/{{ $photo->Path }}">
+	                                    <img style="height: 300px;" src="{{ $urlPath . '/' . $file }}">
 	                                </div>
 						  	@endforeach
                         </div>
@@ -41,10 +50,10 @@
                     </div>
                 </div>
             </div>
-	        <div class="row">
+	        <div class="row visible-lg">
         		<!-- Bottom switcher of slider -->
                 <ul class="hide-bullets">
-                	@foreach($model->Photos as $key => $photo)
+                	@foreach($files  as $key => $file)
 				  		@php
 
 				  		$active = ($key == 0 ? 'active' : '');
@@ -52,18 +61,20 @@
 				  		@endphp
 				  		<li class="col-lg-4 col-sm-3 col-xs-4">
 	                        <a class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
-	                            <img src="{{ URL::to('/images/hotels') }}/hotel-{{ $model->Id }}/{{ $photo->Path }}">
+	                            <img src="{{ $urlPath .'/'. $file }}">
 	                        </a>
 	                    </li>
 				  	@endforeach
                 </ul>	
         	</div>
 	    </div>
+        <div class="clearfix hidden-lg hidden-md"></div>
+        <br class="hidden-lg hidden-md" />
 	    <div class="col-lg-6 col-md-6">
 	    	<h2 class="details-hotel-title">{{ $model->Name }}</h2>
 	    	<div class="clearfix"></div>
 	    	<div class="under-title-line"></div>
-	    	<p><strong>{{ trans("hotel.address") }}</strong>: {{ $model->Address }}<br/>
+	    	<p><strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>
 	    	   <strong>{{ trans("hotel.hours") }}</strong>: {{ $model->OpenAt->format('H:i:s a') }} - {{ $model->ClosetAt->format('H:i:s a') }}</p>
 	    	@if (empty($model->Description))
 	    	<p>No description to show</p>
