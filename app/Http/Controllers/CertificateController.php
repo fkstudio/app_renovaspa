@@ -101,6 +101,10 @@ class CertificateController extends Controller
 
         try {
             $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
+
+            $breadcrumps = [
+                'REGISTRATION' => '#fakelink'
+            ];
         
             if($session->get('certificate_type') == 1 ){
                 $services = [];
@@ -122,10 +126,10 @@ class CertificateController extends Controller
                     $services[$item->CertificateNumber][] = [ 'id' => $item->Service->Id, 'name' => $item->Service->Name, 'quantity' => $quantity, 'price' => $item->Service->getPrice($session->get('hotel_id')) ];
                 }
                                                                                   
-                return view('certificate.serviceBasedRegistration', ['model' => $services]);
+                return view('certificate.serviceBasedRegistration', ['model' => $services, 'breadcrumps' => $breadcrumps]);
             }
             else {
-                return view('certificate.valueBasedRegistration', ['model' => $cart->Items]);
+                return view('certificate.valueBasedRegistration', ['model' => $cart->Items, 'breadcrumps' => $breadcrumps]);
             }
         }   
         catch(\Exception $e){

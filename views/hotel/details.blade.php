@@ -35,8 +35,8 @@
     						  		$active = ($key == 0 ? 'active' : '');
 
     						  		@endphp
-	                                <div class="{{ $active }} item" data-slide-number="{{ $key }}">
-	                                    <img style="height: 300px;" src="{{ $urlPath . '/' . $file }}">
+	                                <div  class="{{ $active }} item" data-slide-number="{{ $key }}">
+	                                    <img src="{{ $urlPath . '/' . $file }}">
 	                                </div>
 						  	@endforeach
                         </div>

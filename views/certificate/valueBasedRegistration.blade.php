@@ -12,21 +12,29 @@
 @endphp
 
 @section("content")
-<div id="vue-app" class="container-fluid">
-	<div class="container">
-		<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
-		<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
+<div class="container-fluid">
+		@include('shared._breadcrumps')
 		<br/>
-		<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
-			@foreach($model as $key => $item)
-			<h3>Certificate #{{ $item->CertificateNumber }}</h3>
-			<br/>
+</div>
+<div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
+										 background-size: cover;
+										 background-position: center center;
+										 height: 420px;"	>
+</div>
+<div id="vue-app" class="container-fluid">
+	<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>
+	<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
+	<br/>
+	<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
+		@foreach($model as $key => $item)
+		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-{{ $key }}">Certificate #{{ $item->CertificateNumber }}</h3>
+		<hr/>
+		<div id="certificate-{{ $key }}" class="collapse">
 			<div class="form-group">
 				<label>A) Personalize by adding a message:</label>
 			</div>
 			<hr>
 			<strong style="font-size:18px;">Value: {{ $symbol.$item->Value }}</strong>
-			<hr>
 			<div class="row">
 				<div class="col-md-8">
 					<div class="form-group">
@@ -173,22 +181,18 @@
 					</div>
 				</div>
 			</div>
-
-			
-			<div class="clearfix"></div>
-			<hr>
-			@endforeach
-			<div class="col-md-12 certificate-terms">
-				<p> <input type="checkbox" id="accept_terms" name="terms">{{ trans('shared.certificate_terms') }}</p>
+		</div>
+		@endforeach
+		<div class="col-md-12 certificate-terms">
+			<p> <input type="checkbox" id="accept_terms" name="terms">{{ trans('shared.certificate_terms') }}</p>
+		</div>
+		<div class="col-md-3">
+			<div class="row">
+				{{ csrf_field() }}
+				<button type="submit" class="btn btn-primary">CONTINUE</button>
 			</div>
-			<div class="col-md-3">
-				<div class="row">
-					{{ csrf_field() }}
-					<button type="submit" class="btn btn-primary">CONTINUE</button>
-				</div>
-			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 </div>
 @endsection
 

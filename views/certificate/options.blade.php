@@ -4,17 +4,90 @@
 @section('title', 'Regions')
 
 @section("content")
+<!-- service based -->
+<div id="serviceBasedModal" class="modal fade" role="dialog">
+	<div class="modal-dialog" style="width: 700px;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-center">SERVICE BASED CERTIFICATE</h4>
+			</div>
+			<div class="modal-body">
+				<P>Service Based Gift Certificates are for a specific spa treatment/s or spa package/s and include a 10% discount.<br/><br/>
+					Will schedule the selected treatment/s at the spa directly upon arrival to the hotel.
+					<h6><strong>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</strong></h6>
+					<ul style="list-style: number;">
+						<li>Select the amount of gift certificate/s</li>
+						<li>Make your selection of treatments ( one or more per gift certificate)</li>
+						<li>Go to your CART and proceed with the Gift Certificate Registration</li>
+						<li>Enter the gift certificate details:
+							<ul>
+								<li>* who will receive it</li>
+								<li>* include personal message</li>
+								<li>* select delivery method</li>
+							</ul>
+						</li>
+					</ul>
+					<h6><strong>IMPORTANT</strong></h6>
+					Very important: for multiple Value Based Gift Certificates, the selection of treatments and registration will be done one after the other.<br/>
+					<h6>You will have to select the treatment/s for Gift Certificate 1 and complete registration for </h6>
+					<h6>Gift Certificate 1 prior to continuing with the selection of treatments and registration for the 
+following Gift Certificates/s.</h6>
+				</P>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- value based -->
+<div id="valueBasedModal" class="modal fade" role="dialog">
+	<div class="modal-dialog" style="width: 700px;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-center">VALUED BASED CERTIFICATE</h4>
+			</div>
+			<div class="modal-body">
+				<P>Value Based Gift Certificates are Renova Spa Credits in a specific currency amount of your choice.
+					<ul>
+						<li>Can purchase spa treatments or spa products for him/herself or any other</li>
+						<li>Will make his/her choice of treatment and schedule it at the spa directly upon arrivalto the hotel</li>
+						<li>Will obtain a 10% bonus on top of the paid value.</li>
+					</ul>
+					<h6><strong>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</strong></h6>
+					<ul>
+						<li>Select the amount of gift certificate/s</li>
+						<li>Select the value for each gift certificate/s</li>
+						<li>Enter the gift certificate/s details:</li>
+						<li>Who will receive it</li>
+						<li>Include personal message</li>
+						<li>Select delivery method</li>
+						<li>Complete your purchase: pay for your gift certificate/s and receive an instant 
+confirmation of purchase and a copy of the gift certificate/s online.</li>
+					</ul>
+				</P>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+		@include('shared._breadcrumps')
+		<br/>
+</div>
+<div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
+										 background-size: cover;
+										 background-position: center center;
+										 height: 420px;"	>
+</div>
 <div id="vue-app" class="container-fluid">
 	
-	@include('shared._breadcrumps')
-	<hr>
 	<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please select at least one certificate.</p>
 	<h3 class="green-title">GIFT CERTIFICATE OPTIONS</h3>
 	<br/>
-	<div class="col-md-3">
-		
-	</div>
-	<div class="col-md-9">
+	<div class="col-md-12">
 		<form onsubmit="return validateForm()" action="{{ URL::to('/') }}/certificate/check/option" method="POST">
 			<div class="form-group">
 				<label>A) What type of gifts are you interested in?</label>
@@ -22,10 +95,12 @@
 			</div>
 			<div class="row">
 				<div class="col-md-5">
-					<input type="radio" name="type" value="1" v-model='type' /> <strong>Service based</strong>  (No price will be shown)
+					<input type="radio" name="type" value="1" v-model='type' /> <strong>Service based</strong>  (No price will be shown) 
+					<span data-toggle="modal" data-target="#serviceBasedModal" style="margin-left: 20px;cursor:pointer;" class="glyphicon glyphicon-question-sign"></span>
 				</div>
 				<div class="col-md-3">
 					<input type="radio" name="type" value="2" v-model='type' /> <strong>Value based</strong>
+					<span data-toggle="modal" data-target="#valueBasedModal" style="margin-left: 20px;cursor:pointer;" class="glyphicon glyphicon-question-sign"></span>
 				</div>
 				<div class="col-md-2">
 					How many?
@@ -41,6 +116,7 @@
 					<div class="form-group">
 						<label>B) Select your gifts</label>
 						<p><strong>Valued-Based Gifts</strong><br/>Choose between value-based or service-based gift certificates</p>
+
 					</div>
 					<div class="clearfix"></div>
 					<div v-for='certificate in value_based' class="col-md-12">
@@ -67,60 +143,7 @@
 						</div>	
 					</div>
 				</div>
-				<div class="row">
-					<hr>
-				</div>
 			</div>
-			<div class="clearfix"></div>
-			<div class="col-md-12">
-				<h6><strong>VALUED BASED CERTIFICATE</strong></h6>
-				<P>Value Based Gift Certificates are Renova Spa Credits in a specific currency amount of your choice.
-					<ul>
-						<li>Can purchase spa treatments or spa products for him/herself or any other</li>
-						<li>Will make his/her choice of treatment and schedule it at the spa directly upon arrivalto the hotel</li>
-						<li>Will obtain a 10% bonus on top of the paid value.</li>
-					</ul>
-					<h6>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>
-					<ul>
-						<li>Select the amount of gift certificate/s</li>
-						<li>Select the value for each gift certificate/s</li>
-						<li>Enter the gift certificate/s details:</li>
-						<li>Who will receive it</li>
-						<li>Include personal message</li>
-						<li>Select delivery method</li>
-						<li>Complete your purchase: pay for your gift certificate/s and receive an instant 
-confirmation of purchase and a copy of the gift certificate/s online.</li>
-					</ul>
-				</P>
-			</div>
-			<div class="clearfix"></div>
-			<hr>
-			<div class="col-md-12">
-				<h6><strong>SERVICE BASED CERTIFICATE</strong></h6>
-				<P>Service Based Gift Certificates are for a specific spa treatment/s or spa package/s and include a 10% discount.<br/><br/>
-					Will schedule the selected treatment/s at the spa directly upon arrival to the hotel.
-					<h6>PROCEDURE TO PURCHASE VALUE BASED GIFT CERTIFICATES</h6>
-					<ul style="list-style: number;">
-						<li>Select the amount of gift certificate/s</li>
-						<li>Make your selection of treatments ( one or more per gift certificate)</li>
-						<li>Go to your CART and proceed with the Gift Certificate Registration</li>
-						<li>Enter the gift certificate details:
-							<ul>
-								<li>* who will receive it</li>
-								<li>* include personal message</li>
-								<li>* select delivery method</li>
-							</ul>
-						</li>
-					</ul>
-					<h6>IMPORTANT</h6>
-					Very important: for multiple Value Based Gift Certificates, the selection of treatments and registration will be done one after the other.<br/>
-					<h6>You will have to select the treatment/s for Gift Certificate 1 and complete registration for </h6>
-					<h6>Gift Certificate 1 prior to continuing with the selection of treatments and registration for the 
-following Gift Certificates/s.</h6>
-				</P>
-			</div>
-			<div class="clearfix"></div>
-			<hr>
 			<div class="form-group">
 				{{ csrf_field() }}
 				<button type="submit" class="pull-right btn btn-primary">CONTINUE</button>

@@ -41,7 +41,7 @@ return [
     'prefered_date' => 'Prefered date',
     'prefered_time' => 'Prefered time',
     'person_receiving' => 'Person receiving the treatment',
-    'cabin_type' => 'Cabin type',
+    'cabin_type' => 'Cabin',
     'discount' => 'Discount',
     'online_discount_available' => 'online discount available',
     'online_discount' => 'online discount',

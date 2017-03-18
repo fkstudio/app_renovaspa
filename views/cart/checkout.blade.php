@@ -4,7 +4,7 @@
 
 @section("content")
 
-	<!-- sign modal -->
+<!-- sign modal -->
 <div id="dateInfoModal" class="modal fade" role="dialog">
 	<div class="modal-dialog" style="width: 700px;">
 		<!-- Modal content-->
@@ -36,6 +36,7 @@
 				<table class="table table-responsive">
 					<thead>
 						<tr>
+							<th></th>
 							<th>{{ trans('shared.service') }}</th>
 							<th>{{ trans('shared.customer_name') }}</th>
 							<th>
@@ -57,6 +58,17 @@
 									$serviceCabin = $item->Service->Cabin;
 								@endphp
 								<tr>
+									<td>
+										@php
+											$photoPath = '/noimage.jpg';
+
+											if($category->Photo != null)
+											{
+												$photoPath = '/categories/'.$item->Category->Photo->Path;
+											}
+										@endphp
+										<img style="max-width: 80px;" src="{{ URL::to('/images/') . $photoPath }}" class="img-responsive" />
+									</td>
 									<td class="padding-td">
 										<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 										{{ ($item->PackageCategoryRelation != null ? $item->PackageCategoryRelation->WeddingPackage->Name.' - ' : '' ) . $item->Service->Name }}
@@ -116,11 +128,14 @@
 								
 								@foreach($packageFeatures as $feature)
 									<tr>
-										<td>{{ $feature->Description }}</td>
-										<td>--</td>
-										<td>--</td>
-										<td>--</td>
-										<td>--</td>
+										<td class="padding-td">
+											<img style="max-width: 80px;margin-left: 10px;margin-top: -15px;" src="{{ URL::to('/images/') }}/wedding_package_icon.png" class="img-responsive" /> 
+										</td>
+										<td class="padding-td">{{ $feature->Description }}</td>
+										<td class="padding-td">--</td>
+										<td class="padding-td">--</td>
+										<td class="padding-td">--</td>
+										<td class="padding-td">--</td>
 									</tr>
 								@endforeach
 
@@ -129,6 +144,9 @@
 										$serviceCabin = $weddingPackageService->Service->Cabin;
 									@endphp
 									<tr>
+										<td class="padding-td">
+											<img style="max-width: 80px;margin-left: 10px;margin-top: -15px;" src="{{ URL::to('/images/') }}/wedding_package_icon.png" class="img-responsive" /> 
+										</td>
 										<td class="padding-td">
 											<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
 											{{ ($packageRelation != null ? $packageRelation->WeddingPackage->Name.' - ' : '' ) .$weddingPackageService->Service->Name }}
@@ -260,6 +278,8 @@
 		});
 
 		$('.timepicker').timepicker();
+
+		$("#dateInfoModal").modal("show");
 	});
 </script>
 @endsection
