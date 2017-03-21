@@ -68,7 +68,7 @@ class DbContext
             $driverImpl = $config->newDefaultAnnotationDriver(__DIR__."/app/models/test");
             $config->setMetadataDriverImpl($driverImpl);
             $config->setQueryCacheImpl($cache);
-            $config->setProxyDir(__DIR__."å/data/DoctrineORMModule/Proxy");
+            $config->setProxyDir(__DIR__."/data/DoctrineORMModule/Proxy");
             $config->setProxyNamespace("Renovaspa\Proxies");
 
             if($applicationMode == "development")

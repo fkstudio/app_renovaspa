@@ -79,7 +79,7 @@ class CategoryController extends Controller
             ];
 
             if($session->get('reservation_type') == 2){
-                $session->flash('success', 'Select a treatment for the certificate #'. $session->get('current_certificate') .' - '. $session->get('certificate_quantity'));
+                $session->flash('success', 'Select a treatment for the certificate No. '. $session->get('current_certificate') .' - '. $session->get('certificate_quantity'));
                 return view("category.list", $viewData);
             }
 

@@ -28,9 +28,9 @@
 	<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
 		
 		@foreach($model as $key => $item)
-		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-{{ $key }}">Certificate #{{ $key }}</h3>
+		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate #{{ $key }}</h3>
 		<hr/>
-		<div id="certificate-{{ $key }}" class="collapse">
+		<div id="certificate-content-{{ $key }}" class="collapse">
 			<div class="form-group">
 				<label>A) Personalize by adding a message:</label>
 			</div>
@@ -197,9 +197,17 @@
 		</div>
 		
 		@endforeach
-		<div class="col-md-12 certificate-terms">
-			<p> <input type="checkbox" id="accept_terms" name="terms"> {{ trans('shared.certificate_terms') }}</p>
+		<div class="clearfix"></div>
+		<br/>
+		<br/>
+		<div class="col-md-12">
+			<p> 
+				<input type="checkbox" id="accept_terms" name="terms"> 
+				<a target="__blank" href="{{ URL::to('/') }}/privacy-policy#certificates">I have added gift certificate/s. I agree to the Privacy Policy</a>
+			</p>
 		</div>
+		<div class="clearfix"></div>
+		<br/>
 		<div class="col-md-3">
 			<div class="row">
 				{{ csrf_field() }}
