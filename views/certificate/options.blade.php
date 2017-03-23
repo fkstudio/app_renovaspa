@@ -4,6 +4,55 @@
 @section('title', 'Regions')
 
 @section("content")
+<!-- sign modal -->
+<div id="pricingModal" class="modal fade" role="dialog">
+	<div class="modal-dialog" style="width: 700px;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-center">VIEW A PRICING GUIDE</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-responsive" id="pricing-guide-table">
+					<tr>
+						<td>
+							$100
+						</td>
+						<td>
+							Great choice for a one hour spa service such as a basic massage, a facial, a hand and foot or a body treatment
+						</td>
+					</tr>
+					<tr>
+						<td>
+							$100 - $150
+						</td>
+						<td>
+							Great choice for an upgraded massage, facial or a body treatment
+						</td>
+					</tr>
+					<tr>
+						<td>
+							$200 - $300
+						</td>
+						<td>
+							Great choice for a combination of two treatments or a half day of spa-ing
+						</td>
+					</tr>
+					<tr>
+						<td>
+							$500
+						</td>
+						<td>
+							Ideal for an indulgent day at the spa that offers many choices of spa treatments
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- service based -->
 <div id="serviceBasedModal" class="modal fade" role="dialog">
 	<div class="modal-dialog" style="width: 700px;">
@@ -142,6 +191,8 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 							</select>
 						</div>	
 					</div>
+					<div class="clearfix"></div>
+					<a style="color:#5fc7ae;" href="#fakelink" data-toggle="modal" data-target="#pricingModal">View a pricing guide</a>
 				</div>
 			</div>
 			<div class="form-group">

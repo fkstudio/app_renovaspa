@@ -54,16 +54,18 @@
         		<!-- Bottom switcher of slider -->
                 <ul class="hide-bullets">
                 	@foreach($files  as $key => $file)
-				  		@php
+                        @if(strpos($file, 'thumbnail'))
+    				  		@php
 
-				  		$active = ($key == 0 ? 'active' : '');
+    				  		$active = ($key == 0 ? 'active' : '');
 
-				  		@endphp
-				  		<li class="col-lg-4 col-sm-3 col-xs-4">
-	                        <a class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
-	                            <img src="{{ $urlPath .'/'. $file }}">
-	                        </a>
-	                    </li>
+    				  		@endphp
+    				  		<li class="col-lg-4 col-sm-3 col-xs-4">
+    	                        <a class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
+    	                            <img src="{{ $urlPath .'/'. $file }}">
+    	                        </a>
+    	                    </li>
+                        @endif
 				  	@endforeach
                 </ul>	
         	</div>

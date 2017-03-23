@@ -310,6 +310,12 @@
 	padding-bottom: 20px !important;
  }
 
+ #pricing-guide-table tr td {
+ 	border: solid 1px rgb(216, 214, 210) !important;
+	width: 30px;
+	text-align: center;
+ }
+
  .table-borderless {
     border-bottom:0px !important;
  }

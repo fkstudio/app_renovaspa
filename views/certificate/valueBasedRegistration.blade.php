@@ -27,7 +27,7 @@
 	<br/>
 	<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
 		@foreach($model as $key => $item)
-		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate #{{ $item->CertificateNumber }}</h3>
+		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate No. {{ $item->CertificateNumber }}</h3>
 		<hr/>
 		<div id="certificate-content-{{ $key }}" class="collapse">
 			<div class="form-group">
@@ -90,7 +90,7 @@
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="certificate-{{ $key }}-email" class="collapse col-md-12">
+				<div id="certificate-{{ $key }}-email" class="collapse col-md-12 collapse-delivery-option">
 					<hr>
 					<label>D) Enter delivery information</label>
 					<p>Please provide the recipient's email addres</p>
@@ -121,12 +121,12 @@
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="certificate-{{ $key }}-print" class="collapse col-md-12">
+				<div id="certificate-{{ $key }}-print" class="collapse col-md-12 collapse-delivery-option">
 					<hr>
 					<p><strong>NOTA:</strong><br/>Your gift certificates will be sent to your e-mail account as soon as your order is complete.</p>
 				</div>
 				<div class="clearfix"></div>
-				<div id="certificate-{{ $key }}-hotel" class="collapse col-md-12">
+				<div id="certificate-{{ $key }}-hotel" class="collapse col-md-12 collapse-delivery-option">
 					<hr>
 					<label>D) Enter delivery information</label>
 					<p><strong>Important notes:</strong></p>
@@ -189,7 +189,7 @@
 		<div class="col-md-12">
 			<p> 
 				<input type="checkbox" id="accept_terms" name="terms"> 
-				<a target="__blank" href="{{ URL::to('/') }}/privacy-policy">I have added gift certificate/s. I agree to the Privacy Policy</a>
+				<a target="__blank" style="color:#5fc7ae;" href="{{ URL::to('/') }}/privacy-policy">I have added gift certificate/s. I agree to the Privacy Policy</a>
 			</p>
 		</div>
 		<div class="clearfix"></div>
@@ -233,7 +233,7 @@
     $(document).ready(function(){
         // hidden all collapse when 1 collapse is clicked and then open it
         $('.collapse-button').on('click', function () {
-		  $('.collapse').collapse('hide')
+		  $('.collapse-delivery-option').collapse('hide')
 		})
     });
 </script>
