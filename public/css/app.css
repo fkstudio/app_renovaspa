@@ -323,11 +323,10 @@
  /* discount */
  .discount {
  	color:#5fc7ae;
- 	font-size:11px;
+ 	font-size:12px;
  }
 
  .discount-tached {
- 	margin-left: 15px;
  	text-decoration: line-through;
  	color: #dc5046;
  	font-size:12px;
@@ -369,12 +368,10 @@
     display: block;
 	margin-bottom: 20px;
 	line-height: 1.42857143;
-	background-color: #5fc7ae !important;
 	border-radius: 0px !important;
 	-webkit-transition: border .2s ease-in-out;
 	-o-transition: border .2s ease-in-out;
 	transition: border .2s ease-in-out;
-	height: 123px;
  }
 
  .carousel-inner>.item>img, .carousel-inner>.item>a>img {

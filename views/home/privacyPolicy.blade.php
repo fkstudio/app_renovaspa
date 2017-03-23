@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container-fluid">
-<h3>PRIVACY POLICY</h3>
+<br/>
+<h3 id="privacy">PRIVACY POLICY</h3>
 <hr>
 <p>This Privacy Policy governs the manner in which Renova Spa collects, uses, maintains and discloses information collected from users (each, a "User")<br>of the www.renovaspa.com website ("Site"). This privacy policy applies to the Site and all products and services offered by Renova Spa.</p><br>
 
@@ -31,7 +32,7 @@ To send periodic emails We may use the email address to send User information an
 <p>If User decides to opt-in to our mailing list, they will receive emails that may include company news, updates, related product or service information, etc.<br> If at any time the User would like to unsubscribe from receiving future emails, they may do so by contacting us via our Site.</p><br>
 
 <h4>How we protect your information</h4>
-<p>We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access,<br>alteration, disclosure or destruction of your personal information, username, password, transaction information and data stored on our Site.<br>
+<p>We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access,<br>alteration, disclosure or destruction f your personal information, username, password, transaction information and data stored on our Site.<br>
 
 <p>Sensitive and private data exchange between the Site and its Users happens over a SSL secured communication channel and is encrypted and protected with digital signatures.<p><br>
 
@@ -48,7 +49,7 @@ To send periodic emails We may use the email address to send User information an
 <h4>Changes to this privacy policy</h4>
 <p>Renova Spa has the discretion to update this privacy policy at any time.</p>When we do, we will revise the updated date at the bottom of this page.</p>We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect.</p>You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications.</p><br>
 
-<h4>Your acceptance of these terms</h4>
+<h4 id="terms">Your acceptance of these terms</h4>
 <p>By using this Site, you signify your acceptance of this policy.<br> If you do not agree to this policy, please do not use our Site.<br>Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes.</p><br>
 
 <h4>Contacting us</h4>
@@ -63,7 +64,8 @@ info@renovaspa.com<br>
 
 <p>This document was last updated on June 03, 2014, Privacy policy created by.</p> <a href="http://www.generateprivacypolicy.com">http://www.generateprivacypolicy.com</a></p>
 <br/>
-<h4>Terms and conditions</h4>
+<h3>Terms and conditions</h3>
+<hr/>
 <p>These terms and conditions govern your use of this website; by using this website, you accept these terms and conditions in full.<p> If you disagree with these terms and conditions or any part of these terms and conditions, you must not use this website.</p>
 <p>You must be at least [18] years of age to use this website.<p>
 <p>By using this website [and by agreeing to these terms and conditions] you warrant and represent that you are at least [18] years of age.</p>
@@ -129,11 +131,13 @@ No partial refunds apply for unused amounts and these cannot be used for tips.<p
 <p>All transactions are processed in US dollars ($/USD). Gift certificates are issued in US dollars.<p>
 When redeeming a Renova SPA gift certificate, the spa will convert the value into the currency of their respective country. It will buy a service or services of equivalent value.</p><br>
 <br/>
+<h3 id="refund">Cancellation and Refund Policy</h3>
+<hr/>
 <h4>1.1 Renova Spa will proceed to a full refund when:</h4>
 <p>The customer wants to cancel 24 hours before the service begins, but only directly in our spa centers during the opening hours.<p>
 <p>Online cancellation can only be done if the service was purchased through our website.<p>
 <p>Cancellations made by Renova Spa for any reason.<p>
-<p>Refundsc must be done in person at the spa center with the ticket.<p>
+<p>Refunds must be done in person at the spa center with the ticket.<p>
 <p>Refunds will be given in the same payment method as the purchase.<p>
 <p>Credit card refunds can take up to 30 days.</p><br>
 <br/>

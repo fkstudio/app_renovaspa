@@ -90,16 +90,8 @@ class HomeController extends Controller
         return view('home/faq');
     }
 
-    public function legalTerms(){
-        return view("home.legalTerms");
-    }
-
     public function privacyPolicy(){
         return view("home.privacyPolicy");
-    }
-
-    public function refund(){
-        return view("home.refund");
     }
 
     /* /GET contact page */

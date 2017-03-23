@@ -203,7 +203,7 @@
 		<div class="col-md-12">
 			<p> 
 				<input type="checkbox" id="accept_terms" name="terms"> 
-				<a target="__blank" href="{{ URL::to('/') }}/privacy-policy#certificates">I have added gift certificate/s. I agree to the Privacy Policy</a>
+				<a target="__blank" href="{{ URL::to('/') }}/privacy-policy">I have added gift certificate/s. I agree to the Privacy Policy</a>
 			</p>
 		</div>
 		<div class="clearfix"></div>

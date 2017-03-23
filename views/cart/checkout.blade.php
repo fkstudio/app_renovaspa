@@ -210,7 +210,7 @@
 					<div class="clearfix"></div>
 					<p class="pull-right">
 						<input type="checkbox" id="accept_terms" name="accept_terms">
-						<a target="__blank" href="{{ URL::to('/') }}/legal-terms">I have added a spa service and I agree...</a>
+						<a target="__blank" href="{{ URL::to('/') }}/privacy-policy">I have added a spa service and I agree...</a>
 					</p>	
 				</div>
 				<div class="clearfix"></div>

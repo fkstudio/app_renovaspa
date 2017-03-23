@@ -13,7 +13,7 @@
       </div>
       <div class="col-lg-8">
         <p class="text-right" style="margin-top: 20px;">
-        © All rights Reserved, Renova Spa 2016. <a href="{{ URL::to('/') }}/privacy-policy">Legal advise</a>, <a href="{{ URL::to('/') }}/legal-terms">Customer Information</a> and <a href="{{ URL::to('/') }}/refund">Refund</a> info.
+        © All rights Reserved, Renova Spa 2016. <a href="{{ URL::to('/') }}/privacy-policy#privacy">Legal advise</a>, <a href="{{ URL::to('/') }}/privacy-policy#terms">Customer Information</a> and <a href="{{ URL::to('/') }}/privacy-policy#refund">Refund</a> info.
         </p>
       </div>
     </div>
