@@ -17,6 +17,12 @@
 			    else {
 			    	$url = "/hotel/".$hotelRegion->Hotel->Id."/categories";
 			    }
+
+			    $countryName = strtolower(str_replace(' ', '-', $hotelRegion->Region->Country->Name));
+                $regionName = strtolower(str_replace(' ', '-', $hotelRegion->Region->Name));
+                $hotelName = str_replace(' ', '-', $hotelRegion->Hotel->Name);
+
+                $folderPath = '/images/hotels/'.$countryName .'/'. $regionName .'/'.$hotelName;
 			    
 			    $photoPath = '/noimage.jpg';
 
@@ -28,7 +34,7 @@
 
 	    <a style="font-size: 30px;color:white;" href="{{ URL::to('/').$url }}">
 		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-		    	<div style="background: url({{ URL::to('/images') . $photoPath }});background-size: cover;" class="col-md-12 block-content" >
+		    	<div style="background: url({{ URL::to('/') . $folderPath }}/photo-1.jpg);background-size: cover;" class="col-md-12 block-content" >
 					<span>{{ $hotelRegion->Hotel->Name }}</span>
 				</div>
 		    </div>
