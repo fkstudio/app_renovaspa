@@ -655,7 +655,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            $session->flush();
+            //$session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -671,7 +671,7 @@ class PaymentController extends Controller
                 $message->setBody($mailData['voucher'], 'text/html');
                 
                 /* this mail will be send from? */
-                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->from('info@turnviral.net', 'Renovaspa');
 
                 /* the sender's data is? */
                 $message->sender('info@renovaspa.com', 'Renovaspa');
@@ -707,7 +707,7 @@ class PaymentController extends Controller
                             //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                             
                             /* this mail will be send from? */
-                            $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                            $message->from('info@turnviral.net', 'Renovaspa');
                             
                             /* the sender's data is? */
                             $message->sender('info@renovaspa.com', 'Renovaspa');
