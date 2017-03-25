@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use \App\Classes\ReCaptchaLib;
 
+error_reporting(E_ALL ^ E_NOTICE);
+
 class ReCaptcha
 {
     public function handle(Request $request, Closure $next)
@@ -22,7 +24,7 @@ class ReCaptcha
 
         if (!$resp->is_valid) {
             // What happens when the CAPTCHA was entered incorrectly
-            return redirect()->route('home.contact')->with('success', 'Please verify your identity.');
+            return redirect()->route('home.contact')->with('failure', 'Please verify your identity.');
         } else {
         	return $next($request);
         }
