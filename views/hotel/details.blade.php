@@ -3,6 +3,23 @@
 @section('title', $model->Name)
 
 @section('content')
+<!-- why ask modal -->
+<div id="whyAskModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 700px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">INFORMATION</h4>
+            </div>
+            <div class="modal-body">
+                <p style="line-height: 25px;text-align: center;">
+                    "Your traveling dates inform us when to expect you at the selected destination. You can make use of your reservations at any date between your arrival and your departure dates. Please consider the following: if your arrival date is within the following 48 hours, we invite you to make your reservations with and open date and time and confirm the appointment at the spa upon arrival to the hotel."
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
 	@include('shared._breadcrumps')
 	<hr/>
@@ -27,17 +44,22 @@
 
                                 array_shift($files);
                                 array_shift($files);
+
+                                $showActive = true;
                             @endphp
                         	<!-- Carousel items -->
 	                        @foreach($files as $key => $file)
+                                @if(!strpos($file, 'thumbnail'))
 						  		    @php
-
-    						  		$active = ($key == 0 ? 'active' : '');
-
+    						  		  $active = ($showActive ? 'active' : '');
     						  		@endphp
 	                                <div  class="{{ $active }} item" data-slide-number="{{ $key }}">
 	                                    <img src="{{ $urlPath . '/' . $file }}">
 	                                </div>
+                                    @php
+                                        $showActive = false;
+                                    @endphp
+                                @endif
 						  	@endforeach
                         </div>
                         <!-- Carousel nav -->
@@ -61,8 +83,8 @@
 
     				  		@endphp
     				  		<li class="col-lg-4 col-sm-3 col-xs-4">
-    	                        <a class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
-    	                            <img src="{{ $urlPath .'/'. $file }}">
+    	                        <a style="background: url({{ $urlPath .'/'. $file }});background-size: cover;background-position: center center;" class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
+    	                            <!-- <img src=""> -->
     	                        </a>
     	                    </li>
                         @endif
@@ -89,11 +111,93 @@
 	</div>
 </div>	
 <div class="clearfix"></div>
+<br/>
+<br/>
+<div class="container-fluid-full" id="form-content" style="background: #F5F5F5;">
+    <br/>
+    <div class="container-fluid">
+        
+        <form action="{{ URL::to('/') }}/reservation/select/book" method="POST" class="form-inline text-center">
+            <h2 style="color: #5fc7ae;" class="text-center">
+            Choose: <input type="radio" checked value="1" name="reservation_type">  Book your treatment  <input type="radio" value="2" name="reservation_type"> Gift Certificate
+            </h2>
+            <br/>
+            <div class="col-lg-2 col-md-12 col-sm-12">
+                <label class="custom-label">{{ trans('shared.country') }}</label>
+                <div class="clearfix"></div>
+                <select id='country_id' name="country_id" v-on:change='getRegions()' class="form-control custom-select">
+                    <option selected value="{{ $region->Country->Id }}">{{ $region->Country->Name }}</option>
+                </select>
+            </div>
+
+            <div class="clearfix hidden-lg"></div>
+            <br class="hidden-lg" />
+
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <label class="custom-label">{{ trans('shared.destination') }}</label>
+                <div class="clearfix"></div>
+                <select id="region_id" name='region_id' class="form-control custom-select">
+                    <option selected value="{{ $region->Id }}">{{ $region->Name }}</option>
+                </select>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
+                <label class="custom-label">{{ trans('shared.hotel') }}</label>
+                <div class="clearfix"></div>
+                <select id="hotel_id" name='hotel_id' class="form-control custom-select">
+                    <option selected value="{{ $model->Id }}">{{ $model->Name }}</option>
+                </select>
+            </div>
+
+            <div class="clearfix hidden-lg"></div>
+            <br class="hidden-lg" />
+
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <label class="custom-label">
+                    *{{ trans('shared.arrival') }} - *{{ trans('shared.departure') }} 
+                </label>
+                <div class="clearfix"></div>
+                <input type="text" id="arrival" name='arrival_departure' class="datepicker form-control custom-select" />
+            </div>  
+
+            <div class="clearfix hidden-lg"></div>
+            <br class="hidden-lg" />
+
+            <div class="col-lg-2">
+                <label class="custom-label"></label>
+                <div class="clearfix"></div>
+                {{ csrf_field() }}
+                
+                <button type="submit" class="btn-block btn-confirm-book btn btn-primary" style="margin-top: 10px;">{{ trans('shared.confirm') }}</button>
+                <p data-toggle="modal" data-target="#whyAskModal" class="pull-right" style="margin-top: 20px;cursor: pointer;">Why we ask?</p>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+</div>
+<div class="clearfix"></div>
 @endsection
 
 @section('scripts')
+<!-- Moment JS-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 <script>
 $(document).ready(function($) {
+
+    $(function() {
+        $('.datepicker').daterangepicker({
+            locale: {
+              format: 'MM/D/YYYY'
+            },
+            minDate: moment(),
+        });
+    });
  
     $('#hotel-carousel').carousel({
             interval: 5000

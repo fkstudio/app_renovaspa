@@ -25,7 +25,6 @@ class HomeController extends Controller
     public function __construct(){
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
-        
     }
 
     /* /GET home page */
@@ -101,16 +100,17 @@ class HomeController extends Controller
 
     /* /POST */
     public function sendContactForm(){
-        /* mail object */
-        $mail = app()['mailer'];
-
-        if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['hotel']) || empty($_POST['message']))
-            return redirect()->route('home.contact')->with('failure', 'Please fill al textboxs.');
-
-        if(!isset($_POST['terms']))
-            return redirect()->route('home.contact')->with('failure', 'You must accept the terms to send the message.');
-
+        
         try {
+            /* mail object */
+            $mail = app()['mailer'];
+
+            if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['hotel']) || empty($_POST['message']))
+                return redirect()->route('home.contact')->with('failure', 'Please fill al textboxs.');
+
+            if(!isset($_POST['terms']))
+                return redirect()->route('home.contact')->with('failure', 'You must accept the terms to send the message.');
+
             $data = $_POST;
             /* send contact form */
             $mail->send([],[], function($message) use ($data) {
@@ -130,6 +130,7 @@ class HomeController extends Controller
             });
 
             return redirect()->route('home.contact')->with('success', 'Message sent successfully.');
+            
         }
         catch (\Exception $e){
             return redirect()->route('home.contact')->with('failure', 'Error sending message. Please try again.');
@@ -138,34 +139,36 @@ class HomeController extends Controller
 
     /* /POST */
     public function sendJoinToOurTeamForm(Request $request){
-        /* mail object */
-        $mail = app()['mailer'];
-
-        /* validate inputs */
-        if(empty($_POST['position']) || empty($_POST['country']) || empty($_POST['name']) || empty($_POST['email']))
-            return redirect()->route('home.contact')->with('failure', 'Please fill al textboxs.');
-
-        /* check if the file exists in the request */
-        if (!$request->hasFile('resume'))
-            return redirect()->route('home.contact')->with('failure', 'You must to upload your resume.');
-
-        /* get file by input file name */
-        $f = $request->resume;
-
-        if($resume->extension() != 'txt' && $resume->extension() != 'doc')
-            return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');
-
-        /* file identifier */
-        $uniqid = uniqid();
-        $file_name = $uniqid . '-'.str_replace(' ', '-', $_POST['name']).'-'.$_POST['position'].'-'.$_POST['email'].'-resume.'.$f->extension();
-        $file_path =  storage_path() .'/app/public/resumes/'. $file_name;
-
-        /* store file in public storage */
-        $f->storeAs('public/resumes', $file_name);
-
+        
         try {
+            /* mail object */
+            $mail = app()['mailer'];
+
+            /* validate inputs */
+            if(empty($_POST['position']) || empty($_POST['country']) || empty($_POST['name']) || empty($_POST['email']))
+                return redirect()->route('home.contact')->with('failure', 'Please fill al textboxs.');
+
+            /* check if the file exists in the request */
+            if (!$request->hasFile('resume'))
+                return redirect()->route('home.contact')->with('failure', 'You must to upload your resume.');
+
+            /* get file by input file name */
+            $f = $request->resume;
+
+            if($resume->extension() != 'txt' && $resume->extension() != 'doc')
+                return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');
+
+            /* file identifier */
+            $uniqid = uniqid();
+            $file_name = $uniqid . '-'.str_replace(' ', '-', $_POST['name']).'-'.$_POST['position'].'-'.$_POST['email'].'-resume.'.$f->extension();
+            $file_path =  storage_path() .'/app/public/resumes/'. $file_name;
+
+            /* store file in public storage */
+            $f->storeAs('public/resumes', $file_name);
+
             $data = $_POST;
             $data['file_path'] = $file_path;
+
             /* send contact form */
             $mail->send([],[], function($message) use ($data) {
                 $message->setBody("
@@ -184,6 +187,7 @@ class HomeController extends Controller
             });
 
             return redirect()->route('home.contact')->with('success', 'Message sent successfully.');
+            
         }
         catch (\Exception $e){
             return redirect()->route('home.contact')->with('failure', 'Error sending message. Please try again.');

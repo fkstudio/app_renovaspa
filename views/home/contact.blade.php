@@ -2,6 +2,10 @@
 
 @section('title', 'Contact')
 
+@section("head")
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
+
 @section('content')
     <div class="container-fluid container-fluid-full">
         <div class="row">
@@ -65,6 +69,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         {{ csrf_field() }}
+                        <div class="g-recaptcha" data-sitekey="6LfcMxoUAAAAAI52W-Rdb5uTD9gBp_TE81bPEKpV"></div>
                         <button type="submit" class="btn btn-primary btn-block" placeholder="Your hotel">SEND</button>
                     </div>
                 </div>
@@ -118,6 +123,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         {{ csrf_field() }}
+                        <div class="g-recaptcha" data-sitekey="6LfcMxoUAAAAAI52W-Rdb5uTD9gBp_TE81bPEKpV"></div>
                         <button type="submit" style="margin-top: 13px" class="btn btn-primary btn-block" placeholder="Your hotel">APPLY</button>
                     </div>
                 </div>

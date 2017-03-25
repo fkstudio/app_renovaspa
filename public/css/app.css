@@ -378,6 +378,11 @@
 	-webkit-transition: border .2s ease-in-out;
 	-o-transition: border .2s ease-in-out;
 	transition: border .2s ease-in-out;
+	height: 155px;
+ }
+
+ .thumbnail-carousel img {
+ 	height: 100%;
  }
 
  .carousel-inner>.item>img, .carousel-inner>.item>a>img {
@@ -433,6 +438,11 @@
 	background: #e7e7e7;
 	padding: 5px 10px;
 	border-radius: 50%;
+ }
+
+ .copyright a {
+ 	color: rgb(133, 135, 133) !important;
+	text-decoration: underline !important;
  }
 /*
  .carousel-caption {

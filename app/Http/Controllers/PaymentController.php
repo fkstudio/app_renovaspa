@@ -308,11 +308,11 @@ class PaymentController extends Controller
                 $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
 
                 /* payment gateway configuration */
-                $gatewayURL = 'https://secure.networkmerchants.com/api/v2/three-step';
-                $APIKey = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy';
+                $gatewayURL = \Config::get('gateway.url');
+                $APIKey = \Config::get('gateway.api_key');
                 
                 $paymentGateway = new \App\Classes\gwapi;
-                $paymentGateway->setLogin("demo", "password");
+                $paymentGateway->setLogin(\Config::get('gateway.user'), \Config::get('gateway.password'));
                 //$paymentGateway->setLogin("renovaspa", "heath1098");
 
                 /* payment data */
@@ -373,7 +373,7 @@ class PaymentController extends Controller
 
         // Redsys payment url
         //$redsysUrl = "https://sis-t.redsys.es:25443/sis/realizarPago"; // UCOOMENT TO TEST
-        $redsysUrl = "https://sis.sermepa.es/sis/realizarPago";
+        $redsysUrl = \Config::get('redsys.url');
 
         /* get current reservation */
         $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
@@ -383,18 +383,20 @@ class PaymentController extends Controller
             return redirect()->route('/')->with('failure', trans('messages.session_expired'));
         }
 
+
+
         // Redsys configuration
-        $version = "HMAC_SHA256_V1";
-        $sha256Key = "Wpe3AaiANFa7KEZpXJHTge+/Ugs6HJG4";
-        $comercialKey = "RP5854MUO552O293";
+        $version = \Config::get('redsys.version');
+        $sha256Key = \Config::get('redsys.sha_256_key');
+        $comercialKey = \Config::get('redsys.comercial_key');
 
         $referenceNumber = $reservation->ConfirmationNumber;
 
         // Input values
-        $comercialCodeFunc = "266971159";
-        $terminal = "1";
-        $currencyCode = "978";
-        $transactionType = "0";
+        $comercialCodeFunc = \Config::get('redsys.comercial_code_func');
+        $terminal = \Config::get('redsys.terminal');
+        $currencyCode = \Config::get('redsys.currency_code');
+        $transactionType = \Config::get('redsys.transaction_type');
 
         /* redirects url */
         $merchantUrlOk = $this->siteUrl.'/payment/voucher';
@@ -447,8 +449,8 @@ class PaymentController extends Controller
             // create a paypal object
             $paypal = new ApiContext(
                 new OAuthTokenCredential(
-                    'Aar8WECVhZvVFwq9ZjdA5q7hJeXPgmj-6koCAuget_3bTflEzM3spiw68XgJtvkD1lSCyQU89N1wh-1H', 
-                    'EAsfhOeskbDnBGBnznoyRwO0zRCWoYE3vz7TldjWsxRdxMdAgBkIkHalY2RwSedNTvkI-97w2zlh-w2s')
+                    \Config::get('paypal.api_key'), 
+                    \Config::get('paypal.secret_key'))
             );
 
             // create paypal payer
@@ -493,7 +495,7 @@ class PaymentController extends Controller
                     foreach($reservation->CertificateDetails as $key => $certificate):
                         // create paypal item object by iteration item
                         $item = new Item();
-                        $item->setName("Certificate #" . ( $key + 1 ) )
+                        $item->setName("Certificate No. " . ( $key + 1 ) )
                              ->setCurrency($currency->Name)
                              ->setQuantity(1)
                              ->setSku(substr($certificate->Id, 0, 8))

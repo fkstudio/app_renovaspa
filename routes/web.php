@@ -34,9 +34,9 @@ Route::get('/refund', [ 'as' => 'home.refund', 'uses' => 'HomeController@refund'
 
 Route::get('/contact', [ 'as' => 'home.contact', 'uses' => 'HomeController@contact' ]);
 
-Route::post('/send/contact/form', [ 'as' => 'home.sendContactForm', 'uses' => 'HomeController@sendContactForm' ]);
+Route::post('/send/contact/form', [ 'as' => 'home.sendContactForm', 'uses' => 'HomeController@sendContactForm' ])->middleware('recaptcha');
 
-Route::post('/send/join/form', [ 'as' => 'home.sendJoinForm', 'uses' => 'HomeController@sendJoinToOurTeamForm' ]);
+Route::post('/send/join/form', [ 'as' => 'home.sendJoinForm', 'uses' => 'HomeController@sendJoinToOurTeamForm' ])->middleware('recaptcha');
 
 Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeController@select' ]);
 
