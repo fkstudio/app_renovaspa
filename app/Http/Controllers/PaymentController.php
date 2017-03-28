@@ -691,7 +691,41 @@ class PaymentController extends Controller
                     $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
                 else
                     $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
-            }); 
+            });
+
+            foreach($reservation->CertificateDetails as $key => $detail){
+                /* store detail object */
+                $mailData['detail'] = $detail;
+                $mailData['pdf_path'] = $this->createPDF($detail);
+                
+                /* send voucher view */
+                $mail->send([],[], function($message) use ($mailData) {
+                    $reservation = $mailData['reservation'];
+                    $detail = $mailData['detail'];
+
+                    //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
+                    
+                    /* this mail will be send from? */
+                    $message->from('info@turnviral.net', 'Renovaspa');
+                    
+                    /* the sender's data is? */
+                    $message->sender('info@renovaspa.com', 'Renovaspa');
+                    
+                    /* this mail is in hidden copy fro? */
+                    $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                    $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                    
+                    /* this mail should be replie to? */
+                    $message->replyTo('info@renovaspa.com', 'Renovaspa');
+
+                    $message->attach($mailData['pdf_path']);
+
+                    if($reservation->Type == 1)
+                        $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                    else
+                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                });  
+            } 
 
             if($reservation->Type == 2){
                 foreach($reservation->CertificateDetails as $key => $detail){
@@ -713,10 +747,6 @@ class PaymentController extends Controller
                             
                             /* the sender's data is? */
                             $message->sender('info@renovaspa.com', 'Renovaspa');
-                            
-                            /* this mail is in hidden copy fro? */
-                            $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-                            $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                             
                             /* this mail should be replie to? */
                             $message->replyTo('info@renovaspa.com', 'Renovaspa');
@@ -744,6 +774,8 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

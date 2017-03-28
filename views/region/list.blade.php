@@ -10,7 +10,6 @@
 		@foreach($model as $region)
 		@php
 			$name = str_replace(' ', '_', $region->Name);
-
 		@endphp
 		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/region/{{ $region->Id }}/hotels">
 		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
@@ -22,7 +21,6 @@
 				</div>
 		    </div>
 		</a>
-
 	    @endforeach
 	</div>
 </div>

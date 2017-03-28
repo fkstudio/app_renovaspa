@@ -54,20 +54,6 @@
 							</div>
 					    </div>
 					</a>
-
-					<!-- <a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryCountry->Category->Id }}/services">
-					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
-					    													overflow: hidden;
-					    													margin-bottom: 20px;
-					    													"">
-					    	<div  class="col-md-12 block-content"  style="background: url({{ URL::to('/images') .$photoPath  }});
-					    													background-size: cover;
-																			background-position: center center;"">
-					    		<span>{{ $categoryCountry->Category->Name }}</span>
-							</div>
-					    </div>
-					</a> -->
-					<!-- style="background: url({{ URL::to('/images') .$photoPath  }});background-size: cover;" -->
 				@endif
 	    	@endforeach
 	    </div>
