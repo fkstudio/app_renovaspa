@@ -23,7 +23,7 @@
 	@endphp
 	
 	<a href="{{ URL::to('/') }}"> HOME</a>
-	<a href="{{ URL::to('/') . $label_url }}"> / {{ $label }}</a>
+	<a href="{{ URL::to('/') . $label_url }}"> {{ ( $label != null ? ' / '.$label : '') }}</a>
 	@foreach($breadcrumps as $key => $value)
 		@php
 			if($value == "#fakelink")

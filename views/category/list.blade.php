@@ -48,7 +48,7 @@
 					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
 					    													overflow: hidden;
 					    													margin-bottom: 20px;">
-					    	<img src="{{ URL::to('/images') .$photoPath  }}" class="img-responsive" style="position: absolute;">
+					    	<img src="{{ URL::to('/images') .$photoPath  }}" class="img-responsive" style="position: absolute;height: 100%;width: 100%;">
 					    	<div  class="col-md-12 block-content" >
 					    		<span>{{ $categoryCountry->Category->Name }}</span>
 							</div>

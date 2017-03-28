@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use \App\Classes\ReCaptchaLib;
 
-error_reporting(E_ALL ^ E_NOTICE);
 
 class ReCaptcha
 {

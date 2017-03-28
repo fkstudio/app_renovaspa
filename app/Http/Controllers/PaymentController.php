@@ -657,7 +657,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -729,7 +729,7 @@ class PaymentController extends Controller
                             if($reservation->Type == 1)
                                 $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
                             else
-                                $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name);
+                                $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                         });   
                     } 
                 }    
