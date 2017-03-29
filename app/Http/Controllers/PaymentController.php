@@ -774,8 +774,6 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

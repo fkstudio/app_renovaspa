@@ -22,7 +22,7 @@
 										 height: 420px;"	>
 </div>
 <div id="vue-app" class="container-fluid">
-	<h3 class="green-title">COMPLETE THE GIFT CERTIFICATES REGISTRATION</h3>
+	<h3 class="green-title">{{ trans('titles.complete_gift_certificate') }}</h3>
 	<br/>
 	<p id="errorMessageContent" class="message-alert failure" style="display:none;">Please fill all fields and accept the terms.</p>
 	<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
@@ -31,10 +31,31 @@
 		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate No. {{ $key }}</h3>
 		<hr/>
 		<div id="certificate-content-{{ $key }}" class="collapse">
-			<div class="form-group">
-				<label>A) Personalize by adding a message:</label>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>A) {{ trans('giftcertificates.who_will_receive') }}</label>
+					</div>
+					<hr/>
+				</div>
+				<div class="col-md-4">	
+					<div class="form-group">
+						<label>{{ trans('shared.first_name') }}</label>
+						<input type="text" name="" class="form-control input-border" />
+					</div>
+				</div>
+				<div class="col-md-4">	
+					<div class="form-group">
+						<label>{{ trans('shared.last_name') }}</label>
+						<input type="text" name="" class="form-control input-border" />
+					</div>
+				</div>
 			</div>
+			<div class="clearfix"></div>
 			<hr/>
+			<div class="form-group">
+				<label>B) {{ trans('giftcertificates.personalize_by_adding') }}</label>
+			</div>
 			@php
 				$certTotal = 0;
 			@endphp
@@ -56,24 +77,24 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">
-								<label> To (as it will appear on the gift certificate):</label>
+								<label>* {{ trans('giftcertificates.to') }}</label>
 								<input type="text" class="form-control required-input input-border" name="to_customer[{{ $key }}]" />
 							</div>
 							<div class="col-md-6">
-								<label>* From (as it will appear on the gift certificate):</label>
+								<label>* {{ trans('giftcertificates.from') }}</label>
 								<input type="text" class="form-control required-input input-border" name="from_customer[{{ $key }}]" />
 							</div>	
 							<div class="clearfix"></div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label>Enter a message</label>
+									<label>{{ trans('giftcertificates.enter_message') }}</label>
 									<textarea  name="message[{{ $key }}]" class="form-control input-border"></textarea>
 								</div>
 							</div>	
 						</div>
 					</div>
 					<div class="form-group">
-						<label>B) Select delivery method:</label>
+						<label>C) {{ trans('giftcertificates.select_delivery') }}</label>
 						<p>* Choose from Renova Spa s flexible delivery options</p>
 					</div>
 					<div class="clearfix"></div>

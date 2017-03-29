@@ -52,6 +52,8 @@ return [
     'certificate_terms' => "I have added gift certificate/s.
                     I agree to the  Privacy Policy , Terms & Conditions ,  Cancellation and Refund Policyand understandthat the gift certificate receiver must present a printout of the gift certificate at the time of redemption. 
                     If the gift certificate is delivered to the guest's room (hotel delivery method selected), the printout is not required. 
-                    (Links to the gift certificate will be provided after completing your order)."
+                    (Links to the gift certificate will be provided after completing your order).",
+    'first_name' => 'First name',
+    'last_name' => 'Last name'
 
 ];

@@ -33,6 +33,12 @@ class CertificateDetailModel {
 	/** @type @Column(type="integer") */
 	public $Type;
 
+	/** @Column(name="real_customer_first_name", type="string") */
+	public $RealCustomerFirstName;
+
+	/** @Column(name="real_customer_last_name", type="string") */
+	public $RealCustomerLastName;
+
 	/** 
 	 * @OneToMany(targetEntity="CertificateDetailServiceModel", cascade="persist",  mappedBy="CertificateDetail")
 	*/
