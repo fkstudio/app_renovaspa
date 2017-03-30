@@ -18,16 +18,12 @@
 			</a>
 			@endif
 			@foreach($model as $categoryCountry)
-				@if($categoryCountry->Category->IsDeleted == false)
+				@if($categoryCountry->Category->IsDeleted != true)
 				
 					@php
 
-					$photoPath = '/noimage.jpg';
-
-					if($categoryCountry->Category->Photo != null)
-					{
-						$photoPath = '/categories/'.$categoryCountry->Category->Photo->Path;
-					}
+					$photoPath = '/categories/'.str_replace(' ', '-', $categoryCountry->Category->Name.'.jpg');
+					
 					
 					if($categoryCountry->IsSpecial == true && $categoryCountry->SpecialBeginDate != null && $categoryCountry->SpecialEndDate != null)
 					{
@@ -44,7 +40,7 @@
 
 					@endphp
 
-					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryCountry->Category->Id }}/services">
+					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/{{ $categoryCountry->Category->Id }}/services">
 					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
 					    													overflow: hidden;
 					    													margin-bottom: 20px;">

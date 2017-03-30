@@ -88,7 +88,7 @@ class DbContext
              $connectionOptions = array(
                 'driver'   => 'pdo_mysql',
                 'host'     => 'localhost',
-                'dbname'   => 'newrenova',
+                'dbname'   => 'final_renova',
                 'user'     => 'root',
                 'password' => 'root',
             );
