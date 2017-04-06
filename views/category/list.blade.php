@@ -40,7 +40,7 @@
 
 					@endphp
 
-					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/categories/{{ $categoryCountry->Category->Id }}/services">
+					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryCountry->Category->Id }}/services">
 					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
 					    													overflow: hidden;
 					    													margin-bottom: 20px;">

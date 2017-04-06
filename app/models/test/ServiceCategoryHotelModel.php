@@ -39,7 +39,7 @@ class ServiceCategoryHotelModel {
 	/** @Column(name="only_for_wedding", type="boolean") */
 	public $OnlyForWedding;	
 
-	/** @Column(name="order", type="integer") */
+	/** @Column(name="ordinal", type="integer") */
 	public $Order;
 
 	/** @Column(name="is_active", type="boolean") */
@@ -52,6 +52,7 @@ class ServiceCategoryHotelModel {
 	 * @OneToOne(targetEntity="ServiceInformationModel", mappedBy="ServiceCategoryHotel")
 	*/
 	public $ServiceInformation;
+	
 
 	public function __construct(){
 		$this->ServiceInformation = new App\Models\Test\ServiceInformationModel();

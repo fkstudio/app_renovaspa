@@ -10,6 +10,17 @@
 |
 */
 
+/*
+|----------------------------------------------------------------------------
+| admin routes
+|----------------------------------------------------------------------------
+*/
+
+/*
+|----------------------------------------------------------------------------
+| admin routes end
+|----------------------------------------------------------------------------
+*/
 
 /*
 |----------------------------------------------------------------------------
@@ -53,6 +64,8 @@ Route::get('/weddings', [ 'as' => 'home.weddings', 'uses' => 'HomeController@wed
 Route::get('/region/{region_id}/categories', [ 'as' => 'category.categoryList', 'uses' => 'CategoryController@categories' ]);
 
 Route::get('/hotel/{hotel_id}/categories/{next?}', [ 'as' => 'category.categoriesByHotel', 'uses' => 'CategoryController@categoriesByHotel' ]);
+
+Route::get('/async/categories/by/country/{country_id}', [ 'as' => 'category.getAll', 'uses' => 'CategoryController@getAll' ]);
 
 /*
 |----------------------------------------------------------------------------

@@ -110,7 +110,10 @@
 							</blockquote>
 							<strong>Schedules:</strong>
 							<blockquote>
-								From {{ ($serviceInformation != null ? $serviceInformation->OpeningTime->format('h:m a') : 'N/A' ) }} to {{ ($serviceInformation != null ? $serviceInformation->EndingTime->format('h:m a') : 'N/A' ) }}
+								From
+								{{ ($serviceInformation != null ? $serviceInformation->OpeningTime->format('h:m a') : 'N/A' ) }} 
+								to 
+								{{ ($serviceInformation != null ? $serviceInformation->EndingTime->format('h:m a') : 'N/A' ) }}
 							</blockquote>
 							<strong>Restrictions:</strong>
 							<blockquote>

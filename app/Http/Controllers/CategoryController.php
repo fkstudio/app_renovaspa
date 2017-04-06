@@ -32,6 +32,19 @@ class CategoryController extends Controller
         return view("category.list", [ "model" => $regionServices ]);
     }
 
+    /* get all categories async to return json boject */
+    public function getAll(Request $request, $country_id){
+        $categoryCountries = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findBy(["Country" => $country_id]);
+
+        $model = [];
+
+        foreach($categoryCountries as $categoryCountry){
+            array_push($model, [ "id" => $categoryCountry->Category->Id, "name" => $categoryCountry->Category->Name ]);
+        }
+
+        return json_encode($model);
+    }
+
     /* get a list of available categories in current hotel */
     public function categoriesByHotel(Request $request, $hotel_id, $next = 0){
         $session = $request->session();
