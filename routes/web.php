@@ -65,7 +65,7 @@ Route::get('/region/{region_id}/categories', [ 'as' => 'category.categoryList', 
 
 Route::get('/hotel/{hotel_id}/categories/{next?}', [ 'as' => 'category.categoriesByHotel', 'uses' => 'CategoryController@categoriesByHotel' ]);
 
-Route::get('/async/categories/by/country/{country_id}', [ 'as' => 'category.getAll', 'uses' => 'CategoryController@getAll' ]);
+// Route::get('/async/categories/by/country/{country_id}', [ 'as' => 'category.getAll', 'uses' => 'CategoryController@getAll' ]);
 
 /*
 |----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ Route::get('/reservation/certificate/delete/item/{id}/{referer}', [ 'as' => 'cer
 | Region controller routes
 |----------------------------------------------------------------------------
 */
-Route::get('/async/region/by/country/{country_id}', [ 'as' => 'region.all', 'uses' => 'RegionController@getAll' ]);
+// Route::get('/async/region/by/country/{country_id}', [ 'as' => 'region.all', 'uses' => 'RegionController@getAll' ]);
 
 Route::get('/country/{country_id}/regions', [ 'as' => 'region.listByCountry', 'uses' => 'RegionController@regionsByCountry' ]);
 
@@ -131,7 +131,7 @@ Route::get('/country/{country_id}/regions', [ 'as' => 'region.listByCountry', 'u
 */
 Route::get('/hotel/details/{id}', [ 'as' => 'hotel.details', 'uses' => 'HotelController@details' ]);
 
-Route::get('/async/hotel/by/region/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
+// Route::get('/async/hotel/by/region/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
 
 Route::get('/region/{region_id}/hotels', [ 'as' => 'hotel.hotelsByRegion', 'uses' => 'HotelController@HotelsByRegion' ]);
 
@@ -158,7 +158,7 @@ Route::match(['post', 'get'], '/reservation/checkout', [ 'as' => 'reservation.ch
 */
 Route::get('/wedding/services', [ 'as' => 'wedding.services', 'uses' => 'WeddingController@weddingServices' ]);
 
-Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);
+// Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);
 
 Route::get('/wedding/checkout', [ 'as' => 'wedding.checkout', 'uses' => 'WeddingController@checkout' ]);
 

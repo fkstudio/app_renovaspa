@@ -286,7 +286,7 @@
 	            var self = this;
 	            
 	            $.ajax({
-	                url: '{{ URL::to("/") }}/async/region/by/country/' + self.country_id,
+	                url: '{{ URL::to("/") }}/api/async/region/by/country/' + self.country_id,
 	                method: 'GET'
 	            }).done(function(response){
 	                var regionList = JSON.parse(response);
@@ -304,7 +304,7 @@
 	            var self = this;
 
 	            $.ajax({
-	                url: '{{ URL::to("/") }}/async/hotel/by/region/' + self.region_id,
+	                url: '{{ URL::to("/") }}/api/async/hotel/by/region/' + self.region_id,
 	                method: 'GET'
 	            }).done(function(response){
 	                var hotelList = JSON.parse(response);
@@ -322,7 +322,7 @@
 	            var self = this;
 
 	            $.ajax({
-	                url: '{{ URL::to("/") }}/async/wedding/packages/by/hotel/' + self.hotel_id,
+	                url: '{{ URL::to("/") }}/api/async/wedding/packages/by/hotel/' + self.hotel_id,
 	                method: 'GET'
 	            }).done(function(response){
 	                var weddingPackages = JSON.parse(response);

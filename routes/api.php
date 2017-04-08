@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::get('/async/categories/by/country/{country_id}', [ 'as' => 'category.getAll', 'uses' => 'CategoryController@getAll' ]);
+
+Route::get('/async/region/by/country/{country_id}', [ 'as' => 'region.all', 'uses' => 'RegionController@getAll' ]);
+
+Route::get('/async/hotel/by/region/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
+
+Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);

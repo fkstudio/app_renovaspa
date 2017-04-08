@@ -76,8 +76,7 @@ class WeddingController extends Controller
     }
 
     /* POST */
-    public function getWeddingPackagesByHotel(Request $request, $hotel_id){
-        $session = $request->session();
+    public function getWeddingPackagesByHotel($hotel_id){
         $model = [];
 
         $queryBuilder = $this->entityManager->getRepository('App\Models\Test\WeddingPackageCategoryRelationModel')->createQueryBuilder('a');
@@ -87,7 +86,7 @@ class WeddingController extends Controller
                      ->leftJoin('a.WeddingPackage', 'WeddingPackage')
                      ->where('weddingPackageCategoryHotel.Hotel = :hotel_id')
                      ->andwhere('WeddingPackage.Type = :package_type')
-                     ->setParameters(['hotel_id' => 'f1c5f852-c667-11e6-915d-39adba9ad86b', 'package_type' => 1]);
+                     ->setParameters(['hotel_id' => $hotel_id, 'package_type' => 1]);
 
         $queryResult = $queryBuilder->getQuery()->getResult();
         
