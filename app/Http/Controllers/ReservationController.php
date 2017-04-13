@@ -249,6 +249,8 @@ class ReservationController extends Controller
                         $certificateItem->CertificateNumber = $key + 1;
                         $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];
+                        $certificateItem->RealCustomerFirstName = $_POST['real_customer_first_name'];
+                        $certificateItem->RealCustomerLastName = $_POST['real_customer_last_name'];
                         $certificateItem->Message = $_POST['message'][$key];
                         $certificateItem->SendType = $_POST['sendType'][$key];
                         $certificateItem->OtherFields = "";
@@ -306,6 +308,8 @@ class ReservationController extends Controller
             }
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
     }

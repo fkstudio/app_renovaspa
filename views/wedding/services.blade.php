@@ -27,8 +27,8 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 			<h4>{{ trans('titles.service_list_title') }}</h5>
 			<br/>
 			<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
-				@foreach($model as $categoryHotel)
-					<h5>{{ $categoryHotel->WeddingPackageCategory->Name }}</h5>
+				@foreach($model as $ckey => $categoryHotel)
+					<h5><strong>{{ $categoryHotel->WeddingPackageCategory->Name }}</strong></h5>
 					<p>{{ $categoryHotel->WeddingPackageCategory->Description }}</p>
 					@php
 
@@ -39,8 +39,8 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					<div class="package-info row">
 						<div class="col-md-8" style="padding-top: 10px;">
 							<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />
-							<strong>{{ $package->WeddingPackage->Name }}</strong>
-							<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $pkey }}">+Info</a>
+							{{ $package->WeddingPackage->Name }}
+							<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $ckey .'-'. $pkey }}">+Info</a>
 						</div>
 						<div class="col-md-2" style="padding-top: 10px;">
 							<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->getPrice(), 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
@@ -49,7 +49,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />
 						</div>
 						<div class="col-md-12">
-							<div id="package-{{ $pkey }}" class="collapse">
+							<div id="package-{{ $ckey .'-'. $pkey }}" class="collapse">
 								<p>{{ $package->WeddingPackage->Description }}</p>
 								<p><strong>Included services:</strong></p>
 								<ul>

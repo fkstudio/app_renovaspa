@@ -41,13 +41,13 @@
 				<div class="col-md-4">	
 					<div class="form-group">
 						<label>{{ trans('shared.first_name') }}</label>
-						<input type="text" name="" class="form-control input-border" />
+						<input type="text" name="real_customer_first_name" class="form-control input-border" />
 					</div>
 				</div>
 				<div class="col-md-4">	
 					<div class="form-group">
 						<label>{{ trans('shared.last_name') }}</label>
-						<input type="text" name="" class="form-control input-border" />
+						<input type="text" name="real_customer_last_name" class="form-control input-border" />
 					</div>
 				</div>
 			</div>

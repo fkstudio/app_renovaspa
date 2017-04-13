@@ -42,7 +42,7 @@
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
 				@if ($categoryCountry->Category->Photo != null)
-				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/{{ $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
+				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/{{ str_replace(' ', '-', $categoryCountry->Category->Name) }}.jpg" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
 				@endif
 				<br class="hidden-lg" />
 				<p class="text-center">
