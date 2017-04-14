@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\DbContext;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 
 class CategoryController extends Controller
@@ -65,16 +66,25 @@ class CategoryController extends Controller
             $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
                                                ->findOneBy(["Hotel" => $hotel_id]);
 
-            $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(
-                                                        [
-                                                            "Country" => $hotelRegion->Region->Country->Id,
-                                                            "IsActive" => true,
-                                                            "IsDeleted" => false
-                                                        ], 
-                                                        [
-                                                            "Order" => "ASC"
-                                                        ]);
+            // $categoryCountries = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
+            //                                       ->findBy(
+            //                                             [
+            //                                                 "Country" => $hotelRegion->Region->Country->Id,
+            //                                                 "IsActive" => true,
+            //                                                 "IsDeleted" => false
+            //                                             ], 
+            //                                             [
+            //                                                 "Order" => "ASC"
+            //                                             ]);
+
+            $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+                AND
+                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
+                             ->setParameter('deleted', false)
+                             ->setParameter('active', true)
+                             ->setParameter('country', $hotelRegion->Region->Country->Id)
+                             ->setParameter('hotel', $hotelRegion->Hotel->Id)
+                             ->getResult();
 
             $breadcrumps = [
                 $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',
@@ -85,7 +95,7 @@ class CategoryController extends Controller
 
 
             $viewData = [ 
-                "model" => $regionServices, 
+                "model" => $categoryCountries, 
                 "hotel" => $hotel, 
                 "region" => $hotelRegion->Region, 
                 'breadcrumps' => $breadcrumps
@@ -100,6 +110,8 @@ class CategoryController extends Controller
             return view("category.list", $viewData);
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

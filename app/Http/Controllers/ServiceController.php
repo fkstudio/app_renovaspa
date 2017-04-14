@@ -116,7 +116,6 @@ class ServiceController extends Controller
             return view("service.list", $viewData);
         }
         catch (\Exception $e){
-            print_r($e);
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
