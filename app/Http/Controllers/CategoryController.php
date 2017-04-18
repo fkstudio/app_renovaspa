@@ -66,17 +66,6 @@ class CategoryController extends Controller
             $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
                                                ->findOneBy(["Hotel" => $hotel_id]);
 
-            // $categoryCountries = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")
-            //                                       ->findBy(
-            //                                             [
-            //                                                 "Country" => $hotelRegion->Region->Country->Id,
-            //                                                 "IsActive" => true,
-            //                                                 "IsDeleted" => false
-            //                                             ], 
-            //                                             [
-            //                                                 "Order" => "ASC"
-            //                                             ]);
-
             $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
                 AND
                 ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
@@ -110,8 +99,6 @@ class CategoryController extends Controller
             return view("category.list", $viewData);
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

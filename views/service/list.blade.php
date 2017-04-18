@@ -6,13 +6,14 @@
 
 @php
 
-  $categories = $dbcontext->getEntityManager()->getRepository("App\Models\Test\CategoryCountryModel")
-                                                  ->findBy(
-                                                  			[
-                                                  				"Country" => session('country_id'),
-                                                  				"IsActive" => true,
-                                                            	"IsDeleted" => false
-                                                  			], ["Order" => "ASC"]);
+  $categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+                AND
+                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
+                             ->setParameter('deleted', false)
+                             ->setParameter('active', true)
+                             ->setParameter('country', session('country_id'))
+                             ->setParameter('hotel', session('hotel_id'))
+                             ->getResult();
 
   $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
 
@@ -41,9 +42,7 @@
 		<div class="row">
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
-				@if ($categoryCountry->Category->Photo != null)
 				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/{{ str_replace(' ', '-', $categoryCountry->Category->Name) }}.jpg" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
-				@endif
 				<br class="hidden-lg" />
 				<p class="text-center">
 					<a href="#fakelink" data-toggle="modal" data-target="#categoryModal" style="color:#5fc7ae;">+Info</a>

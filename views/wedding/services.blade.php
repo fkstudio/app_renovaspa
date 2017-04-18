@@ -36,34 +36,36 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
                                                   ->findBy(['WeddingPackageCategoryHotel' => $categoryHotel->Id])
 					@endphp
 					@foreach($packageRelations as $pkey => $package)
-					<div class="package-info row">
-						<div class="col-md-8" style="padding-top: 10px;">
-							<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />
-							{{ $package->WeddingPackage->Name }}
-							<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $ckey .'-'. $pkey }}">+Info</a>
-						</div>
-						<div class="col-md-2" style="padding-top: 10px;">
-							<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->getPrice(), 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
-						</div>
-						<div class="col-md-2">
-							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />
-						</div>
-						<div class="col-md-12">
-							<div id="package-{{ $ckey .'-'. $pkey }}" class="collapse">
-								<p>{{ $package->WeddingPackage->Description }}</p>
-								<p><strong>Included services:</strong></p>
-								<ul>
-									@foreach($package->WeddingPackage->WeddingPackageServices as $packageService)
-										<li>{{ $packageService->Service->Name }}</li>
-									@endforeach
-								</ul>
-								@if(count($package->WeddingPackage->WeddingPackageServices) <= 0)
-								<p>There is not services added to this package</p>
-								@endif
-								<br/>
+						@if($package->Type == 2)
+							<div class="package-info row">
+								<div class="col-md-8" style="padding-top: 10px;">
+									<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />
+									{{ $package->WeddingPackage->Name }}
+									<a style="cursor: pointer;" data-toggle="collapse" data-target="#package-{{ $ckey .'-'. $pkey }}">+Info</a>
+								</div>
+								<div class="col-md-2" style="padding-top: 10px;">
+									<span style="font-size: 18px;" class="float-right">{{ $country->Currency->Symbol.number_format($package->getPrice(), 2) }}</span><span style="font-size: 12px;">{{ $country->Currency->Name }}</span>
+								</div>
+								<div class="col-md-2">
+									<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="form-control input-border" />
+								</div>
+								<div class="col-md-12">
+									<div id="package-{{ $ckey .'-'. $pkey }}" class="collapse">
+										<p>{{ $package->WeddingPackage->Description }}</p>
+										<p><strong>Included services:</strong></p>
+										<ul>
+											@foreach($package->WeddingPackage->WeddingPackageServices as $packageService)
+												<li>{{ $packageService->Service->Name }}</li>
+											@endforeach
+										</ul>
+										@if(count($package->WeddingPackage->WeddingPackageServices) <= 0)
+										<p>There is not services added to this package</p>
+										@endif
+										<br/>
+									</div>
+								</div>	
 							</div>
-						</div>	
-					</div>
+						@endif
 					@endforeach
 				@endforeach
 				<div class="clearfix"></div>
