@@ -1,6 +1,14 @@
+@inject("dbcontext", "App\Database\DbContext")
+
 @extends('layout/baseLayout')
 
 @section('title', 'Categories')
+
+@php
+
+$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
+
+@endphp
 
 @section("content")
 	<div class="container-fluid">

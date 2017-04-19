@@ -26,6 +26,24 @@ class CategoryController extends Controller
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
 
+    /* return current user cart instance */
+    private function getCart($session_id){
+
+        $cart = null;
+        $cartExists = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(['Session' => $session_id]);
+
+        if($cartExists == null){
+            $cart = new \App\Models\Test\ShoppingCartModel();
+            $cart->Session = $session_id;
+            $cart->Created = new \DateTime();
+            $cart->IsDeleted = false;
+        }
+        else
+            $cart = $cartExists;
+
+        return $cart;
+    }
+
     /* get all categories */
     public function categories(Request $request, $region_id){
         $regionServices = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findBy(["Region" => $region_id]);
@@ -51,6 +69,8 @@ class CategoryController extends Controller
         $session = $request->session();
         $session->put("hotel_id", $hotel_id);
         $reservationType = $session->get('reservation_type');
+
+        $cart = $this->getCart($session->getId());
 
         if($reservationType == null)
             return redirect()->route('home.home');
@@ -92,7 +112,8 @@ class CategoryController extends Controller
                 "hotel" => $hotel, 
                 "region" => $hotelRegion->Region, 
                 'breadcrumps' => $breadcrumps,
-                'weddings' => $weddings
+                'weddings' => $weddings,
+                'mycart' => $cart
             ];
 
             if($session->get('reservation_type') == 2){
