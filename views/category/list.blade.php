@@ -56,7 +56,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					    													margin-bottom: 20px;">
 					    	<img src="{{ URL::to('/images') .$photoPath  }}" class="img-responsive" style="position: absolute;height: 100%;width: 100%;">
 					    	<div  class="col-md-12 block-content" >
-					    		<span>{{ $categoryCountry->Category->Name }}</span>
+					    		<span class="span-list">{{ $categoryCountry->Category->Name }}</span>
 							</div>
 					    </div>
 					</a>
