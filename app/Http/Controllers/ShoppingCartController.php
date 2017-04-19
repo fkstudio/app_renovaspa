@@ -338,7 +338,7 @@ class ShoppingCartController extends Controller
             $cartItemExists = $this->entityManager->getRepository('\App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $itemId]);
 
             if($cartItemExists != null){
-                $message = $cartItemExists->Quantity .' "'. $cartItemExists->Service->Name . trans("item_removed_from_your_cart"); 
+                $message = $cartItemExists->Quantity .' "'. $cartItemExists->Service->Name . trans("messages.item_removed_from_your_cart"); 
                 $this->entityManager->remove($cartItemExists);
 
                 $this->entityManager->flush();
@@ -346,7 +346,7 @@ class ShoppingCartController extends Controller
                 return redirect()->route("cart.myCart")->with('success', $message);
             }
             else {
-                return redirect()->route("cart.myCart")->with('failure', trans("cart_item_doesn_exists"));
+                return redirect()->route("cart.myCart")->with('failure', trans("messages.cart_item_doesn_exists"));
             }
 
             
