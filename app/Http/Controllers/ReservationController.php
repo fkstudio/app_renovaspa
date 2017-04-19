@@ -308,6 +308,7 @@ class ReservationController extends Controller
             }
         }
         catch (\Exception $e){
+            print_r($e);
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
     }

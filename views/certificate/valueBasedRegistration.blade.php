@@ -186,7 +186,7 @@
 											<label>Departure date</label>
 										</td>
 										<td>
-											<input type="text" name="delivery_departure_date[{{ $key }}]" class="form-control input-border" />
+											<input type="text" name="delivery_departure_date[{{ $key }}]" class="datepicker form-control input-border" />
 										</td>
 									</tr>
 									<tr>
@@ -227,6 +227,12 @@
 @endsection
 
 @section('scripts')
+<!-- Moment JS-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
 	function validateTerms(){
@@ -258,6 +264,17 @@
 		  $('.collapse-delivery-option').collapse('hide')
 		})
     });
+
+    $(function() {
+	    $('.datepicker').daterangepicker({
+	    	locale: {
+		      format: 'MM/D/YYYY'
+		    },
+	        singleDatePicker: true,
+	        showDropdowns: true,
+	        
+		});
+	});
 </script>
 @endsection
 
