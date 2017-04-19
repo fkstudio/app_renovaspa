@@ -19,6 +19,12 @@
     		</div>
     	</div>
     </div>
+    <div class="container-fluid container-fluid-full" style="background: url({{ URL::to('/images') }}/spa_etiquette2.jpg);background-size: cover;">
+        <div class="container" style="height:400px;">
+            <div class="row" style="text-align: center;">
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="container about-container">
             <div class="row" style="text-align: center !important;">
@@ -29,6 +35,15 @@
 				<p>Our Spas: Renova Spa is located in in 50 hotels in 10 countries. Each of them is different in decoration and layout, but they all keep the same technical standards and quality service.<p> 
 				<p>A visit our Destinations section in our main menu Here you will find specific information about the spas facilities, hours, price list and offered services.<p>
 				<p>Our facilities: Renova Spa's facilities are mostly equipped with Beauty Salon, Fitness Centre, Treatment Rooms and Humid Areas. <br>On arrival at the Spa our staff will be glad to give you a tour that will introduce you to the spa facilities, such as saunas, steam rooms, Jacuzzis, and relaxation rooms.<br> All these facilities are complimentary and recommended to prepare your skin before any treatment. </p>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid container-fluid-full" style="background: url({{ URL::to('/images') }}/spa_etiquette3.jpg);background-size: cover;">
+        <div class="container" style="height:400px;">
+            <div class="row" style="text-align: center;">
             </div>
         </div>
     </div>
@@ -42,6 +57,15 @@
 				<p>Medical conditions: If you have any type of medical condition, make sure to mention it when making your appointment. Certain treatments may not be advisable for you. <p>
 				<p>Age restrictions: The minimum age required to access the spa facilities (humid areas and gym) is 18 years.<br>Guests under 18 years are allowed to enter only when receiving a Spa or Salon service and accompanied by an adult.<br>
 				Cancellations and Changes: Unexpected things do happen and in some occasions you may need to cancel or change your spa appointment.<br>Please advice the spa with as much time as possible, we will try to search for the best time for you.<br>For reservations through Internet, please read the cancellation policy at the Booking section.<br>For reservations at the spa, please inquire about the cancellation policy at the spa's reception.<p> 
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid container-fluid-full" style="background: url({{ URL::to('/images') }}/spa_etiquette4.jpg);background-size: cover;">
+        <div class="container" style="height:400px;">
+            <div class="row" style="text-align: center;">
             </div>
         </div>
     </div>

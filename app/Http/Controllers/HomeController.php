@@ -81,7 +81,7 @@ class HomeController extends Controller
 
     /* /GET etiquette page */
     public function etiquette(){
-        return view('home/etiquette');
+        return view('home/etiquette', ['margin' => true]);
     }
 
     /* /GET faq page */
