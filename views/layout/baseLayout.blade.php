@@ -25,6 +25,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <meta name="TITLE" content="Renovaspa.com | Weddings | Book your spa treatment in the best destinations">
+    <meta name="DESCRIPTION" content="Best spa deals and offers in Aruba, Cape Verde, Costa Rica, Jamaica, Mexico, Dominican Republic, St-Martin, Mauritius, Europe and much more">
+    <meta name="KEYWORDS" content="destination wedding, Riu hotel spa, Riu resort spa, Riu spa, wedding spa day, wedding package, spa day, spa punta cana, spa cancun, spa playa del carmen, wedding package all inclusive, destination wedding Caribbean, wedding hairstyle">
 
     @yield("head")
   </head>

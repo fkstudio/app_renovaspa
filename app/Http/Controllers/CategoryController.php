@@ -66,6 +66,10 @@ class CategoryController extends Controller
             $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
                                                ->findOneBy(["Hotel" => $hotel_id]);
 
+            $weddings = $this->entityManager->createQuery("SELECT w FROM App\Models\Test\WeddingPackageCategoryHotelModel w WHERE w.Hotel = :hotel")
+                ->setParameter('hotel', $session->get('hotel_id'))
+                ->getResult(); 
+
             $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
                 AND
                 ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
@@ -87,7 +91,8 @@ class CategoryController extends Controller
                 "model" => $categoryCountries, 
                 "hotel" => $hotel, 
                 "region" => $hotelRegion->Region, 
-                'breadcrumps' => $breadcrumps
+                'breadcrumps' => $breadcrumps,
+                'weddings' => $weddings
             ];
 
             if($session->get('reservation_type') == 2){
@@ -99,6 +104,8 @@ class CategoryController extends Controller
             return view("category.list", $viewData);
         }
         catch (\Exception $e){
+            echo $e->getMessage();
+            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

@@ -36,7 +36,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
                                                   ->findBy(['WeddingPackageCategoryHotel' => $categoryHotel->Id])
 					@endphp
 					@foreach($packageRelations as $pkey => $package)
-						@if($package->Type == 2)
+						@if($package->WeddingPackage->Type == 2)
 							<div class="package-info row">
 								<div class="col-md-8" style="padding-top: 10px;">
 									<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />

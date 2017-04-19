@@ -177,7 +177,7 @@
 									<br class="visible-xs" />
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										@if ($reservationType == 1 || $reservationType == 3) 
-											@if ($total > 0)
+											@if ($total > 0 || $reservationType == 3)
 												<button type="submit" class="btn btn-primary block-button">{{ trans('shared.checkout') }}</button>
 											@else
 												<button type="button" class="disabled btn btn-primary block-button">{{ trans('shared.checkout') }}</button>

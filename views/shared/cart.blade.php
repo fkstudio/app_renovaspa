@@ -144,7 +144,7 @@
         @endif
 
         @if ($reservationType == 1 || $reservationType == 3) 
-          @if ($total > 0)
+          @if ($total > 0 || $reservationType == 3)
             <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="btn btn-primary" >{{ trans('shared.checkout') }}</a>
           @else
             <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="disabled btn btn-primary" >{{ trans('shared.checkout') }}</a>

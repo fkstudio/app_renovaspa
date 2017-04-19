@@ -170,13 +170,22 @@
  }
 
  /* block content */
+ .parent {
+ 	-webkit-transition: filter 0.2s linear;
+ }
+ .parent::before {
+ 	-webkit-transition: filter 0.2s linear;
+ 	content: "";
+ 	width: 100%;
+ 	height: 100%;
+ }
  .block-content-responsive {
  	position: absolute;
 	margin-top: -160px;
 	text-align: center;
  }
  .block-content {
- 	-webkit-transition: opacity 0.3s,  padding-top 0.3s;
+ 	-webkit-transition: opacity 0.3s,  padding-top 0.3s, filter 0.2s linear;
 	height: 250px;
 	padding-top: 20%;
 	text-align: center;
@@ -185,13 +194,17 @@
  	-webkit-transition: opacity 0.2s linear;
  	opacity: 0;
  }
- .block-content:hover {
- 	opacity: 0.7;
+ .parent:hover:before  {
+ 	filter: brightness(0.5);
+ }
+ .parent:hover > .block-content {
+ 	opacity: 1;
  	padding-top: 35%;
  }
+
  .block-content:hover > span {
- 	
  	opacity: 1;
+ 	z-index: 99999999;
  }
  /* block content */
 
