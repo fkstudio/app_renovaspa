@@ -91,7 +91,7 @@
           @else
             @php
               $packageRelation = $item->PackageCategoryRelation;
-              $itemPrice = $packageRelation->getPrice();
+              $itemPrice = $packageRelation->Price;
             @endphp
 
             <div class="col-md-3">
@@ -100,12 +100,10 @@
             <div class="col-md-9">
               <h5>{{ $packageRelation->WeddingPackage->Name }}</h5>
               
-              @foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
-                @php
-                  $subtotal += $itemPrice;
-                  $total += $itemPrice;
-                @endphp
-              @endforeach
+              @php
+                $subtotal += $itemPrice;
+                $total += $itemPrice;
+              @endphp
               <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
 

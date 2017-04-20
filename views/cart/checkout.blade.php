@@ -44,7 +44,11 @@
 								<span data-toggle="modal" data-target="#dateInfoModal" style="margin-left: 20px;cursor:pointer;" class="glyphicon glyphicon-question-sign"></span>
 							</th>
 							<th>{{ trans('shared.prefered_time') }}</th>
+							@if(session('reservation_type') != 3)
 							<th>{{ trans('shared.cabin_type') }}</th>
+							@else
+							<th>Wedding member</th>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -96,27 +100,31 @@
 										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
 									</td>
 									
-									<td class="padding-td">
-										@if($item->Service->Cabin->Name != "Package")
-										<select class="form-control required-input blank-select" name="cabin_type[]">
-											@foreach($cabins as $cabin)
-												@if($cabin->Name != "Package")
-													@if ($item->Service != null && $item->Service->Cabin->Id == $cabin->Id)
-														<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
-													@else 
-														<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+									@if(session('reservation_type') != 3)
+										<td class="padding-td">
+											@if($item->Service->Cabin->Name != "Package")
+											<select class="form-control required-input blank-select" name="cabin_type[]">
+												@foreach($cabins as $cabin)
+													@if($cabin->Name != "Package")
+														@if ($item->Service != null && $item->Service->Cabin->Id == $cabin->Id)
+															<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@else 
+															<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+														@endif
 													@endif
+												
+												@endforeach
+											</select>
+											@else
+												<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
+													<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
+												</select>
 												@endif
-											
-											@endforeach
-										</select>
-										@else
-										<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
-											<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
-										</select>
-										@endif
-									</td>
-								</tr>
+											</td>
+										</tr>
+									@else
+										<td class="padding-td">Guest</td>
+									@endif
 								@php
 									$counter += 1;
 								@endphp
@@ -174,26 +182,31 @@
 											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
 										</td>
 										
-										<td class="padding-td">
-											@if($weddingPackageService->Service->Cabin->Name != "Package")
-											<select class="form-control required-input blank-select" name="cabin_type[]">
-												@foreach($cabins as $cabin)
-													@if($cabin->Name != "Package")
-														@if ($weddingPackageService->Service != null && $weddingPackageService->Service->Cabin->Id == $cabin->Id)
-															<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
-														@else 
-															<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+										@if(session('reservation_type') != 3)
+											<td class="padding-td">
+												@if($item->Service->Cabin->Name != "Package")
+												<select class="form-control required-input blank-select" name="cabin_type[]">
+													@foreach($cabins as $cabin)
+														@if($cabin->Name != "Package")
+															@if ($item->Service != null && $item->Service->Cabin->Id == $cabin->Id)
+																<option selected value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+															@else 
+																<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
+															@endif
 														@endif
+													
+													@endforeach
+												</select>
+												@else
+													<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
+														<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
+													</select>
 													@endif
-												
-												@endforeach
-											</select>
-											@else
-											<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
-												<option value="{{ $weddingPackageService->Service->Cabin->Id }}">{{ $weddingPackageService->Service->Cabin->Name }}</option>
-											</select>
-											@endif
-										</td>
+												</td>
+											</tr>
+										@else
+											<td class="padding-td">Guest</td>
+										@endif
 									</tr>
 									@php
 										$counter++

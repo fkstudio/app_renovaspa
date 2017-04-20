@@ -134,10 +134,12 @@ class ReservationController extends Controller
                             if(empty($_POST['id'][$key]) or 
                                count($_POST['customer_name'][$key]) <= 0 or
                                empty($_POST['prefered_date'][$key]) or
-                               empty($_POST['prefered_time'][$key]) or
-                               empty($_POST["cabin_type"][$key]))
+                               empty($_POST['prefered_time'][$key]))
                                 return redirect()->route("cart.checkout")->with("failure", trans("messages.invalid_data"));
                                 
+                            if($reservationType == 1 && empty($_POST["cabin_type"][$key])){
+                                return redirect()->route("cart.checkout")->with("failure", trans("messages.invalid_data"));
+                            }
                             /* get cart item */
                             $cartItem = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $item]);
 
@@ -148,7 +150,11 @@ class ReservationController extends Controller
                             $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
                             $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
                             $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
-                            $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
+                            if($reservationType == 1){
+                                $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
+                            }
+                            else
+                                $cartItem->Cabin = null;
 
 
                             /* save cart item with new data */
