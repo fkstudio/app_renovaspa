@@ -2,6 +2,9 @@
 @php
 	$subtotal = 0;
 	$total = 0;
+
+	$hotel_id = session('hotel_id');
+	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 @endphp
 <!-- App -->
 <link href="{{ URL::to('/') }}/css/app.css" rel="stylesheet">
@@ -121,9 +124,6 @@
 		@foreach($cart->Items as $item)
 			@php
 				$packageRelation = $item->PackageCategoryRelation;
-
-				$hotel_id = session('hotel_id');
-				$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 			@endphp
 			@if($item->Service != null)
 				@php

@@ -7,6 +7,9 @@
 @php
 	$subtotal = 0;
 	$total = 0;
+
+	$hotel_id = session('hotel_id');
+	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 @endphp
 
 @section("content")
@@ -117,9 +120,6 @@
 					@php
 						$subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
 						$total += $item->Service->getPrice($model->Hotel->Id);
-
-						$hotel_id = session('hotel_id');
-						$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>

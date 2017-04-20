@@ -201,18 +201,18 @@ class WeddingController extends Controller
             ];
 
             /* send voucher view */
-            $mail->send([],[], function($message) use ($mailData) {
-                $reservation = $mailData['reservation'];
-                $message->setBody($mailData['voucher'], 'text/html');
-                $message->from('info@turnviral.net', 'Renovaspa');
-                $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
-                $message->replyTo('info@renovaspa.com', 'Renovaspa');
-                $message->subject("Online Reservations - Wedding groups #" . $reservation->ConfirmationNumber);
-            });
+            // $mail->send([],[], function($message) use ($mailData) {
+            //     $reservation = $mailData['reservation'];
+            //     $message->setBody($mailData['voucher'], 'text/html');
+            //     $message->from('info@turnviral.net', 'Renovaspa');
+            //     $message->sender('info@renovaspa.com', 'Renovaspa');
+            //     $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
+            //     $message->replyTo('info@renovaspa.com', 'Renovaspa');
+            //     $message->subject("Online Reservations - Wedding groups #" . $reservation->ConfirmationNumber);
+            // });
 
-            /* clear session data */
-            $session->flush();
+            // /* clear session data */
+            // $session->flush();
 
             return view('wedding.quotation_content', $viewData);
         }
