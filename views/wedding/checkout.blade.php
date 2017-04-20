@@ -117,10 +117,31 @@
 					@php
 						$subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
 						$total += $item->Service->getPrice($model->Hotel->Id);
+
+						$hotel_id = session('hotel_id');
+						$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
 						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+						@if ($item->Service->hasDiscount($hotel_id))
+							@php
+								$discount = $item->Service->getDiscount($hotel_id)
+							@endphp
+							<br/>
+							<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+							@endif
+
+							@if ($item->Service->hasHotelDiscount($hotel_id))
+							<br/>
+							<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+							@elseif ($hotel_region->ActiveDiscount)
+							<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+						@endif
+						<br/>
+						<span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPlanePrice($hotel_id), 2) }}</span>
+						<br/>
+						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span>
 					</div>
 					<div class="clearfix"></div>
 					<hr/>
@@ -154,9 +175,6 @@
 		</div>
 		<h3>CART TOTAL</h3>
 		<table style="font-size: 20px;" class="table table-borderless">
-			@php
-				$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
-			@endphp
 			<tbody>
 				<tr>
 					<td>Subtotal</td>

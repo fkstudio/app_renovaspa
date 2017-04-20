@@ -204,7 +204,7 @@ class WeddingController extends Controller
             $mail->send([],[], function($message) use ($mailData) {
                 $reservation = $mailData['reservation'];
                 $message->setBody($mailData['voucher'], 'text/html');
-                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->from('info@turnviral.net', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
                 $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
@@ -212,13 +212,11 @@ class WeddingController extends Controller
             });
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             return view('wedding.quotation_content', $viewData);
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }
