@@ -84,7 +84,7 @@
 												@endif
 											</td>
 											<td class="padding-td">
-												<a style="margin-top: -6px;" href="{{ URL::to('/') }}/shopping/cart/remove/parckage/{{ $packageCategoryRelation->Id }}" type="button" class="btn btn-danger">X</a>
+												<a style="margin-top: -6px;" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
 											</td>
                          				</tr>
                          			@else

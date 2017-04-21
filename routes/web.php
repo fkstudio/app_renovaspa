@@ -163,7 +163,7 @@ Route::get('/wedding/services', [ 'as' => 'wedding.services', 'uses' => 'Wedding
 Route::get('/wedding/checkout', [ 'as' => 'wedding.checkout', 'uses' => 'WeddingController@checkout' ]);
 
 
-Route::post('/wedding/send/quotation', [ 'as' => 'wedding.sendQuotation', 'uses' => 'WeddingController@sendQuotation' ]);
+Route::match(['post', 'get'], '/wedding/send/quotation', [ 'as' => 'wedding.sendQuotation', 'uses' => 'WeddingController@sendQuotation' ]);
 
 /*
 |----------------------------------------------------------------------------

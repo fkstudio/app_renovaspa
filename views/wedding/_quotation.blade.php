@@ -3,8 +3,8 @@
 	$subtotal = 0;
 	$total = 0;
 
-	$hotel_id = session('hotel_id');
-	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
+	$hotel_id = $model->Hotel->Id;
+	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => $model->Region->Id ]);
 @endphp
 <!-- App -->
 <link href="{{ URL::to('/') }}/css/app.css" rel="stylesheet">

@@ -137,6 +137,10 @@ class WeddingController extends Controller
 
         try {
 
+            if($reservation_id == null){
+                return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+            }
+            
             /* cart */
             $cart = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(["Session" => $session_id]);
             /* get current reservation */
