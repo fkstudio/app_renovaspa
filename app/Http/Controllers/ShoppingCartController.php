@@ -115,7 +115,7 @@ class ShoppingCartController extends Controller
                     break;
                 case 3:
                     /* weddings */
-                    $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.PackageCategoryRelation')
+                    $cart->Items = $this->entityManager->createQuery('SELECT u FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart GROUP BY u.Service, u.PackageCategoryRelation')
                              ->setParameter('cart', $cart->Id)
                              ->getResult();
                     break;
@@ -156,6 +156,8 @@ class ShoppingCartController extends Controller
             return view('cart.myCart', [ 'model' => $cart, 'category' => $category, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
@@ -338,11 +340,11 @@ class ShoppingCartController extends Controller
             $cartItemExists = $this->entityManager->getRepository('\App\Models\Test\ShoppingCartItemModel')->findOneBy(['Id' => $itemId]);
 
             if($cartItemExists != null){
-                if($cartItemExists->Type == 3){
-                    $message = $cartItemExists->PackageCategoryRelation->WeddingPackage->Name .' '. trans("messages.item_removed_from_your_cart"); 
+                if($cartItemExists->PackageCategoryRelation != null){
+                    $message = $cartItemExists->PackageCategoryRelation->WeddingPackage->Name .' '. trans("messages.item_removed_from_your_cart");     
                 }
                 else {
-                    $message = $cartItemExists->Quantity .' '. $cartItemExists->Service->Name . trans("messages.item_removed_from_your_cart");     
+                    $message = $cartItemExists->Quantity .' '. $cartItemExists->Service->Name . trans("messages.item_removed_from_your_cart");
                 }
                 
                 $this->entityManager->remove($cartItemExists);

@@ -11,6 +11,7 @@
 
 <!-- Bootstrap -->
 <link href="{{ URL::to('/') }}/css/bootstrap.min.css" rel="stylesheet">
+
 <div id="vue-app" class="container-fluid">
 	@include('shared._breadcrumps')
 	<hr>
@@ -98,6 +99,17 @@
 				</div>
 				<div class="clearfix"></div>
 				<br/>
+				<div class="col-md-2">
+					<label>{{ trans('shared.arrival') }}</label>
+					<br/>
+					<span>{{ $model->Arrival->format('d/m/Y') }}</span>
+				</div>
+				<div class="col-md-2">
+					<label>{{ trans('shared.departure') }}</label>
+					<br/>
+					<span>{{ $model->Departure->format('d/m/Y') }}</span>
+				</div>
+				<div class="clearfix"></div>
 				<br/>
 				<div class="col-md-2 col-sm-4">
 					<label>Wedding Date</label>

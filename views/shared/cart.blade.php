@@ -37,7 +37,7 @@
             <div class="col-md-3">
               <img style="max-width: 80px;" src="{{ URL::to('/images') . $photoPath }}" class="img-responsive" /> 
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
               <h5>{{ $item->Service->Name }}</h5>
               {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )
               <br/>
@@ -51,6 +51,9 @@
               <br/>
               <span>{{ trans('shared.final_price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
+            <div class="col-md-1">
+              <a style="margin-top: 20px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
+            </div>
             <div class="clearfix"></div>
             <br/>
           <!-- Certificate services -->
@@ -59,7 +62,7 @@
             <div class="col-md-3">
               <img style="max-width: 80px;" src="{{ URL::to('/images') . $photoPath }}" class="img-responsive" /> 
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
               <h5>
               {{ ( $item->Service != null ? $item->Service->Name . ' - ' : '' ) }} Certificate #{{ $item->CertificateNumber }}
               </h5>
@@ -85,6 +88,9 @@
               @endphp
               <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
+            <div class="col-md-1">
+              <a style="margin-top: 20px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
+            </div>
             <div class="clearfix"></div>
             <br/>
           <!-- wedding packages -->
@@ -97,7 +103,7 @@
             <div class="col-md-3">
               <img style="max-width: 80px;margin-left: 15px;" src="{{ URL::to('/') }}/images/wedding_package_icon.png" class="img-responsive" /> 
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
               <h5>{{ $packageRelation->WeddingPackage->Name }}</h5>
               
               @php
@@ -106,7 +112,9 @@
               @endphp
               <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
             </div>
-
+            <div class="col-md-1">
+              <a style="margin-top: 20px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
+            </div>
             <div class="clearfix"></div>
             <br/>
           @endif

@@ -92,6 +92,18 @@
 					</div>
 					<div class="clearfix"></div>
 					<br/>
+					<div class="col-md-2">
+						<label>{{ trans('shared.arrival') }}</label>
+						<br/>
+						<span>{{ $model->Arrival->format('d/m/Y') }}</span>
+					</div>
+					<div class="col-md-2">
+						<label>{{ trans('shared.departure') }}</label>
+						<br/>
+						<span>{{ $model->Departure->format('d/m/Y') }}</span>
+					</div>
+					<div class="clearfix"></div>
+					<br/>
 					<div class="col-md-3">
 						<label>(*) {{ trans('wedding.wedding_date') }}</label>
 						<br/>
