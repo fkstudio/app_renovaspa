@@ -5,16 +5,7 @@
 @section('title', 'Contact')
 
 @section("head")
-<script>
-    var CaptchaCallback = function() {
-        if ( $('#RecaptchaField1').length ) {
-            grecaptcha.render('RecaptchaField1', {'sitekey' : '6LfcMxoUAAAAAI52W-Rdb5uTD9gBp_TE81bPEKpV'});
-        }
-        if ( $('#RecaptchaField2').length ) {
-           grecaptcha.render('RecaptchaField2', {'sitekey' : '6LfMJx4UAAAAAPT_a5MK7UUqXxwWFQ2ShmwxNZyM'});
-        }
-    };
-</script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
 
 @section('content')
@@ -78,6 +69,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12" id="RecaptchaField2">
+                    {!! $recaptcha->recaptcha_get_html('6LfcMxoUAAAAAI52W-Rdb5uTD9gBp_TE81bPEKpV') !!}
                 </div>
                 <div class="clearfix"></div>
                 <br/>
@@ -132,9 +124,6 @@
                         <input type="file" name="resume" />
                     </div>
                 </div>
-                <div class="col-lg-12" id="RecaptchaField2">
-                   
-                </div>
                 <div class="clearfix"></div>
                 <br/>
                 <div class="col-lg-12">
@@ -146,8 +135,4 @@
             </form>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-<script src='https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit' async defer></script>
 @endsection

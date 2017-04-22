@@ -16,6 +16,9 @@ class ReCaptcha
         $privatekey = \Config::get('recaptcha.private_key');
         $captcha = new ReCaptchaLib();
 
+        print_r($_POST);
+        exit();
+
         $resp = $captcha->recaptcha_check_answer ($privatekey,
                                         $_SERVER["REMOTE_ADDR"],
                                         $_POST["recaptcha_challenge_field"],

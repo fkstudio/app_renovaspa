@@ -47,7 +47,7 @@ Route::get('/contact', [ 'as' => 'home.contact', 'uses' => 'HomeController@conta
 
 Route::post('/send/contact/form', [ 'as' => 'home.sendContactForm', 'uses' => 'HomeController@sendContactForm' ])->middleware('recaptcha');
 
-Route::post('/send/join/form', [ 'as' => 'home.sendJoinForm', 'uses' => 'HomeController@sendJoinToOurTeamForm' ])->middleware('recaptcha');
+Route::post('/send/join/form', [ 'as' => 'home.sendJoinForm', 'uses' => 'HomeController@sendJoinToOurTeamForm' ]);
 
 Route::get('/select/{selection}', [ 'as' => 'home.select', 'uses' => 'HomeController@select' ]);
 
