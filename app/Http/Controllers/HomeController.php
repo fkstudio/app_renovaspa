@@ -121,9 +121,9 @@ class HomeController extends Controller
                     <p><strong>Message: </strong></p>
                     <p>".$data['message']." </p>
                     ", 'text/html');
-                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->from('info@turnviral.net', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->to('contact@renovaspa.com', 'Renovaspa Contact Form');
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
 
                 $message->subject("Renovaspa - Contact form");
@@ -177,9 +177,9 @@ class HomeController extends Controller
                     <p><strong>Name: </strong> ".$data['name']." </p>
                     <p><strong>Email: </strong> ".$data['email']." </p>
                     ", 'text/html');
-                $message->from('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->from('info@turnviral.net', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to('hiobairo1993@gmail.com', 'Renovaspa');
+                $message->to('employer@turnviral.net', 'Renovaspa Employer');
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
                 $message->attach($data['file_path']);
 
