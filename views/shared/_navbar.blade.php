@@ -17,23 +17,24 @@
       </div>
   </div>
 </nav>
-<nav class="navbar navbar-default"  data-spy="affix" data-offset-top="36" style="margin-bottom: {{ (isset($margin) ? '-110px' : '0' ) }} !important;">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="main-navbar" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="{{ URL::to('/') }}">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ URL::to('/') }}">
           <img class="img-responsive" style="margin-top: -17px;" src="{{ URL::to('/') }}/images/logo-white-bg.png">
         </a>
-      </div>
+    </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-right" id="main-navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
         <ul class="nav navbar-nav">
           <li><a href="{{ route('home.home') }}">{{ trans('navbar.home') }} <span class="sr-only">(current)</span></a></li>
           <li><a href="{{ URL::to('/') }}/services">{{ trans('navbar.bookhere') }}</a></li>
@@ -89,11 +90,13 @@
             @endif
           </li>
         </ul>
-      </div>
-
-      <!-- /.navbar-collapse -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+
 @if (isset($categories))
 <nav class="navbar navbar-inverse">
   <div class="container-fluid" style="margin-top: 9px;">

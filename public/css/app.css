@@ -120,9 +120,21 @@
     border-radius: 4px;
  }
 
+ .dropdown-no-action {
+ 	background: rgb(34, 33, 34) !important;
+ }
+
+ .sub-sub-menu {
+ 	background: rgb(20, 20, 20) !important;
+ }
+
  .navbar-inverse {
  	background-color: #e7e7e7 !important;
  	border-color: #e7e7e7 !important;
+ }
+
+ .navbar-nav {
+ 	margin: 0px !important;
  }
 
  #home-search-content {

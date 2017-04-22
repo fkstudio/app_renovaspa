@@ -123,7 +123,7 @@ class HomeController extends Controller
                     ", 'text/html');
                 $message->from('info@turnviral.net', 'Renovaspa');
                 $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to('contact@renovaspa.com', 'Renovaspa Contact Form');
+                $message->to('contact@turnviral.com', 'Renovaspa Contact Form');
                 $message->replyTo('info@renovaspa.com', 'Renovaspa');
 
                 $message->subject("Renovaspa - Contact form");
@@ -155,7 +155,7 @@ class HomeController extends Controller
             /* get file by input file name */
             $f = $request->resume;
 
-            if($resume->extension() != 'txt' && $resume->extension() != 'doc')
+            if($f->extension() != 'txt' && $f->extension() != 'doc')
                 return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');
 
             /* file identifier */
