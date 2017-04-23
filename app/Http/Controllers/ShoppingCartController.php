@@ -172,7 +172,6 @@ class ShoppingCartController extends Controller
             return view('cart.myCart', [ 'model' => $cart, 'category' => $category, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
-            print_r($e);
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
@@ -210,7 +209,6 @@ class ShoppingCartController extends Controller
             return redirect()->route('cart.myCart')->with('success', trans('messages.cart_updated_success'));
         }
         catch (\Exceptin $e){
-            exit();
             return redirect()->route('cart.myCart')->with('failure', trans('messages.error'));
         }
     }
