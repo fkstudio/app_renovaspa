@@ -90,6 +90,8 @@ Route::get('/shopping/cart/add/riu/package', [ 'as' => 'cart.addRiuPackage', 'us
 
 Route::get('/shopping/cart/remove/item/{itemId}', [ 'as' => 'cart.removeItem', 'uses' => 'ShoppingCartController@removeItem' ]);
 
+Route::post('/shopping/cart/update', [ 'as' => 'cart.updateCart', 'uses' => 'ShoppingCartController@updateCart' ]);
+
 Route::match(['post', 'get'], '/shopping/cart/checkout', [ 'as' => 'cart.checkout', 'uses' => 'ShoppingCartController@checkout' ]);
 
 /*

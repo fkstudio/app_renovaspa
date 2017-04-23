@@ -22,6 +22,8 @@ return [
     'email_doesn_match' => "Email address must match. Please fill email confirmation field again.",
     'invalid_data' => "Invalid data. Please fill the fields correctly.",
     'invalid_card_data' => 'Please select a valid month/year.',
+    'error' => 'An error has ben through',
+    'cart_updated_success' => 'Shopping cart successfully updated',
     'transaction_error' => 'Transaction error. Please contact your card provider for more information or try with another card.',
     'transaction_canceled' => 'THE TRANSACTION HAS BEEN CANCELED.',
     'fill_card_data' => 'Please fill your Credit Card Information',

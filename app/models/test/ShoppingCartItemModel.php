@@ -82,4 +82,8 @@
 		public function __cosntruct(){
 			$this->Cabin = new App\Models\Test\Cabin();
 		}
+
+		public function __clone(){
+			$this->Id = null;
+		}
 	}

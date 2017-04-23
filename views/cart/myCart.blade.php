@@ -14,7 +14,7 @@
 				<br/>
 				<div class="col-md-12">
 				    @include('shared._messages')
-					<form action="{{ URL::to('/') . $action }}" method="{{ $method }}">
+					<form action="{{ URL::to('/') }}/shopping/cart/update" method="post">
 						<table class="table table-responsive">
 							<thead>
 								<tr>
@@ -84,7 +84,7 @@
 												@endif
 											</td>
 											<td class="padding-td">
-												<a style="margin-top: -6px;" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>
+												<a style="margin-top: -6px;" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" class="btn btn-danger">X</a>
 											</td>
                          				</tr>
                          			@else
@@ -142,6 +142,14 @@
 						<p style="text-align: center;">{{ trans('messages.there_is_no_items_in_cart') }}</p>
 						@endif
 						<div class="clearfix"></div>
+						<hr>
+						<div class="col-lg-offset-10 col-lg-2 col-md-offset-5 col-md-7 col-sm-12">
+							<div class="row">
+								<button type="submit" class="pull-right btn btn-primary block-button">{{ trans('shared.update_cart') }}</button>
+							</div>	
+						</div>
+						<div class="clerfix"></div>
+						<hr>
 						<div class="col-lg-offset-7 col-lg-5 col-md-offset-5 col-md-7 col-sm-12">
 							<div class="row">
 								<h3>CART TOTAL</h3>
@@ -178,16 +186,16 @@
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										@if ($reservationType == 1 || $reservationType == 3) 
 											@if ($total > 0 || $reservationType == 3)
-												<button type="submit" class="btn btn-primary block-button">{{ trans('shared.checkout') }}</button>
+												<a href="{{ URL::to('/') . $action }}" class="btn btn-primary block-button">{{ trans('shared.checkout') }}</a>
 											@else
-												<button type="button" class="disabled btn btn-primary block-button">{{ trans('shared.checkout') }}</button>
+												<a href="#fakelink" class="disabled btn btn-primary block-button">{{ trans('shared.checkout') }}</a>
 											@endif
 
 										@elseif ($reservationType == 2)
 											@if ($total > 0)
-												<button type="submit" class="btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</button>
+												<a href="{{ URL::to('/') . $action }}" class="btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</a>
 											@else
-												<button type="button" class="disabled btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</button>
+												<a href="#fakelink" class="disabled btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</a>
 											@endif
 										
 										@endif

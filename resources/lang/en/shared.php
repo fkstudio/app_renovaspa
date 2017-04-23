@@ -28,6 +28,7 @@ return [
     'quantity' => 'Quantity',
     'total' => 'Total',
     'delete' => 'Delete',
+    'update_cart' => 'UPDATE CART',
     'add_to_cart' => 'ADD TO CART',
     'go_to_cart' => 'GO TO CART',
     'complete_to_go_cart' => 'COMPLETE TO VIEW THE CART',

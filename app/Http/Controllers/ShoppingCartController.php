@@ -65,8 +65,41 @@ class ShoppingCartController extends Controller
             return view('cart.checkout', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'category' => $category, 'cabins' => $cabins ]); 
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
+    }
+
+    public function getItemQuantity(Request $request, $item){
+        $session = $request->session();
+        $sessionId = $session->getId();
+        $reservationType = $session->get('reservation_type');
+        $cart = $this->getCart($sessionId);
+
+        $quantity = 0;
+
+        /* if is a wedding service */
+        if($item->PackageCategoryRelation != null){
+            $quantity = $this->entityManager
+                                        ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.PackageCategoryRelation = :relation')
+                                        ->setParameters([ 'cart' => $cart->Id, 'relation' => $item->PackageCategoryRelation ])
+                                        ->getSingleResult()['Total'];
+        }
+        else if($item->CertificateNumber != null){
+            $quantity = $this->entityManager
+                                        ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
+                                        ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
+                                        ->getSingleResult()['Total'];
+        }
+        else {
+            $quantity = $this->entityManager
+                                    ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service')
+                                    ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id ])
+                                    ->getSingleResult()['Total'];
+        }
+
+        return $quantity;
     }
 
     /* return current user cart */
@@ -74,6 +107,8 @@ class ShoppingCartController extends Controller
         $session = $request->session();
         $sessionId = $session->getId();
         $reservationType = $session->get('reservation_type');
+
+        $cart = $this->getCart($sessionId);
 
         try {
             switch ($reservationType) {
@@ -96,8 +131,6 @@ class ShoppingCartController extends Controller
                     return redirect()->route("home.home")->with('failure', 'messages.session_expired');
                     break;
             }
-
-            $cart = $this->getCart($sessionId);
 
             switch ($reservationType) {
                 case 1:
@@ -124,24 +157,7 @@ class ShoppingCartController extends Controller
 
             foreach($cart->Items as $item){
                 /* if is a wedding service */
-                if($item->PackageCategoryRelation != null){
-                    $item->Quantity = $this->entityManager
-                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.PackageCategoryRelation = :relation')
-                                                ->setParameters([ 'cart' => $cart->Id, 'relation' => $item->PackageCategoryRelation ])
-                                                ->getSingleResult()['Total'];
-                }
-                else if($item->CertificateNumber != null){
-                    $item->Quantity = $this->entityManager
-                                                ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service AND u.CertificateNumber = :certificate')
-                                                ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id, 'certificate' => $item->CertificateNumber ])
-                                                ->getSingleResult()['Total'];
-                }
-                else {
-                    $item->Quantity = $this->entityManager
-                                            ->createQuery('SELECT count(u.Quantity) as Total FROM App\Models\Test\ShoppingCartItemModel u WHERE u.Cart = :cart AND u.Service = :service')
-                                            ->setParameters([ 'cart' => $cart->Id, 'service' => $item->Service->Id ])
-                                            ->getSingleResult()['Total'];
-                }
+                $item->Quantity = $this->getItemQuantity($request, $item);
             }
             
             
@@ -157,11 +173,47 @@ class ShoppingCartController extends Controller
         }
         catch (\Exception $e){
             print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
 
+    public function updateCart(Request $request){
+        $session = $request->session();
+        $sessionId = $session->getId();
+
+        $cart = $this->getCart($sessionId);
+
+        try {
+            foreach($_POST['id'] as $key => $itemId){
+                $item = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
+                                                ->findOneBy(['Id' => $itemId]);
+
+                if($item == null)
+                    return redirect()->route('cart.myCart')->with('failure', trans('messages.invalid_data'));
+
+                // get item quantity
+                $item->Quantity = $this->getItemQuantity($request, $item);
+
+                $toQuantity = $_POST['quantity'][$key];
+
+                if($item->Quantity < $toQuantity){
+                    for($i = $item->Quantity; $i < $toQuantity; $i++){
+                        $itemClone = clone $item;
+
+                        $this->entityManager->persist($itemClone);
+                    }
+                }
+            }
+
+            $this->entityManager->flush();
+
+            return redirect()->route('cart.myCart')->with('success', trans('messages.cart_updated_success'));
+        }
+        catch (\Exceptin $e){
+            exit();
+            return redirect()->route('cart.myCart')->with('failure', trans('messages.error'));
+        }
+    }
     /* add riu wedding package to cart */
     public function addRiuPackageToCart(Request $request){
         $session = $request->session();
