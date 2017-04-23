@@ -313,7 +313,6 @@ class PaymentController extends Controller
                 
                 $paymentGateway = new \App\Classes\gwapi;
                 $paymentGateway->setLogin(\Config::get('gateway.user'), \Config::get('gateway.password'));
-                //$paymentGateway->setLogin("renovaspa", "heath1098");
 
                 /* payment data */
                 $total = $reservation->getTotal();
@@ -557,6 +556,8 @@ class PaymentController extends Controller
             return \Redirect::to($approvalUrl);
         }
         catch (\PayPal\Exception\PayPalConnectionException $e) {
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
 
@@ -673,10 +674,10 @@ class PaymentController extends Controller
                 $message->setBody($mailData['voucher'], 'text/html');
                 
                 /* this mail will be send from? */
-                $message->from('info@turnviral.net', 'Renovaspa');
+                $message->from(\Config::get('email.info'), 'Renovaspa');
 
                 /* the sender's data is? */
-                $message->sender('info@renovaspa.com', 'Renovaspa');
+                $message->sender(\Config::get('email.info'), 'Renovaspa');
                 
                 /* this mail is in hidden copy fro? */
                 $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
@@ -685,7 +686,7 @@ class PaymentController extends Controller
                 $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 
                 /* this mail should be replie to? */
-                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
                 if($reservation->Type == 1)
                     $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
@@ -706,17 +707,17 @@ class PaymentController extends Controller
                     //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                     
                     /* this mail will be send from? */
-                    $message->from('info@turnviral.net', 'Renovaspa');
+                    $message->from(\Config::get('email.info'), 'Renovaspa');
                     
                     /* the sender's data is? */
-                    $message->sender('info@renovaspa.com', 'Renovaspa');
+                    $message->sender(\Config::get('email.info'), 'Renovaspa');
                     
                     /* this mail is in hidden copy fro? */
                     $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
                     $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                     
                     /* this mail should be replie to? */
-                    $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                    $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
                     $message->attach($mailData['pdf_path']);
 
@@ -743,13 +744,13 @@ class PaymentController extends Controller
                             //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                             
                             /* this mail will be send from? */
-                            $message->from('info@turnviral.net', 'Renovaspa');
+                            $message->from(\Config::get('email.info'), 'Renovaspa');
                             
                             /* the sender's data is? */
-                            $message->sender('info@renovaspa.com', 'Renovaspa');
+                            $message->sender(\Config::get('email.info'), 'Renovaspa');
                             
                             /* this mail should be replie to? */
-                            $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                            $message->replyTo(\Config::get('email.info'), 'Renovaspa');
                             
                             /* the recipient of this mail is?  */
                             $message->to($detail->DeliveryEmail, $detail->ToCustomerName);

@@ -121,10 +121,10 @@ class HomeController extends Controller
                     <p><strong>Message: </strong></p>
                     <p>".$data['message']." </p>
                     ", 'text/html');
-                $message->from('info@turnviral.net', 'Renovaspa');
-                $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to('contact@turnviral.com', 'Renovaspa Contact Form');
-                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->from(\Config::get('email.info'), 'Renovaspa');
+                $message->sender(\Config::get('email.info'), 'Renovaspa');
+                $message->to(\Config::get('email.contact'), 'Renovaspa Contact Form');
+                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
                 $message->subject("Renovaspa - Contact form");
             });
@@ -177,10 +177,10 @@ class HomeController extends Controller
                     <p><strong>Name: </strong> ".$data['name']." </p>
                     <p><strong>Email: </strong> ".$data['email']." </p>
                     ", 'text/html');
-                $message->from('info@turnviral.net', 'Renovaspa');
-                $message->sender('info@renovaspa.com', 'Renovaspa');
-                $message->to('employer@turnviral.net', 'Renovaspa Employer');
-                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->from(\Config::get('email.info'), 'Renovaspa');
+                $message->sender(\Config::get('email.info'), 'Renovaspa');
+                $message->to(\Config::get('email.employer'), 'Renovaspa Employer');
+                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
                 $message->attach($data['file_path']);
 
                 $message->subject("Renovaspa - Join us form");

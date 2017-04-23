@@ -208,10 +208,10 @@ class WeddingController extends Controller
             $mail->send([],[], function($message) use ($mailData) {
                 $reservation = $mailData['reservation'];
                 $message->setBody($mailData['voucher'], 'text/html');
-                $message->from('info@turnviral.net', 'Renovaspa');
-                $message->sender('info@renovaspa.com', 'Renovaspa');
+                $message->from(\Config::get('email.info'), 'Renovaspa');
+                $message->sender(\Config::get('email.info'), 'Renovaspa');
                 $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
-                $message->replyTo('info@renovaspa.com', 'Renovaspa');
+                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
                 $message->subject("Online Reservations - Wedding groups #" . $reservation->ConfirmationNumber);
             });
 

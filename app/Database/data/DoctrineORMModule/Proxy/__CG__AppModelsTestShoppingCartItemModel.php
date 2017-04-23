@@ -138,11 +138,13 @@ class ShoppingCartItemModel extends \App\Models\Test\ShoppingCartItemModel imple
     }
 
     /**
-     * 
+     * {@inheritDoc}
      */
     public function __clone()
     {
         $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
+
+        parent::__clone();
     }
 
     /**
