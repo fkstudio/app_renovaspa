@@ -452,6 +452,12 @@ class PaymentController extends Controller
                     \Config::get('paypal.secret_key'))
             );
 
+            $config = [
+                'mode' => \Config::get('paypal.mode')
+            ];
+
+            $paypal->setConfig($config);
+
             // create paypal payer
             $payer = new Payer();
             $payer->setPaymentMethod('paypal');
