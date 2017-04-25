@@ -178,6 +178,8 @@ Route::get('/payment/gateway', [ 'as' => 'payment.gateway', 'uses' => 'PaymentCo
 
 Route::get('/payment/paypal', [ 'as' => 'payment.paypal', 'uses' => 'PaymentController@paypalPayment' ]);
 
+Route::get('/payment/complete/payment', [ 'as' => 'payment.completePaypalPayment', 'uses' => 'PaymentController@completePaypalPayment' ]);
+
 Route::get('/payment/redsys', [ 'as' => 'payment.redsysPayment', 'uses' => 'PaymentController@redsysPayment' ]);
 
 Route::post('/payment/gateway/proceed', [ 'as' => 'payment.execGatewayPayment', 'uses' => 'PaymentController@execGatewayPayment' ]);

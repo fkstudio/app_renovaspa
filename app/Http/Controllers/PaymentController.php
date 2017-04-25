@@ -21,6 +21,8 @@ use PayPal\Api\Amount;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\ExecutePayment;
 
 
 
@@ -445,12 +447,13 @@ class PaymentController extends Controller
             // store hotel object to reuse it
             $hotel = $reservation->Hotel;
 
+            $tokenCredential = new OAuthTokenCredential(
+                                        \Config::get('paypal.api_key'), 
+                                        \Config::get('paypal.secret_key')
+                                    );
+
             // create a paypal object
-            $paypal = new ApiContext(
-                new OAuthTokenCredential(
-                    \Config::get('paypal.api_key'), 
-                    \Config::get('paypal.secret_key'))
-            );
+            $paypal = new ApiContext($tokenCredential);
 
             $config = [
                 'mode' => \Config::get('paypal.mode')
@@ -543,7 +546,7 @@ class PaymentController extends Controller
 
             // create paypal redirect object
             $redirectUrls = new RedirectUrls();
-            $redirectUrls->setReturnUrl($this->siteUrl."/payment/voucher") // FIXME
+            $redirectUrls->setReturnUrl($this->siteUrl."/payment/complete/payment") // FIXME
                          ->setCancelUrl($this->siteUrl."/reservation/canceled"); // FIXME
 
 
@@ -561,12 +564,47 @@ class PaymentController extends Controller
 
             return \Redirect::to($approvalUrl);
         }
-        catch (\PayPal\Exception\PayPalConnectionException $e) {
-            print_r($e);
-            exit();
+        catch (\Exception $e) {
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
 
+    }
+
+    public function completePaypalPayment(){
+        
+        $tokenCredential = new OAuthTokenCredential(
+                                        \Config::get('paypal.api_key'), 
+                                        \Config::get('paypal.secret_key')
+                                    );
+
+        // create a paypal object
+        $paypal = new ApiContext($tokenCredential);
+
+        $config = [
+            'mode' => \Config::get('paypal.mode')
+        ];
+        
+        $paypal->setConfig($config);
+
+        $paymentId = $_GET['paymentId'];
+        $payment = Payment::get($paymentId, $paypal);
+        $payerId = $_GET['PayerID'];
+
+        // Execute payment with payer id
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payerId);
+
+        try {
+            // Execute payment
+            $result = $payment->execute($execution, $paypal);
+            
+            return redirect()->route('payment.serviceVoucher');
+
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            return redirect()->route('reservation.checkout')->with('failure', 'Paypal connection error.');
+        } catch (Exception $ex) {
+            return redirect()->route('reservation.checkout')->with('failure', 'Has ocurred an error.');
+        }
     }
 
 
