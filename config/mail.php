@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@turnviral.net'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@renovaspa.com'),
         'name' => env('MAIL_FROM_NAME', 'Renovaspa'),
     ],
 

@@ -2,8 +2,8 @@
 
 return [
 	// test credencials
-	'info' => 'info@turnviral.net', 
-	'contact' => 'contact@turnviral.net',
-	'employer' => 'employer@turnviral.net'
+	'info' => 'info@renovaspa.com', 
+	'contact' => 'contact@renovaspa.com',
+	'employer' => 'employer@renovaspa.com'
 ];
 

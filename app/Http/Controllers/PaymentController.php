@@ -305,7 +305,6 @@ class PaymentController extends Controller
                 $sessionId = $session->getId();
                 $currency = $session->get('currency');
                 $currencySymbol = $session->get('currency_symbol');
-        
 
                 $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
 
@@ -332,8 +331,13 @@ class PaymentController extends Controller
                     "LA",'21000','DR','809-747-2992',"","sales@renovaspa.com",
                     "");
 
+                $lastNumbers = substr($cardNumber, -4);
+
+                if($lastNumbers == null)
+                    return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_data'));
+
                 // add the last four card numbers to reservation
-                $reservation->LastFourCardNumbers = substr($cardNumber, -4);
+                $reservation->LastFourCardNumbers = $lastNumbers;
                 $this->entityManager->persist($reservation);
                 $this->entityManager->flush();
 
@@ -403,19 +407,40 @@ class PaymentController extends Controller
         $merchantUrlOk = $this->siteUrl.'/payment/voucher';
         $merchantUrlKo = $this->siteUrl."/reservation/canceled";
 
+
+        $total =  $reservation->getTotal() * 100;
+        $order_id = time();
+
+        // echo $total . '<br/>';
+        // echo $referenceNumber . '<br/>';
+        // echo $comercialCodeFunc . '<br/>';
+        // echo $currencyCode . '<br/>';
+        // echo $transactionType . '<br/>';
+        // echo $terminal . '<br/>';
+        // echo $redsysUrl . '<br/>';
+        // echo $merchantUrlOk . '<br/>';
+        // echo $merchantUrlKo . '<br/>';
+        // exit();
+
         /* set reservation data */
-        $redsys->setParameter("DS_MERCHANT_AMOUNT",$reservation->getTotal());
-        $redsys->setParameter("DS_MERCHANT_ORDER", $reservation->ConfirmationNumber);
+        $redsys->setParameter("DS_MERCHANT_AMOUNT", $total);
+        $redsys->setParameter("DS_MERCHANT_ORDER", strval($order_id));
         $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
         $redsys->setParameter("DS_MERCHANT_CURRENCY",$currencyCode);
         $redsys->setParameter("DS_MERCHANT_TRANSACTIONTYPE",$transactionType);
         $redsys->setParameter("DS_MERCHANT_TERMINAL",$terminal);
-        $redsys->setParameter("DS_MERCHANT_MERCHANTURL", $redsysUrl);
+        $redsys->setParameter("DS_MERCHANT_MERCHANTURL", '');
         $redsys->setParameter("DS_MERCHANT_URLOK",$merchantUrlOk);
         $redsys->setParameter("DS_MERCHANT_URLKO",$merchantUrlKo);
 
         $params = $redsys->createMerchantParameters();
         $signature = $redsys->createMerchantSignature($sha256Key);
+
+        // echo $redsysUrl . '<br/>';
+        // echo $version . '<br/>';
+        // echo $params . '<br/>';
+        // echo $signature . '<br/>';
+        // exit();
 
         /* redirect to temp view  */
         return view("payment.redsys", [ 'url' => $redsysUrl, 'version' => $version, 'params' => $params, 'signature' => $signature ]);

@@ -201,7 +201,7 @@
  }
  .block-content {
  	-webkit-transition: opacity 0.3s,  padding-top 0.3s, filter 0.2s linear;
-	height: 250px;
+	height: 340px;
 	padding-top: 20%;
 	text-align: center;
  }
