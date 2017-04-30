@@ -811,7 +811,30 @@ class PaymentController extends Controller
                             $detail = $mailData['detail'];
 
                             //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
-                            
+                            $message->setBody("
+                                <p>
+                                Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
+                                <br/>
+                                franklyn Has sent you a Gift Certificate from Renova Spa.
+                                <br/>
+                                Attached to this e-mail you will find the Gift Certificate/s.
+                                <br/>
+                                Please print it/them out and present it/them at the Renova spa in ".$reservation->Hotel->Name.", ".$reservation->Region->Country->Name.", ".$reservation->Region->Name.", in order to choose and schedule your treatments.
+                                <br/>
+                                We highly recommend you to come to the spa soon upon your arrival to the hotel in order to prevent availability problems.
+                                <br/>
+                                We will be happy to assist you with any further information.
+                                <br/>
+                                Please, e-mail us at ".$reservation->Hotel->NotifyEmail."
+                                <br/>
+                                We hope you enjoy our spa services and look forward to welcome you at Renova SPA!
+                                <br/>
+                                ".$reservation->Hotel->CustomerServiceName."
+                                <br/>
+                                Customer Services & Online Sales
+                                </p>
+                                ", 'text/html');
+
                             /* this mail will be send from? */
                             $message->from(\Config::get('email.info'), 'Renovaspa');
                             

@@ -6,13 +6,13 @@
     <div class="collapse navbar-collapse navbar-right" id="navbar">
         <ul class="nav navbar-nav">
           <li><a href="mailto:info@renovaspa.com">info@renovaspa.com</a></li>
-          <li class="dropdown">
+          <?php /*<li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ trans('navbar.lang') }} <span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-inverse">
               <li><a href="?lang=es">{{ trans('navbar.es') }}</a></li>
               <li><a href="?lang=en">{{ trans('navbar.en') }}</a></li>
             </ul>
-          </li>
+          </li> */ ?>
         </ul>
       </div>
   </div>
@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="{{ URL::to('/') }}">
-          <img class="img-responsive" style="margin-top: -17px;" src="{{ URL::to('/') }}/images/logo-white-bg.png">
+          <img class="img-responsive" style="margin-top: -17px;width: 170px;" src="{{ URL::to('/') }}/images/logo-white-bg.png">
         </a>
     </div>
 

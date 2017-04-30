@@ -290,7 +290,13 @@
 	        
 		});
 
-		$('.timepicker').timepicker();
+		$('.timepicker').timepicker({
+			interval: 60,
+		    minTime: '08',
+		    maxTime: '06pm',
+		    defaultTime: '24',
+		    startTime: '10:00'
+		});
 
 		$("#dateInfoModal").modal("show");
 	});

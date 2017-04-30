@@ -17,9 +17,9 @@
 		<img  style="border-radius: 0px 0 4px 4px;
 					 position: absolute;
 					 margin-left: 19px;
-					 margin-top: -2px;" src="http://renovaspa.com/public/images/logo-white.png">
+					 margin-top: -2px;" src="http://renovaspa.com/images/logo-white.png">
 		<img style="width: 100%;
-					margin-top: -132px;" src="http://renovaspa.com/public/images/content/Depositphotos_25639491_original.jpg">
+					margin-top: -132px;" src="http://renovaspa.com/images/Depositphotos_25639491_original.jpg">
 </div>
 	<section>
 		<p style="color:#3c2f21;font-size: 19px;">Dear {{ $customer_name }}</p>
