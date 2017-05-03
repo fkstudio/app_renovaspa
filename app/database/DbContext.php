@@ -47,12 +47,12 @@ class DbContext
                 'dbname'   => 'final_renova',
             );
 
-            $dbParams = array(
-                'driver'   => 'pdo_mysql',
-                'user'     => 'root',
-                'password' => 'root',
-                'dbname'   => 'final_renova',
-            );
+            // $dbParams = array(
+            //     'driver'   => 'pdo_mysql',
+            //     'user'     => 'root',
+            //     'password' => 'root',
+            //     'dbname'   => 'final_renova',
+            // );
         
         
 
