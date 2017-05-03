@@ -641,6 +641,7 @@ class PaymentController extends Controller
         $reservation_id = $session->get('current_reservation_id');
         $voucher = "";
 
+
         try {
             /* if reservation id is null return an error */
             if(!isset($reservation_id) || empty($reservation_id)){
@@ -665,7 +666,8 @@ class PaymentController extends Controller
             $paymentInfo = $reservation->PaymentInformation;
             /* set voucher data */
             $model = [
-                'customer_name' => $reservation->PaymentInformation->FirstName,
+                'customer_name' => $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName,
+                'type' => $reservation->Type,
                 'customer_email' => $reservation->PaymentInformation->CustomerEmail,
                 'current_date' => new \DateTime("now"),
                 'confirmation_number' => $reservation->ConfirmationNumber,
@@ -692,7 +694,7 @@ class PaymentController extends Controller
                       "name" => $detail->CustomerName,
                       "quantity" => 1,
                       "service" => $detail->Service->Name,
-                      "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m:s'),
+                      "appointment_and_time" => $detail->PreferedDate->format('Y/d/m') . ' ' . $detail->PreferedTime->format('h:m a'),
                       "details" => $detail->Cabin->Name,
                       "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
                     );
@@ -705,20 +707,24 @@ class PaymentController extends Controller
             else if ($reservation->Type == 2){
                 foreach($reservation->CertificateDetails as $key => $detail){
                     $model['details'][$key] = array(
+                        'certificate_type' => $detail->Type,
+                        'real_customer_first_name' => $detail->RealCustomerFirstName,
+                        'real_customer_last_name' => $detail->RealCustomerLastName,
                         'from_customer' => $detail->FromCustomerName,
                         'to_customer' => $detail->ToCustomerName,
                         'confirmation_number' => substr($detail->Id, 0, 7),
+                        'sub_total' => number_format($detail->SubTotal),
                         'price' => number_format($detail->Value)
                     );
 
                     if($detail->SendType == 1){
-                        $model['details'][$key]['type'] = 'Email';
+                        $model['details'][$key]['delivery_method'] = 'Email';
                     }
                     else if($detail->SendType == 2){
-                        $model['details'][$key]['type'] = "Print";
+                        $model['details'][$key]['delivery_method'] = "Print";
                     }
                     else if ($detail->SendType == 3){
-                        $model['details'][$key]['type'] = "Hotel";
+                        $model['details'][$key]['delivery_method'] = "Hotel";
                     }
                 }
 
@@ -727,12 +733,12 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            $session->flush();
+            //$session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
 
-            $mailData = [
+            // $mailData = [
                 'voucher' => $voucher,
                 'reservation' => $reservation
             ];
@@ -815,7 +821,7 @@ class PaymentController extends Controller
                                 <p>
                                 Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
                                 <br/>
-                                franklyn Has sent you a Gift Certificate from Renova Spa.
+                                ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName."Has sent you a Gift Certificate from Renova Spa.
                                 <br/>
                                 Attached to this e-mail you will find the Gift Certificate/s.
                                 <br/>

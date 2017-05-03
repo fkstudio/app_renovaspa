@@ -196,7 +196,11 @@
 							</tr>
 							@if ($hotel_region->ActiveDiscount)
 							<tr>
+								@if($model->Type == 1)
 								<td><span style="font-size: 15px;font-weight: bold;" class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount_available') }}</span></td>
+								@else
+								<td><span style="font-size: 15px;font-weight: bold;" class="discount">{{ $hotel_region->Discount }}% bonus</span></td>
+								@endif
 							</tr>
 							@endif
 							<tr>

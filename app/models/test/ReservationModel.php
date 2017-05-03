@@ -175,7 +175,7 @@
 						}
 					}
 					else{
-						$this->Subtotal += $detail->Value;
+						$this->Subtotal += $detail->SubTotal;
 					}
 				}
 			}

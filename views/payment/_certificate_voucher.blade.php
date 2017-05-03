@@ -94,6 +94,14 @@
 				<td><strong>Destination:</strong></td>
 				<td style="float: right;">{{ $hotel_name }}</td>
 			</tr>
+			<tr>
+				<td><strong>Check in:</strong></td>
+				<td style="float: right;">{{ $check_in }}</td>
+			</tr>
+			<tr>
+				<td><strong>Check out:</strong></td>
+				<td style="float: right;">{{ $check_out }}</td>
+			</tr>
 		</tbody>
 	</table>
 	<h3 style=" margin-top: 25px;
@@ -114,21 +122,30 @@
 					  font-weight: bold;"
 		>
 			<tr>
-				<th style="    text-align: left;
+				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">From</th>
-				<th style="    text-align: left;
+				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">For.</th>
-				<th style="    text-align: left;
+				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">Delivery method</th>
-				<th style="    text-align: left;
+				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">Confirmation number</th>
-				<th style="    text-align: left;
-font-weight: normal;
-font-size: 16px;">Price</th>
+				<th style="text-align: left;
+					font-weight: normal;
+					font-size: 16px;">
+						@if($details[0]['certificate_type'] == 1)
+							{{ 'Discount' }}
+						@else
+							{{ 'Discount' }}
+						@endif
+					</th>
+				<th style="text-align: left;
+					font-weight: normal;
+					font-size: 16px;">Price</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -136,11 +153,21 @@ font-size: 16px;">Price</th>
 			<tr style="color: #545454;
 					   font-size: 14px;"
 			>
-				<td>{{ $detail["from_customer"] }}</td>
-				<td>{{ $detail["to_customer"] }}</td>
-				<td>{{ $detail["type"] }}</td>
+				<td>{{ $customer_name }}</td>
+				<td>{{ $detail["real_customer_first_name"] . ' ' . $detail["real_customer_last_name"] }}</td>
+				<td>{{ $detail["delivery_method"] }}</td>
 				<td>{{ $detail["confirmation_number"] }}</td>
-				<td>{{ $currency_symbol.$detail["price"] }}</td>
+				<td>
+				@if($detail['certificate_type'] == 1)
+					{{ $currency_symbol.( $detail["sub_total"] - $detail["price"] ) }}
+				@else
+					@php
+						$bonus = $detail["price"] - $detail["sub_total"];
+					@endphp
+					{{ $currency_symbol.( $bonus ) }}
+				@endif
+				</td>
+				<td>{{ $currency_symbol.$detail["sub_total"] }}</td>
 				<td></td>
 			</tr>
 			@endforeach

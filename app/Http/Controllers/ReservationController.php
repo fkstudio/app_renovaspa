@@ -92,9 +92,11 @@ class ReservationController extends Controller
             if($request->isMethod('post')){
 
                 /* get hotel data */
-                $hotel = $this->entityManager->getRepository('App\Models\Test\HotelModel')->findOneBy(['Id' => $session->get('hotel_id')]);
+                $hotelRegion = $this->entityManager->getRepository('App\Models\Test\HotelRegionModel')->findOneBy(['Region' => $session->get('region_id'), 'Hotel' => $session->get('hotel_id')]);
+                
+                $hotel = $hotelRegion->Hotel;
 
-                $region = $this->entityManager->getRepository('App\Models\Test\RegionModel')->findOneBy(['Id' => $session->get('region_id')]);
+                $region = $hotelRegion->Region;
 
                 $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
 
@@ -102,7 +104,8 @@ class ReservationController extends Controller
                 if($hotel == null or $region == null or $status == null){  
                     return redirect()->route("cart.myCart")->with("failure", "An error found. Invalid data.", 1);
                 }
-                    
+                
+
                 /* fill reservation data */
                 $reservation = new \App\Models\Test\ReservationModel();
                 $reservation->Type = $reservationType;
@@ -218,6 +221,7 @@ class ReservationController extends Controller
 
                         $certType = $session->get('certificate_type');
                         $totalValue = 0;
+                        $subTotalValue = 0;
                         
                         $certificateItem->Reservation = $reservation;
                         $certificateItem->Type = $certType;
@@ -231,6 +235,7 @@ class ReservationController extends Controller
                             /* get total price*/
                             foreach($cartItems as $item){
                                 $totalValue += $item->Service->getPrice($reservation->Hotel->Id) * $item->Quantity;
+                                $subTotalValue += $item->Service->getPlanePrice($reservation->Hotel->Id) * $item->Quantity;
 
                                 /* add services to certificate item */
                                 $certificateDetailService = new \App\Models\Test\CertificateDetailServiceModel();
@@ -247,14 +252,20 @@ class ReservationController extends Controller
 
                             if($cartItem == null)
                                 return redirect()->route('certificate.registration')->with("failure", "Invalid certificate data");
-                                
-                            $totalValue = $cartItem->Value;
+                            
+                            if($hotelRegion->ActiveDiscount){
+                                $discount = ( $hotelRegion->Discount / 100 ) * $cartItem->Value;
+                                $totalValue = $cartItem->Value + $discount;
+                            }
+                            
+                            $subTotalValue = $cartItem->Value;
                         }
                         else
                             return redirect()->route('home.home')->with("failure", "Error Processing Request");
                             
                         
                         $certificateItem->Value = $totalValue;
+                        $certificateItem->SubTotal = $subTotalValue;
                         $certificateItem->CertificateNumber = $key + 1;
                         $certificateItem->FromCustomerName = $_POST['from_customer'][$key];
                         $certificateItem->ToCustomerName = $_POST['to_customer'][$key];

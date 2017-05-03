@@ -259,7 +259,7 @@
 	$(function() {
 	    $('.datepicker').daterangepicker({
 	    	locale: {
-		      format: 'MM/D/YYYY'
+		      format: 'MM/DD/YYYY'
 		    },
 	        minDate: moment(),
 	    });
