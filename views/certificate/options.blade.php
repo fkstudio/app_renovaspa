@@ -167,9 +167,8 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 			<div v-if='type == 2' class="col-md-12">
 				<div class="row">
 					<div class="form-group">
-						<label>B) Select your gifts</label>
+						<label>B) Select your gifts amount</label>
 						<p><strong>Valued-Based Gifts</strong>
-						<br/>
 					</div>
 					<div class="clearfix"></div>
 					<div v-for='certificate in value_based' class="col-md-12">
@@ -196,6 +195,7 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 						</div>	
 					</div>
 					<div class="clearfix"></div>
+					<br/>
 					<a style="color:#5fc7ae;" href="#fakelink" data-toggle="modal" data-target="#pricingModal">View a pricing guide</a>
 				</div>
 			</div>
