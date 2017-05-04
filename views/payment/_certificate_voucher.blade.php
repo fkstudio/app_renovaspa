@@ -127,7 +127,7 @@ font-weight: normal;
 font-size: 16px;">From</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">For.</th>
+font-size: 16px;">To</th>
 				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">Delivery method</th>

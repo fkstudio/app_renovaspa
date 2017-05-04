@@ -53,7 +53,7 @@ class ApiRedsys{
 		$iv = implode(array_map("chr", $bytes)); //PHP 4 >= 4.0.2
 
 		// Se cifra
-		$ciphertext = mcrypt_encrypt(MCRYPT_3DES, '3dBGQ+AZ2WL4bkWMWnc1xc5T', $message, MCRYPT_MODE_CBC, $iv); //PHP 4 >= 4.0.2
+		$ciphertext = mcrypt_encrypt(MCRYPT_3DES, $key, $message, MCRYPT_MODE_CBC, $iv); //PHP 4 >= 4.0.2
 		return $ciphertext;
 	}
 

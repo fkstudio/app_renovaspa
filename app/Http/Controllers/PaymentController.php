@@ -373,77 +373,67 @@ class PaymentController extends Controller
         $sessionId = $session->getId();
         $reservation_id = $session->get('current_reservation_id');
 
-        /* ApiRedsys Object*/
-        $redsys = new \App\Classes\ApiRedsys();
+        try {
+            /* ApiRedsys Object*/
+            $redsys = new \App\Classes\ApiRedsys();
 
-        // Redsys payment url
-        //$redsysUrl = "https://sis-t.redsys.es:25443/sis/realizarPago"; // UCOOMENT TO TEST
-        $redsysUrl = \Config::get('redsys.url');
+            // Redsys payment url
+            //$redsysUrl = "https://sis-t.redsys.es:25443/sis/realizarPago"; // UCOOMENT TO TEST
+            $redsysUrl = \Config::get('redsys.url');
 
-        /* get current reservation */
-        $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
+            /* get current reservation */
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
 
-        /* if reservation is null return an error */
-        if($reservation == null){
-            return redirect()->route('/')->with('failure', trans('messages.session_expired'));
+            /* if reservation is null return an error */
+            if($reservation == null){
+                return redirect()->route('/')->with('failure', trans('messages.session_expired'));
+            }
+
+            // Redsys configuration
+            $version = \Config::get('redsys.version');
+            $sha256Key = \Config::get('redsys.sha_256_key');
+            $comercialKey = \Config::get('redsys.comercial_key');
+
+            $referenceNumber = $reservation->ConfirmationNumber;
+
+            // Input values
+            $comercialCodeFunc = \Config::get('redsys.comercial_code_func');
+            $terminal = \Config::get('redsys.terminal');
+            $currencyCode = \Config::get('redsys.currency_code');
+            $transactionType = \Config::get('redsys.transaction_type');
+
+            /* redirects url */
+            $merchantUrlOk = $this->siteUrl.'/payment/voucher';
+            $merchantUrlKo = $this->siteUrl."/reservation/canceled";
+
+            $total =  strval( $reservation->getTotal() * 100 );
+
+            /* set reservation data */
+            $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
+            $redsys->setParameter("DS_MERCHANT_TERMINAL",$terminal);
+            $redsys->setParameter("DS_MERCHANT_ORDER", $referenceNumber);
+            $redsys->setParameter("DS_MERCHANT_AMOUNT", $total);
+            $redsys->setParameter("DS_MERCHANT_PRODUCTDESCRIPTION", 'Renova Spa Services, Voucher '.$referenceNumber);
+            $redsys->setParameter('DS_MERCHANT_TITULAR', "Renovaspa");
+            $redsys->setParameter("DS_MERCHANT_CURRENCY",$currencyCode);
+            $redsys->setParameter("DS_MERCHANT_TRANSACTIONTYPE",$transactionType);
+            $redsys->setParameter("DS_MERCHANT_MERCHANTURL", $merchantUrlOk);
+            $redsys->setParameter("DS_MERCHANT_URLOK",$merchantUrlOk);
+            $redsys->setParameter("DS_MERCHANT_URLKO",$merchantUrlKo);
+            $redsys->setParameter("DS_Merchant_MERCHANTNAME", "Renovaspa");
+            $redsys->setParameter('DS_Merchant_ConsumerLanguage', "2");
+            $redsys->setParameter("DS_MERCHANT_MERCHANTDATA", $referenceNumber);
+
+
+            $params = $redsys->createMerchantParameters();
+            $signature = $redsys->createMerchantSignature($sha256Key);
+
+            return view("payment.redsys", [ 'url' => $redsysUrl, 'version' => $version, 'params' => $params, 'signature' => $signature ]);
         }
-
-
-
-        // Redsys configuration
-        $version = \Config::get('redsys.version');
-        $sha256Key = \Config::get('redsys.sha_256_key');
-        $comercialKey = \Config::get('redsys.comercial_key');
-
-        $referenceNumber = $reservation->ConfirmationNumber;
-
-        // Input values
-        $comercialCodeFunc = \Config::get('redsys.comercial_code_func');
-        $terminal = \Config::get('redsys.terminal');
-        $currencyCode = \Config::get('redsys.currency_code');
-        $transactionType = \Config::get('redsys.transaction_type');
-
-        /* redirects url */
-        $merchantUrlOk = $this->siteUrl.'/payment/voucher';
-        $merchantUrlKo = $this->siteUrl."/reservation/canceled";
-
-
-        $total =  $reservation->getTotal() * 100;
-        $order_id = time();
-
-        // echo $total . '<br/>';
-        // echo $referenceNumber . '<br/>';
-        // echo $comercialCodeFunc . '<br/>';
-        // echo $currencyCode . '<br/>';
-        // echo $transactionType . '<br/>';
-        // echo $terminal . '<br/>';
-        // echo $redsysUrl . '<br/>';
-        // echo $merchantUrlOk . '<br/>';
-        // echo $merchantUrlKo . '<br/>';
-        // exit();
-
-        /* set reservation data */
-        $redsys->setParameter("DS_MERCHANT_AMOUNT", $total);
-        $redsys->setParameter("DS_MERCHANT_ORDER", strval($order_id));
-        $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
-        $redsys->setParameter("DS_MERCHANT_CURRENCY",$currencyCode);
-        $redsys->setParameter("DS_MERCHANT_TRANSACTIONTYPE",$transactionType);
-        $redsys->setParameter("DS_MERCHANT_TERMINAL",$terminal);
-        $redsys->setParameter("DS_MERCHANT_MERCHANTURL", '');
-        $redsys->setParameter("DS_MERCHANT_URLOK",$merchantUrlOk);
-        $redsys->setParameter("DS_MERCHANT_URLKO",$merchantUrlKo);
-
-        $params = $redsys->createMerchantParameters();
-        $signature = $redsys->createMerchantSignature($sha256Key);
-
-        // echo $redsysUrl . '<br/>';
-        // echo $version . '<br/>';
-        // echo $params . '<br/>';
-        // echo $signature . '<br/>';
-        // exit();
-
-        /* redirect to temp view  */
-        return view("payment.redsys", [ 'url' => $redsysUrl, 'version' => $version, 'params' => $params, 'signature' => $signature ]);
+        catch(\Exception $e){
+            return redirect()->route('reservation.checkout')->with('failure', 'Please fill try sending the form again.');
+        }
+        
     }
 
     /* POST payment method */
@@ -733,12 +723,12 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
 
-            // $mailData = [
+            $mailData = [
                 'voucher' => $voucher,
                 'reservation' => $reservation
             ];
@@ -816,7 +806,6 @@ class PaymentController extends Controller
                             $reservation = $mailData['reservation'];
                             $detail = $mailData['detail'];
 
-                            //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                             $message->setBody("
                                 <p>
                                 Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."

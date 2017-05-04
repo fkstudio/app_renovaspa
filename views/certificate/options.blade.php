@@ -128,8 +128,8 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 </div>
 <div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
 										 background-size: cover;
-										 background-position: center center;
-										 height: 420px;"	>
+										 background-position: center -220px;
+										 height: 220px;"	>
 </div>
 <div id="vue-app" class="container-fluid">
 	
@@ -143,14 +143,18 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 				<p>Choose between value-based or service-based gift certificates</p>
 			</div>
 			<div class="row">
-				<div class="col-md-5">
-					<input type="radio" name="type" value="1" v-model='type' /> <strong>Service based</strong>  (No price will be shown) 
+				<div class="col-md-5 col-xs-12">
+					<input type="radio" name="type" value="1" v-model='type' /> <strong>SERVICE BASED</strong>  (No price will be shown) 
 					<span data-toggle="modal" data-target="#serviceBasedModal" style="margin-left: 20px;cursor:pointer;" class="glyphicon glyphicon-question-sign"></span>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="type" value="2" v-model='type' /> <strong>Value based</strong>
+				<div class="clearfix visible-xs"></div>
+				<br class="visible-xs" />
+				<div class="col-md-3 col-xs-12">
+					<input type="radio" name="type" value="2" v-model='type' /> <strong>VALUE BASED</strong>
 					<span data-toggle="modal" data-target="#valueBasedModal" style="margin-left: 20px;cursor:pointer;" class="glyphicon glyphicon-question-sign"></span>
 				</div>
+				<div class="clearfix visible-xs"></div>
+				<br class="visible-xs" />
 				<div class="col-md-2">
 					How many?
 				</div>
@@ -164,8 +168,8 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 				<div class="row">
 					<div class="form-group">
 						<label>B) Select your gifts</label>
-						<p><strong>Valued-Based Gifts</strong><br/>Choose between value-based or service-based gift certificates</p>
-
+						<p><strong>Valued-Based Gifts</strong>
+						<br/>
 					</div>
 					<div class="clearfix"></div>
 					<div v-for='certificate in value_based' class="col-md-12">

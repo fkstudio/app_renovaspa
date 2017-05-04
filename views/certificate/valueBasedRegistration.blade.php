@@ -27,7 +27,7 @@
 	<br/>
 	<form onsubmit="return validateTerms()" action="{{ URL::to('/') }}/reservation/checkout" method="POST">
 		@foreach($model as $key => $item)
-		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate No. {{ $item->CertificateNumber }} (Click here to edit)</h3>
+		<h3 style="cursor: pointer;" data-toggle="collapse" data-target="#certificate-content-{{ $key }}">Certificate No. {{ $item->CertificateNumber }} (Click here to add your details)</h3>
 		<hr/>
 		<div id="certificate-content-{{ $key }}" class="collapse">
 			<div class="row">
