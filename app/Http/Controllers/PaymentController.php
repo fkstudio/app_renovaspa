@@ -283,7 +283,18 @@ class PaymentController extends Controller
             $reservation_id = $session->get('current_reservation_id');
             $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $reservation_id]);
 
-            $total = $reservation->getTotal();
+            if($reservation->Type == 2){
+                if(count($reservation->CertificateDetails) && $reservation->CertificateDetails[0]->Type == 1){
+                    $total =  $reservation->getTotal();
+                }
+                else {
+                    $total =  $reservation->getSubTotal();
+                }
+            }
+            else {
+                $total =  $reservation->getTotal();  
+            }
+            
             $country = $reservation->Region->Country;
 
             return view('payment.cardinfo', [ 'country' => $country, 'total' => number_format($total, 2) ]);
@@ -316,8 +327,18 @@ class PaymentController extends Controller
                 $paymentGateway->setLogin(\Config::get('gateway.user'), \Config::get('gateway.password'));
 
                 /* payment data */
-                $total = $reservation->getTotal();
-
+                if($reservation->Type == 2){
+                    if(count($reservation->CertificateDetails) && $reservation->CertificateDetails[0]->Type == 1){
+                        $total =  strval( $reservation->getTotal() * 100 );
+                    }
+                    else {
+                        $total =  strval( $reservation->getSubTotal() * 100 );
+                    }
+                }
+                else {
+                    $total =  strval( $reservation->getTotal() * 100 );  
+                }
+                
                 $expData = explode(' / ', $_POST['month_year']);
                 if(count($expData) <= 0)
                     return redirect()->route('payment.gateway')->with('failure', trans('messages.invalid_card_data'));
@@ -406,7 +427,18 @@ class PaymentController extends Controller
             $merchantUrlOk = $this->siteUrl.'/payment/voucher';
             $merchantUrlKo = $this->siteUrl."/reservation/canceled";
 
-            $total =  strval( $reservation->getTotal() * 100 );
+            if($reservation->Type == 2){
+                if(count($reservation->CertificateDetails) && $reservation->CertificateDetails[0]->Type == 1){
+                    $total =  strval( $reservation->getTotal() * 100 );
+                }
+                else {
+                    $total =  strval( $reservation->getSubTotal() * 100 );
+                }
+            }
+            else {
+                $total =  strval( $reservation->getTotal() * 100 );  
+            }
+            
 
             /* set reservation data */
             $redsys->setParameter("DS_MERCHANT_MERCHANTCODE",$comercialCodeFunc);
@@ -521,14 +553,25 @@ class PaymentController extends Controller
                         $item->setName("Certificate No. " . ( $key + 1 ) )
                              ->setCurrency($currency->Name)
                              ->setQuantity(1)
-                             ->setSku(substr($certificate->Id, 0, 8))
-                             ->setPrice($certificate->Value);
+                             ->setSku(substr($certificate->Id, 0, 8));
+
+                        if($certificate->Type == 1){
+                            
+                            $item->setPrice($certificate->Value);
+
+                            $total += $certificate->Value;
+                            $subtotal += $certificate->Value;
+                        }
+                        else {
+                            $item->setPrice($certificate->SubTotal);
+
+                            $total += $certificate->SubTotal;
+                            $subtotal += $certificate->SubTotal;
+                        }
 
                         // add item to array items
                         $items[] = $item;
 
-                        $subtotal += $certificate->Value;
-                        $total += $certificate->Value;
                     endforeach;
                     break;
             }

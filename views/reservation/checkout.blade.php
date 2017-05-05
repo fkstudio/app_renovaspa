@@ -144,7 +144,6 @@
 								<br/>
 								<span>{{ trans('shared.final_price') }}: <strong>{{ $country->Currency->Symbol.number_format($detail->Service->getPrice($hotel_id), 2) }}</strong></span>
 								<br/>
-								<a href="#fakelink" style="margin-right: 10px;">Edit</a>
 								<a href="{{ URL::to('/') }}/reservation/service/delete/item/{{ $detail->Id }}">Remove</a>
 							</div>
 						</div>
@@ -179,7 +178,6 @@
 								<br/>
 								<span>{{ trans('checkout.value') }}: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
 								<br/>
-								<a href="#fakelink" style="margin-right: 10px;">Edit</a>
 								<a href="{{ URL::to('/') }}/reservation/certificate/delete/item/{{ $detail->Id }}/checkout">Remove</a>
 							</div>
 						</div>
@@ -205,7 +203,11 @@
 							@endif
 							<tr>
 								<td><strong>Total</strong></td>
+								@if($model->Type == 2 && count($model->CertificateDetails) > 0 && $model->CertificateDetails[0]->Type == 2)
+								<td>{{ $country->Currency->Symbol }}{{ number_format($model->getSubTotal(), 2) }}</td>
+								@else
 								<td>{{ $country->Currency->Symbol }}{{ number_format($model->getTotal(), 2) }}</td>
+								@endif
 							</tr>
 						</tbody>
 					</table>
