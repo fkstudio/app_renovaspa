@@ -766,7 +766,7 @@ class PaymentController extends Controller
             }
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
 
             /* mail object */
             $mail = app()['mailer'];
@@ -777,124 +777,124 @@ class PaymentController extends Controller
             ];
 
             /* send voucher view */
-            // $mail->send([],[], function($message) use ($mailData) {
-            //     $reservation = $mailData['reservation'];
-            //     $message->setBody($mailData['voucher'], 'text/html');
+            $mail->send([],[], function($message) use ($mailData) {
+                $reservation = $mailData['reservation'];
+                $message->setBody($mailData['voucher'], 'text/html');
                 
-            //     /* this mail will be send from? */
-            //     $message->from(\Config::get('email.info'), 'Renovaspa');
+                /* this mail will be send from? */
+                $message->from(\Config::get('email.info'), 'Renovaspa');
 
-            //     /* the sender's data is? */
-            //     $message->sender(\Config::get('email.info'), 'Renovaspa');
+                /* the sender's data is? */
+                $message->sender(\Config::get('email.info'), 'Renovaspa');
                 
-            //     /* this mail is in hidden copy fro? */
-            //     $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                /* this mail is in hidden copy fro? */
+                $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
 
-            //     /* the recipient of this mail is? */  
-            //     $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                /* the recipient of this mail is? */  
+                $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                 
-            //     /* this mail should be replie to? */
-            //     $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+                /* this mail should be replie to? */
+                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
-            //     if($reservation->Type == 1)
-            //         $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-            //     else
-            //         $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
-            // });
+                if($reservation->Type == 1)
+                    $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                else
+                    $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
+            });
 
-            // foreach($reservation->CertificateDetails as $key => $detail){
-            //     /* store detail object */
-            //     $mailData['detail'] = $detail;
-            //     $mailData['pdf_path'] = $this->createPDF($detail);
+            foreach($reservation->CertificateDetails as $key => $detail){
+                /* store detail object */
+                $mailData['detail'] = $detail;
+                $mailData['pdf_path'] = $this->createPDF($detail);
                 
-            //     /* send voucher view */
-            //     $mail->send([],[], function($message) use ($mailData) {
-            //         $reservation = $mailData['reservation'];
-            //         $detail = $mailData['detail'];
+                /* send voucher view */
+                $mail->send([],[], function($message) use ($mailData) {
+                    $reservation = $mailData['reservation'];
+                    $detail = $mailData['detail'];
 
-            //         //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
+                    //$message->setBody('Certificado #'.$detail->CertificateNumber. ' - Confirmation number #'. substr($detail->Id, 0, 7)); // FIXME
                     
-            //         /* this mail will be send from? */
-            //         $message->from(\Config::get('email.info'), 'Renovaspa');
+                    /* this mail will be send from? */
+                    $message->from(\Config::get('email.info'), 'Renovaspa');
                     
-            //         /* the sender's data is? */
-            //         $message->sender(\Config::get('email.info'), 'Renovaspa');
+                    /* the sender's data is? */
+                    $message->sender(\Config::get('email.info'), 'Renovaspa');
                     
-            //         /* this mail is in hidden copy fro? */
-            //         $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-            //         $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                    /* this mail is in hidden copy fro? */
+                    $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                    $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
                     
-            //         /* this mail should be replie to? */
-            //         $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+                    /* this mail should be replie to? */
+                    $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
-            //         $message->attach($mailData['pdf_path']);
+                    $message->attach($mailData['pdf_path']);
 
-            //         if($reservation->Type == 1)
-            //             $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-            //         else
-            //             $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
-            //     });  
-            // } 
+                    if($reservation->Type == 1)
+                        $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                    else
+                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                });  
+            } 
 
-            // if($reservation->Type == 2){
-            //     foreach($reservation->CertificateDetails as $key => $detail){
-            //         if($detail->SendType == 1){
+            if($reservation->Type == 2){
+                foreach($reservation->CertificateDetails as $key => $detail){
+                    if($detail->SendType == 1){
 
-            //             /* store detail object */
-            //             $mailData['detail'] = $detail;
-            //             $mailData['pdf_path'] = $this->createPDF($detail);
+                        /* store detail object */
+                        $mailData['detail'] = $detail;
+                        $mailData['pdf_path'] = $this->createPDF($detail);
                         
-            //             /* send voucher view */
-            //             $mail->send([],[], function($message) use ($mailData) {
-            //                 $reservation = $mailData['reservation'];
-            //                 $detail = $mailData['detail'];
+                        /* send voucher view */
+                        $mail->send([],[], function($message) use ($mailData) {
+                            $reservation = $mailData['reservation'];
+                            $detail = $mailData['detail'];
 
-            //                 $message->setBody("
-            //                     <p>
-            //                     Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
-            //                     <br/>
-            //                     ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName."Has sent you a Gift Certificate from Renova Spa.
-            //                     <br/>
-            //                     Attached to this e-mail you will find the Gift Certificate/s.
-            //                     <br/>
-            //                     Please print it/them out and present it/them at the Renova spa in ".$reservation->Hotel->Name.", ".$reservation->Region->Country->Name.", ".$reservation->Region->Name.", in order to choose and schedule your treatments.
-            //                     <br/>
-            //                     We highly recommend you to come to the spa soon upon your arrival to the hotel in order to prevent availability problems.
-            //                     <br/>
-            //                     We will be happy to assist you with any further information.
-            //                     <br/>
-            //                     Please, e-mail us at ".$reservation->Hotel->NotifyEmail."
-            //                     <br/>
-            //                     We hope you enjoy our spa services and look forward to welcome you at Renova SPA!
-            //                     <br/>
-            //                     ".$reservation->Hotel->CustomerServiceName."
-            //                     <br/>
-            //                     Customer Services & Online Sales
-            //                     </p>
-            //                     ", 'text/html');
+                            $message->setBody("
+                                <p>
+                                Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
+                                <br/>
+                                ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName."Has sent you a Gift Certificate from Renova Spa.
+                                <br/>
+                                Attached to this e-mail you will find the Gift Certificate/s.
+                                <br/>
+                                Please print it/them out and present it/them at the Renova spa in ".$reservation->Hotel->Name.", ".$reservation->Region->Country->Name.", ".$reservation->Region->Name.", in order to choose and schedule your treatments.
+                                <br/>
+                                We highly recommend you to come to the spa soon upon your arrival to the hotel in order to prevent availability problems.
+                                <br/>
+                                We will be happy to assist you with any further information.
+                                <br/>
+                                Please, e-mail us at ".$reservation->Hotel->NotifyEmail."
+                                <br/>
+                                We hope you enjoy our spa services and look forward to welcome you at Renova SPA!
+                                <br/>
+                                ".$reservation->Hotel->CustomerServiceName."
+                                <br/>
+                                Customer Services & Online Sales
+                                </p>
+                                ", 'text/html');
 
-            //                 /* this mail will be send from? */
-            //                 $message->from(\Config::get('email.info'), 'Renovaspa');
+                            /* this mail will be send from? */
+                            $message->from(\Config::get('email.info'), 'Renovaspa');
                             
-            //                 /* the sender's data is? */
-            //                 $message->sender(\Config::get('email.info'), 'Renovaspa');
+                            /* the sender's data is? */
+                            $message->sender(\Config::get('email.info'), 'Renovaspa');
                             
-            //                 /* this mail should be replie to? */
-            //                 $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+                            /* this mail should be replie to? */
+                            $message->replyTo(\Config::get('email.info'), 'Renovaspa');
                             
-            //                 /* the recipient of this mail is?  */
-            //                 $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
+                            /* the recipient of this mail is?  */
+                            $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
                             
-            //                 $message->attach($mailData['pdf_path']);
+                            $message->attach($mailData['pdf_path']);
 
-            //                 if($reservation->Type == 1)
-            //                     $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-            //                 else
-            //                     $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
-            //             });   
-            //         } 
-            //     }    
-            // }
+                            if($reservation->Type == 1)
+                                $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                            else
+                                $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                        });   
+                    } 
+                }    
+            }
         
             if($reservation->Type == 1){
                 /* show voucher */
