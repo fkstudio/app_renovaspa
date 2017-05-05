@@ -140,7 +140,7 @@ font-size: 16px;">Confirmation number</th>
 						@if($details[0]['certificate_type'] == 1)
 							{{ 'Discount' }}
 						@else
-							{{ 'Discount' }}
+							{{ 'Bono' }}
 						@endif
 					</th>
 				<th style="text-align: left;
@@ -192,7 +192,16 @@ font-size: 16px;">Confirmation number</th>
 				</tr>
 				<tr>
 					<td><strong>Total</strong></td>
-					<td><strong>{{ $currency_symbol.$total }}</strong></td>
+					@if($type == 2)
+						@if($detail['certificate_type'] == 1)
+							<td><strong>{{ $currency_symbol.$total }}</strong></td>
+						@else
+							<td><strong>{{ $currency_symbol.$subtotal }}</strong></td>
+						@endif
+					@else
+						<td><strong>{{ $currency_symbol.$total }}</strong></td>
+					@endif
+					
 				</tr>
 			</tbody>
 		</table>
