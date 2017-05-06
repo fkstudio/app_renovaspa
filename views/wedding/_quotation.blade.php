@@ -12,7 +12,7 @@
         padding: 15px;
         color: white;
         font-size: 20px;
-        text-align: center;">ONLINE RESERVATIONS - WEDDING GROUPS</h3>
+        text-align: center;">{{ trans('titles.wedding_reservation') }}</h3>
         <br/>
         <h3 style="font-family: inherit;
 font-weight: 500;
@@ -153,6 +153,29 @@ font-weight: 700">{{ trans('shared.departure') }}</label>
              {{ $model->Departure->format('d/m/Y') }}
           </div>
         </div>
+        <div style="clear: both"></div>
+        <br/>
+        <div style="width: 25%;float:left;" >
+          <div class="form-group">
+            <label style="display: inline-block;
+max-width: 100%;
+margin-bottom: 5px;
+font-weight: 700">{{ trans('shared.wedding_date') }}</label>
+            <br>
+            {{ $model->WeddingDate->format('d/m/Y') }}
+          </div>
+        </div>
+        <div style="width: 25%;float:left;" >
+          <div class="form-group">
+            <label style="display: inline-block;
+max-width: 100%;
+margin-bottom: 5px;
+font-weight: 700">{{ trans('shared.wedding_time') }}</label>
+            <br>
+             {{ $model->WeddingTime->format('h:m a') }}
+          </div>
+        </div>
+        <div style="clear: both;"></div>
         <div style="clear: both;"></div>
         <h3 style="background: #5fc7ae;
         padding: 15px;
@@ -181,7 +204,7 @@ color: inherit">Services's information</h3>
 				<div>
 		          <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
 		          <span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
-		          @if ($item->Service->hasDiscount($hotel_id))
+		      @if($item->Service->hasDiscount($hotel_id))
 					@php
 						$discount = $item->Service->getDiscount($hotel_id)
 					@endphp
@@ -218,6 +241,16 @@ color: inherit">Services's information</h3>
 				@endphp
 				<div>
 		          <h5 style="margin-top: 10px;margin-bottom: 10px">{{ $weddingPackage->Name }}</h5>
+              @if($packageRelation->ActiveDiscount)
+                @php
+                  $discount = $packageRelation->Discount;
+                @endphp
+                <span style="color: #5fc7ae;font-size: 12px;">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+                <br/>
+              @endif
+              <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPlanePrice(), 2) }}</span>
+              <br>
+              <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span>
 		          <ul style="list-style: none;">
 		            @foreach($weddingPackage->WeddingPackageFeatures as $feature)
 					<li>{{ $feature->Description }}</li>

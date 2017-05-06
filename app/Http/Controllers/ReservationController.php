@@ -25,8 +25,6 @@ class ReservationController extends Controller
         $this->dbcontext = new DbContext();
         $this->entityManager = $this->dbcontext->getEntityManager();
     }
-    
-
 
     /* */
     public function bookhere(){
@@ -54,6 +52,12 @@ class ReservationController extends Controller
         $session->put('hotel_id', $_POST["hotel_id"]);
 
         $dates = explode(' - ', $_POST['arrival_departure']);
+
+        if(count($dates) < 2){
+            $session->flash('failure', trans('messages.must_select_all_dates'));
+            return \Redirect::to(\URL::previous());
+        }
+
         $session->put('arrival', $dates[0]);
         $session->put('departure', $dates[1]);
 
@@ -151,8 +155,26 @@ class ReservationController extends Controller
 
                             /* complete cart item data */
                             $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
-                            $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
-                            $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+
+                            $dateParts = explode('/', $_POST['prefered_date'][$key]);
+    
+                            if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[1], $dateParts[0], $dateParts[2]) == false){
+                                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
+                            }
+                            else {
+                                $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
+                            }
+
+                            $timeParts = explode(':', $_POST['prefered_time'][$key]);
+
+                            if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
+                            }
+                            else {
+                                $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+                            }
+                           
+                            
                             if($reservationType == 1){
                                 $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
                             }

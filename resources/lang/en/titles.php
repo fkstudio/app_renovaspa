@@ -19,7 +19,7 @@ return [
     'book_your_treatment' => 'BOOK YOUR TREATMENT',
     'treat_someone' => 'TREAT SOMEONE',
     'the_day' => 'THE DAY',
-    'wedding_reservation' => 'RESERVATION FORM FOR WEDDINGS',
+    'wedding_reservation' => 'RESERVATIONS REQUEST FOR WEDDINGS',
     'complete_gift_certificate' => 'COMPLETE THE GIFT CERTIFICATES REGISTRATION'
 
 ];

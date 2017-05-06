@@ -97,7 +97,7 @@
           @else
             @php
               $packageRelation = $item->PackageCategoryRelation;
-              $itemPrice = $packageRelation->Price;
+              $itemPrice = $packageRelation->getPrice();
             @endphp
 
             <div class="col-md-3">
@@ -153,16 +153,15 @@
           @if ($total > 0 || $reservationType == 3)
             <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="btn btn-primary" >{{ trans('shared.checkout') }}</a>
           @else
-            <a href="{{ URL::to('/') }}/shopping/cart/checkout" class="disabled btn btn-primary" >{{ trans('shared.checkout') }}</a>
+            <a href="#fakelink" class="disabled btn btn-primary" >{{ trans('shared.checkout') }}</a>
           @endif
 
         @elseif ($reservationType == 2)
           @if ($total > 0)
             <a href="{{ URL::to('/') }}/certificate/registration" class="btn btn-primary" >{{ trans('shared.go_to_gift_registration') }}</a>
           @else
-            <a href="{{ URL::to('/') }}/certificate/registration" class="disabled btn btn-primary" >{{ trans('shared.go_to_gift_registration') }}</a>
+            <a href="#fakelink" class="disabled btn btn-primary" >{{ trans('shared.go_to_gift_registration') }}</a>
           @endif
-        
         @endif
       </div>
     </div>

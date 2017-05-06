@@ -22,6 +22,8 @@ return [
     'email_doesn_match' => "Email address must match. Please fill email confirmation field again.",
     'invalid_data' => "Invalid data. Please fill the fields correctly.",
     'invalid_card_data' => 'Please select a valid month/year.',
+    'invalid_date' => 'Please select a valid date.',
+    'invalid_time' => 'Please select a valid time.',
     'error' => 'An error has ben through',
     'cart_updated_success' => 'Shopping cart successfully updated',
     'transaction_error' => 'Transaction error. Please contact your card provider for more information or try with another card.',
@@ -31,7 +33,9 @@ return [
     'select_country' => 'You must select some country.',
     'select_region' => 'You must select some region.',
     'messages.must_select_all_fields' => 'You must select all fields.',
-    'would_you_like' => 'Would you like to book any additional services for the wedding couple or your guests?'
+    'would_you_like' => 'Would you like to book any additional services for the wedding couple or your guests?',
+    'must_select_all_fields' => 'You must select all fields',
+    'must_select_all_dates' => 'You must select the arrival and departure date'
     // 
 
 ];

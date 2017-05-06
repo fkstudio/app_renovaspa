@@ -197,8 +197,7 @@
 											@else
 												<a href="#fakelink" class="disabled btn btn-primary block-button">{{ trans('shared.go_to_gift_registration') }}</a>
 											@endif
-										
-										@endif
+								        @endif
 									</div>
 								</div>
 							</div>

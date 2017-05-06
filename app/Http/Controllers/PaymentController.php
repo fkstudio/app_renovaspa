@@ -329,14 +329,14 @@ class PaymentController extends Controller
                 /* payment data */
                 if($reservation->Type == 2){
                     if(count($reservation->CertificateDetails) && $reservation->CertificateDetails[0]->Type == 1){
-                        $total =  strval( $reservation->getTotal() * 100 );
+                        $total =  strval( $reservation->getTotal() );
                     }
                     else {
-                        $total =  strval( $reservation->getSubTotal() * 100 );
+                        $total =  strval( $reservation->getSubTotal() );
                     }
                 }
                 else {
-                    $total =  strval( $reservation->getTotal() * 100 );  
+                    $total =  strval( $reservation->getTotal() );  
                 }
                 
                 $expData = explode(' / ', $_POST['month_year']);

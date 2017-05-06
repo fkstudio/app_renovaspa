@@ -156,8 +156,25 @@ class WeddingController extends Controller
             $reservation->BrideName = $_POST['bride_full_name'];
             $reservation->GroomName = $_POST['groom_full_name'];
             $reservation->Email = $_POST['email'];
-            $reservation->WeddingDate = new \DateTime($_POST['wedding_date']);
-            $reservation->WeddingTime = new \DateTime($_POST['wedding_time']);
+
+            $dateParts = explode('/', $_POST['wedding_date']);
+    
+            if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[1], $dateParts[0], $dateParts[2]) == false){
+                return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_date'));
+            }
+            else {
+                $reservation->WeddingDate = new \DateTime($_POST['wedding_date']);
+            }
+
+            $timeParts = explode(':', $_POST['wedding_time']);
+
+            if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_time'));
+            }
+            else {
+                $reservation->WeddingTime = new \DateTime($_POST['wedding_time']);
+            }
+
             $reservation->WeddingBillDelivery = $_POST['bill_delivery'];
             $reservation->Remarks = $_POST['remarks'];
 
@@ -213,7 +230,7 @@ class WeddingController extends Controller
                 $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
                 $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
                 $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-                $message->subject("Online Reservations - Wedding groups #" . $reservation->ConfirmationNumber);
+                $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
             });
 
             /* clear session data */

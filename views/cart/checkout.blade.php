@@ -94,10 +94,10 @@
 										@endif
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
+										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control required-input" />
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
+										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control required-input" />
 									</td>
 									
 									@if(session('reservation_type') != 3)
@@ -176,10 +176,10 @@
 											@endif
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('mm/dd/yyyy') : '' ) }}" class="datepicker form-control required-input" />
+											<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control required-input" />
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '12:00pm' )  }}" class="timepicker form-control required-input" />
+											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control required-input" />
 										</td>
 										
 										@if(session('reservation_type') != 3)
@@ -231,9 +231,17 @@
 					{{ csrf_field() }}
 					<a href="{{ URL::to('/') }}/shopping/cart" class="btn btn-default">{{ trans('shared.back_to_cart') }}</a>
 					@if (count($model->Items) > 0)
-						<button type="submit" class="btn btn-primary">{{ trans('shared.procced_to_payment') }}</button>
+						@if(session('reservation_type') == 3)
+							<button type="submit" class="btn btn-primary">{{ trans('shared.reservation_form') }}</button>
+						@else
+							<button type="submit" class="btn btn-primary">{{ trans('shared.procced_to_payment') }}</button>
+						@endif
 					@else
-						<button type="button" class="disabled btn btn-primary">{{ trans('shared.procced_to_payment') }}</button>
+						@if(session('reservation_type') == 3)
+							<button type="submit" class="btn btn-primary">{{ trans('shared.reservation_form') }}</button>
+						@else
+							<button type="button" class="disabled btn btn-primary">{{ trans('shared.procced_to_payment') }}</button>
+						@endif
 					@endif
 				</div>	
 			</form>
@@ -287,7 +295,12 @@
 	        maxDate: moment('{{ session("departure") }}'),
 	        singleDatePicker: true,
 	        showDropdowns: true,
+	        autoUpdateInput: false,
 	        
+		});
+
+		$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('MM/DD/YYYY'));
 		});
 
 		$('.timepicker').timepicker({

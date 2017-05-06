@@ -134,7 +134,7 @@
 						$total += $item->Service->getPrice($model->Hotel->Id);
 					@endphp
 					<div class="col-md-12">
-						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
+						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
 						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
 						@if ($item->Service->hasDiscount($hotel_id))
 							@php
@@ -166,6 +166,16 @@
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $weddingPackage->Name }}</h5>
+						@if($packageRelation->ActiveDiscount)
+							@php
+								$discount = $packageRelation->Discount;
+							@endphp
+							<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+						@endif
+						<br/>
+						<span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPlanePrice(), 2) }}</span>
+						<br/>
+						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span>
 						<ul style="list-style: none;">
 							@foreach($weddingPackage->WeddingPackageFeatures as $feature)
 							<li>{{ $feature->Description }}</li>
@@ -173,7 +183,7 @@
 							@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
 								<li>
 									<div class="col-md-12">
-										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
 										<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
 									</div>
 								</li>
@@ -254,7 +264,12 @@
 	        minDate: moment().add(2, "days"),
 	        singleDatePicker: true,
 	        showDropdowns: true,
+	        autoUpdateInput: false
 	        
+		});
+
+		$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('MM/DD/YYYY'));
 		});
 
 		$('.timepicker').timepicker({
