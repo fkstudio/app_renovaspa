@@ -39,20 +39,20 @@ class DbContext
         $dbParams = null;
 
             // ====================== LOCAL DB CONNTECTION ======================
-            $dbParams = array(
-                'driver'   => 'pdo_mysql',
-                'host' => '45.58.47.61',
-                'user'     => 'hiobairo',
-                'password' => 'admin1234',
-                'dbname'   => 'final_renova',
-            );
-
             // $dbParams = array(
             //     'driver'   => 'pdo_mysql',
-            //     'user'     => 'root',
-            //     'password' => 'root',
+            //     'host' => '45.58.47.61',
+            //     'user'     => 'hiobairo',
+            //     'password' => 'admin1234',
             //     'dbname'   => 'final_renova',
             // );
+
+            $dbParams = array(
+                'driver'   => 'pdo_mysql',
+                'user'     => 'root',
+                'password' => 'root',
+                'dbname'   => 'final_renova',
+            );
         
         
 

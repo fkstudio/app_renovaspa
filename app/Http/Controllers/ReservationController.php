@@ -50,6 +50,7 @@ class ReservationController extends Controller
         $session->put('country_id', $_POST["country_id"]);
         $session->put('region_id', $_POST["region_id"]);
         $session->put('hotel_id', $_POST["hotel_id"]);
+        $session->put('reservation_type', $_POST['reservation_type']);
 
         $dates = explode(' - ', $_POST['arrival_departure']);
 
@@ -63,6 +64,7 @@ class ReservationController extends Controller
 
         switch ($_POST['reservation_type']) {
             case 1:
+
                 return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $_POST['hotel_id'] ]);
                 break;
                 
@@ -74,12 +76,9 @@ class ReservationController extends Controller
                     $session->flash("riu_wedding_package_id", $_POST["wedding_package_id"]);
                     return redirect()->route('cart.addRiuPackage');
                 }
-                
                 return redirect()->route('category.categoriesByHotel', [ 'hotel_id' => $_POST['hotel_id'] ]);
                 break;
         }
-        
-
     }
 
     /* return a view to complete reservation data */
@@ -102,7 +101,7 @@ class ReservationController extends Controller
 
                 $region = $hotelRegion->Region;
 
-                $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
+                $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Incompleted']);
 
                 /* check if the region, hotel and status are valid */
                 if($hotel == null or $region == null or $status == null){  
@@ -357,7 +356,23 @@ class ReservationController extends Controller
     /* GET transaction canceled view */
     public function canceled(Request $request){
         $session = $request->session();
+
+        $reservation_id = $session->get('current_reservation_id');
+
+        $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $session->get('current_reservation_id')]);
+
+        $status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Canceled']);
+
+        if($reservation == null)
+            return redirect()->route('home.home')->with('failure', 'Your session has expired.');
+
+        $reservation->Status = $status;
+
+        // change reservation status to canceled
+        $this->entityManager->persist($reservation);
+
         $session->flush();
+        
         return view('reservation.canceled');
     }
 

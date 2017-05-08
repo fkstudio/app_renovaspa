@@ -72,8 +72,9 @@ class CategoryController extends Controller
 
         $cart = $this->getCart($session->getId());
 
-        if($reservationType == null)
+        if($reservationType == null){
             return redirect()->route('home.home');
+        }
 
         try {
             if($next != 0){
@@ -125,8 +126,6 @@ class CategoryController extends Controller
             return view("category.list", $viewData);
         }
         catch (\Exception $e){
-            echo $e->getMessage();
-            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

@@ -172,6 +172,10 @@
                 <p data-toggle="modal" data-target="#whyAskModal" class="pull-right" style="margin-top: 20px;cursor: pointer;">Why we ask?</p>
             </div>
         </form>
+        <div class="clerfix"></div>
+        <div class="col-md-12">
+            @include('shared._messages')
+        </div>
     </div>
     <br/>
     <br/>
@@ -191,11 +195,16 @@
 $(document).ready(function($) {
 
     $(function() {
-        $('.datepicker').daterangepicker({
+        var date = $('.datepicker').daterangepicker({
+            autoUpdateInput: false,
             locale: {
-              format: 'MM/D/YYYY'
+              format: 'MM/DD/YYYY'
             },
             minDate: moment(),
+        });
+
+        date.on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         });
     });
  

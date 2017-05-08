@@ -243,6 +243,7 @@ class PaymentController extends Controller
                 $reservation->PaymentInformation->StreetAddress = $_POST["street_address"];
                 $reservation->PaymentInformation->TownCity = $_POST["city"];
                 $reservation->PaymentInformation->ApartmentUnit = $_POST["apartment_unit"];
+                $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Pending']);
 
                 $this->entityManager->persist($reservation);
                 $this->entityManager->flush(); 
