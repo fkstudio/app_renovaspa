@@ -133,6 +133,31 @@
 		/** @Column(type="boolean", name="is_deleted") */
 		public $IsDeleted;
 
+		public function getDiscount(){
+			/* reset total */
+			$this->Discount = 0;
+
+			if($this->Type == 1){
+				foreach($this->ServicesDetails as $detail){
+					$this->Discount += $detail->Service->getDiscount($this->Hotel->Id);
+				}
+			}
+			else if($this->Type == 2){
+				foreach($this->CertificateDetails as $detail){
+					if($detail->Type == 1){
+						foreach($detail->CertificateDetailServices as $certService){
+							$this->Discount += $certService->Service->getDiscount($this->Hotel->Id);	
+						}
+					}
+					else {
+						$this->Discount += $detail->Value;
+					}
+				}
+			}
+
+			return $this->Discount;
+		}
+
 		public function getTotal(){
 			/* reset total */
 			$this->Total = 0;

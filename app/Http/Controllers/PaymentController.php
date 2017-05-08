@@ -691,6 +691,8 @@ class PaymentController extends Controller
 
             /* change reservation status to complete and it will appear in admin reservation section */
             $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
+            $reservation->Total = $reservation->getTotal();
+            $reservation->SubTotal = $reservation->getSubTotal();
 
             // save reservation with new status
             $this->entityManager->persist($reservation);
@@ -712,7 +714,7 @@ class PaymentController extends Controller
                 'customer_service_name' => $reservation->Hotel->CustomerServiceName,
                 'check_in' => $session->get("arrival"),
                 'check_out' => $session->get("departure"),
-                'discount' => number_format($reservation->Discount, 2),
+                'discount' => number_format($reservation->getDiscount(), 2),
                 'subtotal' => $reservation->getSubTotal(),
                 'total' => $reservation->getTotal(),
                 'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
@@ -854,7 +856,7 @@ class PaymentController extends Controller
                                 <p>
                                 Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
                                 <br/>
-                                ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName."Has sent you a Gift Certificate from Renova Spa.
+                                ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName." Has sent you a Gift Certificate from Renova Spa.
                                 <br/>
                                 Attached to this e-mail you will find the Gift Certificate/s.
                                 <br/>
