@@ -907,14 +907,14 @@ class PaymentController extends Controller
             $voucher = $data['voucher'];
 
             /* clear session data */
-            //$session->flush();
+            $session->flush();
             
             $mailData = [
                 'voucher' => $voucher,
                 'reservation' => $reservation
             ];
 
-            //$this->sendReservationEmail($mailData);
+            $this->sendReservationEmail($mailData);
         
             if($reservation->Type == 1){
                 /* show voucher */
