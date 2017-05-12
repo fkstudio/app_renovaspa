@@ -108,11 +108,11 @@
 						<label>(*) {{ trans('wedding.wedding_date') }}</label>
 						<br/>
 						<p>We only take reservations within 6 months prior to the wedding date and not before.</p>
-						<input type="text" name="wedding_date" class="datepicker form-control input-border" />
+						<input type="text" name="wedding_date" required class="datepicker form-control input-border" />
 						<br/>
 						<label>(*) {{ trans('wedding.wedding_time') }}</label>
 						<br/>
-						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:m a') : '' ) }}" name="wedding_time" class="timepicker form-control input-border" />
+						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:m a') : '' ) }}" name="wedding_time" required class="timepicker form-control input-border" />
 					</div>
 				</div>
 				
@@ -135,7 +135,7 @@
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-						<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
 						@if ($item->Service->hasDiscount($hotel_id))
 							@php
 								$discount = $item->Service->getDiscount($hotel_id)
@@ -152,8 +152,8 @@
 						@endif
 						<br/>
 						<span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPlanePrice($hotel_id), 2) }}</span>
-						<br/>
-						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span>
+						<?php /* <br/>
+						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span> */ ?>
 					</div>
 					<div class="clearfix"></div>
 					<hr/>
@@ -174,8 +174,8 @@
 						@endif
 						<br/>
 						<span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPlanePrice(), 2) }}</span>
-						<br/>
-						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span>
+						<?php /* <br/>
+						<span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span> */ ?>
 						<ul style="list-style: none;">
 							@foreach($weddingPackage->WeddingPackageFeatures as $feature)
 							<li>{{ $feature->Description }}</li>
@@ -184,7 +184,7 @@
 								<li>
 									<div class="col-md-12">
 										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-										<span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+										<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
 									</div>
 								</li>
 							@endforeach
@@ -224,7 +224,7 @@
 		<p>{{ trans('wedding.would_you_like') }}</p>
 		<div class="col-md-7">
 			<div class="row">
-				<select name="bill_delivery" class="form-control custom-select">
+				<select name="bill_delivery" required class="form-control custom-select">
 					<option value="1">-- Select an option --</option>
 					<option value="2">Send one bill including all the services.</option>
 					<option value="3">Send one bill including the wedding couples services and other for each person of the wedding party</option>

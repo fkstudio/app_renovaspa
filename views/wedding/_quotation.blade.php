@@ -203,7 +203,7 @@ color: inherit">Services's information</h3>
 				@endphp
 				<div>
 		          <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
-		          <span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
 		      @if($item->Service->hasDiscount($hotel_id))
 					@php
 						$discount = $item->Service->getDiscount($hotel_id)
@@ -225,7 +225,7 @@ color: inherit">Services's information</h3>
 		          <br/>
 		          <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPlanePrice($hotel_id), 2) }}</span>
 		          <br>
-		          <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span>
+		          <?php /* <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span> */ ?>
 		        </div>
 				<div style="clear: both;"></div>
 				<hr style="margin-top: 20px;
@@ -250,7 +250,7 @@ color: inherit">Services's information</h3>
               @endif
               <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPlanePrice(), 2) }}</span>
               <br>
-              <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span>
+              <?php /* <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span> */ ?>
 		          <ul style="list-style: none;">
 		            @foreach($weddingPackage->WeddingPackageFeatures as $feature)
 					<li>{{ $feature->Description }}</li>
@@ -259,7 +259,7 @@ color: inherit">Services's information</h3>
 						<li>
 			              <div>
 			                <h5 style="margin-top: 10px;margin-bottom: 10px">1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
-			                <span>{{ trans('checkout.booked_to') }} {{ $item->PreferedDate->format('d/m/Y') }} {{ trans('checkout.at_time') }} {{ $item->PreferedTime->format('h:m a') }}, {{ $item->CustomerName }}</span>
+			                <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
 			              </div>
 			            </li>
 					@endforeach

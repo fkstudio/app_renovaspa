@@ -247,7 +247,6 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
-<script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
 	function validateTerms(){
 		var pass = true;

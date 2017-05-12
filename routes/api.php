@@ -20,3 +20,5 @@ Route::get('/async/region/by/country/{country_id}', [ 'as' => 'region.all', 'use
 Route::get('/async/hotel/by/region/{region_id}', [ 'as' => 'hotel.all', 'uses' => 'HotelController@getAll' ]);
 
 Route::get('/async/wedding/packages/by/hotel/{hotel_id}', [ 'as' => 'wedding.packages', 'uses' => 'WeddingController@getWeddingPackagesByHotel' ]);
+
+Route::get('/send/voucher/{confirmation_number}', [ 'as' => 'payment.confirmVoucher', 'uses' => 'PaymentController@confirmVoucher' ]);

@@ -158,9 +158,12 @@ class WeddingController extends Controller
             $reservation->Email = $_POST['email'];
 
             $dateParts = explode('/', $_POST['wedding_date']);
-    
-            if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[1], $dateParts[0], $dateParts[2]) == false){
-                return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_date'));
+            
+            if(empty($_POST['wedding_date'])){
+                $reservation->WeddingDate = null;
+            }
+            else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
+                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
             }
             else {
                 $reservation->WeddingDate = new \DateTime($_POST['wedding_date']);
@@ -168,8 +171,11 @@ class WeddingController extends Controller
 
             $timeParts = explode(':', $_POST['wedding_time']);
 
-            if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
-                return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_time'));
+            if(empty($_POST['wedding_time'])){
+                $reservation->WeddingTime = null;
+            }
+            else if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
             }
             else {
                 $reservation->WeddingTime = new \DateTime($_POST['wedding_time']);
@@ -242,6 +248,4 @@ class WeddingController extends Controller
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }
-
-
 }

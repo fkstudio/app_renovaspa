@@ -95,7 +95,7 @@
 							@endif
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
-							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPrice($hotel->Id), 2) }}
+							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPlanePrice($hotel->Id), 2) }}
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
 							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="input-border input-cart" />

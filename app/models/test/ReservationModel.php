@@ -140,6 +140,7 @@
 			if($this->Type == 1){
 				foreach($this->ServicesDetails as $detail){
 					$this->Discount += $detail->Service->getDiscount($this->Hotel->Id);
+					$this->Discount += $detail->Service->getHotelDiscount($this->Hotel->Id);
 				}
 			}
 			else if($this->Type == 2){

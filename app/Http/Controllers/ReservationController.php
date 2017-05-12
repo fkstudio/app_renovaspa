@@ -35,6 +35,8 @@ class ReservationController extends Controller
     /* POST */
     public function selectBook(Request $request){
         $session = $request->session();
+        $session->flush();
+        $session->regenerate();
         $sessionId = $session->getId();
 
         if(empty($_POST['reservation_type']) || empty($_POST['country_id']) || empty($_POST['region_id']) || empty($_POST['hotel_id'])){
@@ -138,9 +140,7 @@ class ReservationController extends Controller
                     if(isset($_POST['id'])){
                         foreach($_POST['id'] as $key => $item){
                             if(empty($_POST['id'][$key]) or 
-                               count($_POST['customer_name'][$key]) <= 0 or
-                               empty($_POST['prefered_date'][$key]) or
-                               empty($_POST['prefered_time'][$key]))
+                               count($_POST['customer_name'][$key]) <= 0)
                                 return redirect()->route("cart.checkout")->with("failure", trans("messages.invalid_data"));
                                 
                             if($reservationType == 1 && empty($_POST["cabin_type"][$key])){
@@ -156,8 +156,12 @@ class ReservationController extends Controller
                             $cartItem->CustomerName = implode(", ", $_POST['customer_name'][$key]);
 
                             $dateParts = explode('/', $_POST['prefered_date'][$key]);
-    
-                            if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[1], $dateParts[0], $dateParts[2]) == false){
+                            
+                         
+                            if(empty($_POST['prefered_date'][$key])){
+                                $cartItem->PreferedDate = null;
+                            }
+                            else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
                                 return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
                             }
                             else {
@@ -166,7 +170,10 @@ class ReservationController extends Controller
 
                             $timeParts = explode(':', $_POST['prefered_time'][$key]);
 
-                            if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                            if(empty($_POST['prefered_time'][$key])){
+                                $cartItem->PreferedTime = null;
+                            }
+                            else if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
                                 return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
                             }
                             else {
@@ -372,7 +379,7 @@ class ReservationController extends Controller
         $this->entityManager->persist($reservation);
 
         $session->flush();
-        
+
         return view('reservation.canceled');
     }
 

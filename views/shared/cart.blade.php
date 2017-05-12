@@ -49,7 +49,7 @@
               @endphp
               <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPlanePrice, 2) }} {{ $country->Currency->Name }}</span>
               <br/>
-              <span>{{ trans('shared.final_price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
+              <?php /*<span>{{ trans('shared.final_price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span> */ ?>
             </div>
             <div class="col-md-1">
               <a style="margin-top: 20px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>

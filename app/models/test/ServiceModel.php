@@ -58,6 +58,17 @@ class ServiceModel {
 		return false;
 	}
 
+	public function getHotelDiscount($hotel_id){
+		foreach($this->ServicePrices as $servicePrice){
+			if($servicePrice->HotelRegion->Hotel->Id == $hotel_id && $servicePrice->IgnoreHotelDiscount == false){
+				$totalDiscount =  ( $servicePrice->HotelRegion->Discount / 100 ) * $servicePrice->Price;
+				return $totalDiscount;
+			}
+		}
+
+		return false;
+	}
+
 	/* return true if the services has discount activate and false if not */
 	public function hasDiscount($hotel_id){
 		foreach($this->ServicePrices as $servicePrice){

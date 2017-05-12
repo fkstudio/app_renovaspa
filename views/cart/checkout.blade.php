@@ -94,10 +94,10 @@
 										@endif
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control required-input" />
+										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control" />
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control required-input" />
+										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control" />
 									</td>
 									
 									@if(session('reservation_type') != 3)
@@ -176,10 +176,10 @@
 											@endif
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control required-input" />
+											<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Select date" class="datepicker form-control" />
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control required-input" />
+											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Select time" class="timepicker form-control" />
 										</td>
 										
 										@if(session('reservation_type') != 3)

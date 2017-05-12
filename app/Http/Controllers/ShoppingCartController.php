@@ -182,6 +182,9 @@ class ShoppingCartController extends Controller
 
         $cart = $this->getCart($sessionId);
 
+        if(!isset($_POST['id']))
+            return redirect()->route('cart.myCart')->with('success', "You haven't items at your card.");
+
         try {
             foreach($_POST['id'] as $key => $itemId){
                 $item = $this->entityManager->getRepository('App\Models\Test\ShoppingCartItemModel')
@@ -212,6 +215,7 @@ class ShoppingCartController extends Controller
             return redirect()->route('cart.myCart')->with('failure', trans('messages.error'));
         }
     }
+
     /* add riu wedding package to cart */
     public function addRiuPackageToCart(Request $request){
         $session = $request->session();
