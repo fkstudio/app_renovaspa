@@ -19,7 +19,7 @@
 <div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
 										 background-size: cover;
 										 background-position: center center;
-										 height: 420px;"	>
+										 height: 220px;">
 </div>
 <div id="vue-app" class="container-fluid">
 	<h3 class="green-title">{{ trans('titles.complete_gift_certificate') }}</h3>
@@ -240,7 +240,6 @@
 @endsection
 
 @section('scripts')
-!-- Moment JS-->
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
 <!-- Include Date Range Picker -->

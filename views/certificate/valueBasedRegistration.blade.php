@@ -19,7 +19,7 @@
 <div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
 										 background-size: cover;
 										 background-position: center center;
-										 height: 420px;">
+										 height: 220px;">
 </div>
 <div id="vue-app" class="container-fluid">
 	<h3 class="green-title">GIFT CERTIFICATE REGISTRATION</h3>

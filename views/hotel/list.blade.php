@@ -31,15 +31,19 @@
 					$photoPath = '/hotels/hotel-'.$hotelRegion->Hotel->Id.'/'.$hotelRegion->Hotel->getProfile();
 				}
 		    @endphp
-
-	    <a style="font-size: 30px;color:white;" href="{{ URL::to('/').$url }}">
-		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="overflow: hidden;
-		    														 margin-bottom: 20px;">
-		    	<div style="background: url({{ URL::to('/') . $folderPath }}/photo-1.jpg);background-size: cover;" class="col-md-12 block-content" >
-					<span>{{ $hotelRegion->Hotel->Name }}</span>
-				</div>
-		    </div>
-		</a>
+		    <a style="font-size: 30px;color:white;" href="{{ URL::to('/').$url }}">
+			    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
+			    	<span style="position: absolute;
+								 height: 100%;
+								 width: 100%;
+								 background-image: url({{ URL::to('/') . $folderPath }}/photo-1.jpg);
+								 background-position: center center;
+								 background-size: cover;"  class="img-responsive"></span>
+			    	<div  class="col-md-12 block-content" >
+			    		<span class="span-list">{{ $hotelRegion->Hotel->Name }}</span>
+					</div>
+			    </div>
+			</a>
 	    @endforeach
 	</div>
 </div>

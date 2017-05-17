@@ -745,7 +745,7 @@ class PaymentController extends Controller
     }
 
     /* Send reservation email */
-    public function sendReservationEmail($mailData){
+    public function sendReservationEmail($reservation, $mailData){
         /* mail object */
         $mail = app()['mailer'];
 
@@ -914,7 +914,7 @@ class PaymentController extends Controller
                 'reservation' => $reservation
             ];
 
-            $this->sendReservationEmail($mailData);
+            $this->sendReservationEmail($reservation, $mailData);
         
             if($reservation->Type == 1){
                 /* show voucher */
@@ -931,7 +931,7 @@ class PaymentController extends Controller
 
     public function confirmVoucher($confirmationNumber = ''){
         try {
-            if(empty($ConfirmationNumber))
+            if(empty($confirmationNumber))
                 return "Por favor ingrese el numero de confirmación para reenviar el voucher.";
 
             $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['ConfirmationNumber' => $confirmationNumber]);
@@ -946,7 +946,7 @@ class PaymentController extends Controller
                 'reservation' => $reservation
             ];  
 
-            $this->sendReservationEmail($mailData);
+            $this->sendReservationEmail($reservation, $mailData);
 
             if($reservation->Type == 1){
                 /* show voucher */

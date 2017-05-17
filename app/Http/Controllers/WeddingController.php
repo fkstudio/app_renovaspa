@@ -242,7 +242,7 @@ class WeddingController extends Controller
             /* clear session data */
             $session->flush();
 
-            return view('wedding.quotation_content', $viewData);
+            return view('wedding.sent', $viewData);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));

@@ -28,6 +28,7 @@ return [
     'cart_updated_success' => 'Shopping cart successfully updated',
     'transaction_error' => 'Transaction error. Please contact your card provider for more information or try with another card.',
     'transaction_canceled' => 'THE TRANSACTION HAS BEEN CANCELED.',
+    'wedding_quotation_sent' => 'Your wedding quotation has been sent to your email address, Please confirm your quoatation.',
     'fill_card_data' => 'Please fill your Credit Card Information',
     'payment_your_order' => 'Payment your order',
     'select_country' => 'You must select some country.',

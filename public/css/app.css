@@ -226,6 +226,7 @@
  .block-content:hover > span {
  	opacity: 1;
  	z-index: 99999999;
+ 	text-shadow: 1px 1px 1px dimgray
  }
  /* block content */
 

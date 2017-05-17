@@ -128,7 +128,7 @@ confirmation of purchase and a copy of the gift certificate/s online.</li>
 </div>
 <div class="container-fluid-full" style="background: url({{ URL::to('/images') }}/certificate_cover.jpg);
 										 background-size: cover;
-										 background-position: center -220px;
+										 background-position: center center;
 										 height: 220px;"	>
 </div>
 <div id="vue-app" class="container-fluid">

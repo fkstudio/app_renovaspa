@@ -12,12 +12,15 @@
 			$name = str_replace(' ', '_', $region->Name);
 		@endphp
 		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/region/{{ $region->Id }}/hotels">
-		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 " style="
-		    													overflow: hidden;
-		    													margin-bottom: 20px;">
-		    	<img src="{{ URL::to('/images') }}/regions/{{ $name  }}.jpg" class="img-responsive" style="position: absolute;height: 100%;width: 100%;">
+		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
+		    	<span style="position: absolute;
+							 height: 100%;
+							 width: 100%;
+							 background-image: url({{ URL::to('/images') }}/regions/{{ $name  }}.jpg);
+							 background-position: center center;
+							 background-size: cover;"  class="img-responsive"></span>
 		    	<div  class="col-md-12 block-content" >
-		    		<span>{{ $region->Name }}</span>
+		    		<span class="span-list">{{ $region->Name }}</span>
 				</div>
 		    </div>
 		</a>
