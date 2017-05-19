@@ -685,8 +685,8 @@ class PaymentController extends Controller
                     'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
                     'hotel_email' => $reservation->Hotel->NotifyEmail,
                     'customer_service_name' => $reservation->Hotel->CustomerServiceName,
-                    'check_in' => $reservation->Arrival->format('d/m/Y'),
-                    'check_out' => $reservation->Departure->format('d/m/Y'),
+                    'check_in' => $reservation->Arrival->format('F j, Y'),
+                    'check_out' => $reservation->Departure->format('F j, Y'),
                     'discount' => number_format($reservation->getDiscount(), 2),
                     'subtotal' => $reservation->getSubTotal(),
                     'total' => $reservation->getTotal(),
@@ -703,7 +703,7 @@ class PaymentController extends Controller
                   "name" => $detail->CustomerName,
                   "quantity" => 1,
                   "service" => $detail->Service->Name,
-                  "appointment_and_time" => ($detail->PreferedDate != null ? $detail->PreferedDate->format('Y/d/m') : "N/A") . ' ' . ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "N/A"),
+                  "appointment_and_time" => ($detail->PreferedDate != null ? $detail->PreferedDate->format('F j, Y') : "N/A") . ' ' . ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "N/A"),
                   "details" => $detail->Cabin->Name,
                   "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
                 );
@@ -925,6 +925,8 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
@@ -946,7 +948,7 @@ class PaymentController extends Controller
                 'reservation' => $reservation
             ];  
 
-            $this->sendReservationEmail($reservation, $mailData);
+            //$this->sendReservationEmail($reservation, $mailData);
 
             if($reservation->Type == 1){
                 /* show voucher */

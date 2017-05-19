@@ -14,11 +14,7 @@
 				margin-bottom: 30px;
 				border-radius: 12px 12px 0px 0px;"
 	>
-		<img  style="border-radius: 0px 0 4px 4px;
-					 position: absolute;
-					 margin-left: 19px;
-					 margin-top: -2px;" src="http://renovaspa.com/images/logo-white.png">
-		<img style="width: 100%;" src="http://renovaspa.com/images/Depositphotos_25639491_original.jpg">
+		<img style="width: 100%;" src="http://renovaspa.com/images/voucher_header.jpg">
 </div>
 	<section>
 		<p style="color:#3c2f21;font-size: 19px;">Dear {{ $customer_name }}</p>
@@ -43,7 +39,7 @@
 			We hope the Gift Certificate's receiver/s enjoy(s) our spa services and look forward to welcoming them at Renova SPA!<br/><br/>
 
 			Sincerely, <strong>{{ $customer_service_name }}</strong> - Customer Services <span  style="float: right;
-																					   color: #b5b5b5;">{{ $current_date->format("Y/m/d") }}</span>
+																					   color: #b5b5b5;">{{ $current_date->format('F j, Y') }}</span>
 		</p>
 	</section>
 	<h3 style=" margin-top: 25px;

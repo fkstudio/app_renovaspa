@@ -138,7 +138,7 @@
 									<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
 								@endif
 								<br/>
-								<span>{{ trans('checkout.booked_to') }} {{ ($detail->PreferedDate != null ? $detail->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "N/A") }}, {{ $detail->CustomerName }}</span>
+								<span>{{ trans('checkout.booked_to') }} {{ ($detail->PreferedDate != null ? $detail->PreferedDate->format('F j, Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "N/A") }}, {{ $detail->CustomerName }}</span>
 								<br/>
 								<span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol.number_format($detail->Service->getPlanePrice($hotel_id), 2) }}</span>
 								<br/>
