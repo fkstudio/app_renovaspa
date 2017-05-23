@@ -128,7 +128,7 @@ font-weight: normal;
 font-size: 16px;">Delivery method</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">Confirmation number</th>
+font-size: 16px;">Certificate number</th>
 				<th style="text-align: left;
 					font-weight: normal;
 					font-size: 16px;">
@@ -151,7 +151,7 @@ font-size: 16px;">Confirmation number</th>
 				<td>{{ $customer_name }}</td>
 				<td>{{ $detail["real_customer_first_name"] . ' ' . $detail["real_customer_last_name"] }}</td>
 				<td>{{ $detail["delivery_method"] }}</td>
-				<td>{{ $detail["confirmation_number"] }}</td>
+				<td>{{ $detail["certificate_number"] }}</td>
 				<td>
 				@if($detail['certificate_type'] == 1)
 					{{ $currency_symbol.( $detail["sub_total"] - $detail["price"] ) }}

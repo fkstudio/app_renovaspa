@@ -59,7 +59,7 @@ class PaymentController extends Controller
         $depara = $pdf_path . "depara.jpg"; 
 
         $reservation_number  = substr($certificateDetail->Reservation->Id, 0, 7);
-        $certificate_number = substr($certificateDetail->Id, 0, 7);
+        $certificate_number = $certificateDetail->CertificateNumber;
         $destination_hotel = $certificateDetail->Reservation->Hotel->Name;
         $de=$certificateDetail->FromCustomerName;
         $customer_to=$certificateDetail->ToCustomerName;
@@ -721,7 +721,7 @@ class PaymentController extends Controller
                     'real_customer_last_name' => $detail->RealCustomerLastName,
                     'from_customer' => $detail->FromCustomerName,
                     'to_customer' => $detail->ToCustomerName,
-                    'confirmation_number' => substr($detail->Id, 0, 7),
+                    'certificate_number' => $detail->CertificateNumber,
                     'sub_total' => number_format($detail->SubTotal, 2),
                     'price' => number_format($detail->Value, 2)
                 );
@@ -782,9 +782,6 @@ class PaymentController extends Controller
                     /* create pdf gift from reservation detail */
                     $pdf_path = $this->createPDF($detail);
 
-                    /* add pdf path to array */
-                    $gift_paths[$key] = $pdf_path;
-
                     /* add gift certificate number to mail subject */
                     $subject .= " - #" . $detail->CertificateNumber;
 
@@ -801,18 +798,20 @@ class PaymentController extends Controller
 
         });
 
+
         if($reservation->Type == 2){
             foreach($reservation->CertificateDetails as $key => $detail){
                 if($detail->SendType == 1){
 
                     /* store detail object */
                     $mailData['detail'] = $detail;
-                    $mailData['files'] = $gift_paths; //$this->createPDF($detail);
+                    $mailData['pdf_path'] = $this->createPDF($detail);
                     
                     /* send voucher view */
                     $mail->send([],[], function($message) use ($mailData) {
                         $reservation = $mailData['reservation'];
                         $detail = $mailData['detail'];
+
 
                         $message->setBody("
                             <p>
@@ -850,7 +849,7 @@ class PaymentController extends Controller
                         /* the recipient of this mail is?  */
                         $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
                         
-                        $message->attach($mailData["files"][$key]);
+                        $message->attach($mailData['pdf_path']);
 
                         $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - #'. $detail->CertificateNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                     });   
