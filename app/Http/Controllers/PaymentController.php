@@ -703,7 +703,7 @@ class PaymentController extends Controller
                   "name" => $detail->CustomerName,
                   "quantity" => 1,
                   "service" => $detail->Service->Name,
-                  "appointment_and_time" => ($detail->PreferedDate != null ? $detail->PreferedDate->format('F j, Y') : "N/A") . ' ' . ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "N/A"),
+                  "appointment_and_time" => ($detail->PreferedDate != null ? $detail->PreferedDate->format('F j, Y') : "Open date") . ' ' . ($detail->PreferedTime != null ? $detail->PreferedTime->format('h:m a') : "Open time"),
                   "details" => $detail->Cabin->Name,
                   "total" => $reservation->Region->Country->Currency->Symbol.number_format($detail->Price, 2)
                 );
