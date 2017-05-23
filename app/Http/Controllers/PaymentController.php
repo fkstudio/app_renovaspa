@@ -749,6 +749,9 @@ class PaymentController extends Controller
         /* mail object */
         $mail = app()['mailer'];
 
+        /* store gift paths */
+        $gift_paths = [];
+
         /* send voucher view */
         $mail->send([],[], function($message) use ($mailData) {
             $reservation = $mailData['reservation'];
@@ -769,43 +772,34 @@ class PaymentController extends Controller
             /* this mail should be replie to? */
             $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
-            if($reservation->Type == 1)
+            if($reservation->Type == 1){
                 $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-            else
-                $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber);
+            }
+            else{
+                $subject = "Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber;
+                
+                foreach($reservation->CertificateDetails as $key => $detail){
+                    /* create pdf gift from reservation detail */
+                    $pdf_path = $this->createPDF($detail);
+
+                    /* add pdf path to array */
+                    $gift_paths[$key] = $pdf_path;
+
+                    /* add gift certificate number to mail subject */
+                    $subject .= " - #" . $detail->CertificateNumber;
+
+                    /* attach gift pdf to mail */
+                    $message->attach($pdf_path);    
+                }
+
+                /* add destination to subject */
+                $subject .= ' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name;
+
+                /* add subject to mail */
+                $message->subject($subject);
+            }
+
         });
-
-        foreach($reservation->CertificateDetails as $key => $detail){
-            /* store detail object */
-            $mailData['detail'] = $detail;
-            $mailData['pdf_path'] = $this->createPDF($detail);
-            
-            /* send voucher view */
-            $mail->send([],[], function($message) use ($mailData) {
-                $reservation = $mailData['reservation'];
-                $detail = $mailData['detail'];
-
-                /* this mail will be send from? */
-                $message->from(\Config::get('email.info'), 'Renovaspa');
-                
-                /* the sender's data is? */
-                $message->sender(\Config::get('email.info'), 'Renovaspa');
-                
-                /* this mail is in hidden copy fro? */
-                $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-                $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
-                
-                /* this mail should be replie to? */
-                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-
-                $message->attach($mailData['pdf_path']);
-
-                if($reservation->Type == 1)
-                    $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-                else
-                    $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
-            });  
-        } 
 
         if($reservation->Type == 2){
             foreach($reservation->CertificateDetails as $key => $detail){
@@ -813,7 +807,7 @@ class PaymentController extends Controller
 
                     /* store detail object */
                     $mailData['detail'] = $detail;
-                    $mailData['pdf_path'] = $this->createPDF($detail);
+                    $mailData['files'] = $gift_paths; //$this->createPDF($detail);
                     
                     /* send voucher view */
                     $mail->send([],[], function($message) use ($mailData) {
@@ -856,16 +850,45 @@ class PaymentController extends Controller
                         /* the recipient of this mail is?  */
                         $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
                         
-                        $message->attach($mailData['pdf_path']);
+                        $message->attach($mailData["files"][$key]);
 
-                        if($reservation->Type == 1)
-                            $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-                        else
-                            $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - #'. $detail->CertificateNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                     });   
                 } 
             }    
         }
+
+        // foreach($reservation->CertificateDetails as $key => $detail){
+        //     /* store detail object */
+        //     $mailData['detail'] = $detail;
+        //     $mailData['pdf_path'] = $this->createPDF($detail);
+            
+        //     /* send voucher view */
+        //     $mail->send([],[], function($message) use ($mailData) {
+        //         $reservation = $mailData['reservation'];
+        //         $detail = $mailData['detail'];
+
+        //         /* this mail will be send from? */
+        //         $message->from(\Config::get('email.info'), 'Renovaspa');
+                
+        //         /* the sender's data is? */
+        //         $message->sender(\Config::get('email.info'), 'Renovaspa');
+                
+        //         /* this mail is in hidden copy fro? */
+        //         $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+        //         $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
+                
+        //         /* this mail should be replie to? */
+        //         $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+
+        //         $message->attach($mailData['pdf_path']);
+
+        //         if($reservation->Type == 1)
+        //             $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+        //         else
+        //             $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+        //     });  
+        // } 
     }
 
     /* voucher method */
@@ -906,15 +929,19 @@ class PaymentController extends Controller
             $model = $data['data'];
             $voucher = $data['voucher'];
 
-            /* clear session data */
-            $session->flush();
-            
             $mailData = [
                 'voucher' => $voucher,
                 'reservation' => $reservation
             ];
 
-            $this->sendReservationEmail($reservation, $mailData);
+            $testMode = \Config::get('app.mode');
+
+            if($testMode == "PRODUCTION"){
+                $this->sendReservationEmail($reservation, $mailData);
+                
+                /* clear session data */
+                $session->flush();
+            }
         
             if($reservation->Type == 1){
                 /* show voucher */
@@ -946,7 +973,10 @@ class PaymentController extends Controller
                 'reservation' => $reservation
             ];  
 
-            $this->sendReservationEmail($reservation, $mailData);
+            $testMode = \Config::get('app.mode');
+
+            if($testMode == "PRODUCTION")
+                $this->sendReservationEmail($reservation, $mailData);
 
             if($reservation->Type == 1){
                 /* show voucher */

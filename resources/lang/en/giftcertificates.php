@@ -16,7 +16,7 @@ return [
     'personalize_by_adding' => 'Personalize by adding a message:',
     'to' => 'To (as it will appear on the gift certificate):',
     'from' => 'From (as it will appear on the gift certificate):',
-    'enter_message' => 'Enter message',
+    'enter_message' => 'Enter message (Only 170 characters)',
     'select_delivery' => 'Select delivery method:'
 
 ];

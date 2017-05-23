@@ -227,20 +227,27 @@ class WeddingController extends Controller
                 'reservation' => $reservation
             ];
 
-            /* send voucher view */
-            $mail->send([],[], function($message) use ($mailData) {
-                $reservation = $mailData['reservation'];
-                $message->setBody($mailData['voucher'], 'text/html');
-                $message->from(\Config::get('email.info'), 'Renovaspa');
-                $message->sender(\Config::get('email.info'), 'Renovaspa');
-                $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
-                $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-                $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
-            });
+            $testMode = \Config::get('app.mode');
 
-            /* clear session data */
-            $session->flush();
+            if($testMode == "PRODUCTION"){
+                /* send voucher view */
+                $mail->send([],[], function($message) use ($mailData) {
+                    $reservation = $mailData['reservation'];
+                    $message->setBody($mailData['voucher'], 'text/html');
+                    $message->from(\Config::get('email.info'), 'Renovaspa');
+                    $message->sender(\Config::get('email.info'), 'Renovaspa');
+                    $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
+                    $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                    $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+                    $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
+                });    
+
+                /* clear session data */
+                $session->flush();
+            }
+            
+
+            
 
             return view('wedding.sent', $viewData);
         }

@@ -88,7 +88,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>{{ trans('giftcertificates.enter_message') }}</label>
-									<textarea  name="message[{{ $key }}]" class="form-control input-border"></textarea>
+									<textarea maxlength="170" name="message[{{ $key }}]" class="form-control input-border"></textarea>
 								</div>
 							</div>	
 						</div>
