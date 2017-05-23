@@ -174,8 +174,6 @@
 								@else
 								<br/>
 								@endif
-								<span>{{ trans('checkout.message') }}: {{ $detail->Message }}</span>
-								<br/>
 								<span>{{ trans('checkout.value') }}: <strong>{{ $country->Currency->Symbol.$detail->Value }}</strong></span>
 								<br/>
 								<a href="{{ URL::to('/') }}/reservation/certificate/delete/item/{{ $detail->Id }}/checkout">Remove</a>
