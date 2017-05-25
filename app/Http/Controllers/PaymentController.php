@@ -359,9 +359,7 @@ class PaymentController extends Controller
 
                 // add the last four card numbers to reservation
                 $reservation->LastFourCardNumbers = $lastNumbers;
-                $this->entityManager->persist($reservation);
-                $this->entityManager->flush();
-
+                
                 /* set order */
                 $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
 
@@ -375,6 +373,11 @@ class PaymentController extends Controller
                     return redirect()->route('payment.gateway');
                 }   
                 else {
+                    $reservation->ApprovalCode = $paymentGateway->responses['authcode'];
+                    
+                    $this->entityManager->persist($reservation);
+
+                    $this->entityManager->flush();
                     return redirect()->route('payment.serviceVoucher');
                 } 
             }
@@ -617,7 +620,7 @@ class PaymentController extends Controller
 
             // create payment
             $payment->create($paypal);
-            
+
             $approvalUrl = $payment->getApprovalLink();
 
             return \Redirect::to($approvalUrl);
@@ -628,8 +631,7 @@ class PaymentController extends Controller
 
     }
 
-    public function completePaypalPayment(){
-        
+    public function completePaypalPayment(Request $request){
         $tokenCredential = new OAuthTokenCredential(
                                         \Config::get('paypal.api_key'), 
                                         \Config::get('paypal.secret_key')
@@ -655,7 +657,18 @@ class PaymentController extends Controller
         try {
             // Execute payment
             $result = $payment->execute($execution, $paypal);
-            
+
+            $transactions = $payment->getTransactions();
+            $related_resources = $transactions[0]->getRelatedResources();
+            $sale = $related_resources[0]->getSale();
+            $sale_id = $sale->getId();
+
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['Id' => $request->session()->get('current_reservation_id')]);
+
+            $reservation->ApprovalCode = $sale_id;
+            $this->entityManager->persist($reservation);
+            $this->entityManager->flush();
+
             return redirect()->route('payment.serviceVoucher');
 
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
@@ -680,7 +693,8 @@ class PaymentController extends Controller
                     'customer_email' => $reservation->PaymentInformation->CustomerEmail,
                     'current_date' => new \DateTime("now"),
                     'confirmation_number' => $reservation->ConfirmationNumber,
-                    'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' - *****'.$reservation->LastFourCardNumbers ),
+                    'approval_code' => $reservation->ApprovalCode,
+                    'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' *****'.$reservation->LastFourCardNumbers ) . ' - ' . $reservation->ApprovalCode,
                     'billing_details' => $paymentInfo->CountryName.', '.', '.$paymentInfo->TownCity.', '.$paymentInfo->StreetAddress.', '.$paymentInfo->ApartmentUnit.', '.$paymentInfo->PostCode,
                     'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
                     'hotel_email' => $reservation->Hotel->NotifyEmail,
@@ -856,38 +870,6 @@ class PaymentController extends Controller
                 } 
             }    
         }
-
-        // foreach($reservation->CertificateDetails as $key => $detail){
-        //     /* store detail object */
-        //     $mailData['detail'] = $detail;
-        //     $mailData['pdf_path'] = $this->createPDF($detail);
-            
-        //     /* send voucher view */
-        //     $mail->send([],[], function($message) use ($mailData) {
-        //         $reservation = $mailData['reservation'];
-        //         $detail = $mailData['detail'];
-
-        //         /* this mail will be send from? */
-        //         $message->from(\Config::get('email.info'), 'Renovaspa');
-                
-        //         /* the sender's data is? */
-        //         $message->sender(\Config::get('email.info'), 'Renovaspa');
-                
-        //         /* this mail is in hidden copy fro? */
-        //         $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-        //         $message->bcc($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
-                
-        //         /* this mail should be replie to? */
-        //         $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-
-        //         $message->attach($mailData['pdf_path']);
-
-        //         if($reservation->Type == 1)
-        //             $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
-        //         else
-        //             $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - '. substr($detail->Id, 0, 7) .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
-        //     });  
-        // } 
     }
 
     /* voucher method */

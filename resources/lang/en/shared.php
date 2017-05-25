@@ -48,7 +48,7 @@ return [
     'cabin_type' => 'Cabin',
     'discount' => 'Discount',
     'online_discount_available' => 'Online discount available',
-    'online_discount' => 'Online discount',
+    'online_discount' => 'Off',
     'update_cart' => 'UPDATE CART',
     'cart_total' => 'CART TOTAL',
     'upon_availability' => 'Upon availability',

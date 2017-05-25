@@ -203,7 +203,7 @@ color: inherit">Services's information</h3>
 				@endphp
 				<div>
 		          <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
-		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
+		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 		      @if($item->Service->hasDiscount($hotel_id))
 					@php
 						$discount = $item->Service->getDiscount($hotel_id)
@@ -259,7 +259,7 @@ color: inherit">Services's information</h3>
 						<li>
 			              <div>
 			                <h5 style="margin-top: 10px;margin-bottom: 10px">1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
-			                <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "N/A") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "N/A") }}, {{ $item->CustomerName }}</span>
+			                <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 			              </div>
 			            </li>
 					@endforeach

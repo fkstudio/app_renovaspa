@@ -35,7 +35,10 @@
 		public $Hotel;
 
 		/** @Column(name="confirmation_number", type="string") */
-		public $ConfirmationNumber;		
+		public $ConfirmationNumber;	
+
+		/** @Column(name="approval_code", type="string") */
+		public $ApprovalCode;		
 
 		// ================== Wedding data =====================
 		/** @Column(name="bride_name", type="string") */

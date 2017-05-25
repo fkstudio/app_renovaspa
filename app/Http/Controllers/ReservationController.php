@@ -333,6 +333,13 @@ class ReservationController extends Controller
                     } 
                 }
 
+                /* set total and sub total  */
+                $reservation->Total = $reservation->getTotal();
+                $reservation->SubTotal = $reservation->getSubTotal();
+
+                $this->entityManager->persist($reservation);
+
+                /* commit all changes */
                 $this->entityManager->flush();
 
                 $session->put('current_reservation_id', $reservation->Id);

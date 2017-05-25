@@ -70,27 +70,10 @@
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </a>
                     </div>
+                    <div class="clearfix"></div>
+
                 </div>
             </div>
-	        <div class="row visible-lg">
-        		<!-- Bottom switcher of slider -->
-                <ul class="hide-bullets">
-                	@foreach($files  as $key => $file)
-                        @if(strpos($file, 'thumbnail'))
-    				  		@php
-
-    				  		$active = ($key == 0 ? 'active' : '');
-
-    				  		@endphp
-    				  		<li class="col-lg-4 col-sm-3 col-xs-4">
-    	                        <a style="background: url({{ $urlPath .'/'. $file }});background-size: cover;background-position: center center;" class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
-    	                            <!-- <img src=""> -->
-    	                        </a>
-    	                    </li>
-                        @endif
-				  	@endforeach
-                </ul>	
-        	</div>
 	    </div>
         <div class="clearfix hidden-lg hidden-md"></div>
         <br class="hidden-lg hidden-md" />
@@ -98,8 +81,10 @@
 	    	<h2 class="details-hotel-title">{{ $model->Name }}</h2>
 	    	<div class="clearfix"></div>
 	    	<div class="under-title-line"></div>
-	    	<p><strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>
-	    	   <strong>{{ trans("hotel.hours") }}</strong>: {{ $model->OpenAt->format('H:i:s a') }} - {{ $model->ClosetAt->format('H:i:s a') }}</p>
+	    	<p>
+                <strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>
+	    	    <strong>{{ trans("hotel.hours") }}</strong>: {{ $model->OpenAt->format('H:i:s a') }} - {{ $model->ClosetAt->format('H:i:s a') }}
+            </p>
 	    	@if (empty($model->Description))
 	    	<p>No description to show</p>
 	    	@else
