@@ -2,6 +2,23 @@
 
 @section('title', $model->Name)
 
+@php
+    $countryName = strtolower(str_replace(' ', '-', $region->Country->Name));
+    $regionName = strtolower(str_replace(' ', '-', $region->Name));
+    $hotelName = str_replace(' ', '-', $model->Name);
+
+    $folderPath = '/images/hotels/'.$countryName .'/'. $regionName .'/'.$hotelName;
+    $photoPath = base_path().'/public'.$folderPath;
+    $urlPath = URL::to('/').$folderPath;
+
+    $files = scandir($photoPath);
+
+    array_shift($files);
+    array_shift($files);
+
+    $showActive = true;
+@endphp
+
 @section('content')
 <!-- why ask modal -->
 <div id="whyAskModal" class="modal fade" role="dialog">
@@ -31,30 +48,17 @@
                     <div class="carousel slide" id="hotel-carousel">    	
                         <!-- Carousel items -->
                         <div class="carousel-inner">
-                            @php
-                                $countryName = strtolower(str_replace(' ', '-', $region->Country->Name));
-                                $regionName = strtolower(str_replace(' ', '-', $region->Name));
-                                $hotelName = str_replace(' ', '-', $model->Name);
-
-                                $folderPath = '/images/hotels/'.$countryName .'/'. $regionName .'/'.$hotelName;
-                                $photoPath = base_path().'/public'.$folderPath;
-                                $urlPath = URL::to('/').$folderPath;
-
-                                $files = scandir($photoPath);
-
-                                array_shift($files);
-                                array_shift($files);
-
-                                $showActive = true;
-                            @endphp
+                            
                         	<!-- Carousel items -->
 	                        @foreach($files as $key => $file)
                                 @if(!strpos($file, 'thumbnail'))
 						  		    @php
     						  		  $active = ($showActive ? 'active' : '');
     						  		@endphp
-	                                <div  class="{{ $active }} item" data-slide-number="{{ $key }}">
-	                                    <img src="{{ $urlPath . '/' . $file }}">
+	                                <div class="{{ $active }} item" data-slide-number="{{ $key }}">
+	                                    <a data-toggle="lightbox" href="{{ $urlPath . '/' . $file }}">
+                                            <img src="{{ $urlPath . '/' . $file }}">   
+                                        </a>
 	                                </div>
                                     @php
                                         $showActive = false;
@@ -170,6 +174,10 @@
 @endsection
 
 @section('scripts')
+<!-- lighbox -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.min.js"></script>
+
 <!-- Moment JS-->
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
@@ -178,6 +186,11 @@
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 <script>
 $(document).ready(function($) {
+
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
 
     $(function() {
         var date = $('.datepicker').daterangepicker({

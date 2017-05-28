@@ -367,7 +367,7 @@ class PaymentController extends Controller
                 $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvc);
 
                 /* check payment status code */
-                if($paymentGateway->responses['response_code'] != 100){
+                if($paymentGateway->responses['response'] != 1){
                     /* error case */
                     $session->flash('failure', trans('messages.transaction_error'));
                     return redirect()->route('payment.gateway');
