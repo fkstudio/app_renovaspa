@@ -44,7 +44,7 @@ class DbContext
             'host' => '45.58.47.61',
             'user'     => 'hiobairo',
             'password' => 'admin1234',
-            'dbname'   => 'final_renova',
+            'dbname'   => 'final_renova_test',
         );
 
         // $dbParams = array(

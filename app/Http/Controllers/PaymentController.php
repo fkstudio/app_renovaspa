@@ -308,6 +308,7 @@ class PaymentController extends Controller
     /* execute a payment by paymentGateway API */
     public function execGatewayPayment(Request $request){
         /* if each filed is fill proceed with the logic */
+        $testMode = \Config::get('app.mode');
 
         try {
             if(!empty($_POST['card_name']) or !empty($_POST['card_number']) or !empty($_POST['month_year']) or !empty($_POST['cvc'])){
@@ -386,6 +387,10 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
+            if($testMode != "PRODUCTION"){
+                print_r($e);
+                exit();
+            }
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }
@@ -735,7 +740,11 @@ class PaymentController extends Controller
                     'real_customer_last_name' => $detail->RealCustomerLastName,
                     'from_customer' => $detail->FromCustomerName,
                     'to_customer' => $detail->ToCustomerName,
-                    'certificate_number' => $detail->CertificateNumber,
+                    'certificate_number' => $detail->CorrelativeNumber,
+                    'delivery_number_or_agency' => $detail->DeliveryNumberOrAgency,
+                    'delivery_company_name' => $detail->DeliveryCompanyName,
+                    'delivery_departure_date' => ( $detail->DeliveryDepartureDate != null ? $detail->DeliveryDepartureDate->format('F j, Y') : "Open date" ),
+                    'delivery_other_fields' => $detail->DeliveryOtherInfo,
                     'sub_total' => number_format($detail->SubTotal, 2),
                     'price' => number_format($detail->Value, 2)
                 );
@@ -787,7 +796,7 @@ class PaymentController extends Controller
             $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
             if($reservation->Type == 1){
-                $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber);
+                $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber . " - " . $reservation->Hotel->Name);
             }
             else{
                 $subject = "Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber;
@@ -797,11 +806,13 @@ class PaymentController extends Controller
                     $pdf_path = $this->createPDF($detail);
 
                     /* add gift certificate number to mail subject */
-                    $subject .= " - #" . $detail->CertificateNumber;
+                    $subject .= " - #" . $detail->CorrelativeNumber;
 
                     /* attach gift pdf to mail */
                     $message->attach($pdf_path);    
                 }
+
+                $subject .= " - " . $reservation->Region->Name . " " . $reservation->Hotel->Name;
 
                 /* add destination to subject */
                 $subject .= ' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name;
@@ -865,7 +876,7 @@ class PaymentController extends Controller
                         
                         $message->attach($mailData['pdf_path']);
 
-                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - #'. $detail->CertificateNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - #'. $detail->CorrelativeNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                     });   
                 } 
             }    
@@ -879,6 +890,8 @@ class PaymentController extends Controller
         $sessionId = $session->getId();
         $reservation_id = $session->get('current_reservation_id');
         $voucher = "";
+
+        $testMode = \Config::get('app.mode');
 
 
         try {
@@ -915,8 +928,6 @@ class PaymentController extends Controller
                 'reservation' => $reservation
             ];
 
-            $testMode = \Config::get('app.mode');
-
             if($testMode == "PRODUCTION"){
                 $this->sendReservationEmail($reservation, $mailData);
                 
@@ -933,6 +944,10 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e){
+            if($testMode != "PRODUCTION"){
+                print_r($e);
+                exit();
+            }
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

@@ -168,6 +168,53 @@ font-size: 16px;">Certificate number</th>
 			@endforeach
 		</tbody>
 	</table>
+	@foreach($details as $detail)
+		@if($detail['delivery_method'] == 'Hotel')
+				<h3 style=" margin-top: 25px;
+				padding-bottom: 7px;
+			    font-size: 15px;
+			    color: white;
+			    border-bottom: solid 3px #8a7c71;
+			    background: #a79689;
+			    padding-top: 8px;
+			    border-radius: 4px 4px 0 0;"
+	><span style="background: #a79689;
+				  padding: 7px;
+				  border-radius: 4px 4px 0 0;
+				  font-size: 12px;"
+	>Hotel delivery information Certificate #{{ $detail['certificate_number'] }}</span></h3>
+	<table style="width: 100%;">
+		<thead style="color: #584e46;
+					  font-weight: bold;"
+		>
+			<tr>
+				<th style="text-align: left;
+font-weight: normal;
+font-size: 16px;">Delivery number or agency</th>
+				<th style="text-align: left;
+font-weight: normal;
+font-size: 16px;">Company name</th>
+				<th style="text-align: left;
+font-weight: normal;
+font-size: 16px;">Check in</th>
+				<th style="text-align: left;
+font-weight: normal;
+font-size: 16px;">Other information</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr style="color: #545454;
+					   font-size: 14px;"
+			>
+				<td>{{ $detail["delivery_number_or_agency"] }}</td>
+				<td>{{ $detail["delivery_company_name"] }}</td>
+				<td>{{ $detail["delivery_departure_date"] }}</td>
+				<td>{{ $detail["delivery_other_fields"] }}</td>
+			</tr>
+		</tbody>
+	</table>
+		@endif
+	@endforeach
 	<div style="text-align: right;
 			    width: 100%;
 			    height: 100px;

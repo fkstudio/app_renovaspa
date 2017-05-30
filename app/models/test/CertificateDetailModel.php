@@ -47,6 +47,9 @@ class CertificateDetailModel {
 	/**  @Column(name="certificate_number", type="integer") */
 	public $CertificateNumber;
 
+	/**  @Column(name="correlative_number", type="integer") */
+	public $CorrelativeNumber;
+
 	/** @Column(name="sub_total", type="decimal") */
 	public $SubTotal;
 
