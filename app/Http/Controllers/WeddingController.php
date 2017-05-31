@@ -245,9 +245,6 @@ class WeddingController extends Controller
                 /* clear session data */
                 $session->flush();
             }
-            
-
-            
 
             return view('wedding.sent', $viewData);
         }

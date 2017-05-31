@@ -697,7 +697,7 @@ class PaymentController extends Controller
                     'type' => $reservation->Type,
                     'customer_email' => $reservation->PaymentInformation->CustomerEmail,
                     'current_date' => new \DateTime("now"),
-                    'confirmation_number' => $reservation->ConfirmationNumber,
+                    'confirmation_number' => $reservation->CorrelativeNumber,
                     'approval_code' => $reservation->ApprovalCode,
                     'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' *****'.$reservation->LastFourCardNumbers ) . ' - ' . $reservation->ApprovalCode,
                     'billing_details' => $paymentInfo->CountryName.', '.', '.$paymentInfo->TownCity.', '.$paymentInfo->StreetAddress.', '.$paymentInfo->ApartmentUnit.', '.$paymentInfo->PostCode,

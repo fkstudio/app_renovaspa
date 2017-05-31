@@ -9,6 +9,19 @@
 	$bgs[3] = "weddings-bg.jpg";
 @endphp
 
+@section('meta')
+	@if($reservationType == 1)
+		<META NAME="Description" content="Renovaspa.com | Book Here | "Riu resort spa, couple massage, gazebo services"/>
+		<meta name="keywords" content="massage, body wrap massage, spa package, haircut ladies, destination spa Caribbean, bikini waxing, facial, renova spa massage, spa manicure, moon light, classic pedicure, tropical wedding destinations, honeymoon, honeymooners offers"/>
+	@elseif($reservationType == 2)
+		<meta NAME="Description" content="Renovaspa.com | Git Certiticates | Give your loved ones an unforgettable gift"/>
+		<meta name="keywords" content="git certificates hotels, git by Riu, git in the Caribbean, dream git, git on beach, beach git certificates, island git, best caribbean git certificates resorts, git certiticates in caribbean"/>
+	@else
+		<meta NAME="Description" content="Renovaspa.com | Weddings | Book your spa treatment in the best destinations"/>
+		<meta name="keywords" content="Wedding hotels, Weddings by Riu, wedding in the Caribbean, dream wedding, weddings on beach, beach wedding, island wedding, best caribbean wedding resorts,destination weddings in caribbean"/>
+	@endif
+@endsection
+
 @section("content")
 <!-- sign modal -->
 <div id="signModal" class="modal fade" role="dialog">

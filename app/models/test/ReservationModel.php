@@ -37,6 +37,9 @@
 		/** @Column(name="confirmation_number", type="string") */
 		public $ConfirmationNumber;	
 
+		/** @Column(name="correlative_number", type="string") */
+		public $CorrelativeNumber;	
+
 		/** @Column(name="approval_code", type="string") */
 		public $ApprovalCode;		
 
