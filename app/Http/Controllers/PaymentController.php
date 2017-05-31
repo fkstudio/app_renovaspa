@@ -362,7 +362,7 @@ class PaymentController extends Controller
                 $reservation->LastFourCardNumbers = $lastNumbers;
                 
                 /* set order */
-                $paymentGateway->setOrder('Web '.$reservation->ConfirmationNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
+                $paymentGateway->setOrder('Web '.$reservation->CorrelativeNumber,"renovaspa.com",0,0, $reservation->Id, getenv("REMOTE_ADDR"));
 
                 /* execute order */
                 $paymentResult = $paymentGateway->doSale($total,$cardNumber,$expDate,$cvc);
@@ -423,7 +423,7 @@ class PaymentController extends Controller
             $sha256Key = \Config::get('redsys.sha_256_key');
             $comercialKey = \Config::get('redsys.comercial_key');
 
-            $referenceNumber = $reservation->ConfirmationNumber;
+            $referenceNumber = $reservation->CorrelativeNumber;
 
             // Input values
             $comercialCodeFunc = \Config::get('redsys.comercial_code_func');
@@ -603,7 +603,7 @@ class PaymentController extends Controller
             $transaction = new Transaction();
             $transaction->setAmount($amount)
                         ->setItemList($itemList)
-                        ->setInvoiceNumber($reservation->ConfirmationNumber);
+                        ->setInvoiceNumber($reservation->CorrelativeNumber);
 
             if($reservation->Type == 1)
                 $transaction->setDescription("Individual services reservation");
@@ -796,10 +796,10 @@ class PaymentController extends Controller
             $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
             if($reservation->Type == 1){
-                $message->subject("Renova Spa voucher confirmation #" . $reservation->ConfirmationNumber . " - " . $reservation->Hotel->Name);
+                $message->subject("Renova Spa voucher confirmation #" . $reservation->CorrelativeNumber . " - " . $reservation->Hotel->Name);
             }
             else{
-                $subject = "Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber;
+                $subject = "Renova Spa Gift Certificate voucher confirmation #" . $reservation->CorrelativeNumber;
                 
                 foreach($reservation->CertificateDetails as $key => $detail){
                     /* create pdf gift from reservation detail */
@@ -876,7 +876,7 @@ class PaymentController extends Controller
                         
                         $message->attach($mailData['pdf_path']);
 
-                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->ConfirmationNumber . ' - #'. $detail->CorrelativeNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->CorrelativeNumber . ' - #'. $detail->CorrelativeNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                     });   
                 } 
             }    
