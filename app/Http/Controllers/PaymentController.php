@@ -58,8 +58,8 @@ class PaymentController extends Controller
         $lado = $pdf_path . "validopor.jpg"; 
         $depara = $pdf_path . "depara.jpg"; 
 
-        $reservation_number  = substr($certificateDetail->Reservation->Id, 0, 7);
-        $certificate_number = $certificateDetail->CertificateNumber;
+        $reservation_number  = $certificateDetail->Reservation->CorrelativeNumber;
+        $certificate_number = $certificateDetail->CorrelativeNumber;
         $destination_hotel = $certificateDetail->Reservation->Hotel->Name;
         $de=$certificateDetail->FromCustomerName;
         $customer_to=$certificateDetail->ToCustomerName;
@@ -103,7 +103,7 @@ class PaymentController extends Controller
                 $total_value = $ServicesDetail->Service->Name;
                 
                 $pdf->SetFontsize(8);
-                $pdf->SetXY(15.2, 3.0 + ( 0.4 * $key ));
+                $pdf->SetXY(15.2, 3.0 + ( 0.6 * $key ));
                 $pdf->multicell(5,.5, $total_value,0,'L');
             }
         }
@@ -423,7 +423,7 @@ class PaymentController extends Controller
             $sha256Key = \Config::get('redsys.sha_256_key');
             $comercialKey = \Config::get('redsys.comercial_key');
 
-            $referenceNumber = $reservation->CorrelativeNumber;
+            $referenceNumber = $reservation->ConfirmationNumber;
 
             // Input values
             $comercialCodeFunc = \Config::get('redsys.comercial_code_func');
@@ -699,7 +699,7 @@ class PaymentController extends Controller
                     'current_date' => new \DateTime("now"),
                     'confirmation_number' => $reservation->CorrelativeNumber,
                     'approval_code' => $reservation->ApprovalCode,
-                    'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name . ' *****'.$reservation->LastFourCardNumbers ) . ' - ' . $reservation->ApprovalCode,
+                    'card_type' => ( $reservation->PaymentMethod->Name == 'Paypal' ? $reservation->PaymentMethod->Name : $reservation->PaymentMethod->Name ) . ' - ' . $reservation->ApprovalCode,
                     'billing_details' => $paymentInfo->CountryName.', '.', '.$paymentInfo->TownCity.', '.$paymentInfo->StreetAddress.', '.$paymentInfo->ApartmentUnit.', '.$paymentInfo->PostCode,
                     'hotel_name' => "Hotel " . $reservation->Hotel->Name . ", " . $reservation->Region->Name . ", " . $reservation->Region->Country->Name,
                     'hotel_email' => $reservation->Hotel->NotifyEmail,
@@ -735,7 +735,7 @@ class PaymentController extends Controller
         else if ($reservation->Type == 2){
             foreach($reservation->CertificateDetails as $key => $detail){
                 $model['details'][$key] = array(
-                    'certificate_type' => $detail->Type,
+                    'services' => [],
                     'real_customer_first_name' => $detail->RealCustomerFirstName,
                     'real_customer_last_name' => $detail->RealCustomerLastName,
                     'from_customer' => $detail->FromCustomerName,
@@ -749,6 +749,10 @@ class PaymentController extends Controller
                     'price' => number_format($detail->Value, 2)
                 );
 
+                foreach($detail->CertificateDetailServices as $detailService){
+                    $model['details'][$key]['services'][] = $detailService->Service->Name;
+                }
+
                 if($detail->SendType == 1){
                     $model['details'][$key]['delivery_method'] = 'Email';
                 }
@@ -757,6 +761,13 @@ class PaymentController extends Controller
                 }
                 else if ($detail->SendType == 3){
                     $model['details'][$key]['delivery_method'] = "Hotel";
+                }
+
+                if($detail->Type == 1){
+                    $model['details'][$key]['certificate_type'] = 'Service based';
+                }
+                else if($detail->Type == 2){
+                    $model['details'][$key]['certificate_type'] = "Value based";
                 }
             }
 
@@ -812,7 +823,7 @@ class PaymentController extends Controller
                     $message->attach($pdf_path);    
                 }
 
-                $subject .= " - " . $reservation->Region->Name . " " . $reservation->Hotel->Name;
+                //$subject .= " - " . $reservation->Region->Name . " " . $reservation->Hotel->Name;
 
                 /* add destination to subject */
                 $subject .= ' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name;

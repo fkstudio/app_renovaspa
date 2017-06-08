@@ -98,6 +98,7 @@
             @php
               $packageRelation = $item->PackageCategoryRelation;
               $itemPrice = $packageRelation->getPrice();
+              $itemSubTotal = $packageRelation->getPlanePrice();
             @endphp
 
             <div class="col-md-3">
@@ -107,10 +108,10 @@
               <h5>{{ $packageRelation->WeddingPackage->Name }}</h5>
               
               @php
-                $subtotal += $itemPrice;
+                $subtotal += $itemSubTotal;
                 $total += $itemPrice;
               @endphp
-              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemPrice, 2) }} {{ $country->Currency->Name }}</span>
+              <span>{{ trans('shared.price') }}: {{ $country->Currency->Symbol }}{{ number_format($itemSubTotal, 2) }} {{ $country->Currency->Name }}</span>
             </div>
             <div class="col-md-1">
               <a style="margin-top: 20px" href="{{ URL::to('/') }}/shopping/cart/remove/item/{{ $item->Id }}" type="button" class="btn btn-danger">X</a>

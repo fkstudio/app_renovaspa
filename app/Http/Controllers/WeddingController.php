@@ -238,6 +238,7 @@ class WeddingController extends Controller
                     $message->sender(\Config::get('email.info'), 'Renovaspa');
                     $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
                     $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                    $message->bcc(\Config::get('email.info'), 'Renovaspa');
                     $message->replyTo(\Config::get('email.info'), 'Renovaspa');
                     $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
                 });    

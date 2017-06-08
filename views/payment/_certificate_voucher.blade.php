@@ -34,7 +34,7 @@
 			We highly recommend you to contact the recipient/s to make sure the Gift Certificate/s has been received.<br/><br/>
 
 			We will be happy to assist you with any further information.
-			Please, e-mail us at info.aruba@renovaspa.com<br/><br/>
+			Please, e-mail us at {{ $hotel_email }}<br/><br/>
 
 			We hope the Gift Certificate's receiver/s enjoy(s) our spa services and look forward to welcoming them at Renova SPA!<br/><br/>
 
@@ -119,20 +119,25 @@
 			<tr>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">From</th>
+font-size: 16px;">To</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">To</th>
+font-size: 16px;">Type</th>
+				@if($details[0]['certificate_type'] == 'Service based')
+				<th style="text-align: left;
+font-weight: normal;
+font-size: 16px;">Services</th>
+				@endif
 				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">Delivery method</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">Certificate number</th>
+font-size: 16px;">Number</th>
 				<th style="text-align: left;
 					font-weight: normal;
 					font-size: 16px;">
-						@if($details[0]['certificate_type'] == 1)
+						@if($details[0]['certificate_type'] == 'Service based')
 							{{ 'Discount' }}
 						@else
 							{{ 'Bono' }}
@@ -148,12 +153,20 @@ font-size: 16px;">Certificate number</th>
 			<tr style="color: #545454;
 					   font-size: 14px;"
 			>
-				<td>{{ $customer_name }}</td>
+				
 				<td>{{ $detail["real_customer_first_name"] . ' ' . $detail["real_customer_last_name"] }}</td>
+				<td>{{ $detail['certificate_type'] }}</td>
+				@if($detail['certificate_type'] == 'Service based')
+				<td>
+					@foreach($detail['services'] as $serviceName)
+						{{ $serviceName }}</br>
+					@endforeach
+				</td>
+				@endif
 				<td>{{ $detail["delivery_method"] }}</td>
 				<td>{{ $detail["certificate_number"] }}</td>
 				<td>
-				@if($detail['certificate_type'] == 1)
+				@if($detail['certificate_type'] == 'Service based')
 					{{ $currency_symbol.( $detail["sub_total"] - $detail["price"] ) }}
 				@else
 					@php

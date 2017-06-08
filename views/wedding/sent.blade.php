@@ -3,7 +3,7 @@
 @section('title', 'The wedding quotation has been sent')
 
 @section("content")
-	<div class="container-fluid-full" style="background: url(http://localhost/renovaspa/public/images/wedding_cover.jpg);
+	<div class="container-fluid-full" style="background: url({{ URL::to('/')  }}/images/wedding_cover.jpg);
 										     background-size: cover;
 											 height: 540px;">
 	</div>
