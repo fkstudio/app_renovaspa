@@ -248,7 +248,7 @@ font-size: 16px;">Other information</th>
 				<tr>
 					<td><strong>Total</strong></td>
 					@if($type == 2)
-						@if($detail['certificate_type'] == 1)
+						@if($details[0]['certificate_type'] == 'Service based')
 							<td><strong>{{ $currency_symbol.$total }}</strong></td>
 						@else
 							<td><strong>{{ $currency_symbol.$subtotal }}</strong></td>
