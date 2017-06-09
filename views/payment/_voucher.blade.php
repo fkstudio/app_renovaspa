@@ -30,8 +30,12 @@
 				Please, e-mail us at {{ $hotel_email }} <br/>
 				We hope you enjoy our spa services and look forward to receiving you at Renova Spa! <br/>
 				<br/>
-				Sincerely, <strong>{{ $customer_service_name }}</strong> - Customer Services <span  style="float: right;
-    																					   color: #b5b5b5;">{{ $current_date->format('F j, Y') }}</span>
+				Sincerely
+				<br/>
+				<strong>{{ $customer_service_name }}</strong>
+				<br/>
+				Customer Services <span  style="float: right;
+																						   color: #b5b5b5;">{{ $current_date->format('F j, Y') }}</span>
 			</p>
 		</section>
 		<h3 style=" margin-top: 25px;
@@ -163,7 +167,7 @@
 				<tbody>
 					<tr>
 						<td>Subtotal</td>
-						<td>{{ $currency_symbol.number_format($subtotal, 2) }}</td>
+						<td>{{ $currency_symbol.$subtotal }}</td>
 					</tr>
 					<tr>
 						<td>Discount</td>
@@ -201,15 +205,4 @@
 		<br/>
 		<p>Thank you again for using <a style="color: #665b51;" href="http://renovaspa.com">Renovaspa.com</a> </p>
 		<p>Please contact us at {{ $hotel_email }} if you request any further information or changes. </p>
-		<br/>
-		<div style="text-align: center;">
-			<p>Follow us</p>
-			<a target="_blank" href="https://www.facebook.com/RenovaSpa/"><i style="padding-left: 17px;padding-right: 17px" class="social-icon fa fa-facebook"></i></a>
-	        <a target="_blank" href="https://twitter.com/renovaspas"><i class="social-icon fa fa-twitter"></i></a>
-	        <a target="_blank" href="https://www.instagram.com/renova.spa/"><i class="social-icon fa fa-instagram"></i></a>
-	        <a target="_blank" href="https://es.pinterest.com/renovaspa/"><i class="social-icon fa fa-pinterest"></i></a>
-		</div>
-		<div class="clearfix"></div>
-		<br/>
-		<p class="text-center"><a href="{{ URL::to('/') }}">GO TO HOME</a></p>
 	</div>

@@ -2,7 +2,7 @@
 <div style="width: 90%;
 			max-width: 800px;
 			margin: 0 auto;
-			font-size: 14px;
+			font-size: 13px;
 			padding: 16px;
 			background: white;
 			border-radius: 12px;
@@ -18,7 +18,7 @@
 </div>
 	<section>
 		<p style="color:#3c2f21;font-size: 19px;">Dear {{ $customer_name }}</p>
-		<p style="font-size: 14px;
+		<p style="font-size: 13px;
 				    text-align: justify;
 				    color: #655a50;
 				    line-height: 23px;"
@@ -38,7 +38,11 @@
 
 			We hope the Gift Certificate's receiver/s enjoy(s) our spa services and look forward to welcoming them at Renova SPA!<br/><br/>
 
-			Sincerely, <strong>{{ $customer_service_name }}</strong> - Customer Services <span  style="float: right;
+			Sincerely
+			<br/>
+			<strong>{{ $customer_service_name }}</strong>
+			<br/>
+			Customer Services <span  style="float: right;
 																					   color: #b5b5b5;">{{ $current_date->format('F j, Y') }}</span>
 		</p>
 	</section>
@@ -120,9 +124,6 @@
 				<th style="text-align: left;
 font-weight: normal;
 font-size: 16px;">To</th>
-				<th style="text-align: left;
-font-weight: normal;
-font-size: 16px;">Type</th>
 				@if($details[0]['certificate_type'] == 'Service based')
 				<th style="text-align: left;
 font-weight: normal;
@@ -133,29 +134,29 @@ font-weight: normal;
 font-size: 16px;">Delivery method</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">Number</th>
+font-size: 16px;">Gift certificate number</th>
+				@if($details[0]['certificate_type'] == 'Service based')
 				<th style="text-align: left;
 					font-weight: normal;
-					font-size: 16px;">
-						@if($details[0]['certificate_type'] == 'Service based')
-							{{ 'Discount' }}
-						@else
-							{{ 'Bono' }}
-						@endif
-					</th>
+					font-size: 16px;">Discount</th>
+				@else
 				<th style="text-align: left;
 					font-weight: normal;
-					font-size: 16px;">Price</th>
+					font-size: 16px;">Bonus</th>
+				@endif
+				
+				<th style="text-align: left;
+					font-weight: normal;
+					font-size: 16px;">Total</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach($details as $detail)
 			<tr style="color: #545454;
-					   font-size: 14px;"
+					   font-size: 13px;"
 			>
 				
 				<td>{{ $detail["real_customer_first_name"] . ' ' . $detail["real_customer_last_name"] }}</td>
-				<td>{{ $detail['certificate_type'] }}</td>
 				@if($detail['certificate_type'] == 'Service based')
 				<td>
 					@foreach($detail['services'] as $serviceName)
@@ -217,7 +218,7 @@ font-size: 16px;">Other information</th>
 		</thead>
 		<tbody>
 			<tr style="color: #545454;
-					   font-size: 14px;"
+					   font-size: 13px;"
 			>
 				<td>{{ $detail["delivery_number_or_agency"] }}</td>
 				<td>{{ $detail["delivery_company_name"] }}</td>
@@ -279,15 +280,4 @@ font-size: 16px;">Other information</th>
 	<br/>
 	<p>Thank you again for using <a style="color: #665b51;" href="http://renovaspa.com">Renovaspa.com</a> </p>
 	<p>Please contact us at {{ $hotel_email }} if you request any further information or changes. </p>
-	<br/>
-	<div style="text-align: center;">
-			<p>Follow us</p>
-			<a target="_blank" href="https://www.facebook.com/RenovaSpa/"><i style="padding-left: 17px;padding-right: 17px" class="social-icon fa fa-facebook"></i></a>
-	        <a target="_blank" href="https://twitter.com/renovaspas"><i class="social-icon fa fa-twitter"></i></a>
-	        <a target="_blank" href="https://www.instagram.com/renova.spa/"><i class="social-icon fa fa-instagram"></i></a>
-	        <a target="_blank" href="https://es.pinterest.com/renovaspa/"><i class="social-icon fa fa-pinterest"></i></a>
-		</div>
-		<div class="clearfix"></div>
-		<br/>
-		<p class="text-center"><a href="{{ URL::to('/') }}">GO TO HOME</a></p>
 </div>

@@ -162,7 +162,7 @@
 				}
 			}
 
-			return $this->Discount;
+			return number_format($this->Discount, 2);
 		}
 
 		public function getTotal(){
@@ -187,7 +187,7 @@
 				}
 			}
 
-			return $this->Total;
+			return number_format($this->Total, 2);
 		}
 
 		public function getSubtotal(){
@@ -212,7 +212,7 @@
 				}
 			}
 
-			return $this->Subtotal;
+			return number_format($this->Subtotal,2);
 		}
 
 		public function __construct(){

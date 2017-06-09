@@ -157,7 +157,7 @@
 						</div>
 						<div class="col-md-10">
 							<div class="row">
-								<h5 style="color:#5fc7ae;"><strong>Gift certificate #{{ $key + 1 }}</strong></h5>
+								<h5 style="color:#5fc7ae;"><strong>Gift certificate #{{ $detail->CertificateNumber }}</strong></h5>
 								@if($detail->Type == 2)
 								<span>(Value based)</span>
 								<br/>
