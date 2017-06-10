@@ -53,8 +53,6 @@ class DbContext
         //     'password' => 'root',
         //     'dbname'   => 'final_renova',
         // );
-        
-        
 
         // DB configuration and Doctrine Entity Manager
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
