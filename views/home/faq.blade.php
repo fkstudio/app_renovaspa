@@ -1,6 +1,6 @@
 @extends('layout/baseLayout')
 
-@section('title', 'Spa etiquette')
+@section('title', 'FAQ')
 
 @section('content')
     <div class="container-fluid">

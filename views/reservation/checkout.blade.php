@@ -1,6 +1,6 @@
 	@extends('layout/baseLayout')
 
-	@section('title', 'Services')
+	@section('title', 'Reservation / Checkout')
 
 	@inject("dbcontext", "App\Database\DbContext")
 

@@ -1,13 +1,19 @@
 @extends('layout/baseLayout')
 
-@section('title', 'Regions')
-
 @php
 	$reservationType = session('reservation_type');
 	$bgs[1] = "bookhere-bg.jpg";
 	$bgs[2] = "certificates-bg.jpg";
 	$bgs[3] = "weddings-bg.jpg";
 @endphp
+
+@if($reservationType == 1)
+	@section('title', 'Book your treatment')
+@elseif($reservationType == 2)
+	@section('title', 'Treat someone')
+@else
+	@section('title', 'The day')
+@endif
 
 @section('meta')
 	@if($reservationType == 1)

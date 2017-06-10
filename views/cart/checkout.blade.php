@@ -1,6 +1,6 @@
 @extends('layout/baseLayout')
 
-@section('title', 'Checkout')
+@section('title', 'Shopping cart / Checkout')
 
 @section("content")
 
@@ -15,7 +15,9 @@
 			</div>
 			<div class="modal-body">
 				<p style="line-height: 25px;" class="text-center">
-					“In order to choose an specific time, please book at least 48 hours in advance. We will keep the time of this service open. Please visit our spa in order to schedule your service.”
+					- You will be able to make a fixed appointment by choosing a specific date and time if you book with more than 48 hours advice.<br/><br/>
+					- If you are unsure about the appointment, please, choose OPEN DATE and OPEN TIME and confirm your appointment at the spa directly.<br/><br/>
+					- For reservations with less than 48 hours advice, you will have to choose OPEN DATE and OPEN TIME and confirm your appointment at the spa directly upon arrival to the hotel based on availability.
 				</p>
 			</div>
 		</div>

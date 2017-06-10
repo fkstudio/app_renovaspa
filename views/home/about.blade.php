@@ -1,6 +1,6 @@
 @extends('layout/baseLayout')
 
-@section('title', 'Home')
+@section('title', 'About us')
 
 @section('content')
     <div class="container-fluid container-fluid-full" style="background: url({{ URL::to('/images') }}/about-bg.jpg);background-size: cover;">

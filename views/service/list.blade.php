@@ -2,7 +2,7 @@
 
 @extends('layout/baseLayout')
 
-@section('title', 'Services')
+@section('title', $categoryCountry->Category->Name. ' / Services')
 
 @php
 

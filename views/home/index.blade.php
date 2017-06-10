@@ -1,6 +1,6 @@
 @extends('layout/baseLayout')
 
-@section('title', 'Home')
+@section('title', 'Book your spa treatment in the best destinations')
 
 @section('content')
 	<div class="container-fluid-full">
