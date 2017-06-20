@@ -50,4 +50,10 @@ class CategoryCountryModel {
 
 	/** @Column(name="is_deleted", type="boolean") */
 	public $IsDeleted;
+
+	public $ServiceCategoryHotels;
+
+	public function __construct(){
+		$this->ServiceCategoryHotels = [];
+	}
 }

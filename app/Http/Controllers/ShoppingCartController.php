@@ -65,8 +65,6 @@ class ShoppingCartController extends Controller
             return view('cart.checkout', [ 'model' => $cart, 'breadcrumps' => $breadcrumps, 'category' => $category, 'cabins' => $cabins ]); 
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }

@@ -85,13 +85,29 @@ class HotelController extends Controller
         try {
             $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $id]);
 
+            $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+                AND
+                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
+                             ->setParameter('deleted', false)
+                             ->setParameter('active', true)
+                             ->setParameter('country', $hotelRegion->Region->Country->Id)
+                             ->setParameter('hotel', $hotelRegion->Hotel->Id)
+                             ->getResult();
+
+            foreach($categoryCountries as $categoryCountry){
+                $serviceCategoryHotels = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")
+                ->findBy([ 'Category' => $categoryCountry->Category->Id, 'Hotel' => $id ],['Order' => 'ASC']);
+
+                $categoryCountry->ServiceCategoryHotels = $serviceCategoryHotels;
+            }
+
             $breadcrumps = [
                 'HOTELS' => '#fakelink', 
                 strtoupper($hotelRegion->Hotel->Name) => '#fakelink'
             ];
 
             return view("hotel.details", 
-                        ['model' => $hotelRegion->Hotel, 'region' => $hotelRegion->Region, 'breadcrumps' => $breadcrumps]);
+                        ['model' => $hotelRegion->Hotel, 'region' => $hotelRegion->Region, 'breadcrumps' => $breadcrumps, 'categoryCountries' => $categoryCountries]);
         }
         catch (\Exception $e){
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');

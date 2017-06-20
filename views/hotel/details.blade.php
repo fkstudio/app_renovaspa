@@ -22,6 +22,46 @@
 @endphp
 
 @section('content')
+<!-- services and prices modal -->
+<div id="servicesAndPricesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 700px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Services and prices</h4>
+            </div>
+            <div class="modal-body">
+                @foreach($categoryCountries as $categoryCountry)
+                <div class="text-center">
+                    <a href="#fakelink" style="cursor: pointer;" data-toggle="collapse" data-target="#category_collapse_{{ $categoryCountry->Category->Id }}">{{ $categoryCountry->Category->Name }}</a>
+                </div>
+
+                <div id="category_collapse_{{ $categoryCountry->Category->Id }}" class="collapse">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categoryCountry->ServiceCategoryHotels as $serviceCategoryHotel)
+                            <tr>
+                                <td>{{ $serviceCategoryHotel->Service->Name }}</td>
+                                <td>{{ $serviceCategoryHotel->Service->getPrice($serviceCategoryHotel->Hotel->Id) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <hr/>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- why ask modal -->
 <div id="whyAskModal" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 700px;">
@@ -117,6 +157,9 @@
             <h2 class="details-hotel-title">{{ $model->Name }}</h2>
             <div class="clearfix"></div>
             <div class="under-title-line"></div>
+            <span><a href="#fakelink" data-toggle="modal" data-target="#servicesAndPricesModal">Services and prices</a></span>
+            <div class="clearfix"></div>
+            <br/>
             <p><strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>
                <strong>{{ trans("hotel.hours") }}</strong>: {{ $model->OpenAt->format('H:i:s a') }} - {{ $model->ClosetAt->format('H:i:s a') }}</p>
             @if (empty($model->Description))

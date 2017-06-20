@@ -90,6 +90,11 @@ class ReservationController extends Controller
         $reservationType = $session->get('reservation_type');
         $reservation_id = $session->get('current_reservation_id');
 
+        // echo '<pre>';
+        // print_r($_POST);
+        // echo '</pre>';
+        // exit();
+
         try {
 
             $reservation = null;
@@ -136,6 +141,9 @@ class ReservationController extends Controller
                 $cart = $this->entityManager->getRepository('App\Models\Test\ShoppingCartModel')->findOneBy(['Session' => $session->getId()]);
 
                 if($reservationType == 1 || $reservationType == 3){
+
+                    $packages = [];
+                    $usedPackages = [];
 
                     if(isset($_POST['id'])){
                         foreach($_POST['id'] as $key => $item){
@@ -205,22 +213,45 @@ class ReservationController extends Controller
                             $packageRelation = $cartItem->PackageCategoryRelation;
 
                             if($packageRelation != null){
-                                foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService){
-                                    /* fill reservation item data */
-                                    $reservationItem->CartItem = $cartItem;
-                                    $reservationItem->Reservation = $reservation;
-                                    $reservationItem->Service = $packageService->Service;
-                                    $reservationItem->CustomerName = $cartItem->CustomerName;
-                                    $reservationItem->PreferedDate = $cartItem->PreferedDate;
-                                    $reservationItem->PreferedTime = $cartItem->PreferedTime;
-                                    $reservationItem->Price = $packageService->Service->getPrice($reservation->Hotel->Id);
-                                    $reservationItem->Cabin = $cartItem->Cabin;
-                                    $reservationItem->Created = new \DateTime();
-                                    $reservationItem->Modified = new \DateTime();
-                                    $reservationItem->IsDeleted = false;
+                                
+                                if(!in_array($packageRelation->WeddingPackage->Id, $usedPackages)){
+                                    
+                                    $packageItems = [];
 
-                                    $reservation->ServicesDetails[] = $reservationItem;
+                                    foreach($packageRelation->WeddingPackage->WeddingPackageServices as $pkey => $packageService){
+                                        
+                                        $data["customer_name"] = implode(", ", $_POST['customer_name'][$pkey]);
+                                        $data["prefered_date"] = new \DateTime($_POST['prefered_date'][$pkey]);
+                                        $data["prefered_time"] = new \DateTime($_POST['prefered_time'][$pkey]);
+
+                                        $packageItems[] = $data;
+                                        
+                                        //echo implode(", ", $_POST['customer_name'][$pkey]).'<br/>';
+                                        /* fill reservation item data */
+                                        $reservationItem->CartItem = $cartItem;
+                                        $reservationItem->Reservation = $reservation;
+                                        $reservationItem->Service = $packageService->Service;
+                                        $reservationItem->CustomerName = implode(", ", $_POST['customer_name'][$pkey]); // $cartItem->CustomerName;
+                                        $reservationItem->PreferedDate = new \DateTime($_POST['prefered_date'][$pkey]); //$cartItem->PreferedDate;
+                                        $reservationItem->PreferedTime =  new \DateTime($_POST['prefered_time'][$pkey]); //$cartItem->PreferedTime;
+                                        $reservationItem->Price = $packageService->Service->getPrice($reservation->Hotel->Id);
+                                        $reservationItem->Cabin = $cartItem->Cabin;
+                                        $reservationItem->Created = new \DateTime();
+                                        $reservationItem->Modified = new \DateTime();
+                                        $reservationItem->IsDeleted = false;
+
+                                        
+
+                                        $reservation->ServicesDetails[] = $reservationItem;
+                                    }
+
+                                    $packages[$packageRelation->WeddingPackage->Id] = $packageItems;
+
+                                    
+
+                                    array_push($usedPackages, $packageRelation->WeddingPackage->Id);
                                 }
+                                
                             }
                             else{
                                 /* fill reservation item data */
@@ -240,6 +271,8 @@ class ReservationController extends Controller
                             }
                         }    
                     }
+
+                    $session->put('packages', $packages);
                     
                 }
                 else if ($reservationType == 2){
@@ -363,6 +396,10 @@ class ReservationController extends Controller
             }
         }
         catch (\Exception $e){
+            echo '<pre>';
+            print_r($e);
+            echo '</pre>';
+            exit();
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
     }

@@ -159,7 +159,11 @@
 					<hr/>
 				@else
 					@php
+						$packages = session('packages');
+
 						$weddingPackage = $packageRelation->WeddingPackage;
+
+						$data = $packages[$packageRelation->WeddingPackage->Id];
 						
 						$subtotal += $packageRelation->getPlanePrice();
 						$total += $packageRelation->getPrice();
@@ -169,6 +173,7 @@
 						@if($packageRelation->ActiveDiscount)
 							@php
 								$discount = $packageRelation->Discount;
+
 							@endphp
 							<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
 						@endif
@@ -180,11 +185,11 @@
 							@foreach($weddingPackage->WeddingPackageFeatures as $feature)
 							<li>{{ $feature->Description }}</li>
 							@endforeach	
-							@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $packageService)
+							@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $key => $packageService)
 								<li>
 									<div class="col-md-12">
 										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-										<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
+										<span>{{ trans('checkout.booked_to') }} {{ ($data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
 									</div>
 								</li>
 							@endforeach

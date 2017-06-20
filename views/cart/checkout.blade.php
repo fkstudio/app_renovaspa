@@ -57,6 +57,7 @@
 						@php
 							# counter to iterate only over services
 							$counter = 0;
+							$packages = session('packages');
 						@endphp
 						@foreach($model->Items as $key => $item)
 							@if($item->Service != null)
@@ -134,6 +135,7 @@
 								@php
 									$packageRelation = $item->PackageCategoryRelation;
 									$packageFeatures = $packageRelation->WeddingPackage->WeddingPackageFeatures;
+									$data = ($packages != null ? $packages[$packageRelation->WeddingPackage->Id] : [] );
 								@endphp
 								
 								@foreach($packageFeatures as $feature)
@@ -163,11 +165,11 @@
 										</td>
 										<td class="padding-td">
 											@php
-												$parts = explode(", ", $item->CustomerName);
+												$parts = ( isset($data[$skey]) ? explode(", ", $data[$skey]['customer_name']) : []);
 											@endphp
 
 											@if($serviceCabin->Name == "Single")
-												<input type="text" required name="customer_name[{{ $counter }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ $parts[0] }}" />
+												<input type="text" required name="customer_name[{{ $counter }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ ( isset($parts[0]) ? $parts[0] : '') }}" />
 											@elseif ($serviceCabin->Name == "Double")
 												<input type="text" required name="customer_name[{{ $counter }}][]" placeholder="Complete name..." class="form-control required-input" value="{{ (isset($parts[0]) ? $parts[0] : '') }}" />
 												<input type="text" required name="customer_name[{{ $counter }}][]" placeholder="You will shared room with..." class="form-control required-input" value="{{ (isset($parts[1]) ? $parts[1] : '' ) }}" />
@@ -178,10 +180,10 @@
 											@endif
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" class="datepicker form-control" />
+											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" placeholder="Open date" class="datepicker form-control" />
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" class="timepicker form-control" />
+											<input type="text" name="prefered_time[]" value="{{ ( isset($data[$skey]['prefered_time']) ? $data[$skey]['prefered_time']->format('h:m') : '' )  }}" placeholder="Open time" class="timepicker form-control" />
 										</td>
 										
 										@if(session('reservation_type') != 3)
@@ -196,14 +198,13 @@
 																<option value="{{ $cabin->Id }}" >{{ $cabin->Name }}</option>
 															@endif
 														@endif
-													
 													@endforeach
 												</select>
 												@else
 													<select type="text" name="cabin_type[]" readonly class="disabled custom-select form-control required-input">
 														<option value="{{ $item->Service->Cabin->Id }}">{{ $item->Service->Cabin->Name }}</option>
 													</select>
-													@endif
+												@endif
 												</td>
 											</tr>
 										@else
