@@ -48,8 +48,6 @@
 							<th>{{ trans('shared.prefered_time') }}</th>
 							@if(session('reservation_type') != 3)
 							<th>{{ trans('shared.cabin_type') }}</th>
-							@else
-							<th>Wedding member</th>
 							@endif
 						</tr>
 					</thead>
@@ -97,10 +95,10 @@
 										@endif
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" class="datepicker form-control" />
+										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" id="prefered_date_{{ $key }}" data-index="{{ $counter }}" class="datepicker form-control" />
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" class="timepicker form-control" />
+										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" id="prefered_time_{{ $key }}" disabled=true data-index="{{ $counter }}" class="timepicker form-control" />
 									</td>
 									
 									@if(session('reservation_type') != 3)
@@ -147,7 +145,6 @@
 										<td class="padding-td">--</td>
 										<td class="padding-td">--</td>
 										<td class="padding-td">--</td>
-										<td class="padding-td">--</td>
 									</tr>
 								@endforeach
 
@@ -180,10 +177,10 @@
 											@endif
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" placeholder="Open date" class="datepicker form-control" />
+											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" id="prefered_date_{{ $key }}"  placeholder="Open date" data-index="{{ $counter }}" class="datepicker form-control" />
 										</td>
 										<td class="padding-td">
-											<input type="text" name="prefered_time[]" value="{{ ( isset($data[$skey]['prefered_time']) ? $data[$skey]['prefered_time']->format('h:m') : '' )  }}" placeholder="Open time" class="timepicker form-control" />
+											<input type="text" name="prefered_time[]" value="{{ ( isset($data[$skey]['prefered_time']) ? $data[$skey]['prefered_time']->format('h:m') : '' )  }}" id="prefered_time_{{ $key }}" disabled=true placeholder="Open time" data-index="{{ $counter }}" class="timepicker form-control" />
 										</td>
 										
 										@if(session('reservation_type') != 3)
@@ -207,8 +204,6 @@
 												@endif
 												</td>
 											</tr>
-										@else
-											<td class="padding-td">Guest</td>
 										@endif
 									</tr>
 									@php
@@ -315,6 +310,16 @@
 		});
 
 		$("#dateInfoModal").modal("show");
+
+		$(".datepicker").blur(function(){
+			var input = $(this);
+			var index = input.attr("data-index");
+			if(input.val() == "")
+				$("#prefered_time_"+index).attr('disabled', true);
+			else
+				$("#prefered_time_"+index).attr('disabled', false);
+
+		})
 	});
 </script>
 @endsection

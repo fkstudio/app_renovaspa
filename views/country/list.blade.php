@@ -284,7 +284,8 @@
 	    var date = $('.datepicker').daterangepicker({
 	    	autoUpdateInput: false,
 	    	locale: {
-		      format: 'MM/DD/YYYY'
+		      format: 'MM/DD/YYYY',
+		      autoApply: true
 		    },
 	        minDate: moment(),
 	    });
