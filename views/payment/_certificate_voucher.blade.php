@@ -156,7 +156,7 @@ font-size: 16px;">Gift certificate number</th>
 					   font-size: 13px;"
 			>
 				
-				<td>{{ $detail["real_customer_first_name"] . ' ' . $detail["real_customer_last_name"] }}</td>
+				<td>{{ $detail["to_customer"] }}</td>
 				@if($detail['certificate_type'] == 'Service based')
 				<td>
 					@foreach($detail['services'] as $serviceName)
