@@ -24,12 +24,12 @@
 @section('content')
 <!-- services and prices modal -->
 <div id="servicesAndPricesModal" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 700px;">
+    <div class="modal-dialog" style="max-width: 700px;">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">Services and prices</h4>
+                <h4 class="modal-title text-center">SERVICES AND PRICES</h4>
             </div>
             <div class="modal-body">
                 @foreach($categoryCountries as $categoryCountry)
@@ -42,6 +42,7 @@
                         <thead>
                             <tr>
                                 <th>Service</th>
+                                <th>Duración</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
@@ -49,7 +50,8 @@
                             @foreach($categoryCountry->ServiceCategoryHotels as $serviceCategoryHotel)
                             <tr>
                                 <td>{{ $serviceCategoryHotel->Service->Name }}</td>
-                                <td>{{ $serviceCategoryHotel->Service->getPrice($serviceCategoryHotel->Hotel->Id) }}</td>
+                                <td>{{ ( $serviceCategoryHotel->ServiceInformation != null ? $serviceCategoryHotel->ServiceInformation->Duration : '') }}</td>
+                                <td>{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotel->Service->getPlanePrice($serviceCategoryHotel->Hotel->Id), 2) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -157,7 +159,7 @@
             <h2 class="details-hotel-title">{{ $model->Name }}</h2>
             <div class="clearfix"></div>
             <div class="under-title-line"></div>
-            <span><a href="#fakelink" data-toggle="modal" data-target="#servicesAndPricesModal">Services and prices</a></span>
+            <span><a href="#fakelink" data-toggle="modal" data-target="#servicesAndPricesModal">SERVICES AND PRICES</a></span>
             <div class="clearfix"></div>
             <br/>
             <p><strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>

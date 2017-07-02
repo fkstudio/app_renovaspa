@@ -391,7 +391,7 @@ class PaymentController extends Controller
                 print_r($e);
                 exit();
             }
-            return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+            return redirect()->route('payment.gateway')->with('failure', trans('messages.transaction_error'));
         }
     }
 

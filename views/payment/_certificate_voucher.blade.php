@@ -210,9 +210,6 @@ font-weight: normal;
 font-size: 16px;">Company name</th>
 				<th style="text-align: left;
 font-weight: normal;
-font-size: 16px;">Check in</th>
-				<th style="text-align: left;
-font-weight: normal;
 font-size: 16px;">Other information</th>
 			</tr>
 		</thead>
@@ -222,7 +219,6 @@ font-size: 16px;">Other information</th>
 			>
 				<td>{{ $detail["delivery_number_or_agency"] }}</td>
 				<td>{{ $detail["delivery_company_name"] }}</td>
-				<td>{{ $detail["delivery_departure_date"] }}</td>
 				<td>{{ $detail["delivery_other_fields"] }}</td>
 			</tr>
 		</tbody>

@@ -358,7 +358,7 @@ class ReservationController extends Controller
                             /* complete hotel delivery information */
                             $certificateItem->DeliveryNumberOrAgency = $_POST['delivery_number_or_agency'][$key];
                             $certificateItem->DeliveryCompanyName = $_POST['delivery_company_name'][$key];
-                            $certificateItem->DeliveryDepartureDate = new \DateTime($_POST['delivery_departure_date'][$key]);
+                            //$certificateItem->DeliveryDepartureDate = new \DateTime($_POST['delivery_departure_date'][$key]);
                             $certificateItem->DeliveryOtherInfo = $_POST['delivery_other_info'][$key];
                         }
 

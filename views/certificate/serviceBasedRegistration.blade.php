@@ -193,14 +193,6 @@
 									</tr>
 									<tr>
 										<td>
-											<label>Departure date</label>
-										</td>
-										<td>
-											<input type="text" name="delivery_departure_date[{{ $key }}]" class="datepicker form-control input-border" />
-										</td>
-									</tr>
-									<tr>
-										<td>
 											<label>Other information</label>
 										</td>
 										<td>
