@@ -60,12 +60,7 @@
 		public function getProfile(){
 			$photo_path = null;
 			if(count($this->Photos) > 0){
-				foreach($this->Photos as $photo){
-					if( strpos($photo->Path, 'profile')){
-						$photo_path = $photo->Path;
-						break;
-					}
-				}
+				$photo_path = $this->Photos[0]->Path;
 			}
 			else {
 				$newPhoto = new \App\Models\Test\PhotoModel();

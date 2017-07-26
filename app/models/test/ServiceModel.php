@@ -32,6 +32,12 @@ class ServiceModel {
 	*/
 	public $ServicePrices;
 
+	/** @Column(name="is_active", type="boolean") */
+	public $IsActive;
+
+	/** @Column(name="is_deleted", type="boolean") */
+	public $IsDeleted;
+
 
 	/* get the services price without any discount */
 	public function getPlanePrice($hotel_id){

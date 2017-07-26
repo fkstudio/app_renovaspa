@@ -95,8 +95,6 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-
-
 @if (isset($categories))
 <nav class="navbar navbar-inverse">
   <div class="container-fluid" style="margin-top: 9px;">
@@ -106,7 +104,9 @@
           <li><a href="{{ URL::to('/') }}/wedding/services">RENOVA WEDDING PACKAGE</a></li>
           @endif
           @foreach($categories as $categoryRegion)
-          <li><a href="{{ URL::to('/') }}/category/{{ $categoryRegion->Category->Id }}/services">{{ $categoryRegion->Category->Name }}</a></li>
+            @if($categoryRegion->IsDeleted == false && $categoryRegion->IsActive == true && $categoryRegion->Category->IsDeleted == false && $categoryRegion->Category->IsActive == true)
+              <li><a href="{{ URL::to('/') }}/category/{{ $categoryRegion->Category->Id }}/services">{{ $categoryRegion->Category->Name }}</a></li>
+            @endif
           @endforeach
         </ul>
       </div>

@@ -38,7 +38,7 @@ class HotelController extends Controller
 
         try {
             $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(['Id' => $region_id], ['Name' => 'DESC']);
-            $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ], ['Name' => 'DESC']);
+            $hotels = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")->findBy([ 'Region' => $region_id ]);
 
             $breadcrumps = [
                 $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
@@ -56,8 +56,6 @@ class HotelController extends Controller
             return view("hotel.list", $viewData);
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }
@@ -96,7 +94,7 @@ class HotelController extends Controller
 
             foreach($categoryCountries as $categoryCountry){
                 $serviceCategoryHotels = $this->entityManager->getRepository("App\Models\Test\ServiceCategoryHotelModel")
-                ->findBy([ 'Category' => $categoryCountry->Category->Id, 'Hotel' => $id ],['Order' => 'ASC']);
+                ->findBy([ 'IsDeleted' => false, 'Category' => $categoryCountry->Category->Id, 'Hotel' => $id ],['Order' => 'ASC']);
 
                 $categoryCountry->ServiceCategoryHotels = $serviceCategoryHotels;
             }

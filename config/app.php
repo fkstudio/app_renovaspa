@@ -42,6 +42,8 @@ return [
 
     'mode' => 'PRODUCTION',
 
+    'admin_url' => 'http://localhost/admin.renovaspa/public',
+
     /*
     |--------------------------------------------------------------------------
     | Application URL

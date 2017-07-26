@@ -42,7 +42,7 @@
 		<div class="row">
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
-				<img style="margin: 0 auto;" src="{{ URL::to('/images/categories') }}/{{ str_replace(' ', '-', $categoryCountry->Category->Name) }}.jpg" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
+				<img style="margin: 0 auto;" src="{{ config('app.admin_url') . '/images/categories/' . $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
 				<br class="hidden-lg" />
 				<p class="text-center">
 					<a href="#fakelink" data-toggle="modal" data-target="#categoryModal" style="color:#5fc7ae;">+Info</a>

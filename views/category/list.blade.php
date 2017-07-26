@@ -28,12 +28,9 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 				@endif
 			@endif
 			@foreach($model as $categoryCountry)
-				@if($categoryCountry->Category->IsDeleted != true)
+				@if($categoryCountry->Category->IsDeleted != true && $categoryCountry->Category->IsActive == true)
 				
 					@php
-
-					$photoPath = '/categories/'.str_replace(' ', '-', $categoryCountry->Category->Name.'.jpg');
-					
 					
 					if($categoryCountry->IsSpecial == true && $categoryCountry->SpecialBeginDate != null && $categoryCountry->SpecialEndDate != null)
 					{
@@ -53,11 +50,11 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryCountry->Category->Id }}/services">
 					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
 					    	<span style="position: absolute;
-height: 100%;
-width: 100%;
-background-image: url({{ URL::to('/images') .$photoPath }});
-background-position: center center;
-background-size: cover;"  class="img-responsive"></span>
+										 height: 100%;
+										 width: 100%;
+										 background-image: url({{ config('app.admin_url') . '/images/categories/' . $categoryCountry->Category->Photo->Path }});
+										 background-position: center center;
+										 background-size: cover;"  class="img-responsive"></span>
 					    	<div  class="col-md-12 block-content" >
 					    		<span class="span-list">{{ $categoryCountry->Category->Name }}</span>
 							</div>

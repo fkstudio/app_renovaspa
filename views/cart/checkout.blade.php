@@ -64,15 +64,7 @@
 								@endphp
 								<tr>
 									<td>
-										@php
-											$photoPath = '/noimage.jpg';
-
-											if($category->Photo != null)
-											{
-												$photoPath = '/categories/'.$item->Category->Photo->Path;
-											}
-										@endphp
-										<img style="max-width: 80px;" src="{{ URL::to('/images/') . $photoPath }}" class="img-responsive" />
+										<img style="max-width: 80px;" src="{{ config('app.admin_url') . '/images/categories/' . $item->Category->Photo->Path }}" class="img-responsive" />
 									</td>
 									<td class="padding-td">
 										<input type="hidden" name="id[]" value="{{ $item->Id }}" /> 
