@@ -32,4 +32,8 @@ class CategoryModel {
 	/** @Column(name="is_deleted", type="boolean") */
 	public $IsDeleted;
 
+	public function __construct(){
+		$this->Photo = new App\Models\Test\PhotoModel();
+	}
+
 }

@@ -93,7 +93,7 @@ class CategoryController extends Controller
 
             $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
                 AND
-                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
+                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel AND sch.IsActive = true AND sch.IsDeleted = false) > 0  ORDER BY cc.Order ASC')
                              ->setParameter('deleted', false)
                              ->setParameter('active', true)
                              ->setParameter('country', $hotelRegion->Region->Country->Id)

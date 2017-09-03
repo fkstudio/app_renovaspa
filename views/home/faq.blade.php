@@ -13,8 +13,6 @@
             <hr/>
             <p> 
             As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
-
-            Our Online Wedding Concierge will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
             </p>
             <p>Our Online Wedding Concierge will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.</p>
             <h4>Follow these simple steps:</h4>

@@ -90,7 +90,38 @@
 										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" id="prefered_date_{{ $key }}" data-index="{{ $counter }}" class="datepicker form-control" />
 									</td>
 									<td class="padding-td">
-										<input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" id="prefered_time_{{ $counter }}" data-index="{{ $counter }}" readonly="" class="timepicker form-control" />
+										@php
+											$info = $item->Service->getProfile(session('hotel_id'), session('category_id'))->ServiceInformation;
+
+											$beginHour = 9;
+											$endingHour = 6;
+											
+											if($info != null)
+											{
+												$beginHour = ( $info->OpeningTime != null ? $info->OpeningTime->format('H') : 9 );
+												$endingHour = ( $info->EndingTime != null ? $info->EndingTime->format('H') : 6 );
+											}
+										@endphp
+										<select id="prefered_time_{{ $counter }}" disabled data-index="{{ $counter }}" class="blak-select form-control" name="prefered_time[]">
+											@php
+												$h = $beginHour;
+												$f = 'am';
+											@endphp
+											@for($i = $beginHour; $i <= $endingHour; $i ++)
+												@php
+													if($h > 12){
+														$h = 1;
+														$f = 'pm';
+													}
+
+												@endphp
+											<option value="{{ $h }}:00{{ $f }}">{{ $h }}:00{{ $f }}</option>
+												@php
+													$h++;
+												@endphp
+											@endfor
+										</select>
+										<!-- <input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" id="prefered_time_{{ $counter }}" data-index="{{ $counter }}" readonly="" class="timepicker form-control" /> -->
 									</td>
 									
 									@if(session('reservation_type') != 3)
@@ -295,7 +326,7 @@
 			interval: 60,
 		    minTime: '08',
 		    maxTime: '06pm',
-		    defaultTime: '24',
+		    defaultTime: '12',
 		    startTime: '10:00'
 		});
 
@@ -305,10 +336,11 @@
 			var input = $(this);
 			var index = input.attr("data-index");
 			if(input.val() == ""){
-				$("#prefered_time_"+index).val('').attr('readonly', true);
+				var s = $("#prefered_time_"+index).val('').attr('disabled');
 			}
-			else
-				$("#prefered_time_"+index).attr('readonly', false);
+			else {
+				var s = $("#prefered_time_"+index).removeAttr('disabled');
+			}
 
 		})
 	});

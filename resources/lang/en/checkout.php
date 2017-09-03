@@ -8,8 +8,8 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'booked_to' => 'Booked to',
-    'at_time' => 'at time',
+    'booked_to' => '',
+    'at_time' => '',
     'place_order' => 'PLACE ORDER',
     'message' => 'Message',
     'value' => 'Value',

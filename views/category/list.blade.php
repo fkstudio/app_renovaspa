@@ -52,7 +52,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					    	<span style="position: absolute;
 										 height: 100%;
 										 width: 100%;
-										 background-image: url({{ config('app.admin_url') . '/images/categories/' . $categoryCountry->Category->Photo->Path }});
+										 background-image: url({{ config('app.admin_url') . '/images/categories/' . ($categoryCountry->Category->Photo != null ? $categoryCountry->Category->Photo->Path : "" ) }});
 										 background-position: center center;
 										 background-size: cover;"  class="img-responsive"></span>
 					    	<div  class="col-md-12 block-content" >

@@ -37,4 +37,10 @@ class RegionModel {
 	*/
 	public $Photo;
 
+	/** @Column(name="is_active", type="boolean") */
+	public $IsActive;
+
+	/** @Column(name="is_deleted", type="boolean") */
+	public $IsDeleted;
+
 }

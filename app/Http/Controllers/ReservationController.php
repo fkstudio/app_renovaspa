@@ -176,18 +176,20 @@ class ReservationController extends Controller
                                 $cartItem->PreferedDate = new \DateTime($_POST['prefered_date'][$key]);
                             }
 
-                            $timeParts = explode(':', $_POST['prefered_time'][$key]);
+                            
+                            if(isset($_POST['prefered_time'][$key]) || empty($_POST['prefered_time'][$key])){
+                                $timeParts = explode(':', $_POST['prefered_time'][$key]);
 
-                            if(empty($_POST['prefered_time'][$key])){
-                                $cartItem->PreferedTime = null;
-                            }
-                            else if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
-                                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
+                                if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                                    return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
+                                }
+                                else {
+                                    $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+                                }
                             }
                             else {
-                                $cartItem->PreferedTime = new \DateTime($_POST['prefered_time'][$key]);
+                                $cartItem->PreferedTime = null;
                             }
-                           
                             
                             if($reservationType == 1){
                                 $cartItem->Cabin = $this->entityManager->getRepository('App\Models\Test\CabinModel')->findOneBy(['Id' => $_POST["cabin_type"][$key]]);
@@ -220,9 +222,12 @@ class ReservationController extends Controller
 
                                     foreach($packageRelation->WeddingPackage->WeddingPackageServices as $pkey => $packageService){
                                         
+                                        $pre_date = (!empty($_POST['prefered_date'][$pkey]) ? new \DateTime($_POST['prefered_date'][$pkey]) : null );
+                                        $pre_time = (!empty($_POST['prefered_time'][$pkey]) ? new \DateTime($_POST['prefered_time'][$pkey]) : null );
+
                                         $data["customer_name"] = implode(", ", $_POST['customer_name'][$pkey]);
-                                        $data["prefered_date"] = new \DateTime($_POST['prefered_date'][$pkey]);
-                                        $data["prefered_time"] = new \DateTime($_POST['prefered_time'][$pkey]);
+                                        $data["prefered_date"] = $pre_date;
+                                        $data["prefered_time"] = $pre_time;
 
                                         $packageItems[] = $data;
                                         
@@ -232,8 +237,8 @@ class ReservationController extends Controller
                                         $reservationItem->Reservation = $reservation;
                                         $reservationItem->Service = $packageService->Service;
                                         $reservationItem->CustomerName = implode(", ", $_POST['customer_name'][$pkey]); // $cartItem->CustomerName;
-                                        $reservationItem->PreferedDate = new \DateTime($_POST['prefered_date'][$pkey]); //$cartItem->PreferedDate;
-                                        $reservationItem->PreferedTime =  new \DateTime($_POST['prefered_time'][$pkey]); //$cartItem->PreferedTime;
+                                        $reservationItem->PreferedDate = $pre_date; //$cartItem->PreferedDate;
+                                        $reservationItem->PreferedTime =  $pre_time; //$cartItem->PreferedTime;
                                         $reservationItem->Price = $packageService->Service->getPrice($reservation->Hotel->Id);
                                         $reservationItem->Cabin = $cartItem->Cabin;
                                         $reservationItem->Created = new \DateTime();
@@ -396,10 +401,6 @@ class ReservationController extends Controller
             }
         }
         catch (\Exception $e){
-            echo '<pre>';
-            print_r($e);
-            echo '</pre>';
-            exit();
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
     }

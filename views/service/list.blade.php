@@ -42,7 +42,7 @@
 		<div class="row">
 			<br/>
 			<div class="col-lg-4 col-md-12 col-sm-12">
-				<img style="margin: 0 auto;" src="{{ config('app.admin_url') . '/images/categories/' . $categoryCountry->Category->Photo->Path }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
+				<img style="margin: 0 auto;" src="{{ config('app.admin_url') . '/images/categories/' . ($categoryCountry->Category->Photo != null ? $categoryCountry->Category->Photo->Path : "" ) }}" class="img-responsive" alt='{{ $categoryCountry->Category->Name }}' />
 				<br class="hidden-lg" />
 				<p class="text-center">
 					<a href="#fakelink" data-toggle="modal" data-target="#categoryModal" style="color:#5fc7ae;">+Info</a>
@@ -69,67 +69,69 @@
 						</div>
 					</div>
 					@foreach($model as $key => $serviceCategoryHotelModel)
-					@php
-						$serviceInformation = $serviceCategoryHotelModel->ServiceInformation;
-					@endphp
-					<div class="row" style="margin-bottom: 5px">
-						<div class="col-lg-5 col-md-4 col-sm-4 col-xs-5">
-							{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}" style="color:#5fc7ae;">+info</a>
-							<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
-						</div>
-						<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
-							{{ ($serviceInformation != null ? $serviceInformation->Duration : 'N/A' ) }}
-						</div>
-						<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
-							@if ($serviceCategoryHotelModel->Service->hasDiscount($hotel->Id))
-								@php
-									$discount = $serviceCategoryHotelModel->Service->getDiscount($hotel->Id)
-								@endphp
-							<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
-							@endif
+						@if($serviceCategoryHotelModel->Service->IsActive == true && $serviceCategoryHotelModel->Service->IsDeleted == false)
+							@php
+								$serviceInformation = $serviceCategoryHotelModel->ServiceInformation;
+							@endphp
+							<div class="row" style="margin-bottom: 5px">
+								<div class="col-lg-5 col-md-4 col-sm-4 col-xs-5">
+									{{ $serviceCategoryHotelModel->Service->Name }} <a href="#fakelink" data-toggle="collapse" data-target="#service-{{ $key }}" style="color:#5fc7ae;">+info</a>
+									<input type="hidden" name="id[]" value="{{ $serviceCategoryHotelModel->Service->Id }}" /> 
+								</div>
+								<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+									{{ ($serviceInformation != null ? $serviceInformation->Duration : 'N/A' ) }}
+								</div>
+								<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
+									@if ($serviceCategoryHotelModel->Service->hasDiscount($hotel->Id))
+										@php
+											$discount = $serviceCategoryHotelModel->Service->getDiscount($hotel->Id)
+										@endphp
+									<span class="discount">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+									@endif
 
-							@if ($serviceCategoryHotelModel->Service->hasHotelDiscount($hotel->Id))
-							<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-							@elseif ($hotel_region->ActiveDiscount)
-							<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-							@endif
-						</div>
-						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
-							{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPlanePrice($hotel->Id), 2) }}
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-							<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="input-border input-cart" />
-						</div>
-						<div class="clearfix"></div>
-						<div class="col-md-12 collapse" id="service-{{ $key }}">
-							<hr/>
-							<strong>Description:</strong>
-							<blockquote>
-								{{ ($serviceInformation != null ? $serviceInformation->Description : 'N/A' ) }}
-							</blockquote>
-							<strong>Schedules:</strong>
-							<blockquote>
-								From
-								{{ ($serviceInformation->OpeningTime != null ? $serviceInformation->OpeningTime->format('h:m a') : 'N/A' ) }} 
-								to 
-								{{ ($serviceInformation->EndingTime != null ? $serviceInformation->EndingTime->format('h:m a') : 'N/A' ) }}
-							</blockquote>
-							<strong>Restrictions:</strong>
-							<blockquote>
-								Pregnant restriction: {{ ($serviceInformation && $serviceInformation->PregnantRestriction == true ? 'Yes' : 'No') }}
-								<br/>
-								Age restriction: {{ ($serviceInformation && $serviceInformation->AgeRestriction == true ? 'Yes' : 'No') }}
-							</blockquote>
-							<hr/>
-						</div>
-					</div>
-					<div class="clearfix"></div>
+									@if ($serviceCategoryHotelModel->Service->hasHotelDiscount($hotel->Id))
+									<span class="discount">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+									@elseif ($hotel_region->ActiveDiscount)
+									<span class="discount-tached">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+									@endif
+								</div>
+								<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
+									{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotelModel->Service->getPlanePrice($hotel->Id), 2) }}
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+									<input style="max-width: 70px !important;" type="number" value='0' name="quantity[]" class="input-border input-cart" />
+								</div>
+								<div class="clearfix"></div>
+								<div class="col-md-12 collapse" id="service-{{ $key }}">
+									<hr/>
+									<strong>Description:</strong>
+									<blockquote>
+										{{ ($serviceInformation != null ? $serviceInformation->Description : 'N/A' ) }}
+									</blockquote>
+									<strong>Schedules:</strong>
+									<blockquote>
+										From
+										{{ ($serviceInformation->OpeningTime != null ? $serviceInformation->OpeningTime->format('h:m a') : 'N/A' ) }} 
+										to 
+										{{ ($serviceInformation->EndingTime != null ? $serviceInformation->EndingTime->format('h:m a') : 'N/A' ) }}
+									</blockquote>
+									<strong>Restrictions:</strong>
+									<blockquote>
+										Pregnant restriction: {{ ($serviceInformation && $serviceInformation->PregnantRestriction == true ? 'Yes' : 'No') }}
+										<br/>
+										Age restriction: {{ ($serviceInformation && $serviceInformation->AgeRestriction == true ? 'Yes' : 'No') }}
+									</blockquote>
+									<hr/>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						@endif
 					@endforeach
-					<div class="clearfix"></div>
-					<br/>
+						<div class="clearfix"></div>
+						<br/>
 					@if (count($model) <= 0)
-					<p style="text-align: center;">{{ trans('messages.there_is_no_items_to_show') }}</p>
-					<br/>
+						<p style="text-align: center;">{{ trans('messages.there_is_no_items_to_show') }}</p>
+						<br/>
 					@endif
 					<div class="clearfix"></div>
 					<div class="form-group">

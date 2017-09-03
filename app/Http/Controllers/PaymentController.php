@@ -881,6 +881,9 @@ class PaymentController extends Controller
                         
                         /* this mail should be replie to? */
                         $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+
+                        /* this mail is in hidden copy to? */
+                        $message->bcc(\Config::get('email.info'), 'Renovaspa');
                         
                         /* the recipient of this mail is?  */
                         $message->to($detail->DeliveryEmail, $detail->ToCustomerName);

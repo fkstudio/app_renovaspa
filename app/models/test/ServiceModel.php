@@ -38,6 +38,19 @@ class ServiceModel {
 	/** @Column(name="is_deleted", type="boolean") */
 	public $IsDeleted;
 
+	/** 
+	 * @OneToMany(targetEntity="ServiceCategoryHotelModel", mappedBy="Service")
+	*/
+	public $ServiceCategoryHotels;
+
+	public function getProfile($hotel_id, $category_id){
+		foreach($this->ServiceCategoryHotels as $serviceCategoryHotel){
+			if($serviceCategoryHotel->Category->Id == $category_id && $serviceCategoryHotel->Hotel->Id == $hotel_id){
+				return $serviceCategoryHotel;
+			}
+		}
+	}
+
 
 	/* get the services price without any discount */
 	public function getPlanePrice($hotel_id){

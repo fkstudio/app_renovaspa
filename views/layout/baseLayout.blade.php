@@ -78,7 +78,7 @@
           
         });
 
-        $(".open-message").fadeTo(2000, 500).slideUp(700, function(){
+        $(".open-message").fadeTo(5000, 500).slideUp(700, function(){
             $(".open-message").slideUp(700);
         });
 

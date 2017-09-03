@@ -127,7 +127,7 @@
             <div class="clearfix"></div>
             <br/>
             <p><strong>{{ trans("hotel.address") }}</strong>: {!! $model->Address !!}<br/>
-               <strong>{{ trans("hotel.hours") }}</strong>: {{ $model->OpenAt->format('H:i:s a') }} - {{ $model->ClosetAt->format('H:i:s a') }}</p>
+               <strong>{{ trans("hotel.hours") }}</strong>: {{ date('h:i a', strtotime($model->OpenAt->format("H:i a"))) }} - {{  date('h:i a', strtotime($model->ClosetAt->format("H:i"))) }}</p>
             @if (empty($model->Description))
             <p>No description to show</p>
             @else

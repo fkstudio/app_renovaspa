@@ -202,12 +202,11 @@
  .block-content {
  	-webkit-transition: opacity 0.3s,  padding-top 0.3s, filter 0.2s linear;
 	height: 340px;
-	padding-top: 20%;
+	padding-top: 35%;
 	text-align: center;
  }
  .block-content span {
  	-webkit-transition: opacity 0.2s linear;
- 	opacity: 0;
  }
  .block-content:hover:before  {
  	background-color: black;
@@ -220,7 +219,6 @@
  }
  .parent:hover > .block-content {
  	opacity: 1;
- 	padding-top: 35%;
  }
 
  .block-content:hover > span {

@@ -77,12 +77,24 @@ class ServiceController extends Controller
 
         try {
                 
-            $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
-            $categoryCountry = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findOneBy(["Category" => $category_id, 'Country' => $session->get('country_id')]);
-            $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id]);
+            $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id, 'IsDeleted' => false]);
+            $categoryCountry = $this->entityManager->getRepository("App\Models\Test\CategoryCountryModel")->findOneBy(["Category" => $category_id, 'Country' => $session->get('country_id'), 'IsDeleted' => false, 'IsActive' => true]);
+            $region = $this->entityManager->getRepository("App\Models\Test\RegionModel")->findOneBy(["Id" => $region_id, 'IsDeleted' => false, 'IsActive' => true]);
+
+
+            if($hotel == null)
+                return redirect()->route('home.home')->with('failure', 'El hotel especificado no es valido.');
+
+            if($categoryCountry == null)
+                return redirect()->route('home.home')->with('failure', 'Ha ocurrido un error.');
+
+            if($region == null)
+                return redirect()->route('home.home')->with('failure', 'La región especificada no es valida.');
+
 
             $filters = [
-                            "Category" => $category_id, 'Hotel' => $hotel->Id,
+                            "Category" => $category_id, 
+                            'Hotel' => $hotel->Id,
                             "IsActive" => true,
                             "IsDeleted" => false
                         ];
