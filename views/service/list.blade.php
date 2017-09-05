@@ -16,7 +16,7 @@
                              ->getResult();
 
   $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
-
+  
 @endphp
 
 @section("content")

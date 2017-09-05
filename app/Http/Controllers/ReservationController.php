@@ -168,6 +168,7 @@ class ReservationController extends Controller
                          
                             if(empty($_POST['prefered_date'][$key])){
                                 $cartItem->PreferedDate = null;
+                                $aartItem->PreferedTime = null;
                             }
                             else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
                                 return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
@@ -177,7 +178,8 @@ class ReservationController extends Controller
                             }
 
                             
-                            if(isset($_POST['prefered_time'][$key]) || empty($_POST['prefered_time'][$key])){
+                            if(isset($_POST['prefered_time'][$key]) && $_POST['prefered_time'][$key] != ""){
+                                
                                 $timeParts = explode(':', $_POST['prefered_time'][$key]);
 
                                 if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
@@ -222,8 +224,8 @@ class ReservationController extends Controller
 
                                     foreach($packageRelation->WeddingPackage->WeddingPackageServices as $pkey => $packageService){
                                         
-                                        $pre_date = (!empty($_POST['prefered_date'][$pkey]) ? new \DateTime($_POST['prefered_date'][$pkey]) : null );
-                                        $pre_time = (!empty($_POST['prefered_time'][$pkey]) ? new \DateTime($_POST['prefered_time'][$pkey]) : null );
+                                        $pre_date = ($_POST['prefered_date'][$pkey] != "" ? new \DateTime($_POST['prefered_date'][$pkey]) : null );
+                                        $pre_time = ($_POST['prefered_time'][$pkey] != "" ? new \DateTime($_POST['prefered_time'][$pkey]) : null );
 
                                         $data["customer_name"] = implode(", ", $_POST['customer_name'][$pkey]);
                                         $data["prefered_date"] = $pre_date;

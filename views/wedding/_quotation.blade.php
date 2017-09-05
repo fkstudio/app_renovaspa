@@ -140,7 +140,7 @@ max-width: 100%;
 margin-bottom: 5px;
 font-weight: 700">{{ trans('shared.arrival') }}</label>
             <br>
-            {{ $model->Arrival->format('d/m/Y') }}
+            {{ $model->Arrival->format('F j, Y') }}
           </div>
         </div>
         <div style="width: 25%;float:left;" >
@@ -150,7 +150,7 @@ max-width: 100%;
 margin-bottom: 5px;
 font-weight: 700">{{ trans('shared.departure') }}</label>
             <br>
-             {{ $model->Departure->format('d/m/Y') }}
+             {{ $model->Departure->format('F j, Y') }}
           </div>
         </div>
         <div style="clear: both"></div>
@@ -162,7 +162,7 @@ max-width: 100%;
 margin-bottom: 5px;
 font-weight: 700">{{ trans('shared.wedding_date') }}</label>
             <br>
-            {{ $model->WeddingDate->format('d/m/Y') }}
+            {{ $model->WeddingDate->format('F j, Y') }}
           </div>
         </div>
         <div style="width: 25%;float:left;" >
@@ -203,7 +203,7 @@ color: inherit">Services's information</h3>
 				@endphp
 				<div>
 		          <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
-		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
+		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 		      @if($item->Service->hasDiscount($hotel_id))
 					@php
 						$discount = $item->Service->getDiscount($hotel_id)
@@ -263,7 +263,7 @@ color: inherit">Services's information</h3>
 						<li>
 			              <div>
 			                <h5 style="margin-top: 10px;margin-bottom: 10px">1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
-			                <span>{{ trans('checkout.booked_to') }} {{ ($data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
+			                <span>{{ trans('checkout.booked_to') }} {{ ($data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
 			              </div>
 			            </li>
 					@endforeach

@@ -126,7 +126,9 @@ class ShoppingCartController extends Controller
                     $action = '/shopping/cart/checkout';
                     break;
                 default:
-                    return redirect()->route("home.home")->with('failure', 'messages.session_expired');
+                    echo 'asdf';
+                    exit();
+                    //return redirect()->route("home.home")->with('failure', 'messages.session_expired');
                     break;
             }
 
@@ -170,6 +172,7 @@ class ShoppingCartController extends Controller
             return view('cart.myCart', [ 'model' => $cart, 'category' => $category, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
+            print_r($e);exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
@@ -355,6 +358,7 @@ class ShoppingCartController extends Controller
                             /* check if the reservation type is equal to certificate */
                             if($reservationType == 2){
                                 $cartItem->CertificateNumber = $session->get("current_certificate");
+                                $session->put('reservation_type', 2);
                             }
 
                             $cart->Items[] = $cartItem;

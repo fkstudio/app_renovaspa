@@ -14,31 +14,36 @@
             </div>
             <div class="modal-body">
                 @foreach($categoryCountries as $categoryCountry)
-                <div class="text-center">
-                    <a href="#fakelink" style="cursor: pointer;" data-toggle="collapse" data-target="#category_collapse_{{ $categoryCountry->Category->Id }}">{{ $categoryCountry->Category->Name }}</a>
-                </div>
+                    <div class="text-center">
+                        <a href="#fakelink" style="cursor: pointer;" data-toggle="collapse" data-target="#category_collapse_{{ $categoryCountry->Category->Id }}">{{ $categoryCountry->Category->Name }}</a>
+                    </div>
 
-                <div id="category_collapse_{{ $categoryCountry->Category->Id }}" class="collapse">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Duración</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($categoryCountry->ServiceCategoryHotels as $serviceCategoryHotel)
-                            <tr>
-                                <td>{{ $serviceCategoryHotel->Service->Name }}</td>
-                                <td>{{ ( $serviceCategoryHotel->ServiceInformation != null ? $serviceCategoryHotel->ServiceInformation->Duration : '') }}</td>
-                                <td>{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotel->Service->getPlanePrice($serviceCategoryHotel->Hotel->Id), 2) }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <hr/>
+                    <div id="category_collapse_{{ $categoryCountry->Category->Id }}" class="collapse">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Duración</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($categoryCountry->Category->IsDeleted != true && $categoryCountry->Category->IsActive == true)
+                                    @foreach($categoryCountry->ServiceCategoryHotels as $serviceCategoryHotel)
+                                        @if($serviceCategoryHotel->Service->IsActive == true && $serviceCategoryHotel->Service->IsDeleted == false)
+                                        <tr>
+                                            <td>{{ $serviceCategoryHotel->Service->Name }}</td>
+                                            <td>{{ ( $serviceCategoryHotel->ServiceInformation != null ? $serviceCategoryHotel->ServiceInformation->Duration : '') }}</td>
+                                            <td>{{ $region->Country->Currency->Symbol.number_format($serviceCategoryHotel->Service->getPlanePrice($serviceCategoryHotel->Hotel->Id), 2) }}</td>
+                                        </tr>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr/>
+                    
                 @endforeach
             </div>
         </div>
@@ -82,7 +87,7 @@
                                       $active = ($showActive ? 'active' : '');
                                     @endphp
                                     <div  class="{{ $active }} item" data-slide-number="{{ $key }}">
-                                        <img src="{{ config("app.admin_url") .'/images/hotels/'. $model->getProfile() }}">
+                                        <img src="{{ config("app.admin_url") .'/images/hotels/'. $photo->Path }}">
                                     </div>
                                     @php
                                         $showActive = false;
@@ -109,7 +114,7 @@
 
                             @endphp
                             <li class="col-lg-4 col-sm-3 col-xs-4">
-                                <a style="background: url({{ config("app.admin_url") .'/images/hotels/' . $model->getProfile() }});background-size: cover;background-position: center center;" class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
+                                <a style="background: url({{ config("app.admin_url") .'/images/hotels/' . $photo->Path }});background-size: cover;background-position: center center;" class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
                                     <!-- <img src=""> -->
                                 </a>
                             </li>

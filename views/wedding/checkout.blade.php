@@ -112,7 +112,7 @@
 						<br/>
 						<label>(*) {{ trans('wedding.wedding_time') }}</label>
 						<br/>
-						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:i a') : '' ) }}" name="wedding_time" required class="timepicker form-control input-border" />
+						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:m a') : '' ) }}" name="wedding_time" required class="timepicker form-control input-border" />
 					</div>
 				</div>
 				
@@ -135,7 +135,7 @@
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:i a') : "Open time") }}, {{ $item->CustomerName }}</span>
+						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 						@if ($item->Service->hasDiscount($hotel_id))
 							@php
 								$discount = $item->Service->getDiscount($hotel_id)
@@ -161,9 +161,17 @@
 					@php
 						$packages = session('packages');
 
+						//print_r($packages);
+
 						$weddingPackage = $packageRelation->WeddingPackage;
 
-						$data = $packages[$packageRelation->WeddingPackage->Id];
+						if(array_key_exists($packageRelation->WeddingPackage->Id, $packages)){
+							$data = $packages[$packageRelation->WeddingPackage->Id];
+						}
+						else {
+							$data = null;
+						}
+						
 						
 						$subtotal += $packageRelation->getPlanePrice();
 						$total += $packageRelation->getPrice();
@@ -189,7 +197,7 @@
 								<li>
 									<div class="col-md-12">
 										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-										<span>{{ trans('checkout.booked_to') }} {{ ($data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:i a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
+										<span>{{ trans('checkout.booked_to') }} {{ ($data != null && $data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data != null && $data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
 									</div>
 								</li>
 							@endforeach
