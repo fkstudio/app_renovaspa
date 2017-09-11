@@ -1,0 +1,5 @@
+/config/mail.php
+/config/email.php
+/config/paypal.php
+/config/gateway.php
+/config/redsys.php
