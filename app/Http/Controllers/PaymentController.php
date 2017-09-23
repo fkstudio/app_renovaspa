@@ -848,10 +848,11 @@ class PaymentController extends Controller
                         $reservation = $mailData['reservation'];
                         $detail = $mailData['detail'];
 
+                        $customerFullName = $detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName;
 
                         $message->setBody("
                             <p>
-                            Dear ".$detail->RealCustomerFirstName . " " . $detail->RealCustomerLastName ."
+                            Dear ".$customerFullName ."
                             <br/>
                             ".$reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName." Has sent you a Gift Certificate from Renova Spa.
                             <br/>
@@ -884,13 +885,16 @@ class PaymentController extends Controller
 
                         /* this mail is in hidden copy to? */
                         $message->bcc(\Config::get('email.info'), 'Renovaspa');
+
+                        /* this mail is in hidden copy to? */
+                        $message->bcc($reservation->PaymentInformation->CustomerEmail, $customerFullName);
                         
                         /* the recipient of this mail is?  */
                         $message->to($detail->DeliveryEmail, $detail->ToCustomerName);
                         
                         $message->attach($mailData['pdf_path']);
 
-                        $message->subject("Renova Spa Gift Certificate voucher confirmation #" . $reservation->CorrelativeNumber . ' - #'. $detail->CorrelativeNumber .' at '. $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
+                        $message->subject($customerFullName. " has sent you Gift Certificate from Renova Spa at ". $reservation->Region->Country->Name . ' - '. $reservation->Region->Name . ' - ' . $reservation->Hotel->Name); 
                     });   
                 } 
             }    

@@ -102,7 +102,7 @@
 												$endingHour = ( $info->EndingTime != null ? $info->EndingTime->format('H') : 6 );
 											}
 										@endphp
-										<select id="prefered_time_{{ $counter }}" readonly data-index="{{ $counter }}" class="blak-select exaction form-control" name="prefered_time[]">
+										<select id="prefered_time_{{ $counter }}" readonly data-index="{{ $counter }}" class="blak-select exaction exaction-select form-control" name="prefered_time[]">
 											<option value="">Open time</option>
 											@php
 												$h = $beginHour;
@@ -125,7 +125,6 @@
 												@endphp
 											@endfor
 										</select>
-										<!-- <input type="text" name="prefered_time[]" value="{{ ( $item->PreferedTime != null ? $item->PreferedTime->format('h:m') : '' )  }}" placeholder="Open time" id="prefered_time_{{ $counter }}" data-index="{{ $counter }}" readonly="" class="timepicker form-control" /> -->
 									</td>
 									
 									@if(session('reservation_type') != 3)
@@ -205,7 +204,7 @@
 											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" id="prefered_date_{{ $key }}"  placeholder="Open date" data-index="{{ $counter }}" class="datepicker exaction form-control" />
 										</td>
 										<td class="padding-td">
-											<select name="prefered_time[]" id="prefered_time_{{ $counter }}" placeholder="Open time" data-index="{{ $counter }}" class="form-control exaction">
+											<select name="prefered_time[]" id="prefered_time_{{ $counter }}" placeholder="Open time" data-index="{{ $counter }}" class="form-control exaction exaction-select">
 												<option value="">Open time</option>
 												<option value="08:00am">08:00am</option>
 												<option value="09:00am">09:00am</option>
@@ -314,6 +313,14 @@
 	    		pass = false;
 	    });
 
+	    $.each($('.exaction-select'), function(key, value){
+	    	var item = $(value);
+	    	
+	    	if(item.attr("data-hidden") == "false" && item.val() == ""){
+	    		pass = false;
+	    	}
+	    });
+
 	    
 	    if(!pass){
 	    	$("#errorMessageContent").fadeTo(2000, 500).slideUp(500, function(){
@@ -357,16 +364,18 @@
 		$(".exaction").change(function(){
 			setVal(this);
 		})
+
+		$(".exaction-select").css('visibility', 'hidden').attr("data-hidden", true);
 	});
 
 	function setVal(obj){
 		var input = $(obj);
 		var index = input.attr("data-index");
 		if(input.val() == ""){
-			var s = $("#prefered_time_"+index).val('').css('visibility', 'hidden');
+			var s = $("#prefered_time_"+index).val('').css('visibility', 'hidden').attr("data-hidden", true);
 		}
 		else {
-			var s = $("#prefered_time_"+index).css('visibility', 'visible');
+			var s = $("#prefered_time_"+index).css('visibility', 'visible').attr("data-hidden", false);
 		}
 	}
 </script>

@@ -113,21 +113,21 @@ class HomeController extends Controller
 
             $data = $_POST;
             /* send contact form */
-            $mail->send([],[], function($message) use ($data) {
-                $message->setBody("
-                    <p><strong>Name: </strong> ".$data['name']." </p>
-                    <p><strong>Email: </strong> ".$data['email']." </p>
-                    <p><strong>Hotel: </strong> ".$data['hotel']." </p>
-                    <p><strong>Message: </strong></p>
-                    <p>".$data['message']." </p>
-                    ", 'text/html');
-                $message->from(\Config::get('email.info'), 'Renovaspa');
-                $message->sender(\Config::get('email.info'), 'Renovaspa');
-                $message->to(\Config::get('email.contact'), 'Renovaspa Contact Form');
-                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+            // $mail->send([],[], function($message) use ($data) {
+            //     $message->setBody("
+            //         <p><strong>Name: </strong> ".$data['name']." </p>
+            //         <p><strong>Email: </strong> ".$data['email']." </p>
+            //         <p><strong>Hotel: </strong> ".$data['hotel']." </p>
+            //         <p><strong>Message: </strong></p>
+            //         <p>".$data['message']." </p>
+            //         ", 'text/html');
+            //     $message->from(\Config::get('email.info'), 'Renovaspa');
+            //     $message->sender(\Config::get('email.info'), 'Renovaspa');
+            //     $message->to(\Config::get('email.contact'), 'Renovaspa Contact Form');
+            //     $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
-                $message->subject("Renovaspa - Contact form");
-            });
+            //     $message->subject("Renovaspa - Contact form");
+            // });
 
             return redirect()->route('home.contact')->with('success', 'Message sent successfully.');
             
@@ -170,21 +170,21 @@ class HomeController extends Controller
             $data['file_path'] = $file_path;
 
             /* send contact form */
-            $mail->send([],[], function($message) use ($data) {
-                $message->setBody("
-                    <p><strong>Position applying: </strong> ".$data['position']." </p>
-                    <p><strong>City/Country: </strong> ".$data['country']." </p>
-                    <p><strong>Name: </strong> ".$data['name']." </p>
-                    <p><strong>Email: </strong> ".$data['email']." </p>
-                    ", 'text/html');
-                $message->from(\Config::get('email.info'), 'Renovaspa');
-                $message->sender(\Config::get('email.info'), 'Renovaspa');
-                $message->to(\Config::get('email.employer'), 'Renovaspa Employer');
-                $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-                $message->attach($data['file_path']);
+            // $mail->send([],[], function($message) use ($data) {
+            //     $message->setBody("
+            //         <p><strong>Position applying: </strong> ".$data['position']." </p>
+            //         <p><strong>City/Country: </strong> ".$data['country']." </p>
+            //         <p><strong>Name: </strong> ".$data['name']." </p>
+            //         <p><strong>Email: </strong> ".$data['email']." </p>
+            //         ", 'text/html');
+            //     $message->from(\Config::get('email.info'), 'Renovaspa');
+            //     $message->sender(\Config::get('email.info'), 'Renovaspa');
+            //     $message->to(\Config::get('email.employer'), 'Renovaspa Employer');
+            //     $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+            //     $message->attach($data['file_path']);
 
-                $message->subject("Renovaspa - Join us form");
-            });
+            //     $message->subject("Renovaspa - Join us form");
+            // });
 
             return redirect()->route('home.contact')->with('success', 'Message sent successfully.');
             

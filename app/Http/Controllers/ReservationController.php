@@ -168,7 +168,7 @@ class ReservationController extends Controller
                          
                             if(empty($_POST['prefered_date'][$key])){
                                 $cartItem->PreferedDate = null;
-                                $aartItem->PreferedTime = null;
+                                $cartItem->PreferedTime = null;
                             }
                             else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
                                 return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
@@ -403,6 +403,8 @@ class ReservationController extends Controller
             }
         }
         catch (\Exception $e){
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with("failure", 'Your session has expired.');
         }
     }

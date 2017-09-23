@@ -6,6 +6,15 @@
 
 @php
 
+$categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+                AND
+                ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
+                             ->setParameter('deleted', false)
+                             ->setParameter('active', true)
+                             ->setParameter('country', session('country_id'))
+                             ->setParameter('hotel', session('hotel_id'))
+                             ->getResult();
+
 $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => session('hotel_id'), 'Region' => session('region_id') ]);
 
 @endphp
