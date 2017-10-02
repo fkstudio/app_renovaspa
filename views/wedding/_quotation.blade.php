@@ -1,10 +1,10 @@
 @inject("dbcontext", "App\Database\DbContext")
 @php
-	$subtotal = 0;
-	$total = 0;
+  $subtotal = 0;
+  $total = 0;
 
-	$hotel_id = $model->Hotel->Id;
-	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => $model->Region->Id ]);
+  $hotel_id = $model->Hotel->Id;
+  $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => $model->Region->Id ]);
 @endphp
 
 <div id="container" style="color: #7f7f7f !important;width:80%;margin:0 auto;">
@@ -193,58 +193,61 @@ color: inherit">Services's information</h3>
         border-top: 1px solid #eee" />
 
         @foreach($cart->Items as $item)
-			@php
-				$packageRelation = $item->PackageCategoryRelation;
-			@endphp
-			@if($item->Service != null)
-				@php
-					$subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
-					$total += $item->Service->getPrice($model->Hotel->Id);
-				@endphp
-				<div>
-		          <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
-		          <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
-		      @if($item->Service->hasDiscount($hotel_id))
-					@php
-						$discount = $item->Service->getDiscount($hotel_id)
-					@endphp
-					<br>
-		          	<span style="color: #5fc7ae;font-size: 12px;">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
-					@endif
+      @php
+        $packageRelation = $item->PackageCategoryRelation;
+      @endphp
+      @if($item->Service != null)
+        @php
+          $subtotal += $item->Service->getPlanePrice($model->Hotel->Id);
+          $total += $item->Service->getPrice($model->Hotel->Id);
+        @endphp
+        <div>
+              <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
+              <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
+          @if($item->Service->hasDiscount($hotel_id))
+          @php
+            $discount = $item->Service->getDiscount($hotel_id)
+          @endphp
+          <br>
+                <span style="color: #5fc7ae;font-size: 12px;">{{ "-".$discount. "% ".trans('shared.discount') }}</span>
+          @endif
 
-					@if ($item->Service->hasHotelDiscount($hotel_id))
-					<br>
-		          	<span style="color: #5fc7ae;font-size: 12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-					@elseif ($hotel_region->ActiveDiscount)
-					<br>
-		          	<span style="text-decoration: line-through;
-							 	 color: #dc5046;
-							 	 font-size:12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
-					@endif
+          @if ($item->Service->hasHotelDiscount($hotel_id))
+          <br>
+                <span style="color: #5fc7ae;font-size: 12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+          @elseif ($hotel_region->ActiveDiscount)
+          <br>
+                <span style="text-decoration: line-through;
+                 color: #dc5046;
+                 font-size:12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount') }}</span>
+          @endif
 
-		          <br/>
-		          <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPlanePrice($hotel_id), 2) }}</span>
-		          <br>
-		          <?php /* <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span> */ ?>
-		        </div>
-				<div style="clear: both;"></div>
-				<hr style="margin-top: 20px;
-					       margin-bottom: 20px;
-					       border: 0;
-					       border-top: 1px solid #eee" />
-			@else
-				@php
+              <br/>
+              <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPlanePrice($hotel_id), 2) }}</span>
+              <br>
+              <?php /* <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($item->Service->getPrice($hotel_id), 2) }}</strong></span> */ ?>
+            </div>
+        <div style="clear: both;"></div>
+        <hr style="margin-top: 20px;
+                 margin-bottom: 20px;
+                 border: 0;
+                 border-top: 1px solid #eee" />
+      @else
+        @php
           $packages = session('packages');
+          $data = null;
 
-					$weddingPackage = $packageRelation->WeddingPackage;
+          $weddingPackage = $packageRelation->WeddingPackage;
 
-          $data = $packages[$packageRelation->WeddingPackage->Id];
-					
-					$subtotal += $packageRelation->getPlanePrice();
-					$total += $packageRelation->getPrice();
-				@endphp
-				<div>
-		          <h5 style="margin-top: 10px;margin-bottom: 10px">{{ $weddingPackage->Name }}</h5>
+          if($packages != null){
+            $data = $packages[$packageRelation->WeddingPackage->Id];
+          }
+
+          $subtotal += $packageRelation->getPlanePrice();
+          $total += $packageRelation->getPrice();
+        @endphp
+        <div>
+              <h5 style="margin-top: 10px;margin-bottom: 10px">{{ $weddingPackage->Name }}</h5>
               @if($packageRelation->ActiveDiscount)
                 @php
                   $discount = $packageRelation->Discount;
@@ -255,27 +258,27 @@ color: inherit">Services's information</h3>
               <span>{{ trans('shared.price') }}: {{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPlanePrice(), 2) }}</span>
               <br>
               <?php /* <span>{{ trans('shared.final_price') }}: <strong>{{ $model->Region->Country->Currency->Symbol.number_format($packageRelation->getPrice(), 2) }}</strong></span> */ ?>
-		          <ul style="list-style: none;">
-		            @foreach($weddingPackage->WeddingPackageFeatures as $feature)
-					<li>{{ $feature->Description }}</li>
-					@endforeach	 
-					@foreach($packageRelation->WeddingPackage->WeddingPackageServices as $key => $packageService)
-						<li>
-			              <div>
-			                <h5 style="margin-top: 10px;margin-bottom: 10px">1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
-			                <span>{{ trans('checkout.booked_to') }} {{ ($data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
-			              </div>
-			            </li>
-					@endforeach
-		          </ul>
-		        </div>
-				<div style="clear: both;"></div>
-				<hr style="margin-top: 20px;
+              <ul style="list-style: none;">
+                @foreach($weddingPackage->WeddingPackageFeatures as $feature)
+          <li>{{ $feature->Description }}</li>
+          @endforeach  
+          @foreach($packageRelation->WeddingPackage->WeddingPackageServices as $key => $packageService)
+            <li>
+                    <div>
+                      <h5 style="margin-top: 10px;margin-bottom: 10px">1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $packageService->Service->Cabin->Name }} )</h5>
+                      <span>{{ trans('checkout.booked_to') }} {{ ($data != null &&$data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data != null && $data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
+                    </div>
+                  </li>
+          @endforeach
+              </ul>
+            </div>
+        <div style="clear: both;"></div>
+        <hr style="margin-top: 20px;
                    margin-bottom: 20px;
                    border: 0;
                    border-top: 1px solid #eee" />
-			@endif
-		@endforeach
+      @endif
+    @endforeach
         <h3 style="font-family: inherit;
                   font-weight: 500;
                   font-size: 24px;
@@ -288,11 +291,11 @@ color: inherit">Services's information</h3>
                 <td><span style="float:right;">{{ $model->Region->Country->Currency->Symbol }}{{ $subtotal }}</span></td>
               </tr>
               @if ($hotel_region->ActiveDiscount)
-			  <tr>
-				<td>
-				<span style="font-size: 15px;font-weight: bold;color: #5fc7ae;font-size: 12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount_available') }}</span></td>
-			  </tr>
-			  @endif
+        <tr>
+        <td>
+        <span style="font-size: 15px;font-weight: bold;color: #5fc7ae;font-size: 12px;">-{{ $hotel_region->Discount }}% {{ trans('shared.online_discount_available') }}</span></td>
+        </tr>
+        @endif
               <tr>
                 <td><strong>Total</strong></td>
                 <td><strong style="float:right;">{{ $model->Region->Country->Currency->Symbol }}{{ $total }}</strong></td>
@@ -316,15 +319,15 @@ color: inherit">Services's information</h3>
                    border: 0;
                    border-top: 1px solid #eee" />
         @php
-			$delivery = $model->WeddingBillDelivery;
-		@endphp
+      $delivery = $model->WeddingBillDelivery;
+    @endphp
         @if($delivery == 2)
-		<p>Send one bill including all the services.</p>
-		@elseif ($delivery == 3)
-		<p>Send one bill including the wedding couples services and other for each person of the wedding party</p>
-		@else 
-		<p>Send separate bills for each person.</p>
-		@endif
+    <p>Send one bill including all the services.</p>
+    @elseif ($delivery == 3)
+    <p>Send one bill including the wedding couples services and other for each person of the wedding party</p>
+    @else 
+    <p>Send separate bills for each person.</p>
+    @endif
         <label style="display: inline-block;
                       max-width: 100%;
                       margin-bottom: 5px;

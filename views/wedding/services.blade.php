@@ -72,12 +72,14 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 				<br/>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
 							{{ csrf_field() }}
 							<button type="submit" name="weddings" class="btn btn-interline block-button">{{ trans('shared.add_to_cart') }}</button>	
 						</div>
 						<br class="visible-xs" />
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<div class="clearfix visible-lg"></div>
+						<br class="visible-lg" />
+						<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
 							<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">{{ trans('shared.go_to_cart') }}</a>
 						</div>
 					</div>

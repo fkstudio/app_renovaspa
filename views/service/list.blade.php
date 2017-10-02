@@ -136,13 +136,15 @@
 					<div class="clearfix"></div>
 					<div class="form-group">
 						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
 								{{ csrf_field() }}
 								<button type="submit" name="services" class="btn btn-interline block-button">{{ trans('shared.add_to_cart') }}</button>	
 							</div>
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs" />
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="clearfix visible-lg"></div>
+							<br class="visible-lg" />
+							<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
 								@if (session('reservation_type') == 1 || session('reservation_type') == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">{{ trans('shared.go_to_cart') }}</a>
 								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)

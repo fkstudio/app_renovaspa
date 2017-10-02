@@ -14,21 +14,22 @@
             </div>
             <div class="modal-body">
                 @foreach($categoryCountries as $categoryCountry)
-                    <div class="text-center">
-                        <a href="#fakelink" style="cursor: pointer;" data-toggle="collapse" data-target="#category_collapse_{{ $categoryCountry->Category->Id }}">{{ $categoryCountry->Category->Name }}</a>
-                    </div>
+                    @if($categoryCountry->Category->IsDeleted != true && $categoryCountry->Category->IsActive == true)
+                        <div class="text-center">
+                            <a href="#fakelink" style="cursor: pointer;" data-toggle="collapse" data-target="#category_collapse_{{ $categoryCountry->Category->Id }}">{{ $categoryCountry->Category->Name }}</a>
+                        </div>
+                        
 
-                    <div id="category_collapse_{{ $categoryCountry->Category->Id }}" class="collapse">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Service</th>
-                                    <th>Duración</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($categoryCountry->Category->IsDeleted != true && $categoryCountry->Category->IsActive == true)
+                        <div id="category_collapse_{{ $categoryCountry->Category->Id }}" class="collapse">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Duración</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @foreach($categoryCountry->ServiceCategoryHotels as $serviceCategoryHotel)
                                         @if($serviceCategoryHotel->Service->IsActive == true && $serviceCategoryHotel->Service->IsDeleted == false)
                                         <tr>
@@ -38,11 +39,11 @@
                                         </tr>
                                         @endif
                                     @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr/>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr/>
+                    @endif
                 @endforeach
             </div>
         </div>

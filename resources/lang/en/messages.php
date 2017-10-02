@@ -28,6 +28,7 @@ return [
     'cart_updated_success' => 'Shopping cart successfully updated',
     'transaction_error' => 'Transaction error. Please contact your card provider for more information or try with another card.',
     'transaction_canceled' => 'THE TRANSACTION HAS BEEN CANCELED.',
+    'wedding_canceled' => 'THE RESERVATIONS REQUEST HAS BEEN  CANCELED.',
     'wedding_quotation_sent' => 'Your reservation request has been successfully sent to our Wedding Concierge, who will be happy to work on the schedule and contact you back within the next 24 hours for your final approval (Saturdays after midday within 48 hrs.) These are the reservation you have sent',
     'fill_card_data' => 'Please fill your Credit Card Information',
     'payment_your_order' => 'Payment your order',

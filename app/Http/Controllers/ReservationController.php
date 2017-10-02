@@ -427,8 +427,6 @@ class ReservationController extends Controller
         // change reservation status to canceled
         $this->entityManager->persist($reservation);
 
-        $session->flush();
-
         return view('reservation.canceled');
     }
 

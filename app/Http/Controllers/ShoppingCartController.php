@@ -126,9 +126,7 @@ class ShoppingCartController extends Controller
                     $action = '/shopping/cart/checkout';
                     break;
                 default:
-                    echo 'asdf';
-                    exit();
-                    //return redirect()->route("home.home")->with('failure', 'messages.session_expired');
+                    return redirect()->route("home.home")->with('failure', 'messages.session_expired');
                     break;
             }
 
