@@ -10,7 +10,9 @@ return [
 
     // wedding controller messages
     'important' => 'Important',
-    'you_will_be_contacted' => 'You will be contacted through e-mail by the online wedding concierge , please make sure Provide the e-mail address that you frequently use',
+    'you_will_be_contacted' => 'Important: You will be contacted through e-mail by the online wedding concierge.
+    Please make sure to provide the e-mail address that you frequently use.
+',
     'personal_info' => 'Personal information',
     'couple_info' => 'Couple information',
     'service_info' => "Services's information",

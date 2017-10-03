@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/renovalaravel'),
+    'url' => env('APP_URL', 'http://localhost/renovaspa/public'),
 
     /*
     |--------------------------------------------------------------------------

@@ -14,10 +14,10 @@
             <p> 
             As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
             </p>
-            <p>Our Online Wedding Concierge will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.</p>
+            <p>Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.</p>
             <h4>Follow these simple steps:</h4>
             <br/>
-            <h4>STEP 1 - Go to the link THE DAY online wedding concierge.</h4>
+            <h4>STEP 1 - Go to the link <a href="{{ URL::to("/") }}/weddings">THE DAY</a> <a href="mailto:info@renovaspa.com">online wedding concierge</a>.</h4>
             <p>•  Select your hotel.</p>
             <p>•  Enter the dates of your stay.</p>
             <p>Note: We do not take reservations with more than 6 month prior to your wedding date.</p>
@@ -28,17 +28,17 @@
             <h4>STEP 2 - Make your choice of services.</h4>
             <p>•  If your Hotel Wedding Package includes salon or spa services, these will be available by default on your shopping cart.</p>
             <p>•  Review all services offered and make your request for the wedding couple, the wedding party and all guests.</p>
-            <p>Note: if you are unsure about the correct times, you are welcome to leave these OPEN online wedding concierge will suggest a schedule based on all the information on the form.</p>
+            <p>Note: if you are unsure about the correct times, you are welcome to leave these OPEN <a href="mailto:info@renovaspa.com">online wedding concierge</a> will suggest a schedule based on all the information on the form.</p>
             <br/>
             <p>•  Proceed to check out - include names and appointment requests.
-Note: if you are unsure about the correct times, you are welcome to leave these OPEN online wedding concierge will suggest a schedule based on all the information on the form.</p>
+Note: if you are unsure about the correct times, you are welcome to leave these OPEN <a href="mailto:info@renovaspa.com">online wedding concierge</a> will suggest a schedule based on all the information on the form.</p>
             <br/>
             <p>•  Complete the requested information on the reservations form.</p>
             <p>•  Send the reservations form.</p>
             <p>Note: the reservations form is only a request for reservations - no reservations will be confirmed until the full process is finished and you obtain a confirming voucher.</p>
             <br/>
             <h4>STEP 3 - Wedding Concierge contact.</h4>
-            <p>•  Our online wedding concierge will check on the reservations request and e-mail you within the next 24 hours (48 hours after Saturdays midday).</p>
+            <p>•  Our <a href="mailto:info@renovaspa.com">online wedding concierge</a> will check on the reservations request and e-mail you within the next 24 hours (48 hours after Saturdays midday).</p>
             <p>•  The requested reservations will be confirmed or an alternative schedule will be proposed based on availability and space limitations.</p>
             <p>•  Review the information and reply agreeing or requesting any changes.</p>
             <br/>
@@ -53,13 +53,13 @@ Note: if you are unsure about the correct times, you are welcome to leave these 
             <p>•  Direct charges to Visa or Mastercard can be processed after receiving some information.</p>
             <br/>
             <h4>STEP 5 - Receive your reservation voucher</h4>
-            <p>Within the next 24 hours after receiving your down payment, our Online Wedding Concierge will e-mail you the confirming voucher(s) for your services.
+            <p>Within the next 24 hours after receiving your down payment, our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will e-mail you the confirming voucher(s) for your services.
 Note: no reservation is confirmed without a voucher.</p>
             <br/>
             <p>•  Print it out.</p>
             <p>•  Present it at the Spa in order to receive your services.</p>
             <p>•  The due amount will be paid at the spa directly prior to taking the services.</p>
-            <p>•  To make additional reservations after the initial one or any changes, please contact your online wedding concierge mentioning your voucher number.</p>
+            <p>•  To make additional reservations after the initial one or any changes, please contact your <a href="mailto:info@renovaspa.com">online wedding concierge</a> mentioning your voucher number.</p>
             <br/>
             <h4>BEAUTY SALON FACILITIES</h4>
             <p><b>• How many beauty salon services can you make at the same time?</b></p><p> 
@@ -85,7 +85,7 @@ Note: no reservation is confirmed without a voucher.</p>
             We can provide you with a spa cabin, if available. <br>Therefore, we will need you to come to the spa prior to the wedding day in order to make this special request<br>to the spa manager directly and confirm if we have a special place available on your wedding day.</p>
             <br>
             <p><b>• My wedding starts early and my wedding group requires several salon services.<br>How can we accommodate these?.</b><br>
-            Please, contact your online wedding concierge and we will check if we can bring in extra staff or make an earlier start in order to accommodate your needs.</p>
+            Please, contact your <a href="mailto:info@renovaspa.com">online wedding concierge</a> and we will check if we can bring in extra staff or make an earlier start in order to accommodate your needs.</p>
             <br/>
             <h4>HAIRSTYLES</h4>
             <p><b>•  Do you apply accessories or flowers as part of the hairstyles? Do you supply these?</b><br>
@@ -149,7 +149,7 @@ Note: no reservation is confirmed without a voucher.</p>
             <br>
             <p><b>• Do you apply false eye lashes?</b><br>
             Yes, we do apply false eye lashes.<br>
-            Please, check with your online wedding concierge, since in some locations we do not supply these, so you will have to provide them.
+            Please, check with your <a href="mailto:info@renovaspa.com">online wedding concierge</a>, since in some locations we do not supply these, so you will have to provide them.
             </p>
             <br>
             <p><b>• Do your offer makeup try outs? Do you recommend these?</b><br>
@@ -190,7 +190,7 @@ Note: no reservation is confirmed without a voucher.</p>
             <p> 
             As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
 
-            Our Online Wedding Concierge will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
+            Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
             </p>
         </div>
         <hr/>
@@ -203,7 +203,7 @@ Note: no reservation is confirmed without a voucher.</p>
             <p> 
             As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
 
-            Our Online Wedding Concierge will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
+            Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
             </p>
         </div>
         <hr/>
@@ -245,7 +245,7 @@ Note: no reservation is confirmed without a voucher.</p>
             <br/>
             <h4>•   Can I change the schedule once the reservation has been confirmed?</h4>
             <p>
-                Yes, you can. You will have to contact your online wedding concierge and the services can be rescheduled, within 24 hours of the appointments without a penalty and based on availability. Any changes with less than 24 hours need to be done at the spa directly.
+                Yes, you can. You will have to contact your <a href="mailto:info@renovaspa.com">online wedding concierge</a> and the services can be rescheduled, within 24 hours of the appointments without a penalty and based on availability. Any changes with less than 24 hours need to be done at the spa directly.
                 All changes will be based upon availability.
             </p>
         </div>
@@ -259,7 +259,7 @@ Note: no reservation is confirmed without a voucher.</p>
             <p>Yes, you are welcome to purchase Gift Certificates for them: <a href="{{ URL::to('/') }}/certificates">HERE</a> </p>
             <br/>
             <h4>•   Can my guests purchase Gift Certificates for me as a wedding present?</h4>
-            <p>Yes, they are welcome to purchase Gift Certificates for you. HERE</p>
+            <p>Yes, they are welcome to purchase Gift Certificates for you. <a href="{{ URL::to('/') }}/certificates">HERE</a></p>
         </div>
     </div>
 @endsection

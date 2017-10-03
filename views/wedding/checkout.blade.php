@@ -95,12 +95,12 @@
 					<div class="col-md-2">
 						<label>{{ trans('shared.arrival') }}</label>
 						<br/>
-						<span>{{ $model->Arrival->format('d/m/Y') }}</span>
+						<span>{{ $model->Arrival->format('F j, Y') }}</span>
 					</div>
 					<div class="col-md-2">
 						<label>{{ trans('shared.departure') }}</label>
 						<br/>
-						<span>{{ $model->Departure->format('d/m/Y') }}</span>
+						<span>{{ $model->Departure->format('F j, Y') }}</span>
 					</div>
 					<div class="clearfix"></div>
 					<br/>
@@ -135,7 +135,7 @@
 					@endphp
 					<div class="col-md-12">
 						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
+						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 						@if ($item->Service->hasDiscount($hotel_id))
 							@php
 								$discount = $item->Service->getDiscount($hotel_id)
@@ -197,7 +197,7 @@
 								<li>
 									<div class="col-md-12">
 										<h5>1  {{ $packageService->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
-										<span>{{ trans('checkout.booked_to') }} {{ ($data != null && $data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('d/m/Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data != null && $data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
+										<span>{{ trans('checkout.booked_to') }} {{ ($data != null && $data[$key]['prefered_date'] != null ? $data[$key]['prefered_date']->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($data != null && $data[$key]['prefered_time'] != null ? $data[$key]['prefered_time']->format('h:m a') : "Open time") }}, {{ $data[$key]['customer_name'] }}</span>
 									</div>
 								</li>
 							@endforeach
