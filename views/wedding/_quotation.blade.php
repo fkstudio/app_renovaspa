@@ -8,6 +8,8 @@
 @endphp
 
 <div id="container" style="color: #7f7f7f !important;width:80%;margin:0 auto;">
+        <img src="{{ URL::to('/images') }}/quotation_header.jpg" class="img-responsive" />
+        <br/>
         <h3 style="background: #5fc7ae;
         padding: 15px;
         color: white;

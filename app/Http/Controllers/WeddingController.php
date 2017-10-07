@@ -156,8 +156,6 @@ class WeddingController extends Controller
                 return redirect()->route("category.categoriesByHotel", [ "hotel_id" => $session->get("hotel_id") ]);
             }
             else {
-                echo 'asdasd';
-                exit();
                 if($reservation_id == null){
                     return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
                 }
