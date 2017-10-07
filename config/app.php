@@ -38,11 +38,11 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     'mode' => 'PRODUCTION',
 
-    'admin_url' => 'http://admin.renovaspa.com',
+    'admin_url' => 'http://localhost/admin.renovaspa/public/',
 
     /*
     |--------------------------------------------------------------------------

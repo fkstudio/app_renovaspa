@@ -72,7 +72,6 @@ class ServiceController extends Controller
         $region_id = $session->get('region_id');
         $session->put('category_id', $category_id);
 
-
         $cart = $this->getCart($session->getId());
 
         try {

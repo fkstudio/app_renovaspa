@@ -130,124 +130,146 @@ class WeddingController extends Controller
         return view('wedding.services', [ 'breadcrumps' => $breadcrumps, 'model' => $categories, 'country' => $country, 'mycart' => $cart ]);
     }
 
+
     public function sendQuotation(Request $request){
         $session = $request->session();
         $session_id = $session->getId();
         $reservation_id = $session->get('current_reservation_id');
 
+
         try {
 
-            if($reservation_id == null){
-                return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
-            }
-            
-            /* cart */
-            $cart = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(["Session" => $session_id]);
-            /* get current reservation */
-            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')
-                                           ->findOneBy(['Id' => $reservation_id]);
+            if(isset($_POST['save_quotation'])){
+              
+                $quotation = [
+                    "first_name" => $_POST['first_name'],
+                    "last_name" => $_POST['last_name'],
+                    "email" => $_POST['email'],
+                    "bride_name" => $_POST['bride_full_name'],
+                    "groom_name" => $_POST['groom_full_name'],
+                    "wedding_date" => $_POST['wedding_date'],
+                    "wedding_time" => $_POST['wedding_time']
+                ];
 
-            if($reservation == null)
-                return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+                $session->put("quotation", $quotation);
 
-            /* complete reservation data */
-            $reservation->CertificateFirstName = $_POST['first_name'];
-            $reservation->CertificateLastName = $_POST['last_name'];
-            $reservation->BrideName = $_POST['bride_full_name'];
-            $reservation->GroomName = $_POST['groom_full_name'];
-            $reservation->Email = $_POST['email'];
-
-            $dateParts = explode('/', $_POST['wedding_date']);
-            
-            if(empty($_POST['wedding_date'])){
-                $reservation->WeddingDate = null;
-            }
-            else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
-                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
+                return redirect()->route("category.categoriesByHotel", [ "hotel_id" => $session->get("hotel_id") ]);
             }
             else {
-                $reservation->WeddingDate = new \DateTime($_POST['wedding_date']);
+                echo 'asdasd';
+                exit();
+                if($reservation_id == null){
+                    return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+                }
+                
+                /* cart */
+                $cart = $this->entityManager->getRepository("App\Models\Test\ShoppingCartModel")->findOneBy(["Session" => $session_id]);
+                /* get current reservation */
+                $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')
+                                               ->findOneBy(['Id' => $reservation_id]);
+
+                if($reservation == null)
+                    return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
+
+                /* complete reservation data */
+                $reservation->CertificateFirstName = $_POST['first_name'];
+                $reservation->CertificateLastName = $_POST['last_name'];
+                $reservation->BrideName = $_POST['bride_full_name'];
+                $reservation->GroomName = $_POST['groom_full_name'];
+                $reservation->Email = $_POST['email'];
+
+                $dateParts = explode('/', $_POST['wedding_date']);
+                
+                if(empty($_POST['wedding_date'])){
+                    $reservation->WeddingDate = null;
+                }
+                else if(count($dateParts) < 3 || count($dateParts) > 3 || checkdate($dateParts[0], $dateParts[1], $dateParts[2]) == false){
+                    return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_date'));
+                }
+                else {
+                    $reservation->WeddingDate = new \DateTime($_POST['wedding_date']);
+                }
+
+                $timeParts = explode(':', $_POST['wedding_time']);
+
+                if(empty($_POST['wedding_time'])){
+                    $reservation->WeddingTime = null;
+                }
+                else if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
+                    return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
+                }
+                else {
+                    $reservation->WeddingTime = new \DateTime($_POST['wedding_time']);
+                }
+
+                $reservation->WeddingBillDelivery = $_POST['bill_delivery'];
+                $reservation->Remarks = $_POST['remarks'];
+
+                $this->entityManager->persist($reservation);
+
+                $this->entityManager->flush();
+
+                if( empty($_POST['first_name']) || 
+                    empty($_POST['last_name']) || 
+                    empty($_POST['bride_full_name']) || 
+                    empty($_POST['groom_full_name']) || 
+                    empty($_POST['email']) || 
+                    empty($_POST['email_confirmation']) || 
+                    empty($_POST['wedding_date']) || 
+                    empty($_POST['wedding_time']) || 
+                    empty($_POST['bill_delivery']))
+                    return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_data'));
+
+                if($_POST['email'] != $_POST['email_confirmation'])
+                    return redirect()->route('wedding.checkout')->with('failure', trans('messages.email_doesn_match'));
+
+
+                /* change reservation status to complete */
+                $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
+
+                $this->entityManager->persist($reservation);
+
+                $this->entityManager->flush();
+
+                /* view data */
+                $viewData = [
+                    'model' => $reservation,
+                    'cart' => $cart
+                ];
+
+                /* get wedding quotation as html string */
+                $voucher = (string) \View::make('wedding._quotation', $viewData)->render();
+
+                /* mail object */
+                $mail = app()['mailer'];
+
+                $mailData = [
+                    'voucher' => $voucher,
+                    'reservation' => $reservation
+                ];
+
+                $testMode = \Config::get('app.mode');
+
+                if($testMode == "PRODUCTION"){
+                    /* send voucher view */
+                    $mail->send([],[], function($message) use ($mailData) {
+                        $reservation = $mailData['reservation'];
+                        $message->setBody($mailData['voucher'], 'text/html');
+                        $message->from(\Config::get('email.info'), 'Renovaspa');
+                        $message->sender(\Config::get('email.info'), 'Renovaspa');
+                        $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
+                        $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+                        $message->bcc(\Config::get('email.info'), 'Renovaspa');
+                        $message->replyTo(\Config::get('email.info'), 'Renovaspa');
+                        $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
+                    });    
+
+                    /* clear session data */
+                    //$session->flush();
+                }
+
+                return view('wedding.sent', $viewData);
             }
-
-            $timeParts = explode(':', $_POST['wedding_time']);
-
-            if(empty($_POST['wedding_time'])){
-                $reservation->WeddingTime = null;
-            }
-            else if(count($timeParts) < 2 || \App\Classes\Utilities::checktime($timeParts[0], $timeParts[1], '00')){
-                return redirect()->route("cart.checkout")->with('failure', trans('messages.invalid_time'));
-            }
-            else {
-                $reservation->WeddingTime = new \DateTime($_POST['wedding_time']);
-            }
-
-            $reservation->WeddingBillDelivery = $_POST['bill_delivery'];
-            $reservation->Remarks = $_POST['remarks'];
-
-            $this->entityManager->persist($reservation);
-
-            $this->entityManager->flush();
-
-            if( empty($_POST['first_name']) || 
-                empty($_POST['last_name']) || 
-                empty($_POST['bride_full_name']) || 
-                empty($_POST['groom_full_name']) || 
-                empty($_POST['email']) || 
-                empty($_POST['email_confirmation']) || 
-                empty($_POST['wedding_date']) || 
-                empty($_POST['wedding_time']) || 
-                empty($_POST['bill_delivery']))
-                return redirect()->route('wedding.checkout')->with('failure', trans('messages.invalid_data'));
-
-            if($_POST['email'] != $_POST['email_confirmation'])
-                return redirect()->route('wedding.checkout')->with('failure', trans('messages.email_doesn_match'));
-
-
-            /* change reservation status to complete */
-            $reservation->Status = $this->entityManager->getRepository('App\Models\Test\StatusModel')->findOneBy(['Name' => 'Completed']);
-
-            $this->entityManager->persist($reservation);
-
-            $this->entityManager->flush();
-
-            /* view data */
-            $viewData = [
-                'model' => $reservation,
-                'cart' => $cart
-            ];
-
-            /* get wedding quotation as html string */
-            $voucher = (string) \View::make('wedding._quotation', $viewData)->render();
-
-            /* mail object */
-            $mail = app()['mailer'];
-
-            $mailData = [
-                'voucher' => $voucher,
-                'reservation' => $reservation
-            ];
-
-            $testMode = \Config::get('app.mode');
-
-            if($testMode == "PRODUCTION"){
-                /* send voucher view */
-                $mail->send([],[], function($message) use ($mailData) {
-                    $reservation = $mailData['reservation'];
-                    $message->setBody($mailData['voucher'], 'text/html');
-                    $message->from(\Config::get('email.info'), 'Renovaspa');
-                    $message->sender(\Config::get('email.info'), 'Renovaspa');
-                    $message->to($reservation->Email, $reservation->CertificateFirstName . ' ' . $reservation->CertificateLastName);
-                    $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
-                    $message->bcc(\Config::get('email.info'), 'Renovaspa');
-                    $message->replyTo(\Config::get('email.info'), 'Renovaspa');
-                    $message->subject("Wedding reservation for: " . $reservation->CertificateFirstName . " ".$reservation->CertificateLastName);
-                });    
-
-                /* clear session data */
-                //$session->flush();
-            }
-
-            return view('wedding.sent', $viewData);
         }
         catch (\Exception $e){
             print_r($e);

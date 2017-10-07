@@ -126,6 +126,8 @@ class ShoppingCartController extends Controller
                     $action = '/shopping/cart/checkout';
                     break;
                 default:
+                    echo "no reservation type";
+                    exit();
                     return redirect()->route("home.home")->with('failure', 'messages.session_expired');
                     break;
             }
@@ -170,7 +172,6 @@ class ShoppingCartController extends Controller
             return view('cart.myCart', [ 'model' => $cart, 'category' => $category, 'breadcrumps' => $breadcrumps, 'country' => $country, 'action' => $action, 'method' => $method, 'reservationType' => $reservationType ]);
         }
         catch (\Exception $e){
-            print_r($e);exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
@@ -371,8 +372,19 @@ class ShoppingCartController extends Controller
                 }    
             }
 
+            // echo "session 1 <br/>";
+            // echo "<pre>";
+            // print_r($session->all());
+            // echo "</pre><br/>";
+
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
+
+            // echo "session 2 <br/>";
+            // echo "<pre>";
+            // print_r($session->all());
+            // echo "<pre>";
+            // exit();
 
             if($isWedding){
                 return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
@@ -410,7 +422,6 @@ class ShoppingCartController extends Controller
             else {
                 return redirect()->route("cart.myCart")->with('failure', trans("messages.cart_item_doesn_exists"));
             }
-
             
         }
         catch (\Exception $e){

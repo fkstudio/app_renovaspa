@@ -10,6 +10,8 @@
 
 	$hotel_id = session('hotel_id');
 	$hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\HotelRegionModel")->findOneBy([ 'Hotel' => $hotel_id, 'Region' => session('region_id') ]);
+
+	$quotation = session("quotation");
 @endphp
 
 @section("content")
@@ -33,18 +35,18 @@
 					<br/>
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="first_name" value="{{ $model->CertificateFirstName }}" class="form-control input-border" placeholder="* First name">
+							<input type="text" required name="first_name" value="{{ ($quotation != null ? $quotation['first_name'] : '') }}" class="form-control input-border" placeholder="* First name">
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="last_name" value="{{ $model->CertificateLastName }}" class="form-control input-border" placeholder="* Last name">
+							<input type="text" required name="last_name" value="{{ ($quotation != null ? $quotation['last_name'] : '') }}" class="form-control input-border" placeholder="* Last name">
 						</div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="email" required name="email" value="{{ $model->Email }}" class="form-control input-border" placeholder="* Email">
+							<input type="email" required name="email" value="{{ ($quotation != null ? $quotation['email'] : '') }}" class="form-control input-border" placeholder="* Email">
 						</div>
 					</div>
 					<div class="col-md-3">
@@ -60,12 +62,12 @@
 					
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="bride_full_name" class="form-control input-border" value="{{ $model->BrideName }}" placeholder="* Bride full name">
+							<input type="text" required name="bride_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['bride_name'] : '') }}" placeholder="* Bride full name">
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="groom_full_name" class="form-control input-border" value="{{ $model->GroomName }}" placeholder="* Groom full name">
+							<input type="text" required name="groom_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['groom_name'] : '') }}" placeholder="* Groom full name">
 						</div>
 					</div>
 
@@ -108,11 +110,11 @@
 						<label>(*) {{ trans('wedding.wedding_date') }}</label>
 						<br/>
 						<p>We only take reservations within 6 months prior to the wedding date and not before.</p>
-						<input type="text" name="wedding_date" required class="datepicker form-control input-border" />
+						<input type="text" value="{{ ($quotation != null ? $quotation['wedding_date'] : '') }}" name="wedding_date" required class="datepicker form-control input-border" />
 						<br/>
 						<label>(*) {{ trans('wedding.wedding_time') }}</label>
 						<br/>
-						<input type="text" value="{{ ( $model->WeddingTime != null ? $model->WeddingTime->format('h:m a') : '' ) }}" name="wedding_time" required class="timepicker form-control input-border" />
+						<input type="text" value="{{ ($quotation != null ? $quotation['wedding_time'] : '') }}" name="wedding_time" required class="timepicker form-control input-border" />
 					</div>
 				</div>
 				
@@ -228,7 +230,9 @@
 			</tbody>
 		</table>
 		<hr/>
-		<a href="{{ URL::to('/') }}/hotel/{{ $hotel_region->Hotel->Id }}/categories">{{ trans('messages.would_you_like') }}</a>
+		<button style="background: none;
+border: none;
+color: rgb(64, 90, 139);" formnovalidate type="submit" name="save_quotation" href="{{ URL::to('/') }}/hotel/{{ $hotel_region->Hotel->Id }}/categories">{{ trans('messages.would_you_like') }}</button>
 		<hr/>
 		<p style="color: red;"><strong>50% down payment will be required by the wedding concierge in order to confirm this reservation once this request has been checked out and approved within the next 24 hours For any questions, please, contact: info@renovaspa.com</strong></p>
 		<hr/>
