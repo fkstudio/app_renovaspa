@@ -238,6 +238,9 @@ class WeddingController extends Controller
                 /* get wedding quotation as html string */
                 $voucher = (string) \View::make('wedding._quotation', $viewData)->render();
 
+                echo $voucher;
+                exit();
+
                 /* mail object */
                 $mail = app()['mailer'];
 
@@ -270,8 +273,6 @@ class WeddingController extends Controller
             }
         }
         catch (\Exception $e){
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', trans('messages.session_expired'));
         }
     }

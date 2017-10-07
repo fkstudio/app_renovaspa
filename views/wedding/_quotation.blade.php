@@ -8,7 +8,9 @@
 @endphp
 
 <div id="container" style="color: #7f7f7f !important;width:80%;margin:0 auto;">
-        <img src="{{ URL::to('/images') }}/quotation_header.jpg" class="img-responsive" />
+        <div class="col-md-12" style="background:url({{ URL::to('/images') }}/quotation_header.jpg);height:250px;
+          background-size: cover;">
+        </div>
         <br/>
         <h3 style="background: #5fc7ae;
         padding: 15px;
