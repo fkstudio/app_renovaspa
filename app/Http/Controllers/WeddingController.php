@@ -238,9 +238,6 @@ class WeddingController extends Controller
                 /* get wedding quotation as html string */
                 $voucher = (string) \View::make('wedding._quotation', $viewData)->render();
 
-                echo $voucher;
-                exit();
-
                 /* mail object */
                 $mail = app()['mailer'];
 
