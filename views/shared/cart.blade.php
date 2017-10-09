@@ -51,7 +51,7 @@
           @elseif($item->CertificateNumber != null)
 
             <div class="col-md-3">
-              <img style="max-width: 80px;" src="{{ URL::to('/images') . $item->Category->Photo->Path }}" class="img-responsive" /> 
+              <img style="max-width: 80px;" src="{{ URL::to('/images/categories') . '/' . $item->Category->Photo->Path }}" class="img-responsive" /> 
             </div>
             <div class="col-md-8">
               <h5>

@@ -66,7 +66,14 @@ class ServiceController extends Controller
 
     /* get all services in category by hotel */
     public function servicesByCategoryAndHotel(Request $request, $category_id){
+        
         $session = $request->session();
+
+        // echo $session->getId() ." <br/>";
+        // echo "<pre>";
+        // print_r($session->all());
+        // echo "</pre><br/>";
+        // exit();
 
         $hotel_id = $session->get('hotel_id');
         $region_id = $session->get('region_id');

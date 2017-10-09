@@ -145,9 +145,9 @@
 							<div class="clearfix visible-lg"></div>
 							<br class="visible-lg" />
 							<div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-								@if (session('reservation_type') == 1 || session('reservation_type') == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == true)
+								@if (session('reservation_type') == 1 || session('reservation_type') == 3 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == 1)
 								<a href="{{ URL::to('/shopping/cart') }}" class="btn btn-default block-button">{{ trans('shared.go_to_cart') }}</a>
-								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == false)
+								@elseif (session('reservation_type') == 1 || session('current_certificate') >= session('certificate_quantity') && session('can_go_to_cart') == 0)
 								<a href="#fakelink" class="disabled btn btn-default block-button">{{ trans('shared.complete_to_go_cart') }}</a>
 								@else
 								<a href="{{ URL::to('/') }}/hotel/{{ $hotel->Id }}/categories/{{ session('current_certificate') + 1 }}" class="btn btn-default block-button">{{ trans('shared.go_to_next_certificate') }}</a>
@@ -167,4 +167,6 @@
 		</div>
 	</div>
 	<br/>
+
 @endsection
+

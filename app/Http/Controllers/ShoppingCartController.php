@@ -267,7 +267,12 @@ class ShoppingCartController extends Controller
         $reservationType = $session->get('reservation_type');
         $isWedding = (isset($_POST['weddings'])) ? true : false;
 
+        $connection = $this->entityManager->getConnection();
+
         try {
+            
+            $connection->beginTransaction();
+
             /* get current user cart */
             $cart = $this->getCart($sessionId);
 
@@ -338,7 +343,6 @@ class ShoppingCartController extends Controller
 
                     if(!empty($serviceQuantity) && $serviceQuantity > 0){
                         $service = $this->entityManager->getRepository("App\Models\Test\ServiceModel")->findOneBy(['Id' => $serviceId]);
-
                         $cartItem = null;
 
                         for($i = 1; $i <= $serviceQuantity; $i++){
@@ -356,15 +360,16 @@ class ShoppingCartController extends Controller
 
                             /* check if the reservation type is equal to certificate */
                             if($reservationType == 2){
-                                $cartItem->CertificateNumber = $session->get("current_certificate");
-                                $session->put('reservation_type', 2);
+                                $cartItem->CertificateNumber = intval($session->get('current_certificate'));
                             }
 
                             $cart->Items[] = $cartItem;
                         }
 
-                        if($session->get('can_go_to_cart') == false && $session->get('current_certificate') >= $session->get('certificate_quantity')){
-                            $session->put('can_go_to_cart', true);
+                        if($reservationType == 2){
+                            if($session->get('can_go_to_cart') == 0 && $session->get('current_certificate') >= $session->get('certificate_quantity')){
+                                $session->put('can_go_to_cart', 1);
+                            }
                         }
 
                         $statusMessage = trans('messages.items_added');
@@ -377,8 +382,14 @@ class ShoppingCartController extends Controller
             // print_r($session->all());
             // echo "</pre><br/>";
 
+            if($isWedding){
+                return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
+            }
+
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
+
+            $connection->commit();
 
             // echo "session 2 <br/>";
             // echo "<pre>";
@@ -386,13 +397,10 @@ class ShoppingCartController extends Controller
             // echo "<pre>";
             // exit();
 
-            if($isWedding){
-                return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
-            }
-
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
         }
         catch (\Exception $e){
+            $connection->rollBack();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }

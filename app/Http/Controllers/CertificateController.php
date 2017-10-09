@@ -53,7 +53,7 @@ class CertificateController extends Controller
         $session->put('certificate_type', $certificateType);
         $session->put('certificate_quantity', $_POST['quantity']);
         $session->put('current_certificate', 1);
-        $session->put('can_go_to_cart', false);
+        $session->put('can_go_to_cart', 0);
 
         try {
             if($certificateType == 1){

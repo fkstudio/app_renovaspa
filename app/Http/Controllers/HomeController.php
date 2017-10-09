@@ -39,7 +39,7 @@ class HomeController extends Controller
     public function services(Request $request){
         $session = $request->session();
 
-        $request->session()->regenerate();
+        $session->regenerate();
 
         $session->put('reservation_type', 1);
         
@@ -52,7 +52,7 @@ class HomeController extends Controller
     public function certificates(Request $request){
         $session = $request->session();
 
-        $request->session()->regenerate();
+        $session->regenerate();
 
         $session->put('reservation_type', 2);
 
@@ -65,7 +65,7 @@ class HomeController extends Controller
     public function weddings(Request $request){
         $session = $request->session();
 
-        $request->session()->regenerate();
+        $session->regenerate();
 
         $session->put('reservation_type', 3);
 
