@@ -242,7 +242,7 @@ color: inherit">Services's information</h3>
 
           $weddingPackage = $packageRelation->WeddingPackage;
 
-          if($packages != null){
+          if(count($data) > 0 && $packages != null){
             $data = $packages[$packageRelation->WeddingPackage->Id];
           }
 
