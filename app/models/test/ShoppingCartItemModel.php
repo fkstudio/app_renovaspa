@@ -79,8 +79,8 @@
 		public $IsDeleted;
 
 
-		public function __cosntruct(){
-			$this->Cabin = new App\Models\Test\Cabin();
+		public function __construct(){
+			//$this->Cabin = new \App\Models\Test\CabinModel();
 		}
 
 		public function __clone(){

@@ -31,8 +31,9 @@ class ShoppingCartController extends Controller
             $cart->Created = new \DateTime();
             $cart->IsDeleted = false;
         }
-        else
+        else{
             $cart = $cartExists;
+        }
 
         return $cart;
     }
@@ -269,6 +270,13 @@ class ShoppingCartController extends Controller
 
         $connection = $this->entityManager->getConnection();
 
+        // echo "session 2 <br/>";
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo "<pre>";
+        // exit();
+
+
         try {
             
             $connection->beginTransaction();
@@ -297,6 +305,7 @@ class ShoppingCartController extends Controller
             }
 
             if($isWedding){
+
                 foreach($_POST['pacakge_relation_id'] as $key => $id){
                     $pacakgeRelation_id = $id; 
                     $serviceQuantity = $_POST['quantity'][$key];
@@ -310,25 +319,22 @@ class ShoppingCartController extends Controller
                             return redirect()->route("wedding.services", $data)->with('failure', 'messages.select_some_package');     
 
                         for($i = 1; $i <= $serviceQuantity; $i++){
-                            
-                            // iterate by package items
-                            //foreach($packageRelation->WeddingPackage->WeddingPackageServices as $service){
-                                // create cart item
-                                $cartItem = new \App\Models\Test\ShoppingCartItemModel();
-                                $cartItem->Cart = $cart;
-                                $cartItem->PackageCategoryRelation = $packageRelation;
-                                $cartItem->Service = null;
-                                $cartItem->Quantity = 1;
-                                $cartItem->Price = $packageRelation->Price;
-                                $cartItem->PreferedDate = null;
-                                $cartItem->PreferedTime = null;
-                                $cartItem->Type = $reservationType;
-                                $cartItem->Created = new \DateTime();
-                                $cartItem->IsDeleted = false;    
 
-                                // save cart item
-                                $cart->Items[] = $cartItem;
-                            //}
+                            // create cart item
+                            $cartItem = new \App\Models\Test\ShoppingCartItemModel();
+                            $cartItem->Cart = $cart;
+                            $cartItem->PackageCategoryRelation = $packageRelation;
+                            $cartItem->Service = null;
+                            $cartItem->Quantity = 1;
+                            $cartItem->Price = $packageRelation->Price;
+                            $cartItem->PreferedDate = null;
+                            $cartItem->PreferedTime = null;
+                            $cartItem->Type = $reservationType;
+                            $cartItem->Created = new \DateTime();
+                            $cartItem->IsDeleted = false;    
+
+                            // save cart item
+                            $cart->Items[] = $cartItem;
                         }
                     }  
                 }
@@ -377,30 +383,22 @@ class ShoppingCartController extends Controller
                 }    
             }
 
-            // echo "session 1 <br/>";
-            // echo "<pre>";
-            // print_r($session->all());
-            // echo "</pre><br/>";
-
-            if($isWedding){
-                return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
-            }
-
+            
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
 
             $connection->commit();
 
-            // echo "session 2 <br/>";
-            // echo "<pre>";
-            // print_r($session->all());
-            // echo "<pre>";
-            // exit();
-
+            if($isWedding){
+                return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
+            }
+            
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
         }
         catch (\Exception $e){
             $connection->rollBack();
+            print_r($e);
+            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
