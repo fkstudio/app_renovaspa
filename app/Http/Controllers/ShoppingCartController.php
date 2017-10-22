@@ -392,13 +392,11 @@ class ShoppingCartController extends Controller
             if($isWedding){
                 return redirect()->route("wedding.services", $data)->with('success', trans('messages.package_added'));                
             }
-            
+
             return redirect()->route("service.listByCategory", $data)->with('success', $statusMessage);    
         }
         catch (\Exception $e){
             $connection->rollBack();
-            print_r($e);
-            exit();
             return redirect()->route('home.home')->with('failure', trans("messages.session_expired"));
         }
     }
