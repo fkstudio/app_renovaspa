@@ -156,7 +156,7 @@ class HomeController extends Controller
             $f = $request->resume;
 
 
-            $ext = $f->getClientOriginalExtension());
+            $ext = $f->getClientOriginalExtension();
 
             if($ext != 'txt' && $ext != 'doc')
                 return redirect()->route('home.contact')->with('failure', 'You must upload a valid file.');

@@ -12,6 +12,8 @@ class ReCaptcha
 {
     public function handle(Request $request, Closure $next)
     {   
+        return $next($request);
+        
         try {
             // captcha private key
             $privatekey = \Config::get('recaptcha.private_key');
