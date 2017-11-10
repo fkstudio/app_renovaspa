@@ -67,7 +67,8 @@ class HotelController extends Controller
         $model = [];
 
         foreach($hotelRegions as $hotelRegion){
-            array_push($model, [ "id" => $hotelRegion->Hotel->Id, "name" => $hotelRegion->Hotel->Name ]);
+            if($hotelRegion->Hotel->IsDeleted == false && $hotelRegion->Hotel->Enabled == true)
+                array_push($model, [ "id" => $hotelRegion->Hotel->Id, "name" => $hotelRegion->Hotel->Name ]);
         }
 
         return json_encode($model);

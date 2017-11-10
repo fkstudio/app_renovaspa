@@ -64,7 +64,9 @@
                       <a href="#" class="dropdown-action dropdown-no-action">{{ $region->Name }}</a>
                       <ul class="dropdown-menu dropdown-inverse sub-sub-menu">
                         @foreach($region->HotelRegions as $hotelRegion)
+                          @if($hotelRegion->Hotel->IsDeleted == false && $hotelRegion->Hotel->Enabled == true)
                           <li><a href="{{ URL::to('/') }}/hotel/details/{{ $hotelRegion->Hotel->Id }}" tabindex="-1" class="dropdown-submenu-item">{{ strtoupper($hotelRegion->Hotel->Name) }}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     </li>
