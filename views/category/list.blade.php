@@ -29,7 +29,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 				<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/hotel/{{ session('hotel_id') }}/categories?special">
 				    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-xl-3 parent">
 				    	<div style="background: url({{ URL::to('/') }}/images/specials.jpg);background-size: cover;" class="col-md-12 block-content" >
-							<span>SPECIALS</span>
+							<span>SPECIALS OFFERS</span>
 						</div>
 				    </div>
 				</a>

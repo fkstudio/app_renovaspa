@@ -122,7 +122,7 @@ class CategoryController extends Controller
             $specialUrl = '#fakelink';
 
             if($special){
-                $treatments = "SPECIAL TREATMENTS";
+                $treatments = "SPECIAL OFFERS";
                 $specialUrl = "/hotel/".$hotelRegion->Hotel->Id."/categories?special";
             }
 
