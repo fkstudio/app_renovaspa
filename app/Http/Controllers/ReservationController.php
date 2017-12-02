@@ -41,12 +41,12 @@ class ReservationController extends Controller
 
         if(empty($_POST['reservation_type']) || empty($_POST['country_id']) || empty($_POST['region_id']) || empty($_POST['hotel_id'])){
             $session->flash('failure', trans('messages.must_select_all_fields'));
-            return \Redirect::to(\URL::previous());
+            return \Redirect::to(\URL::previous().'#form-content');
         }
 
         if($_POST['reservation_type'] == 3 && empty($_POST['wedding_package_id'])){
             $session->flash('failure', trans('messages.must_select_all_fields'));
-            return \Redirect::to(\URL::previous());
+            return \Redirect::to(\URL::previous().'#form-content');
         }
 
         $session->put('country_id', $_POST["country_id"]);
@@ -58,7 +58,7 @@ class ReservationController extends Controller
 
         if(count($dates) < 2){
             $session->flash('failure', trans('messages.must_select_all_dates'));
-            return \Redirect::to(\URL::previous());
+            return \Redirect::to(\URL::previous().'#form-content');
         }
 
         $session->put('arrival', $dates[0]);

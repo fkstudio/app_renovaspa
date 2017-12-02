@@ -104,23 +104,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row visible-lg">
-                <!-- Bottom switcher of slider -->
-                <ul class="hide-bullets">
-                    @foreach($model->Photos as $key => $photo)
-                            @php
-
-                            $active = ($key == 0 ? 'active' : '');
-
-                            @endphp
-                            <li class="col-lg-4 col-sm-3 col-xs-4">
-                                <a style="background: url({{ config("app.admin_url") .'/images/hotels/' . $photo->Path }});background-size: cover;background-position: center center;" class="thumbnail thumbnail-carousel" id="carousel-selector-{{ $key }}">
-                                    <!-- <img src=""> -->
-                                </a>
-                            </li>
-                    @endforeach
-                </ul>   
-            </div>
         </div>
         <div class="clearfix hidden-lg hidden-md"></div>
         <br class="hidden-lg hidden-md" />

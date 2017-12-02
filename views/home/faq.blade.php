@@ -17,7 +17,7 @@
             <p>Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.</p>
             <h4>Follow these simple steps:</h4>
             <br/>
-            <h4>STEP 1 - Go to the link <a href="{{ URL::to("/") }}/weddings">THE DAY</a> <a href="mailto:info@renovaspa.com">online wedding concierge</a>.</h4>
+            <h4>STEP 1 - Go to the link <a href="{{ URL::to("/") }}/weddings">THE DAY</a>
             <p>•  Select your hotel.</p>
             <p>•  Enter the dates of your stay.</p>
             <p>Note: We do not take reservations with more than 6 month prior to your wedding date.</p>
