@@ -32,7 +32,22 @@ class CategoryModel {
 	/** @Column(name="is_deleted", type="boolean") */
 	public $IsDeleted;
 
+	/** 
+	 * @OneToMany(targetEntity="CategoryCountryModel", cascade="persist",  mappedBy="Category")
+	*/
+	public $CategoryCountries;
+
+	public function GetCategoryCountry($country_id){
+		foreach($this->CategoryCountries as $categoryCountry){
+			if($categoryCountry->Country->Id == $country_id)
+				return $categoryCountry;
+		}
+
+		return null;
+	}
+
 	public function __construct(){
+		$this->CategoryCountries = [];
 		$this->Photo = new App\Models\Test\PhotoModel();
 	}
 

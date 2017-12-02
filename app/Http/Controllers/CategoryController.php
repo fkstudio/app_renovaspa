@@ -66,6 +66,7 @@ class CategoryController extends Controller
 
     /* get a list of available categories in current hotel */
     public function categoriesByHotel(Request $request, $hotel_id, $next = 0){
+        $special = false;
         $session = $request->session();
         $session->put("hotel_id", $hotel_id);
         $reservationType = $session->get('reservation_type');
@@ -83,6 +84,9 @@ class CategoryController extends Controller
                 }
             }
 
+            if(isset($_GET['special']))
+                $special = true;
+
             $hotel = $this->entityManager->getRepository("App\Models\Test\HotelModel")->findOneBy(["Id" => $hotel_id]);
             $hotelRegion = $this->entityManager->getRepository("App\Models\Test\HotelRegionModel")
                                                ->findOneBy(["Hotel" => $hotel_id]);
@@ -91,25 +95,48 @@ class CategoryController extends Controller
                 ->setParameter('hotel', $session->get('hotel_id'))
                 ->getResult(); 
 
-            $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+            $categoryCountries = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = :special
                 AND
                 ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel AND sch.IsActive = true AND sch.IsDeleted = false) > 0  ORDER BY cc.Order ASC')
                              ->setParameter('deleted', false)
                              ->setParameter('active', true)
+                             ->setParameter('special', $special)
                              ->setParameter('country', $hotelRegion->Region->Country->Id)
                              ->setParameter('hotel', $hotelRegion->Hotel->Id)
                              ->getResult();
+
+            if($special == false){
+                $specialCategories = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = true
+                    AND
+                    ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel AND sch.IsActive = true AND sch.IsDeleted = false) > 0  ORDER BY cc.Order ASC')
+                                 ->setParameter('deleted', false)
+                                 ->setParameter('active', true)
+                                 ->setParameter('country', $hotelRegion->Region->Country->Id)
+                                 ->setParameter('hotel', $hotelRegion->Hotel->Id)
+                                 ->getResult();
+            } else {
+                $specialCategories = [];
+            }
+
+            $treatments = 'TREATMENTS';
+            $specialUrl = '#fakelink';
+
+            if($special){
+                $treatments = "SPECIAL TREATMENTS";
+                $specialUrl = "/hotel/".$hotelRegion->Hotel->Id."/categories?special";
+            }
 
             $breadcrumps = [
                 $hotelRegion->Region->Country->Name => '/country/'. $hotelRegion->Region->Country->Id . '/regions',
                 $hotelRegion->Region->Name => '/region/'. $hotelRegion->Region->Id . '/hotels',
                 $hotelRegion->Hotel->Name => '/hotel/' . $hotelRegion->Hotel->Id . '/categories',
-                'TREATMENTS' => '#fakelink'
+                $treatments => $specialUrl
             ];
 
 
             $viewData = [ 
                 "model" => $categoryCountries, 
+                "specialCategories" => $specialCategories,
                 "hotel" => $hotel, 
                 "region" => $hotelRegion->Region, 
                 'breadcrumps' => $breadcrumps,
@@ -126,6 +153,7 @@ class CategoryController extends Controller
             return view("category.list", $viewData);
         }
         catch (\Exception $e){
+            print_r($e);exit();
             return redirect()->route('home.home')->with('failure', 'Your session has expired.');
         }
     }

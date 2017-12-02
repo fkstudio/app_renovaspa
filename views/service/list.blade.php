@@ -6,11 +6,12 @@
 
 @php
 
-  $categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+  $categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = :special
                 AND
                 ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
                              ->setParameter('deleted', false)
                              ->setParameter('active', true)
+                             ->setParameter('special', $categoryCountry->IsSpecial)
                              ->setParameter('country', session('country_id'))
                              ->setParameter('hotel', session('hotel_id'))
                              ->getResult();

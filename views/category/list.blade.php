@@ -6,7 +6,7 @@
 
 @php
 
-$categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active
+$categories = $dbcontext->getEntityManager()->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = false
                 AND
                 ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel) > 0  ORDER BY cc.Order ASC')
                              ->setParameter('deleted', false)
@@ -25,6 +25,15 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 		<hr>
 		@include('shared._messages')
 		<div class="row">
+			@if(count($specialCategories) > 0)
+				<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/hotel/{{ session('hotel_id') }}/categories?special">
+				    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-xl-3 parent">
+				    	<div style="background: url({{ URL::to('/') }}/images/specials.jpg);background-size: cover;" class="col-md-12 block-content" >
+							<span>SPECIALS</span>
+						</div>
+				    </div>
+				</a>
+			@endif
 			@if(session('reservation_type') == 3)
 				@if(count($weddings) > 0)
 					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/wedding/services">

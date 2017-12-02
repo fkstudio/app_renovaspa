@@ -49,6 +49,8 @@ class ServiceModel {
 				return $serviceCategoryHotel;
 			}
 		}
+
+		return null;
 	}
 
 

@@ -56,6 +56,7 @@
 							# counter to iterate only over services
 							$counter = 0;
 							$packages = session('packages');
+							$specials = [];
 						@endphp
 						@foreach($model->Items as $key => $item)
 							@if($item->Service != null)
@@ -87,17 +88,26 @@
 										@endif
 									</td>
 									<td class="padding-td">
+										@php
+											$cc = $item->Category->GetCategoryCountry(session('country_id'));
+
+											if($cc != null && $cc->IsSpecial){
+												$specials[] = ['id' => 'prefered_date_'.$key, 'start' => $cc->SpecialBeginDate->format('m/d/Y'), 'end' => $cc->SpecialEndDate->format('m/d/Y')];
+											}
+
+										@endphp
 										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" id="prefered_date_{{ $key }}" data-index="{{ $counter }}" class="datepicker exaction form-control" />
 									</td>
 									<td class="padding-td">
 										@php
-											$info = $item->Service->getProfile(session('hotel_id'), session('category_id'))->ServiceInformation;
+											$serviceCategoryHotel = $item->Service->getProfile(session('hotel_id'), session('category_id'));
 
 											$beginHour = 9;
 											$endingHour = 6;
 											
-											if($info != null)
+											if(isset($serviceCategoryHotel->ServiceInformation))
 											{
+												$info = $serviceCategoryHotel->ServiceInformation;
 												$beginHour = ( $info->OpeningTime != null ? $info->OpeningTime->format('H') : 9 );
 												$endingHour = ( $info->EndingTime != null ? $info->EndingTime->format('H') : 6 );
 											}
@@ -119,7 +129,7 @@
 													}
 
 												@endphp
-											<option value="{{ $h }}:00{{ $f }}">{{ $h }}:00{{ $f }}</option>
+													<option value="{{ $h }}:00{{ $f }}">{{ $h }}:00{{ $f }}</option>
 												@php
 													$h++;
 												@endphp
@@ -201,6 +211,15 @@
 											@endif
 										</td>
 										<td class="padding-td">
+											@php
+												$cc = $item->Category->GetCategoryCountry(session('country_id'));
+
+												if($cc != null && $cc->IsSpecial){
+													$specials[] = ['id' => 'prefered_date_'.$key, 'start' => $cc->SpecialBeginDate->format('m/d/Y'), 'end' => $cc->SpecialEndDate->format('m/d/Y')];
+												}
+
+											@endphp
+
 											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" id="prefered_date_{{ $key }}"  placeholder="Open date" data-index="{{ $counter }}" class="datepicker exaction form-control" />
 										</td>
 										<td class="padding-td">
@@ -339,20 +358,29 @@
 	        maxDate: moment('{{ session("departure") }}'),
 	        singleDatePicker: true,
 	        showDropdowns: true,
-	        autoUpdateInput: false,
+	        autoUpdateInput: false
 	        
 		});
 
+	
+		@foreach($specials as $special)
+			$('#{{ $special['id'] }}').daterangepicker({
+		    	locale: {
+			      format: 'MM/D/YYYY'
+			    },
+		        minDate: moment('{{ $special['start'] }}'),
+		        maxDate: moment('{{ $special['end'] }}'),
+		        singleDatePicker: true,
+		        showDropdowns: true,
+		        autoUpdateInput: false
+		        
+			});
+		@endforeach
+
+		
+
 		$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
 			$(this).val(picker.startDate.format('MM/DD/YYYY'));
-		});
-
-		$('.timepicker').timepicker({
-			interval: 60,
-		    minTime: '08',
-		    maxTime: '06pm',
-		    defaultTime: '12',
-		    startTime: '10:00'
 		});
 
 		$("#dateInfoModal").modal("show");
@@ -365,7 +393,16 @@
 			setVal(this);
 		})
 
+		$('.timepicker').timepicker({
+			interval: 60,
+		    minTime: '08',
+		    maxTime: '06pm',
+		    defaultTime: '12',
+		    startTime: '10:00'
+		});
+
 		$(".exaction-select").css('visibility', 'hidden').attr("data-hidden", true);
+
 	});
 
 	function setVal(obj){

@@ -113,11 +113,19 @@ class ServiceController extends Controller
                         $filters, 
                         ['Order' => 'ASC']);
 
+            $treatments = 'TREATMENTS';
+            $specialUrl = '#fakelink';
+
+            if($categoryCountry->IsSpecial){
+                $treatments = "SPECIAL TREATMENTS";
+                $specialUrl = "/hotel/".$hotel->Id."/categories?special";
+            }
 
             $breadcrumps = [
                 $region->Country->Name => '/country/'. $region->Country->Id . '/regions',
                 $region->Name => '/region/'. $region->Id . '/hotels',
                 $hotel->Name => '/hotel/' . $hotel->Id . '/categories',
+                $treatments => $specialUrl,
                 $categoryCountry->Category->Name => '/category/'. $categoryCountry->Category->Id . '/services',
                 'SERVICES' => '#fakelink'
             ];
