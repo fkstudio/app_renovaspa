@@ -8,6 +8,7 @@
 	<hr>
 	<div class="row">
 		@foreach($model as $hotelRegion)
+			@if($hotelRegion->Hotel->IsDeleted != true)
 		    @php
 		    	$url = "";
 			    
@@ -31,6 +32,7 @@
 					</div>
 			    </div>
 			</a>
+			@endif
 	    @endforeach
 	</div>
 </div>
