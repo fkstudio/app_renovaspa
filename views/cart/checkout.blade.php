@@ -212,11 +212,11 @@
 										</td>
 										<td class="padding-td">
 											@php
-												$cc = $item->Category->GetCategoryCountry(session('country_id'));
+												/*$cc = $item->Category->GetCategoryCountry(session('country_id'));
 
 												if($cc != null && $cc->IsSpecial){
 													$specials[] = ['id' => 'prefered_date_'.$key, 'start' => $cc->SpecialBeginDate->format('m/d/Y'), 'end' => $cc->SpecialEndDate->format('m/d/Y')];
-												}
+												}*/
 
 											@endphp
 

@@ -70,6 +70,7 @@ class CategoryController extends Controller
         $session = $request->session();
         $session->put("hotel_id", $hotel_id);
         $reservationType = $session->get('reservation_type');
+        $specialCategories = [];
 
         $cart = $this->getCart($session->getId());
 
@@ -106,16 +107,19 @@ class CategoryController extends Controller
                              ->getResult();
 
             if($special == false){
-                $specialCategories = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = true
+                $specials = $this->entityManager->createQuery('SELECT cc FROM App\Models\Test\CategoryCountryModel cc WHERE cc.Country = :country AND cc.IsDeleted = :deleted AND cc.IsActive = :active AND cc.IsSpecial = true
                     AND
-                    ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel AND sch.IsActive = true AND sch.IsDeleted = false) > 0  ORDER BY cc.Order ASC')
+                    ( SELECT count(sch) FROM App\Models\Test\ServiceCategoryHotelModel sch where sch.Category = cc.Category AND sch.Hotel = :hotel AND sch.IsActive = true AND sch.IsDeleted = false) > 0 ORDER BY cc.Order ASC')
                                  ->setParameter('deleted', false)
                                  ->setParameter('active', true)
                                  ->setParameter('country', $hotelRegion->Region->Country->Id)
                                  ->setParameter('hotel', $hotelRegion->Hotel->Id)
                                  ->getResult();
-            } else {
-                $specialCategories = [];
+
+                foreach($specials as $special){
+                    if($special->Category->IsDeleted != true && $special->Category->IsActive == true)
+                    $specialCategories[] = $special;
+                }
             }
 
             $treatments = 'TREATMENTS';
