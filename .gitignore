@@ -1,3 +1,4 @@
+vendor/*
 config/mail.php
 config/email.php
 config/paypal.php
