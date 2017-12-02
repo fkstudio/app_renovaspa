@@ -16,7 +16,7 @@
 		    	<span style="position: absolute;
 							 height: 100%;
 							 width: 100%;
-							 background-image: url({{ URL::to('/images') }}/regions/{{ $name  }}.jpg);
+							 background-image: url({{ config("app.admin_url") .'/images/regions/'. $region->Photo->Path }});
 							 background-position: center center;
 							 background-size: cover;"  class="img-responsive"></span>
 		    	<div  class="col-md-12 block-content" >
