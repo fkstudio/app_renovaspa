@@ -117,7 +117,7 @@ class ServiceController extends Controller
             $specialUrl = '#fakelink';
 
             if($categoryCountry->IsSpecial){
-                $treatments = "SPECIAL TREATMENTS";
+                $treatments = "SPECIAL OFFERS";
                 $specialUrl = "/hotel/".$hotel->Id."/categories?special";
             }
 
