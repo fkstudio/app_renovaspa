@@ -75,7 +75,7 @@ color: inherit">Couple information</h3>
             <label style="display: inline-block;
 max-width: 100%;
 margin-bottom: 5px;
-font-weight: 700">Bride</label>
+font-weight: 700">Couple member 1</label>
             <br>
             {{ $model->BrideName }}
           </div>
@@ -85,7 +85,7 @@ font-weight: 700">Bride</label>
             <label style="display: inline-block;
 max-width: 100%;
 margin-bottom: 5px;
-font-weight: 700">Groom</label>
+font-weight: 700">Couple member 2</label>
             <br>
             {{ $model->GroomName }}
           </div>
@@ -205,7 +205,7 @@ color: inherit">Services's information</h3>
           $total += $item->Service->getPrice($model->Hotel->Id);
         @endphp
         <div>
-              <h5>1 {{ $item->Service->Name }} - {{ trans("shared.cabin_type") }} ( {{ $item->Service->Cabin->Name }} )</h5>
+              <h5>1 {{ $item->Service->Name }}</h5>
               <span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
           @if($item->Service->hasDiscount($hotel_id))
           @php

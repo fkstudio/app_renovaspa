@@ -36,9 +36,9 @@
         <div class="clearfix"></div>
         <div class="col-lg-5 col-sm-12 col-xs-12">
             <div class="col-lg-12 text-center">
-                <h4>THANK YOUR FOR YOU INTEREST</h4>
-                <SMALL>IN Renovaspa</SMALL>
-                <p>At Renova Spa, we aim at delivering a positive experience and relationships with our customers. Please contact us with any questions or comments. To allow us answer you quickly and effectively, please select from the options listed below the most appropriate subject to entitle your comment. Please fill in the form below.</p>
+            <SMALL>Please accept our terms & conditions to submit your message!</SMALL><br><br>
+                <h4>THANK YOU FOR YOUR INTEREST IN RENOVA SPA!</h4>
+                <p>Our Team at RenovaSPA aims to deliver a positive experience and friendly atmosphere to all of their guests. Therefore, please do not hesitate to contact us for any questions, wishes and comments, at any time. In order to reply to you effectively and in a timely manner, please complete the form below, and agree with our terms & conditions.</p>
             </div>
             <div class="clearfix"></div>
             <br/>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <input type="" name="email" class="form-control input-border" placeholder="Your email">
+                        <input type="email" name="email" class="form-control input-border" placeholder="Your Email-Address">
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -60,23 +60,20 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <textarea rows="6" name="message" class="form-control input-border" placeholder="Write your message"></textarea>
+                        <textarea rows="6" name="message" class="form-control input-border" placeholder="Your message"></textarea>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <input type="checkbox" name="terms" /> I have read and accept the Privacy Policy
+                        <input type="checkbox" name="terms" /> I have read and accepted the Privacy Policy.
                     </div>
-                </div>
-                <div class="col-lg-12" id="RecaptchaField2">
-                    {!! $recaptcha->recaptcha_get_html('6LfcMxoUAAAAAI52W-Rdb5uTD9gBp_TE81bPEKpV') !!}
                 </div>
                 <div class="clearfix"></div>
                 <br/>
                 <div class="col-lg-12">
                     <div class="form-group">
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-primary btn-block" placeholder="Your hotel">SEND</button>
+                        <button type="submit" class="btn btn-primary btn-block" placeholder="Your hotel">SUBMIT</button>
                     </div>
                 </div>
             </form>
@@ -112,7 +109,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <input type="" name="email" class="form-control input-border" placeholder="Email">
+                        <input type="Email" name="email" class="form-control input-border" placeholder="Email">
                     </div>
                 </div>
                 <div class="clearfix"></div>

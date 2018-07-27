@@ -2,6 +2,10 @@
 
 @section('title', $model->Name)
 
+@section('head')
+<link rel="stylesheet" type="text/css" href="{{ URL::to('/css') }}/hotel-datepicker.css" />
+@endsection
+
 @section('content')
 <!-- services and prices modal -->
 <div id="servicesAndPricesModal" class="modal fade" role="dialog">
@@ -173,7 +177,7 @@
                     *{{ trans('shared.arrival') }} - *{{ trans('shared.departure') }} 
                 </label>
                 <div class="clearfix"></div>
-                <input type="text" id="arrival" name='arrival_departure' class="datepicker form-control custom-select" />
+                <input type="text" id="arrival" name='arrival_departure' class="form-control custom-select" />
             </div>  
 
             <div class="clearfix hidden-lg"></div>
@@ -209,8 +213,8 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
 <!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<script src="{{ URL::to('/js') }}/fecha.js"></script>
+<script src="{{ URL::to('/js') }}/hotel-datepicker.min.js"></script>
 <script>
 $(document).ready(function($) {
 
@@ -220,17 +224,20 @@ $(document).ready(function($) {
     });
 
     $(function() {
-        var date = $('.datepicker').daterangepicker({
-            autoUpdateInput: false,
-            locale: {
-              format: 'MM/DD/YYYY'
-            },
-            minDate: moment(),
-        });
+        // var date = $('.datepicker').daterangepicker({
+        //     autoUpdateInput: false,
+        //     locale: {
+        //       format: 'MM/DD/YYYY'
+        //     },
+        //     minDate: moment(),
+        // });
 
-        date.on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        });
+        // date.on('apply.daterangepicker', function(ev, picker) {
+        //     $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        // });
+
+        var options = {autoClose: true, showTopbar: false, format: "MM/DD/YYYY"}
+        var hdpkr = new HotelDatepicker(document.getElementById('arrival'), options);
     });
  
     $('#hotel-carousel').carousel({

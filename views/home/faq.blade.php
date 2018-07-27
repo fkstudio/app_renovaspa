@@ -191,22 +191,103 @@ Note: no reservation is confirmed without a voucher.</p>
             As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
 
             Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
-            </p>
+            </p><br/>
+            <h4>•  If I purchase a wedding package, do I have to take all the services included in the package on the wedding day, or can I split these up?</h4>
+            <p>You are welcome to split the treatments up in different days.</p>
+
+            <h4>•  Can I substitute any treatments?</h4>
+            <p>The packages have fixed treatments that cannot be replaced. If no package exactly fits your needs, you are welcome to choose from our spa menu</p>
+
+            <h4>•  Can I upgrade any treatments?</h4>
+            <p>Only nail treatments can be upgraded by paying a difference.</p>
+
+            <h4>•  Can the rest of the ladies purchase wedding packages as well, or are these just for the bride?</h4>
+            <p>All the ladies in your party are welcome to purchase wedding packages, not only the bride</p>
+
+            <h4>•  Are Renova Spa Wedding Packages available at all locations?</h4>
+            <p>Not all locations offer packages. These will be displayed on your menu, if available.e</p>
+
+            <h4>•  Hairstyles are listed with different prices. What type of hairstyle is included in the Renova Spa Wedding Packages?</h4>
+            <p>Packages have a discounted fixed price and the included hairstyle covers any length or complexity</p>
+
         </div>
         <hr/>
-        <a data-toggle="collapse" data-target="#hotel_wedding_packages">
-            HOTEL WEDDING PACKAGES
+        <a data-toggle="collapse" data-target="#riu_wedding_packages">
+            RIU WEDDING PACKAGES
         </a>
-        <div id="hotel_wedding_packages" class="collapse">
+        <div id="riu_wedding_packages" class="collapse">
             <hr/>
             <br/>
-            <p> 
-            As we know that having everything planned for your wedding trip is very important, we have created a special form where you can book the spa and salon appointments you need, obtaining the special wedding discount your resort has offered as part of your wedding package.<br/><br/>
+            <p>RIU has included the following Spa services and benefits in their Wedding Packages. If you have purchased any of these, <br>our Renova Spa Online Concierge will assist you to schedule the included services and make additional 
+            reservations for you and your guests.</p><br/>
 
-            Our <a href="mailto:info@renovaspa.com">Online Wedding Concierge</a> will assist you to book your appointments in advance, based on space and staff availability at each spa, and coordinate the services for the wedding couple and all guests.
-            </p>
+            <h4>•Riu Free Wedding Package and Riu Classic Wedding Package.</h4>
+            <p>- 10% discount on any Renova Spa Services for the wedding couple.</p>
+            <p>- 10% discount on any Renova Spa services for attending guests (available only for online bookings).</p>
+            <p>- Surprise gift.</p>
+
+            <h4>Riu Royal Wedding Package</h4>
+            <p>- 10% discount on any Renova Spa Services for the wedding couple.</p>
+            <p>- 10% discount on any Renova Spa services for attending guests (available only for online bookings).</p>
+            <p>- 1 Romantic Couple's Massage for the wedding couple (2 Relaxing Massages for 25 Minutes).</p>
+
+            <h4>Riu Caprice Wedding Package</h4>
+            <p>- 10% discount on any Renova Spa Services for the wedding couple.</p>
+            <p>- 10% discount on any Renova Spa services for attending guests.(available only for online bookings).</p>
+            <p>- 1 Romantic Couple's Massage for the wedding couple (2 Aromatherapy Massages for 60 min).</p>
+            <p>- 1 Classic manicure for the bride or groom.</p>
+            <p>- 1 Classic pedicure for the bride or Groom.</p>
+            <p>- 1 Bride's Hairstyle.
+
+            <h4>Riu Indulgence Wedding Package</h4>
+            <p>* Available only at Riu Palace Hotels.</p>
+            <p>- 10% discount on any Renova Spa Services for the wedding couple.</p>
+            <p>- 10% discount on any Renova Spa services for attending guests. (available only for online bookings).</p>
+            <p>- 1 Romantic Couple's Massage for the wedding couple. (2 Aromatherapy Massages for 60 min).</p>
+            <p>- 2 Relaxing Massages for 25 minutes for the wedding couple.</p>
+            <p>- 2 Body Scrubs for 25 minutes for the wedding couple.</p>
+            <p>- 2 Classic Cleansing Facials for 50 minutes for the wedding couple.</p>
+            <p>- 2 Spa Pedicures for the wedding couple.</p>
+            <p>- 1 Bride's Hairstyle.</p><br>
+
+
+            <h4>IMPORTANT</h4>
+            <p>- These Riu Wedding Packages are offered by the hotel. These services will only be included if you purchased these packages.</p>
+            <p>- In order to redeem included services, you will need to present a Gift Certificate that will de be provided to you by your 
+            Riu Wedding Coordinator on site upon arrival.</p>
+
+
+            <h4>•  Can I substitute or upgrade any of the services included?</h4>
+            <p>The services cannot be substituted.</p>
+
+            <p>•  Can I give any of my included services to somebody else in the wedding party?</p>
+            The treatments can only be used by bride and groom.</p> 
+
+            <h4>•  Can I schedule the included services during my whole stay?</h4>
+            Yes, you can split the treatments up during your stay, before or after the wedding.
+
+            <h4>•  Does the Spa discount included on my hotel wedding package apply for the rest of the party?</h4>
+            <p>The 10% wedding discount applies for all wedding couple´s services booked online or on site. The rest 
+            of the guests will obtain the 10% discount only for online reservations.<p>
+
+            <h4>•  Is there any restriction to this wedding discount?</h4>
+            <p>Promotions cannot be added. The 10% wedding discount cannot be used combined with other discounts or promotions.<p>
+
+            <h4>•  Do I have to meet the hotel wedding coordinator prior to coming to the spa?</h4>
+            <p>In order to obtain the special discount and/or included treatments or surprised gifts, 
+            you will have to present a voucher provided by your RIU MICE representative at the spa. 
+            Therefore,  we can reserve the included treatments in advance, 
+            but these need to be scheduled for any day after your 
+            first meeting with the hotel wedding coordinator on site.</p>
+
+            <h4>•   What happens if I change the hotel wedding package?</h4>
+            <p>- If you change the package, we will just need to be informed.</p> 
+            <p>- In case you downgrade, then you will have to pay for the difference, if you decide to keep the appointments.</p>
+            <p>- In case you upgrade, then you can schedule the additional services or obtain a partial refund, if you already paid for some of these.</p>
+
         </div>
         <hr/>
+
         <a data-toggle="collapse" data-target="#reservation_payments">
             RESERVATIONS AND PAYMENT PROCEDURES
         </a>

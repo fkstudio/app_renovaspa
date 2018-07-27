@@ -379,6 +379,7 @@ class PaymentController extends Controller
                     $this->entityManager->persist($reservation);
 
                     $this->entityManager->flush();
+
                     return redirect()->route('payment.serviceVoucher');
                 } 
             }
@@ -706,7 +707,7 @@ class PaymentController extends Controller
                     'customer_service_name' => $reservation->Hotel->CustomerServiceName,
                     'check_in' => $reservation->Arrival->format('F j, Y'),
                     'check_out' => $reservation->Departure->format('F j, Y'),
-                    'discount' => number_format($reservation->getDiscount(), 2),
+                    'discount' => number_format($reservation->Subtotal - $reservation->Total, 2),
                     'subtotal' => $reservation->getSubTotal(),
                     'total' => $reservation->getTotal(),
                     'currency_symbol' => $reservation->Region->Country->Currency->Symbol,
@@ -799,6 +800,8 @@ class PaymentController extends Controller
             
             /* this mail is in hidden copy fro? */
             $message->bcc($reservation->Hotel->NotifyEmail, 'Renovaspa');
+
+            $message->bcc(\Config::get('email.info'), 'Renovaspa');
 
             /* the recipient of this mail is? */  
             $message->to($reservation->PaymentInformation->CustomerEmail, $reservation->PaymentInformation->FirstName . ' ' . $reservation->PaymentInformation->LastName);
@@ -975,7 +978,7 @@ class PaymentController extends Controller
             if(empty($confirmationNumber))
                 return "Por favor ingrese el numero de confirmación para reenviar el voucher.";
 
-            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['ConfirmationNumber' => $confirmationNumber]);
+            $reservation = $this->entityManager->getRepository('App\Models\Test\ReservationModel')->findOneBy(['CorrelativeNumber' => $confirmationNumber]);
         
             $data = $this->createVoucherData($reservation);
 
@@ -1001,7 +1004,7 @@ class PaymentController extends Controller
             }
         }
         catch (\Exception $e) {
-            return "Por favor ingrese el numero de confirmación para reenviar el voucher.";    
+            return "Ha ocurrido un error enviando el voucher. Asegurese de que es una reserva aprobada";    
         }
     }
 }

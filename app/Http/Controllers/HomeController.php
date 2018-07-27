@@ -123,7 +123,7 @@ class HomeController extends Controller
                     ", 'text/html');
                 $message->from(\Config::get('email.info'), 'Renovaspa');
                 $message->sender(\Config::get('email.info'), 'Renovaspa');
-                $message->to(\Config::get('email.contact'), 'Renovaspa Contact Form');
+                $message->to(\Config::get('email.info'), 'Renovaspa Contact Form');
                 $message->replyTo(\Config::get('email.info'), 'Renovaspa');
 
                 $message->subject("Renovaspa - Contact form");

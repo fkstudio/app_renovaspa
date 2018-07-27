@@ -33,8 +33,10 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 						</div>
 				    </div>
 				</a>
+				<div class="visible-xs clearfix"></div>
+				<br class="visible-xs" />
 			@endif
-			@if(session('reservation_type') == 3)
+			@if(!isset($_GET['special']) && session('reservation_type') == 3)
 				@if(count($weddings) > 0)
 					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/wedding/services">
 					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-xl-3 parent">
@@ -43,6 +45,8 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 							</div>
 					    </div>
 					</a>
+					<div class="visible-xs clearfix"></div>
+					<br class="visible-xs" />
 				@endif
 			@endif
 			@foreach($model as $categoryCountry)
@@ -54,13 +58,13 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					{
 						$currentDate = new DateTIme("now");
 
-						if($currentDate >= $categoryCountry->SpecialBeginDate && $currentDate <= $categoryCountry->SpecialEndDate)
+						/*if($currentDate >= $categoryCountry->SpecialBeginDate && $currentDate <= $categoryCountry->SpecialEndDate)
 						{
 
 						}
 						else {
 							continue;
-						}
+						}*/
 					}
 
 					@endphp
@@ -70,6 +74,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					    	<span style="position: absolute;
 										 height: 100%;
 										 width: 100%;
+										 background: rgb(239, 232, 232);
 										 background-image: url({{ config('app.admin_url') . '/images/categories/' . ($categoryCountry->Category->Photo != null ? $categoryCountry->Category->Photo->Path : "" ) }});
 										 background-position: center center;
 										 background-size: cover;"  class="img-responsive"></span>

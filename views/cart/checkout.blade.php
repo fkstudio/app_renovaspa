@@ -96,7 +96,7 @@
 											}
 
 										@endphp
-										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" id="prefered_date_{{ $key }}" data-index="{{ $counter }}" class="datepicker exaction form-control" />
+										<input type="text" name="prefered_date[]" value="{{ ( $item->PreferedDate != null ? $item->PreferedDate->format('m/d/Y') : '' ) }}" placeholder="Open date" readonly id="prefered_date_{{ $key }}" data-index="{{ $counter }}" class="datepicker exaction form-control" />
 									</td>
 									<td class="padding-td">
 										@php
@@ -118,22 +118,37 @@
 												$h = $beginHour;
 												$f = 'am';
 											@endphp
-											@for($i = $beginHour; $i <= $endingHour; $i ++)
-												@php
-													if($h > 11){
-														$f = 'pm';
-													}
 
-													if($h > 12){
-														$h = 1;
-													}
+											@if($beginHour > $endingHour)
+												<option value="08:00am">08:00am</option>
+												<option value="09:00am">09:00am</option>
+												<option value="10:00am">10:00am</option>
+												<option value="11:00am">11:00am</option>
+												<option value="12:00pm">12:00pm</option>
+												<option value="01:00pm">01:00pm</option>
+												<option value="02:00pm">02:00pm</option>
+												<option value="03:00pm">03:00pm</option>
+												<option value="04:00pm">04:00pm</option>
+												<option value="05:00pm">05:00pm</option>
+												<option value="06:00pm">06:00pm</option>
+											@else
+												@for($i = $beginHour; $i <= $endingHour; $i ++)
+													@php
+														if($h > 11){
+															$f = 'pm';
+														}
 
-												@endphp
-													<option value="{{ $h }}:00{{ $f }}">{{ $h }}:00{{ $f }}</option>
-												@php
-													$h++;
-												@endphp
-											@endfor
+														if($h > 12){
+															$h = 1;
+														}
+
+													@endphp
+														<option value="{{ $h }}:00{{ $f }}">{{ $h }}:00{{ $f }}</option>
+													@php
+														$h++;
+													@endphp
+												@endfor
+											@endif
 										</select>
 									</td>
 									
@@ -220,7 +235,7 @@
 
 											@endphp
 
-											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" id="prefered_date_{{ $key }}"  placeholder="Open date" data-index="{{ $counter }}" class="datepicker exaction form-control" />
+											<input type="text" name="prefered_date[]" value="{{ ( isset($data[$skey]['prefered_date']) ? $data[$skey]['prefered_date']->format('m/d/Y') : '' ) }}" readonly id="prefered_date_{{ $key }}"  placeholder="Open date" data-index="{{ $counter }}" class="datepicker exaction form-control" />
 										</td>
 										<td class="padding-td">
 											<select name="prefered_time[]" id="prefered_time_{{ $counter }}" placeholder="Open time" data-index="{{ $counter }}" class="form-control exaction exaction-select">

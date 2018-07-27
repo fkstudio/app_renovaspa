@@ -28,6 +28,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 			<br/>
 			<form action="{{ URL::to('/') }}/cart/add/services" method="POST">
 				@foreach($model as $ckey => $categoryHotel)
+					@if($categoryHotel->WeddingPackageCategory->IsActive == true && $categoryHotel->WeddingPackageCategory->IsDeleted == false)
 					<h5><strong>{{ $categoryHotel->WeddingPackageCategory->Name }}</strong></h5>
 					<p>{{ $categoryHotel->WeddingPackageCategory->Description }}</p>
 					@php
@@ -36,7 +37,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
                                                   ->findBy(['WeddingPackageCategoryHotel' => $categoryHotel->Id])
 					@endphp
 					@foreach($packageRelations as $pkey => $package)
-						@if($package->WeddingPackage->Type == 2)
+						@if($package->WeddingPackage->IsDeleted == false && $package->WeddingPackage->IsActive == true && $package->WeddingPackage->Type == 2)
 							<div class="package-info row">
 								<div class="col-md-8" style="padding-top: 10px;">
 									<input type="hidden" value="{{ $package->Id }}" name="pacakge_relation_id[]" />
@@ -67,6 +68,7 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 							</div>
 						@endif
 					@endforeach
+					@endif
 				@endforeach
 				<div class="clearfix"></div>
 				<br/>

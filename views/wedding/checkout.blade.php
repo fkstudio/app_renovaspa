@@ -62,12 +62,12 @@
 					
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="bride_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['bride_name'] : '') }}" placeholder="* Bride full name">
+							<input type="text" required name="bride_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['bride_name'] : '') }}" placeholder="* Couple member 1">
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<input type="text" required name="groom_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['groom_name'] : '') }}" placeholder="* Groom full name">
+							<input type="text" required name="groom_full_name" class="form-control input-border" value="{{ ($quotation != null ? $quotation['groom_name'] : '') }}" placeholder="* Couple member 2">
 						</div>
 					</div>
 
@@ -109,7 +109,6 @@
 					<div class="col-md-3">
 						<label>(*) {{ trans('wedding.wedding_date') }}</label>
 						<br/>
-						<p>We only take reservations within 6 months prior to the wedding date and not before.</p>
 						<input type="text" value="{{ ($quotation != null ? $quotation['wedding_date'] : '') }}" name="wedding_date" required class="datepicker form-control input-border" />
 						<br/>
 						<label>(*) {{ trans('wedding.wedding_time') }}</label>
@@ -136,7 +135,7 @@
 						$total += $item->Service->getPrice($model->Hotel->Id);
 					@endphp
 					<div class="col-md-12">
-						<h5>{{ $item->Service->Name }} - {{ trans("shared.cabin_type") }}</h5>
+						<h5>{{ $item->Service->Name }}</h5>
 						<span>{{ trans('checkout.booked_to') }} {{ ($item->PreferedDate != null ? $item->PreferedDate->format('F j, Y') : "Open date") }} {{ trans('checkout.at_time') }} {{ ($item->PreferedTime != null ? $item->PreferedTime->format('h:m a') : "Open time") }}, {{ $item->CustomerName }}</span>
 						@if ($item->Service->hasDiscount($hotel_id))
 							@php

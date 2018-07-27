@@ -18,6 +18,8 @@ return [
     'card_info' => 'INFORMACIÓN DE TARJETA',
     'book_your_treatment' => 'RESERVA TU TRATAMIENTO',
     'treat_someone' => 'RESERVA PARA ALGUIEN',
-    'the_day' => 'THE DAY'
+    'the_day' => 'THE DAY',
+    'wedding_reservation' => 'SOLICITAR RESERVACIONES PARA BODAS',
+    'complete_gift_certificate' => 'COMPLETAR REGISTRO DE CERTIFICADO DE REGALOS'
 
 ];

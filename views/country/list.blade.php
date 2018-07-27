@@ -28,6 +28,10 @@
 	@endif
 @endsection
 
+@section('head')
+<link rel="stylesheet" type="text/css" href="{{ URL::to('/css') }}/hotel-datepicker.css" />
+@endsection
+
 @section("content")
 <!-- sign modal -->
 <div id="signModal" class="modal fade" role="dialog">
@@ -63,44 +67,44 @@
 					RIU has included the following Spa services and benefits in their Wedding Packages. 
 					If you have purchased any of these, our Renova Spa Online Concierge will assist you to schedule the included services and make additional reservations for you and your guests.
 				</p>
-				<h4>Riu Free Wedding Package and Riu Classic Wedding Packages</h4>
+				<h4>Riu Free Wedding Package and Riu Classic Wedding Packages Package.</h4>
 				<p>
-					- 10% discount on any Renova Spa Services for the wedding couple<br/>
-					- 10% discount on any Renova Spa services for attending guets (available only for online bookings)<br/>
-					- Surprise gift
+					- 10% discount on any Renova Spa Services for the wedding couple.<br/>
+					- 10% discount on any Renova Spa services for attending guets (available only for online bookings) guests.<br/>
+					- Surprise gift.
 				</p>
 				<h4>Riu Royal Wedding Package</h4>
 				<p>
 					- 10% discount on any Renova Spa Services for the wedding couple.<br/>
-					- 10% discount on any Renova Spa services for attending guests (available only for only bookings).<br/>
-					- 1 Romantic Couple's Massage for the wedding couple (2 Swedish Massages for 20 Minutes).
+					- 10% discount on any Renova Spa services for attending guests (available only for online bookings).<br/>
+					- 1 Romantic Couple's Massage for the wedding couple (2 Relaxing Massages for 25 Minutes).
 				</p>
 				<h4>Riu Caprice Wedding Package</h4>
 				<p>
-					- 10% discount on any Renova Spa Services for the wedding couple<br/>
-					- 10% discount on any Renova Spa services for attending guets (available only for online bookings)<br/>
-					- 1 Romantic Couple's Massage for the wedding couple (2 Aromatherapy Massages for 50 min)<br/>
-					- 1 Classic manicure for the Bride<br/>
-					- 1 Classic pedicure for the Bride<br/>
-					- 1 Bride's Hairstyle
+					- 10% discount on any Renova Spa Services for the wedding couple.<br/>
+					- 10% discount on any Renova Spa services for attending guets (available only for online bookings).<br/>
+					- 1 Romantic Couple's Massage for the wedding couple (2 Aromatherapy Massages for 60 min)<br/>
+					- 1 Classic manicure for the bride or Groom<br/>
+					- 1 Classic pedicure for the bride or Groom.<br/>
+					- 1 Bride's Hairstyle.
 				</p>
 				<h4>Riu Indulgence Wedding Package</h4>
 				<p>
-					* Available only at Riu Palace Macao (Dominican Republic), Riu Palace Antillas (Aruba), Riu Palace Jamaica (Jamaica), Riu Palace Las Americas (Mexico).
+					*Available only at Riu Palace Hotels.
 				</p>
 				<p>
 					- 10% discount on any Renova Spa Services for the wedding couple<br/>
-					- 10% discount on any Renova Spa services for attending guets (available only for online bookings)<br/>
-					- 1 Romantic Couple's Massage for the wedding couple (2 Aromatherapy Massages for 50 min)<br/>
-					- 2 Relaxing Massages for 25 minutes for the wedding couple<br/>
-					- 2 Body Exfoliations for 25 minutes for the wedding couple<br/>
-					- 2 Facial for 50 minutes for the wedding couple<br/>
-					- 2 Spa Pedicures for the wedding couple<br/>
-					- 1 Bride's Hairstyle
+					- 10% discount on any Renova Spa services for attending guests (available only for online bookings)<br/>
+					- 1 Romantic Couple's Massage for the wedding couple (2 Aromatherapy Massages for 60 min)<br/>
+					- 2 Relaxing Massages for 25 minutes for the wedding couple.<br/>
+					- 2 Body Scrubs for 25 minutes for the wedding couple.<br/>
+					- 2 Classic Cleansing Facials for 50 minutes for the wedding couple.<br/>
+					- 2 Spa Pedicures for the wedding couple.<br/>
+					- 1 Bride's Hairstyle.
 				</p>
 				<h4>IMPORTANT</h4>
 				<p>- These Riu Wedding Packages are offered by the hotel. These services will only be included if you purchased these packages.</p>
-				<p>- In order to validate included services, you will need to present a Gift Certificate that will de be provided to you by your Riu Wedding Coordinator on site upon arrival.</p>
+				<p>- In order to redeem included services, you will need to present a Gift Certificate that will de be provided to you by your Riu Wedding Coordinator on site upon arrival.</p>
 			</div>
 			@endif
 		</div>
@@ -195,7 +199,7 @@
 						@endif
 					</label>
 					<div class="clearfix"></div>
-					<input type="text" id="arrival" name='arrival_departure' class="datepicker form-control custom-select" />
+					<input type="text" id="arrival" name='arrival_departure' class="form-control custom-select" />
 				</div>	
 
 				<div class="clearfix hidden-lg"></div>
@@ -257,8 +261,11 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
 <!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+ -->
+<script src="{{ URL::to('/js') }}/fecha.js"></script>
+<script src="{{ URL::to('/js') }}/hotel-datepicker.min.js"></script>
 
 <script src="{{ URL::to('/js') }}/vuejs.js"></script>
 <script>
@@ -281,18 +288,21 @@
 	});
 
 	$(function() {
-	    var date = $('.datepicker').daterangepicker({
-	    	autoUpdateInput: false,
-	    	locale: {
-		      format: 'MM/DD/YYYY',
-		      autoApply: true
-		    },
-	        minDate: moment(),
-	    });
+	 //    var date = $('.datepicker').daterangepicker({
+	 //    	autoUpdateInput: false,
+	 //    	locale: {
+		//       format: 'MM/DD/YYYY',
+		//       autoApply: true
+		//     },
+	 //        minDate: moment(),
+	 //    });
 
-	    date.on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-		});
+	 //    date.on('apply.daterangepicker', function(ev, picker) {
+		// 	$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+		// });
+
+		var options = {autoClose: true, showTopbar: false, format: "MM/DD/YYYY"}
+	    var hdpkr = new HotelDatepicker(document.getElementById('arrival'), options);
 	});
 
 	var vue = new Vue({
