@@ -70,14 +70,15 @@ $hotel_region = $dbcontext->getEntityManager()->getRepository("App\Models\Test\H
 					@endphp
 
 					<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/category/{{ $categoryCountry->Category->Id }}/services">
-					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
+					    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-xl-3 parent" style="overflow: hidden;margin-bottom: 20px;">
 					    	<span style="position: absolute;
 										 height: 100%;
-										 width: 100%;
+										 width: 92%;
 										 background: rgb(239, 232, 232);
+										 display: center;
 										 background-image: url({{ config('app.admin_url') . '/images/categories/' . ($categoryCountry->Category->Photo != null ? $categoryCountry->Category->Photo->Path : "" ) }});
 										 background-position: center center;
-										 background-size: cover;"  class="img-responsive"></span>
+										 background-size: cover;"  class="img-responsive center-block"></span>
 					    	<div  class="col-md-12 block-content" >
 					    		<span class="span-list">{{ $categoryCountry->Category->Name }}</span>
 							</div>

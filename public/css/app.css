@@ -181,11 +181,12 @@
  	opacity: 0.8;
  }
 
- /* block content */
+
+ /* block-content-regions */
  .parent {
  	-webkit-transition: filter 0.2s linear;
  }
- .block-content::before {
+ .block-content-regions::before {
  /*	-webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
 	content: "";
 	display: inline-block;
@@ -194,21 +195,21 @@
 	position: absolute;
 	margin: -65px -50px;*/
  }
- .block-content-responsive {
+ .block-content-regions-responsive {
  	position: absolute;
 	margin-top: -160px;
 	text-align: center;
  }
- .block-content {
+ .block-content-regions {
  	-webkit-transition: opacity 0.3s,  padding-top 0.3s, filter 0.2s linear;
 	height: 340px;
 	text-align: center;
  }
- .block-content span {
+ .block-content-regions span {
  	-webkit-transition: opacity 0.2s linear;
  	opacity: 0;
  }
- .block-content:hover:before  {
+ .block-content-regions:hover:before  {
  	background-color: black;
  	opacity: 0.5;
  }
@@ -217,18 +218,61 @@
  	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
  }
- .parent:hover > .block-content {
+ .parent:hover > .block-content-regions {
  	opacity: 1;
  	padding-top: 35%;
  }
 
- .block-content:hover > span {
+ .block-content-regions:hover > span {
  	opacity: 1;
  	z-index: 99999999;
  	text-shadow: 1px 1px 1px dimgray
-
  }
- /* block content */
+ /* block-content-regions*/
+
+
+  /* block content */
+  .parent {
+	-webkit-transition: filter 0.2s linear;
+}
+.block-content::before {
+/*	-webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
+   content: "";
+   display: inline-block;
+   width: inherit;
+   height: inherit;
+   position: absolute;
+   margin: -65px -50px;*/
+}
+.block-content-responsive {
+   position: absolute;
+   margin-top: -160px;
+   text-align: center;
+}
+.block-content {
+	-webkit-transition: opacity 0.3s,  padding-top 0.3s, filter 0.2s linear;
+   height: 340px;
+   text-align: center;
+}
+.block-content span {
+	-webkit-transition: opacity 0.2s linear;
+	opacity: 0;
+}
+.block-content:hover:before  {
+	background-color: black;
+	opacity: 0.5;
+}
+
+.parent:hover {
+	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+   filter: grayscale(100%);
+}
+.parent:hover > .block-content {
+	opacity: 1;
+	padding-top: 35%;
+}
+/* block content */
+
 
  /* breadcrumbs */
  .breadcrumps {

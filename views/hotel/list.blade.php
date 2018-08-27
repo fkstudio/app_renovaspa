@@ -20,14 +20,15 @@
 			    }
 		    @endphp
 		    <a style="font-size: 30px;color:white;" href="{{ URL::to('/').$url }}">
-			    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
+			    <div class="col-lg-3 col-md-2 col-sm-6 col-xs-12 col-xl-3 parent" style="overflow: hidden;margin-bottom: 20px;">
 			    	<span style="position: absolute;
 								 height: 100%;
 								 width: 100%;
+								 display: block;
 								 background-image: url({{ config("app.admin_url") .'/images/hotels/'. $hotelRegion->Hotel->getProfile() }});
 								 background-position: center center;
-								 background-size: cover;"  class="img-responsive"></span>
-			    	<div  class="col-md-12 block-content" >
+								 background-size: cover;"  class="img-responsive center-block"></span>
+			    	<div  class="col-md-12 block-content-regions" >
 			    		<span class="span-list">{{ $hotelRegion->Hotel->Name }}</span>
 					</div>
 			    </div>

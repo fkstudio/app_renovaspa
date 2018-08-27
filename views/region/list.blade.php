@@ -9,15 +9,16 @@
 	<div class="row">
 		@foreach($model as $region)
 		<a style="font-size: 30px;color:white;" href="{{ URL::to('/') }}/region/{{ $region->Id }}/hotels">
-		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 parent" style="overflow: hidden;margin-bottom: 20px;">
+		    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-xl-3 parent" style="overflow: hidden;margin-bottom: 20px;">
 		    	<span style="position: absolute;
-							 height: 100%;
-							 width: 100%;
+							 height: 90%;
+							 width: 90%;
+							 display: block;
 							 background: rgb(239, 232, 232);
 							 background-image: url({{ config("app.admin_url") .'/images/regions/'. ($region->Photo != null ? $region->Photo->Path : "" ) }});
 							 background-position: center center;
-							 background-size: cover;"  class="img-responsive"></span>
-		    	<div  class="col-md-12 block-content" >
+							 background-size: cover;"  class="img-responsive center-block"></span>
+		    	<div  class="col-md-12 block-content-regions" >
 		    		<span class="span-list">{{ $region->Name }}</span>
 				</div>
 		    </div>
